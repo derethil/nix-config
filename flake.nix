@@ -36,6 +36,7 @@
     homeConfigurations = {
       "derethil@artemis" = lib.homeManagerConfiguration {
         pkgs = pkgsFor.x86_64-linux;
+        modules = [./home/derethil/artemis.nix];
         extraSpecialArgs = {
           inherit inputs outputs;
         };
