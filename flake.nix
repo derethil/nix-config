@@ -1,4 +1,3 @@
-
 {
   description = "My Home Manager Configuration";
 
@@ -13,7 +12,13 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, systems, ... }@inputs: let
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    systems,
+    ...
+  } @ inputs: let
     inherit (self) outputs;
     lib = nixpkgs.lib // home-manager.lib;
     forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
@@ -26,13 +31,11 @@
     );
   in {
     inherit lib;
-
-    defaultPackage.x86_64-linux = home-manager.packages.x86_64-linux.home-manager;
+    formatter = forEachSystem (pkgs: pkgs.alejandra);
 
     homeConfigurations = {
       "derethil@artemis" = lib.homeManagerConfiguration {
         pkgs = pkgsFor.x86_64-linux;
-        modules = [ ./home.nix ];
         extraSpecialArgs = {
           inherit inputs outputs;
         };
