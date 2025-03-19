@@ -22,9 +22,8 @@ jobs:
       - name: "Validate Flake"
         run: nix flake check --all-systems
 
-      - name: "Flake Health"
+      - name: "Check Flake Health"
         uses: DeterminateSystems/flake-checker-action@v2
         with:
-          nixpkgs-keys: nixpkgs nixpkgs-unstable
           ignore-missing-flake-lock: false
           fail-mode: true
