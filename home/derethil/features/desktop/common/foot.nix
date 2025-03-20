@@ -6,8 +6,8 @@
       main = {
         font = "GeistMono NF SemiBold:size=12";
         pad = "6x6";
+        selection-target = "both";
       };
-      cursor.selection-target = "both";
       colors = {
         alpha = 1.0;
         foreground = "d4be98";
