@@ -1,5 +1,5 @@
 {
   imports = [
-    ./foot.nix
+    ./wayland
   ];
 }
