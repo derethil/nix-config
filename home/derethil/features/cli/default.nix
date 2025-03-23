@@ -1,5 +1,7 @@
 {pkgs, ...}: {
   imports = [
+    ./fish
+    ./starship.nix
     ./git.nix
   ];
 
