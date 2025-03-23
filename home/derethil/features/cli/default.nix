@@ -1,8 +1,11 @@
 {pkgs, ...}: {
   imports = [
     ./fish
-    ./starship.nix
+    ./direnv.nix
     ./git.nix
+    ./starship.nix
+    ./thefuck.nix
+    ./zoxide.nix
   ];
 
   home.packages = with pkgs; [
@@ -20,8 +23,6 @@
     ripgrep # Better grep
     scc # Project statistics
     tldr # Command help
-    thefuck # I fucked up
-    zoxide # Better cd
 
     # Nix Tools
     alejandra # Formatter

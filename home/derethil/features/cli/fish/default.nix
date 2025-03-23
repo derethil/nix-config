@@ -1,5 +1,9 @@
-{pkgs, ...}: let
-  # TODO: handle versioning this better
+{
+  pkgs,
+  lib,
+  ...
+}: let
+  # TODO: handle versioning these plugins better
   fish-done = {
     name = "done";
     src = pkgs.fetchFromGitHub {
@@ -20,8 +24,20 @@
     };
   };
 in {
+  imports = [
+    ./theme.nix
+  ];
+
   programs.fish = {
     enable = true;
+
+    interactiveShellInit = ''
+      fish_vi_key_bindings
+      set fish_cursor_default     block      blink
+      set fish_cursor_insert      line       blink
+      set fish_cursor_replace_one underscore blink
+      set fish_cursor_visual      block
+    '';
 
     shellAbbrs = {
       be = "bundle exec";
@@ -29,7 +45,6 @@ in {
 
     shellAliases = {
       l = "eza -la --icons --group-directories-first";
-      ls = "echo 'Use l instead of ls'";
       lt = "eza --tree --icons --group-directories-first --level=3";
       cat = "bat";
       btm = "btm --enable_gpu";
@@ -43,6 +58,7 @@ in {
 
     functions = {
       activate = "source ./.venv/bin/activate.fish";
+      fish_greeting = lib.readFile ./fish_greeting.fish;
     };
 
     plugins = [
