@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  config,
   ...
 }: let
   # git commit --amend, but for older commits
@@ -38,11 +39,63 @@
     git branch --merged="$branch" | grep -v "$branch" | xargs -n 1 git branch -d
     git fetch --prune;
   '';
+
+  aliases = {
+    d = "diff -M";
+    a = "add";
+    f = "fetch";
+    aa = "add --all .";
+    bd = "branch -D";
+    r = "restore";
+    rs = "restore --staged";
+    bl = "branch --list";
+    s = "status";
+    ca = "commit -a -m";
+    m = "merge --no-ff";
+    pt = "push --tags";
+    P = "push";
+    p = "pull";
+    pf = "push --force-with-lease";
+    rh = "reset --hard";
+    b = "branch";
+    cob = "checkout -b";
+    co = "checkout";
+    ba = "branch -a";
+    cp = "cherry-pick";
+    l = "log --pretty=format:'%Cgreen%h%Creset - %Cblue%an%Creset @ %ar : %s'";
+    l2 = "log --pretty='format:%Cgreen%h%Creset %an - %s' --graph";
+    lv = "log --stat";
+    pom = "pull origin master";
+    gcd = "";
+    cf = "clean -fd";
+    cod = "checkout -- .";
+    pum = "pull upstream master";
+    pod = "push origin --delete";
+    su = "status -uno";
+    cm = "commit -m";
+    cv = "commit --verbose";
+    cn = "commit --amend --no-edit";
+    c = "commit --verbose";
+    rm = "reset HEAD";
+    t = "log --tags --simplify-by-decoration --pretty='format:%ai %d'";
+    sl = "shortlog -s -n --all --no-merges";
+    op = "open";
+    w = "switch";
+  };
+
+  shellAbbrs = builtins.listToAttrs (map
+    (name: {
+      name = "g" + name;
+      value = "git ${aliases.${name}}";
+    })
+    (builtins.attrNames aliases));
 in {
   home.packages = [git-fixup git-root git-prune-merged];
+
   programs.git = {
     enable = true;
     package = pkgs.gitAndTools.gitFull;
+
     userName = "Jaren Glenn";
     userEmail = lib.mkDefault "jarenglenn@gmail.com";
     diff-so-fancy.enable = true;
@@ -53,6 +106,9 @@ in {
       push.autoSetupremote = true;
       pull.ff = "only";
     };
+
+    aliases = aliases;
+
     ignores = [
       ".venv"
       ".tool-versions"
@@ -67,45 +123,7 @@ in {
       ".python-version"
       ".typos.toml"
     ];
-    aliases = {
-      d = "diff -M";
-      a = "add";
-      f = "fetch";
-      aa = "add --all .";
-      bd = "branch -D";
-      bl = "branch --list";
-      s = "status";
-      ca = "commit -a -m";
-      m = "merge --no-ff";
-      pt = "push --tags";
-      P = "push";
-      p = "pull";
-      pf = "push --force-with-lease";
-      rh = "reset --hard";
-      b = "branch";
-      cob = "checkout -b";
-      co = "checkout";
-      ba = "branch -a";
-      cp = "cherry-pick";
-      l = "log --pretty=format:'%Cgreen%h%Creset - %Cblue%an%Creset @ %ar : %s'";
-      l2 = "log --pretty='format:%Cgreen%h%Creset %an - %s' --graph";
-      lv = "log --stat";
-      pom = "pull origin master";
-      gcd = "";
-      cf = "clean -fd";
-      cod = "checkout -- .";
-      pum = "pull upstream master";
-      pod = "push origin --delete";
-      su = "status -uno";
-      cm = "commit -m";
-      cv = "commit --verbose";
-      cn = "commit --amend --no-edit";
-      c = "commit --verbose";
-      rm = "reset HEAD";
-      t = "log --tags --simplify-by-decoration --pretty='format:%ai %d'";
-      rs = "shortlog -s -n --all --no-merges";
-      op = "open";
-      w = "switch";
-    };
   };
+
+  programs.fish.shellAbbrs = lib.mkIf config.programs.fish.enable shellAbbrs;
 }
