@@ -102,6 +102,7 @@ in {
     lfs.enable = true;
     extraConfig = {
       init.defaultBranch = "main";
+      core.editor = "nvim";
       credential.helper = "cache --timeout=3600";
       push.autoSetupremote = true;
       pull.ff = "only";
