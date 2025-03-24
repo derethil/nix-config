@@ -26,6 +26,7 @@
 in {
   imports = [
     ./theme.nix
+    ./arch.nix
   ];
 
   programs.fish = {
