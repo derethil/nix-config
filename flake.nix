@@ -10,6 +10,11 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    trashy = {
+      url = "github:oberblastmeister/trashy";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
