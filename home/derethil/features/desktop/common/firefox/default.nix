@@ -4,17 +4,12 @@
   ...
 }: {
   imports = [
-    ./ublock-origin.nix
-  ];
-
-  home.packages = with pkgs; [
-    tridactyl-native
+    ./addons/ublock-origin.nix
+    ./addons/tridactyl.nix
   ];
 
   programs.firefox = {
     enable = true;
-    package = pkgs.firefox.override {cfg = {enableTridactylNative = true;};};
-
     policies = {
       # Privacy
       HttpsOnlyMode = "enabled";

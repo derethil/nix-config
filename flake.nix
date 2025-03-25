@@ -43,6 +43,8 @@
     inherit lib;
     formatter = forEachSystem (pkgs: pkgs.alejandra);
 
+    overlays = import ./overlays {inherit inputs outputs;};
+
     homeConfigurations = {
       "derethil@artemis" = lib.homeManagerConfiguration {
         pkgs = pkgsFor.x86_64-linux;
