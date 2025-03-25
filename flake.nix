@@ -11,6 +11,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     trashy = {
       url = "github:oberblastmeister/trashy";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -41,7 +46,7 @@
     homeConfigurations = {
       "derethil@artemis" = lib.homeManagerConfiguration {
         pkgs = pkgsFor.x86_64-linux;
-        modules = [./home/derethil/artemis.nix];
+        modules = [./home/derethil/artemis.nix ./home/derethil/nixpkgs.nix];
         extraSpecialArgs = {
           inherit inputs outputs;
         };
