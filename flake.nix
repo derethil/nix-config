@@ -42,6 +42,7 @@
         import nixpkgs {
           inherit system;
           config.allowUnfree = true;
+          config.allowUnfreePredicate = _: true;
         }
     );
   in {

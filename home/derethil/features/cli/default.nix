@@ -11,7 +11,7 @@
 
   home.packages = with pkgs; [
     bat # Better cat
-    bsdtar # Archiver
+    libarchive # Archiver / unarchiver
     bottom # System monitor
     diff-so-fancy # Better diff
     duf # Disk Usage
