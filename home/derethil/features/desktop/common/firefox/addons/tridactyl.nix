@@ -4,5 +4,8 @@
 
     bind <d tabclosealltoleft
     bind >d tabclosealltoright
+
+    bind K tabprev
+    bind J tabnext
   '';
 }
