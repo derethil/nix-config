@@ -1,6 +1,4 @@
 {
-  pkgs,
-  builtins,
   lib,
   config,
   ...
