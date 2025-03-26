@@ -108,6 +108,13 @@ in {
       pull.ff = "only";
     };
 
+    includes = [
+      {
+        condition = "gitdir:~/development/dragonarmy/**/*";
+        contents.user.email = "jaren.glenn@df-nn.com";
+      }
+    ];
+
     aliases = aliases;
 
     ignores = [
