@@ -104,10 +104,15 @@ in {
         "device.sensors.enabled" = false;
         "geo.enabled" = false;
 
+        # Request not to track
+        "privacy.globalprivacycontrol.functionality.enabled" = true;
+        "privacy.globalprivacycontrol.enabled" = true;
+
         # Disable useless stuff
         "extensions.pocket.enabled" = false;
         "extensions.abuseReport.enabled" = false;
         "extensions.formautofill.creditCards.enabled" = false;
+        "extensions.formautofill.addresses.enabled" = false;
         "browser.contentblocking.report.lockwise.enabled" = false;
         "browser.uitour.enabled" = false;
         "browser.newtabpage.activity-stream.showSponsored" = false;
