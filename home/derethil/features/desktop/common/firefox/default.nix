@@ -1,8 +1,15 @@
 {
   inputs,
+  config,
   pkgs,
   ...
-}: {
+}: let
+  pkg = pkgs.firefox.override {
+    nativeMessagingHosts = with pkgs; [
+      tridactyl-native
+    ];
+  };
+in {
   imports = [
     ./addons/ublock-origin.nix
     ./addons/tridactyl.nix
@@ -10,6 +17,7 @@
 
   programs.firefox = {
     enable = true;
+    package = config.lib.nixGL.wrap pkg;
     policies = {
       # Privacy
       HttpsOnlyMode = "enabled";

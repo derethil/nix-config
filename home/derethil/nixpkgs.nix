@@ -8,4 +8,10 @@ in {
   home.sessionVariables = {
     NIX_PATH = lib.concatStringsSep ":" (lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs);
   };
+
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+    };
+  };
 }

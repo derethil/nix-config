@@ -1,4 +1,8 @@
 {inputs, ...}: {
+  imports = [
+    ./nixgl.nix
+  ];
+
   flake-inputs = final: _: {
     inputs =
       builtins.mapAttrs (
