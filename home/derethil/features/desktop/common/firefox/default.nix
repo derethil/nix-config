@@ -81,12 +81,6 @@
         # Enable UserChrome
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
 
-        # Hardware acceleration
-        "gfx.webrender.all" = true;
-        "media.ffmpeg.vaapi.enabled" = true;
-        "media.rdd-ffmpeg.enabled" = true;
-        "widget.dmabuf.force-enabled" = true;
-
         # No location telemetry
         "beacon.enabled" = false;
         "device.sensors.enabled" = false;
