@@ -75,6 +75,16 @@
         "browser.startup.page" = 3; # Restore previous session
         "browser.toolbars.bookmarks.visibility" = "never";
 
+        # Only sync browser history and tabs
+        "services.sync.engine.addons" = false;
+        "services.sync.engine.addresses" = false;
+        "services.sync.engine.bookmarks" = false;
+        "services.sync.engine.creditcards" = false;
+        "services.sync.engine.history" = true;
+        "services.sync.engine.passwords" = false;
+        "services.sync.engine.prefs" = false;
+        "services.sync.engine.tabs" = true;
+
         # Skip download prompt
         "browser.download.useDownloadDir" = false;
 
