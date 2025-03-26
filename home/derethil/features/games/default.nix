@@ -1,11 +1,10 @@
-{
-  pkgs,
-  config,
-  ...
-}: {
+{pkgs, ...}: {
+  imports = [
+    ./steam.nix
+  ];
+
   home.packages = with pkgs; [
     gdlauncher-carbon
     heroic
-    (config.lib.nixGL.wrap steam)
   ];
 }
