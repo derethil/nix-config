@@ -1,6 +1,9 @@
 {pkgs, ...}: {
+  imports = [
+    ./mattermost.nix
+  ];
+
   home.packages = with pkgs; [
-    mattermost-desktop
     insomnia
   ];
 }
