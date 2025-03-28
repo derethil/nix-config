@@ -1,0 +1,27 @@
+@use "color";
+@use "font";
+@use "layout";
+@use "animation";
+@use "bar";
+@use "mixins";
+@use "misc";
+
+window.Bar .option-button {
+  @include mixins.widget;
+
+  &:hover {
+    border-color: color.$accent4;
+    &.active {
+      color: color.$background-dim;
+    }
+  }
+
+  &.active {
+    background-color: color.$accent4-muted;
+    color: color.$background-muted;
+    font-weight: bold;
+  }
+
+  & label {
+  }
+}

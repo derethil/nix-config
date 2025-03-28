@@ -1,0 +1,49 @@
+@use "color";
+@use "font";
+@use "layout";
+@use "animation";
+@use "bar";
+@use "mixins";
+
+window.Bar {
+  @include mixins.separator;
+
+  .bar-wrapper {
+    @include mixins.widget;
+    font-family: font.$mono-family;
+    font-weight: bold;
+    padding: 0;
+
+    .bar-modules {
+      padding: #{layout.$padding}px;
+    }
+  }
+
+  .list-item {
+    @include bar.list-padding;
+  }
+
+  .datetime {
+    .time {
+      padding: #{layout.$padding * 0.33}px 0;
+      font-size: #{font.$mono-size * 1.75}px;
+    }
+
+    .date {
+      font-size: #{font.$mono-size * 0.9}px;
+    }
+  }
+
+  .updates {
+    font-size: 15px;
+  }
+
+  .dashboard-button {
+    background-color: color.$background;
+    border-radius: #{layout.$radius / 2}px;
+    color: color.$text;
+    icon {
+      font-size: 20px;
+    }
+  }
+}

@@ -1,0 +1,56 @@
+@use "mixins";
+@use "color";
+@use "font";
+@use "misc";
+
+.pulse-result-wrapper.hue-button {
+  &:focus-within {
+    background-color: color.$background-surface;
+  }
+
+  &.on .label icon {
+    color: color.$accent5;
+    &.light {
+      color: color.$accent3;
+    }
+  }
+
+  .type {
+    font-size: #{font.$mono-size}px;
+    color: color.$text-muted;
+  }
+
+  .label icon {
+    transition: all #{misc.$transition}ms ease-in-out;
+    font-size: 28px;
+    color: color.$accent5-muted;
+    &.light {
+      color: color.$accent3-muted;
+    }
+  }
+
+  switch {
+    @include mixins.switch;
+  }
+
+  .toggle-details {
+    all: unset;
+    icon {
+      font-size: 20px;
+      color: color.$text;
+    }
+  }
+
+  scale {
+    trough {
+      min-height: 12px;
+      background-color: color.$background-surface;
+      highlight {
+        background-color: color.$accent6-muted;
+      }
+      slider {
+        all: unset;
+      }
+    }
+  }
+}

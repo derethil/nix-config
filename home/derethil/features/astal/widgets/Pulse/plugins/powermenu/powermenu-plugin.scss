@@ -1,0 +1,48 @@
+@use "color";
+@use "layout";
+@use "font";
+@use "pulse";
+
+@mixin action($color, $color-muted) {
+  color: $color;
+  border-bottom: 2px solid transparent;
+  &:focus,
+  &:hover {
+    border-bottom: 2px solid $color-muted;
+    color: $color-muted;
+  }
+  &:not(:first-child) {
+    border-left: 1px solid #{color.$background-surface};
+  }
+}
+
+window.pulse .pulse-result-wrapper {
+  @include pulse.result;
+  font-weight: 700;
+  transition: all 0.2s;
+
+  icon {
+    font-size: 24px;
+    margin-right: #{layout.$padding}px;
+  }
+
+  &.shutdown icon {
+    @include action(color.$accent1, color.$accent1-muted);
+  }
+
+  &.reboot icon {
+    @include action(color.$accent2, color.$accent2-muted);
+  }
+
+  &.logout icon {
+    @include action(color.$accent3, color.$accent3-muted);
+  }
+
+  &.suspend icon {
+    @include action(color.$accent4, color.$accent4-muted);
+  }
+
+  &.lock icon {
+    @include action(color.$accent5, color.$accent5-muted);
+  }
+}

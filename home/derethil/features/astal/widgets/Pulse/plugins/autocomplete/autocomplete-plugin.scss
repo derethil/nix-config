@@ -1,0 +1,16 @@
+@use "color";
+@use "layout";
+@use "pulse";
+
+.pulse .command-entry {
+  @include pulse.result;
+
+  .command {
+    font-weight: 700;
+    margin-right: #{layout.$gap}px;
+  }
+
+  .description {
+    color: color.$text-muted;
+  }
+}

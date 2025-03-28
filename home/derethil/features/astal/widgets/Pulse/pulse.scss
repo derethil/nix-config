@@ -1,0 +1,74 @@
+@use "mixins";
+@use "color";
+@use "layout";
+@use "font";
+@use "misc";
+
+window.pulse .pulse {
+  background-color: transparent;
+
+  > box {
+    @include mixins.widget;
+    margin: 0;
+    background-color: transparentize(color.$background-muted, misc.$transparency);
+    padding-bottom: #{layout.$padding}px;
+
+    transition: all 0.2s ease-in-out;
+    border-bottom: 1px solid transparent;
+    border-radius: #{layout.$radius}px;
+
+    &.inactive {
+      border-color: color.$background-surface;
+      border-radius: #{layout.$radius}px #{layout.$radius}px 0 0;
+    }
+  }
+
+  scrollable viewport {
+    all: unset;
+    .results {
+      border-radius: #{layout.$radius}px;
+      border: #{layout.$border-width}px solid #{color.$border};
+      border-top: none;
+    }
+  }
+
+  .start-icon {
+    background-color: color.$background;
+    border-radius: #{layout.$radius / 2}px;
+    margin-right: #{layout.$padding}px;
+    padding: #{layout.$padding}px #{layout.$padding}px;
+    font-size: #{font.$mono-size * 1.5}px;
+  }
+
+  .entry-wrapper {
+    font-size: #{font.$mono-size * 1.35}px;
+    font-weight: 600;
+
+    .placeholder {
+      color: color.$text-muted;
+    }
+
+    entry {
+      all: unset;
+      color: color.$text;
+      caret-color: color.$text-highlight;
+    }
+
+    button {
+      all: unset;
+      padding: #{layout.$padding}px #{layout.$padding * 1.5}px;
+      transition: color 0.2s ease;
+      &:hover,
+      &:focus {
+        color: color.$text-highlight;
+      }
+    }
+  }
+
+  .end-adornment {
+    padding-right: #{layout.$padding}px;
+    icon {
+      font-size: 20px;
+    }
+  }
+}

@@ -1,9 +1,10 @@
 {
   imports = [
     ./global
+    ./features/astal
     ./features/cli
-    ./features/games
     ./features/desktop/hyprland
+    ./features/games
     ./features/work
   ];
 }

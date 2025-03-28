@@ -1,0 +1,44 @@
+@use "mixins";
+@use "color";
+@use "layout";
+@use "misc";
+@use "font";
+
+window.Bar .bar-wrapper > revealer {
+  transition: transform 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+window.Bar .dashboard {
+  @include mixins.widget($border: false);
+  background-color: transparentize(color.$background-dim, misc.$transparency);
+  margin: 0px;
+  border-radius: #{layout.$radius}px 0 0 #{layout.$radius}px;
+  border-right: 2px solid color.$background-surface;
+
+  .page-selector {
+    button {
+      // background-color: color.$background-surface;
+      padding: #{layout.$padding / 2}px 0px;
+      color: #{color.$text};
+      border-radius: 50%;
+      icon {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .heading {
+    font-weight: 600;
+    font-size: #{font.$mono-size * 1.25}px;
+    margin: #{layout.$gap}px;
+  }
+
+  .section {
+    margin-top: #{layout.$gap / 2}px;
+    margin-bottom: #{layout.$gap / 2}px;
+
+    &:first-child {
+      margin-top: 0px;
+    }
+  }
+}

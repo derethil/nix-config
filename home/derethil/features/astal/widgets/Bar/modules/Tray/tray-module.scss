@@ -1,0 +1,17 @@
+@use "color";
+@use "layout";
+@use "bar";
+@use "mixins";
+
+window.Bar .tray {
+  margin-bottom: #{layout.$gap}px;
+
+  > button {
+    all: unset;
+    @include bar.list-padding;
+
+    icon {
+      font-size: 22px;
+    }
+  }
+}
