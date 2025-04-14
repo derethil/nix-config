@@ -108,30 +108,6 @@ in {
       yank
       vim-tmux-navigator
       {
-        plugin = tmux-theme;
-        extraConfig = ''
-          # Statusline
-          set -g @theme_custom_theme_dir "${themes}"
-          set -g @theme_custom_plugin_dir "${modules}"
-          set -g @theme_flavour "gruvbox-material"
-          set -g status-interval 5
-
-          set -g @theme_window_right_separator "█ "
-          set -g @theme_window_number_position "right"
-          set -g @theme_window_middle_separator " | "
-          set -g @theme_window_default_fill "none"
-          set -g @theme_window_current_fill "all"
-          set -g @theme_window_default_text "#W"
-          set -g @theme_window_current_text "#W"
-
-          set -g @theme_window_current_color "#{thm_bg_bright}"
-          set -g @theme_window_current_background "#{thm_bg}"
-
-          set -g @theme_status_modules_right "directory continuum session"
-          set -g @theme_directory_text "#( echo #{pane_current_path} | sed 's|$HOME|~|' | rev | cut -d'/' -f-3 | rev )"
-        '';
-      }
-      {
         plugin = power-zoom;
         extraConfig = "";
       }
@@ -139,6 +115,16 @@ in {
         plugin = fzf-tmux-url;
         extraConfig = ''
           set -g @fzf-url-bind 'u'
+        '';
+      }
+      {
+        plugin = tmux-sessionx;
+        extraConfig = ''
+          set -g @sessionx-bind 'o'
+          set -g @sessionx-zoxide-mode 'on'
+          set -g @sessionx-custom-paths "${config.home.homeDirectory}/development/personal,${config.home.homeDirectory}/development/dragonarmy"
+          set -g @sessionx-custom-paths-subdirectories "true"
+          set -g @sessionx-bind-kill-session 'alt-x'
         '';
       }
       {
@@ -158,13 +144,27 @@ in {
         '';
       }
       {
-        plugin = tmux-sessionx;
+        plugin = tmux-theme;
         extraConfig = ''
-          set -g @sessionx-bind 'o'
-          set -g @sessionx-zoxide-mode 'on'
-          set -g @sessionx-custom-paths "${config.home.homeDirectory}/development/personal,${config.home.homeDirectory}/development/dragonarmy"
-          set -g @sessionx-custom-paths-subdirectories "true"
-          set -g @sessionx-bind-kill-session 'alt-x'
+          # Statusline
+          set -g @theme_custom_theme_dir "${themes}"
+          set -g @theme_custom_plugin_dir "${modules}"
+          set -g @theme_flavour "gruvbox-material"
+          set -s status-interval 1
+
+          set -g @theme_window_right_separator "█ "
+          set -g @theme_window_number_position "right"
+          set -g @theme_window_middle_separator " | "
+          set -g @theme_window_default_fill "none"
+          set -g @theme_window_current_fill "all"
+          set -g @theme_window_default_text "#W"
+          set -g @theme_window_current_text "#W"
+
+          set -g @theme_window_current_color "#{thm_bg_bright}"
+          set -g @theme_window_current_background "#{thm_bg}"
+
+          set -g @theme_status_modules_right "directory continuum session"
+          set -g @theme_directory_text "#( echo #{pane_current_path} | sed 's|$HOME|~|' | rev | cut -d'/' -f-3 | rev )"
         '';
       }
     ];
