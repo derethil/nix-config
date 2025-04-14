@@ -3,9 +3,8 @@
   pkgs,
   ...
 }: let
-  themesPath = ./themes;
-  modulesPath = ./modules;
-  scriptsPath = ./scripts;
+  themes = ./themes;
+  modules = ./modules;
 
   tmux-theme = pkgs.tmuxPlugins.mkTmuxPlugin {
     pluginName = "tmux-theme";
@@ -29,6 +28,7 @@
     };
   };
 in {
+  imports = [./scripts];
   programs.tmux = {
     enable = true;
     shell = "${pkgs.fish}/bin/fish"; # Adjust if you use a different shell
@@ -147,9 +147,8 @@ in {
         plugin = tmux-theme;
         extraConfig = ''
           # Statusline
-          set -g @theme_custom_theme_dir "${themesPath}"
-          set -g @theme_custom_plugin_dir "${modulesPath}"
-          set -g @theme_custom_scripts_dir "${scriptsPath}"
+          set -g @theme_custom_theme_dir "${themes}"
+          set -g @theme_custom_plugin_dir "${modules}"
           set -g @theme_flavour "gruvbox-material"
           set -g status-interval 5
 
