@@ -3,20 +3,24 @@
   pkgs,
   ...
 }: let
-  tmuxTheme = pkgs.tmuxPlugins.mkTmuxPlugin {
+  themesPath = ./themes;
+  modulesPath = ./modules;
+  scriptsPath = ./scripts;
+
+  tmux-theme = pkgs.tmuxPlugins.mkTmuxPlugin {
     pluginName = "tmux-theme";
-    version = "1.0.0";
+    version = "unstable-04-14-2025";
     src = pkgs.fetchFromGitHub {
       owner = "derethil";
       repo = "tmux-theme";
       rev = "main";
-      sha256 = "sha256-OhlXT0bfPf02e4oWt2lC2C8S9coClHJnyvkA0x87B4A=";
+      sha256 = "sha256-108VWhspwUi/sO5lZsym/6Ga8ydB6pHUv+dUtAmLxiE=";
     };
   };
 
   power-zoom = pkgs.tmuxPlugins.mkTmuxPlugin {
     pluginName = "tmux-power-zoom";
-    version = "1.0.0";
+    version = "unstable-04-14-2025";
     src = pkgs.fetchFromGitHub {
       owner = "jaclu";
       repo = "tmux-power-zoom";
@@ -24,13 +28,7 @@
       sha256 = "sha256-IddpiE3ZLIRk14O90Ovpc+mbj+74nNtwMhYIci4FLSI=";
     };
   };
-
-  themesPath = ./themes;
-  modulesPath = ./modules;
 in {
-  # # Ensure TPM directory exists
-  # home.file."${config.xdg.configHome}/tmux/plugins/tpm/.keep".text = "";
-  #
   programs.tmux = {
     enable = true;
     shell = "${pkgs.fish}/bin/fish"; # Adjust if you use a different shell
@@ -116,12 +114,13 @@ in {
       {
         plugin = fzf-tmux-url;
         extraConfig = ''
-          set -g @fzf-url-bind 'x'
+          set -g @fzf-url-bind 'u'
         '';
       }
       {
         plugin = resurrect;
         extraConfig = ''
+          set -g @resurrect-dir "${config.xdg.stateHome}/tmux/resurrect"
           set -g @resurrect-processes 'false'
           set -g @resurrect-save 'S'
           set -g @resurrect-restore 'R'
@@ -145,11 +144,12 @@ in {
         '';
       }
       {
-        plugin = tmuxTheme;
+        plugin = tmux-theme;
         extraConfig = ''
           # Statusline
           set -g @theme_custom_theme_dir "${themesPath}"
           set -g @theme_custom_plugin_dir "${modulesPath}"
+          set -g @theme_custom_scripts_dir "${scriptsPath}"
           set -g @theme_flavour "gruvbox-material"
           set -g status-interval 5
 
