@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   pkgs,
   ...
 }: let
@@ -8,24 +9,14 @@
 
   tmux-theme = pkgs.tmuxPlugins.mkTmuxPlugin {
     pluginName = "tmux-theme";
-    version = "unstable-04-14-2025";
-    src = pkgs.fetchFromGitHub {
-      owner = "derethil";
-      repo = "tmux-theme";
-      rev = "main";
-      sha256 = "sha256-108VWhspwUi/sO5lZsym/6Ga8ydB6pHUv+dUtAmLxiE=";
-    };
+    version = "flake-input";
+    src = inputs.tmux-theme;
   };
 
   power-zoom = pkgs.tmuxPlugins.mkTmuxPlugin {
     pluginName = "tmux-power-zoom";
-    version = "unstable-04-14-2025";
-    src = pkgs.fetchFromGitHub {
-      owner = "jaclu";
-      repo = "tmux-power-zoom";
-      rev = "main";
-      sha256 = "sha256-IddpiE3ZLIRk14O90Ovpc+mbj+74nNtwMhYIci4FLSI=";
-    };
+    version = "flake-input";
+    src = inputs.tmux-power-zoom;
   };
 in {
   imports = [./scripts];

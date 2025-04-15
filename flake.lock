@@ -158,6 +158,8 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
         "systems": "systems",
+        "tmux-power-zoom": "tmux-power-zoom",
+        "tmux-theme": "tmux-theme",
         "trashy": "trashy"
       }
     },
@@ -188,6 +190,38 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tmux-power-zoom": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1741296244,
+        "narHash": "sha256-IddpiE3ZLIRk14O90Ovpc+mbj+74nNtwMhYIci4FLSI=",
+        "owner": "jaclu",
+        "repo": "tmux-power-zoom",
+        "rev": "84b8e3dd5b7e10db793ac925e1e65fe204a4e47b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jaclu",
+        "repo": "tmux-power-zoom",
+        "type": "github"
+      }
+    },
+    "tmux-theme": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1744408323,
+        "narHash": "sha256-108VWhspwUi/sO5lZsym/6Ga8ydB6pHUv+dUtAmLxiE=",
+        "owner": "derethil",
+        "repo": "tmux-theme",
+        "rev": "b761a9ec5d95ad710c84101ec08e0ae701cb724a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "derethil",
+        "repo": "tmux-theme",
         "type": "github"
       }
     },

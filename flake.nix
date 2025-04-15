@@ -6,6 +6,8 @@
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
     systems.url = "github:nix-systems/default-linux";
 
+    # Nix Stuff
+
     nixgl = {
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -16,6 +18,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Applications
+
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,6 +28,18 @@
     trashy = {
       url = "github:oberblastmeister/trashy";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Tmux Plugins
+
+    tmux-theme = {
+      url = "github:derethil/tmux-theme";
+      flake = false;
+    };
+
+    tmux-power-zoom = {
+      url = "github:jaclu/tmux-power-zoom";
+      flake = false;
     };
   };
 
