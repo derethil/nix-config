@@ -1,7 +1,3 @@
-{
-  inputs,
-  pkgs,
-  ...
-}: {
-  home.packages = [inputs.trashy.defaultPackage.${pkgs.system}];
+{pkgs, ...}: {
+  home.packages = [pkgs.inputs.trashy];
 }

@@ -62,7 +62,7 @@ in {
 
       bookmarks = {};
 
-      extensions.packages = with inputs.firefox-addons.packages.${pkgs.system}; [
+      extensions.packages = with pkgs.inputs.firefox-addons; [
         sponsorblock
         ublock-origin
 

@@ -1,4 +1,4 @@
-{inputs, ...}: {
-  nixGL.packages = inputs.nixgl.packages;
+{pkgs, ...}: {
+  nixGL.packages = pkgs.inputs.nixgl;
   nixGL.defaultWrapper = "nvidia";
 }
