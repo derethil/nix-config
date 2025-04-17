@@ -1,15 +1,17 @@
 {pkgs, ...}: {
   imports = [
-    ./wayland
+    ./chromium.nix
     ./firefox
+    ./fonts.nix
     ./nixgl.nix
+    ./wayland
   ];
 
   home.packages = with pkgs; [
-    spotify
     discord
-    vesktop
-    obsidian
     obs-studio
+    obsidian
+    spotify
+    vesktop
   ];
 }
