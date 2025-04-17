@@ -2,7 +2,7 @@
   imports = [
     ./chromium.nix
     ./firefox
-    ./fonts.nix
+    ./gtk.nix
     ./nixgl.nix
     ./wayland
   ];
