@@ -2,28 +2,7 @@
   pkgs,
   lib,
   ...
-}: let
-  # TODO: handle versioning these plugins better
-  fish-done = {
-    name = "done";
-    src = pkgs.fetchFromGitHub {
-      owner = "franciscolourenco";
-      repo = "done";
-      tag = "1.19.3";
-      sha256 = "12l7m08bp8vfhl8dmi0bfpvx86i344zbg03v2bc7wfhm20li3hhc";
-    };
-  };
-
-  fzf-fish = {
-    name = "fzf.fish";
-    src = pkgs.fetchFromGitHub {
-      owner = "patrickf1";
-      repo = "fzf.fish";
-      tag = "10.3";
-      sha256 = "1hqqppna8iwjnm8135qdjbd093583qd2kbq8pj507zpb1wn9ihjg";
-    };
-  };
-in {
+}: {
   imports = [
     ./theme.nix
     ./arch.nix
@@ -61,10 +40,10 @@ in {
       activate = "source ./.venv/bin/activate.fish";
       fish_greeting = lib.readFile ./fish_greeting.fish;
     };
-
-    plugins = [
-      fish-done
-      fzf-fish
-    ];
   };
+
+  home.packages = with pkgs.fishPlugins; [
+    fzf
+    done
+  ];
 }
