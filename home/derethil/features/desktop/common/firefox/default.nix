@@ -64,6 +64,7 @@ in {
       extensions.packages = with pkgs.inputs.firefox-addons; [
         sponsorblock
         ublock-origin
+        private-relay
 
         bitwarden
         darkreader
@@ -74,7 +75,7 @@ in {
         reduxdevtools
         refined-github
 
-        private-relay
+        augmented-steam
       ];
 
       settings = {
