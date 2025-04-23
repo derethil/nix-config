@@ -1,5 +1,5 @@
-{
-  home.sessionVariables = rec {
+let
+  sessionVariables = rec {
     XDG_CACHE_HOME = "$HOME/.cache";
     XDG_CONFIG_HOME = "$HOME/.config";
     XDG_DATA_HOME = "$HOME/.local/share";
@@ -69,4 +69,13 @@
     # Wine
     WINEPREFIX = "${XDG_DATA_HOME}/wine";
   };
+in {
+  home.sessionVariables = sessionVariables;
+  home.sessionPath = with sessionVariables; [
+    "${XDG_BIN_HOME}"
+    "${ASDF_DATA_DIR}/bin"
+    "${ASDF_DATA_DIR}/shims"
+    "${CARGO_HOME}/bin"
+    "${GOPATH}/bin"
+  ];
 }
