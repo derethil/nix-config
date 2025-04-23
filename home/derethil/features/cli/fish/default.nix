@@ -2,7 +2,11 @@
   pkgs,
   lib,
   ...
-}: {
+}: let
+  # TODO: only add this if aws cli is enabled
+  awsCompletions = "complete --command aws --no-files --arguments '(begin; set --local --export COMP_SHELL fish; set --local --export COMP_LINE (commandline); aws_completer | sed \"s/ \\$//\"; end)'";
+  completions = builtins.concatStringsSep "\n" [awsCompletions];
+in {
   imports = [
     ./theme.nix
     ./arch.nix
@@ -17,6 +21,7 @@
       set fish_cursor_insert      line       blink
       set fish_cursor_replace_one underscore blink
       set fish_cursor_visual      block
+      ${completions}
     '';
 
     shellAbbrs = {
