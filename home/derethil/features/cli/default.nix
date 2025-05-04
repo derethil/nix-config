@@ -31,6 +31,7 @@
     scc # Project statistics
     tldr # Command help
     unar # Unarchiver
+    watchexec # Run commands based on file changes
 
     # Nix Tools
     alejandra # Formatter
