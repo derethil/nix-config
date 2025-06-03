@@ -39,6 +39,7 @@ in {
       agsv2 = "ags run --directory ~/.config/astal";
       wget = "wget --hsts-file=$XDG_DATA_HOME/wget-hsts";
       hueadm = "hueadm --config ~/.config/.hueadm.json";
+      go-coverage = "go test ./... -coverprofile=coverage.out; go tool cover -html=coverage.out";
     };
 
     functions = {
