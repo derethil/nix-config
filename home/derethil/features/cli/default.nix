@@ -5,7 +5,6 @@
     ./direnv.nix
     ./git.nix
     ./starship.nix
-    ./thefuck.nix
     ./trashy.nix
     ./zoxide.nix
   ];
