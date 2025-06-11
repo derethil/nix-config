@@ -130,6 +130,7 @@ in {
       ".direnv/"
       ".python-version"
       ".typos.toml"
+      "**/.golangci.yml"
     ];
   };
 
