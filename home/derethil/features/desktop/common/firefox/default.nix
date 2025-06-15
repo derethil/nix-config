@@ -43,6 +43,7 @@ in {
     };
 
     profiles.derethil = {
+      isDefault = true;
       search = {
         force = true;
         default = "google";
