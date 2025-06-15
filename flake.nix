@@ -75,6 +75,13 @@
           inherit inputs outputs;
         };
       };
+      "jaren@Xochiquetzal" = lib.homeManagerConfiguration {
+        pkgs = pkgsFor.x86_64-linux;
+        modules = [./home/derethil/Xochiquetzal.nix ./home/derethil/nixpkgs.nix];
+        extraSpecialArgs = {
+          inherit inputs outputs;
+        };
+      };
     };
   };
 }
