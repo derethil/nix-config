@@ -14,6 +14,7 @@ in {
 
   programs.fish = {
     enable = true;
+    generateCompletions = true;
 
     interactiveShellInit = ''
       fish_vi_key_bindings
@@ -39,12 +40,12 @@ in {
       agsv2 = "ags run --directory ~/.config/astal";
       wget = "wget --hsts-file=$XDG_DATA_HOME/wget-hsts";
       hueadm = "hueadm --config ~/.config/.hueadm.json";
-      go-coverage = "go test ./... -coverprofile=coverage.out; go tool cover -html=coverage.out";
     };
 
     functions = {
       activate = "source ./.venv/bin/activate.fish";
-      fish_greeting = lib.readFile ./fish_greeting.fish;
+      fish_greeting = lib.readFile ./functions/fish_greeting.fish;
+      go-coverage = lib.readFile ./functions/go_coverage.fish;
     };
   };
 
