@@ -47,13 +47,12 @@
     };
   };
 
-  outputs = {snowfall-lib, ...} @ inputs:
-    snowfall-lib.mkFlake {
-      inherit inputs;
-      src = ./.;
-      channels-config = {
-        allowUnfree = true;
-        allowUnfreePredicate = _: true;
-      };
+  outputs = {snowfall-lib, ...} @ inputs: (snowfall-lib.mkFlake {
+    inherit inputs;
+    src = ./.;
+    channels-config = {
+      allowUnfree = true;
+      allowUnfreePredicate = _: true;
     };
+  });
 }
