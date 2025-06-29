@@ -1,9 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ./chromium.nix
-    ./firefox
     ./gtk.nix
-    ./nixgl.nix
     ./wayland
   ];
 

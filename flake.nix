@@ -4,17 +4,21 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
-    systems.url = "github:nix-systems/default-linux";
 
-    # Nix Stuff
+    # Nix
 
-    nixgl = {
-      url = "github:nix-community/nixGL";
+    snowfall-lib = {
+      url = "github:snowfallorg/lib";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     home-manager = {
       url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixgl = {
+      url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -43,45 +47,13 @@
     };
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    home-manager,
-    systems,
-    ...
-  } @ inputs: let
-    inherit (self) outputs;
-    lib = nixpkgs.lib // home-manager.lib;
-    forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
-    pkgsFor = lib.genAttrs (import systems) (
-      system:
-        import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-          config.allowUnfreePredicate = _: true;
-        }
-    );
-  in {
-    inherit lib;
-    formatter = forEachSystem (pkgs: pkgs.alejandra);
-
-    overlays = import ./overlays {inherit inputs outputs;};
-
-    homeConfigurations = {
-      "derethil@artemis" = lib.homeManagerConfiguration {
-        pkgs = pkgsFor.x86_64-linux;
-        modules = [./home/derethil/artemis.nix ./home/derethil/nixpkgs.nix];
-        extraSpecialArgs = {
-          inherit inputs outputs;
-        };
-      };
-      "jaren@Xochiquetzal" = lib.homeManagerConfiguration {
-        pkgs = pkgsFor.x86_64-linux;
-        modules = [./home/derethil/Xochiquetzal.nix ./home/derethil/nixpkgs.nix];
-        extraSpecialArgs = {
-          inherit inputs outputs;
-        };
+  outputs = {snowfall-lib, ...} @ inputs:
+    snowfall-lib.mkFlake {
+      inherit inputs;
+      src = ./.;
+      channels-config = {
+        allowUnfree = true;
+        allowUnfreePredicate = _: true;
       };
     };
-  };
 }
