@@ -13,6 +13,7 @@
   };
   tools = {
     nixgl.enable = true;
+    aws-cli.enable = true;
   };
   hardware = {
     nvidia.enable = true;
