@@ -7,8 +7,6 @@
     ./features/work
   ];
 
-  home.stateVersion = "25.05";
-
   apps = {
     firefox.enable = true;
   };
@@ -18,4 +16,6 @@
   hardware = {
     nvidia.enable = true;
   };
+
+  home.stateVersion = "25.05";
 }
