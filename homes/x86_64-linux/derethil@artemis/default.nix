@@ -9,6 +9,7 @@
 
   apps = {
     firefox.enable = true;
+    foot.enable = true;
   };
   tools = {
     nixgl.enable = true;
