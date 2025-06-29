@@ -15,6 +15,9 @@
     nixgl.enable = true;
     aws-cli.enable = true;
   };
+  cli = {
+    fish.enable = true;
+  };
   hardware = {
     nvidia.enable = true;
   };
