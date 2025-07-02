@@ -11,6 +11,7 @@ with internal; {
   apps = {
     firefox = enabled;
     foot = enabled;
+    mattermost = enabled;
   };
   tools = {
     nixgl = enabled;
