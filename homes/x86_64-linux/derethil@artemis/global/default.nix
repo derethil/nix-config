@@ -5,7 +5,6 @@
 }: {
   imports = [
     ./xdg.nix
-    ../features/cli
   ];
 
   home = {

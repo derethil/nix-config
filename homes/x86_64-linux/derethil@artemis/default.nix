@@ -25,6 +25,7 @@ with internal; {
     zoxide = enabled;
     starship = enabled;
     tmux = enabled;
+    misc = enabled;
   };
   hardware = {
     nvidia = enabled;
