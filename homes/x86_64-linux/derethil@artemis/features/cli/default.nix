@@ -1,11 +1,9 @@
 {pkgs, ...}: {
   imports = [
-    ./fish
     ./tmux
     ./direnv.nix
     ./git.nix
     ./starship.nix
-    ./trashy.nix
     ./zoxide.nix
   ];
 

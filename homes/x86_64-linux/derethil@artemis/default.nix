@@ -17,6 +17,7 @@
   };
   cli = {
     fish.enable = true;
+    trashy.enable = true;
   };
   hardware = {
     nvidia.enable = true;
