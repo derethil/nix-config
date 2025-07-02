@@ -1,7 +1,6 @@
 {pkgs, ...}: {
   imports = [
     ./tmux
-    ./direnv.nix
     ./starship.nix
     ./zoxide.nix
   ];

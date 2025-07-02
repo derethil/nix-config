@@ -19,6 +19,7 @@
   cli = {
     fish.enable = true;
     trashy.enable = true;
+    direnv.enable = true;
   };
   hardware = {
     nvidia.enable = true;
