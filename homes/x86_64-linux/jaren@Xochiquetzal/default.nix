@@ -7,12 +7,12 @@ in {
     ./${pc-path}/global
     ./${pc-path}/features/games
     ./${pc-path}/features/desktop/hyprland
-    ./${pc-path}/features/work
   ];
 
   apps = {
     firefox = enabled;
     foot = enabled;
+    insomnia = enabled;
     mattermost = enabled;
   };
   tools = {

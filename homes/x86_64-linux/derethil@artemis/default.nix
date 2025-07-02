@@ -5,12 +5,12 @@ with internal; {
     ./global
     ./features/games
     ./features/desktop/hyprland
-    ./features/work
   ];
 
   apps = {
     firefox = enabled;
     foot = enabled;
+    insomnia = enabled;
     mattermost = enabled;
   };
   tools = {
