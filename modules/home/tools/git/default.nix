@@ -99,7 +99,12 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = [git-fixup git-root git-prune-merged];
+    home.packages = with pkgs; [
+      git-fixup
+      git-root
+      git-prune-merged
+      git-open
+    ];
 
     programs.git = {
       enable = true;
