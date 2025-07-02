@@ -3,7 +3,6 @@ with lib;
 with internal; {
   imports = [
     ./global
-    ./features/cli
     ./features/games
     ./features/desktop/hyprland
     ./features/work
@@ -17,6 +16,7 @@ with internal; {
     nixgl = enabled;
     aws-cli = enabled;
     git = enabled;
+    jira-cli = enabled;
   };
   cli = {
     fish = enabled;
