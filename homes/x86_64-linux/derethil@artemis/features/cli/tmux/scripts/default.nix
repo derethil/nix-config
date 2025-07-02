@@ -1,5 +1,0 @@
-{
-  imports = [
-    ./continuum-status.nix
-  ];
-}

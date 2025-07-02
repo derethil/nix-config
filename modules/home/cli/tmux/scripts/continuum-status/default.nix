@@ -1,4 +1,11 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+with lib;
+with internal; let
   tmux-continuum-status = pkgs.writeShellScriptBin "tmux-continuum-status" ''
     #!${pkgs.bash}/bin/bash
 
@@ -66,5 +73,7 @@
     get_status
   '';
 in {
-  home.packages = [tmux-continuum-status];
+  config = mkIf config.cli.tmux.enable {
+    home.packages = [tmux-continuum-status];
+  };
 }

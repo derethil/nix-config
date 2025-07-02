@@ -1,8 +1,4 @@
 {pkgs, ...}: {
-  imports = [
-    ./tmux
-  ];
-
   home.packages = with pkgs; [
     bat # Better cat
     libarchive # Archiver / unarchiver

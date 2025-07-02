@@ -24,6 +24,7 @@ with internal; {
     direnv = enabled;
     zoxide = enabled;
     starship = enabled;
+    tmux = enabled;
   };
   hardware = {
     nvidia = enabled;
