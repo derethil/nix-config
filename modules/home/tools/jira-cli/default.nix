@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  config,
   ...
 }:
 with lib;
@@ -8,10 +9,10 @@ with internal; let
   cfg = config.tools.jira-cli;
 in {
   options.tools.jira-cli = {
-    enabled = mkBoolOpt false "Whether to enable the Jira CLI tool.";
+    enable = mkBoolOpt false "Whether to enable the Jira CLI tool.";
   };
 
-  config = mkIf cfg.enabled {
+  config = mkIf cfg.enable {
     home.packages = with pkgs; [
       jira-cli-go
     ];

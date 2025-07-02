@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  config,
   ...
 }:
 with lib;
@@ -8,10 +9,10 @@ with internal; let
   cfg = config.cli.misc;
 in {
   options.cli.misc = {
-    enabled = mkEnableOption "Whether to enable the various CLI tools and utilities.";
+    enable = mkEnableOption "Whether to enable the various CLI tools and utilities.";
   };
 
-  config = mkIf cfg.enabled {
+  config = mkIf cfg.enable {
     home.packages = with pkgs; [
       bat # Better cat
       libarchive # Archiver / unarchiver
