@@ -16,6 +16,8 @@ in {
     programs.fish = {
       enable = true;
       generateCompletions = true;
+      shellAbbrs = config.cli.abbreviations;
+      shellAliases = config.cli.aliases;
 
       interactiveShellInit = ''
         fish_vi_key_bindings
@@ -25,23 +27,6 @@ in {
         set fish_cursor_visual      block
         ${lib.optionalString config.tools.aws-cli.enable "complete --command aws --no-files --arguments '(begin; set --local --export COMP_SHELL fish; set --local --export COMP_LINE (commandline); aws_completer | sed \"s/ \\$//\"; end)'"}
       '';
-
-      shellAbbrs = {
-        be = "bundle exec";
-      };
-
-      shellAliases = {
-        l = "eza -la --icons --group-directories-first --time-style=relative";
-        lt = "eza --tree --icons --group-directories-first --level=3";
-        cat = "bat";
-        btm = "btm --enable_gpu";
-        del = "trashy put";
-        nv = "nvim";
-        udb = "sudo updatedb";
-        agsv2 = "ags run --directory ~/.config/astal";
-        wget = "wget --hsts-file=$XDG_DATA_HOME/wget-hsts";
-        hueadm = "hueadm --config ~/.config/.hueadm.json";
-      };
 
       functions = {
         activate = "source ./.venv/bin/activate.fish";

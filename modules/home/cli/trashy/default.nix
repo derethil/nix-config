@@ -14,5 +14,8 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = [pkgs.inputs.trashy];
+    cli.aliases = {
+      del = "trashy put";
+    };
   };
 }

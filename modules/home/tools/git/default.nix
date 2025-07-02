@@ -87,7 +87,7 @@ with internal; let
     w = "switch";
   };
 
-  shellAbbrs = builtins.listToAttrs (map
+  abbreviations = builtins.listToAttrs (map
     (name: {
       name = "g" + name;
       value = "git ${aliases.${name}}";
@@ -99,19 +99,19 @@ in {
   };
 
   config = mkIf cfg.enable {
+    cli.abbreviations = abbreviations;
     home.packages = with pkgs; [
       git-fixup
       git-root
       git-prune-merged
       git-open
     ];
-
     programs.git = {
       enable = true;
       package = pkgs.gitAndTools.gitFull;
-
       userName = "Jaren Glenn";
       userEmail = lib.mkDefault "jarenglenn@gmail.com";
+      aliases = aliases;
       diff-so-fancy.enable = true;
       lfs.enable = true;
       extraConfig = {
@@ -121,16 +121,12 @@ in {
         push.autoSetupremote = true;
         pull.ff = "only";
       };
-
       includes = [
         {
           condition = "gitdir:~/development/dragonarmy/**/*";
           contents.user.email = "jaren.glenn@df-nn.com";
         }
       ];
-
-      aliases = aliases;
-
       ignores = [
         ".venv"
         ".tool-versions"
@@ -147,7 +143,5 @@ in {
         "**/.golangci.yml"
       ];
     };
-
-    programs.fish.shellAbbrs = lib.mkIf config.programs.fish.enable shellAbbrs;
   };
 }

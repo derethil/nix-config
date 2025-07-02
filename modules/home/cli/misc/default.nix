@@ -13,6 +13,14 @@ in {
   };
 
   config = mkIf cfg.enable {
+    cli.aliases = {
+      l = "eza -la --icons --group-directories-first --time-style=relative";
+      lt = "eza --tree --icons --group-directories-first --level=3";
+      cat = "bat";
+      btm = "btm --enable_gpu";
+      udb = "sudo updatedb";
+    };
+
     home.packages = with pkgs; [
       bat # Better cat
       libarchive # Archiver / unarchiver
