@@ -1,4 +1,6 @@
-{
+{lib, ...}:
+with lib;
+with internal; {
   imports = [
     ./global
     ./features/cli
@@ -8,23 +10,23 @@
   ];
 
   apps = {
-    firefox.enable = true;
-    foot.enable = true;
+    firefox = enabled;
+    foot = enabled;
   };
   tools = {
-    nixgl.enable = true;
-    aws-cli.enable = true;
-    git.enable = true;
+    nixgl = enabled;
+    aws-cli = enabled;
+    git = enabled;
   };
   cli = {
-    fish.enable = true;
-    trashy.enable = true;
-    direnv.enable = true;
-    zoxide.enable = true;
-    starship.enable = true;
+    fish = enabled;
+    trashy = enabled;
+    direnv = enabled;
+    zoxide = enabled;
+    starship = enabled;
   };
   hardware = {
-    nvidia.enable = true;
+    nvidia = enabled;
   };
 
   home.stateVersion = "25.05";
