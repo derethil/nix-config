@@ -14,6 +14,7 @@
   tools = {
     nixgl.enable = true;
     aws-cli.enable = true;
+    git.enable = true;
   };
   cli = {
     fish.enable = true;

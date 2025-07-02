@@ -2,7 +2,6 @@
   imports = [
     ./tmux
     ./direnv.nix
-    ./git.nix
     ./starship.nix
     ./zoxide.nix
   ];

@@ -3,9 +3,13 @@
   lib,
   config,
   ...
-}: let
+}:
+with lib;
+with internal; let
+  cfg = config.tools.git;
+
   # git commit --amend, but for older commits
-  git-fixup = pkgs.writeShellScriptBin "gfu" ''
+  git-fixup = pkgs.writeShellScriptBin "git-fixup" ''
     rev="$(git rev-parse "$1")"
     git commit --fixup "$@"
     GIT_SEQUENCE_EDITOR=true git rebase -i --autostash --autosquash $rev^
@@ -18,7 +22,7 @@
   '';
 
   # remove branches that have been merged
-  git-prune-merged = pkgs.writeShellScriptBin "gpr" ''
+  git-prune-merged = pkgs.writeShellScriptBin "git-prune-merged" ''
     if [ $# -ne 1 ]; then
       echo "Usage: gpr <branch>"
       exit 1
@@ -90,49 +94,55 @@
     })
     (builtins.attrNames aliases));
 in {
-  home.packages = [git-fixup git-root git-prune-merged];
-
-  programs.git = {
-    enable = true;
-    package = pkgs.gitAndTools.gitFull;
-
-    userName = "Jaren Glenn";
-    userEmail = lib.mkDefault "jarenglenn@gmail.com";
-    diff-so-fancy.enable = true;
-    lfs.enable = true;
-    extraConfig = {
-      init.defaultBranch = "main";
-      core.editor = "nvim";
-      credential.helper = "cache --timeout=3600";
-      push.autoSetupremote = true;
-      pull.ff = "only";
-    };
-
-    includes = [
-      {
-        condition = "gitdir:~/development/dragonarmy/**/*";
-        contents.user.email = "jaren.glenn@df-nn.com";
-      }
-    ];
-
-    aliases = aliases;
-
-    ignores = [
-      ".venv"
-      ".tool-versions"
-      ".envrc"
-      ".local/"
-      ".nvim.lua"
-      ".vscode/"
-      ".lazy.lua"
-      "**/*.local"
-      "*.local.*"
-      ".direnv/"
-      ".python-version"
-      ".typos.toml"
-      "**/.golangci.yml"
-    ];
+  options.tools.git = {
+    enable = mkBoolOpt true "Whether to enable Git tool.";
   };
 
-  programs.fish.shellAbbrs = lib.mkIf config.programs.fish.enable shellAbbrs;
+  config = mkIf cfg.enable {
+    home.packages = [git-fixup git-root git-prune-merged];
+
+    programs.git = {
+      enable = true;
+      package = pkgs.gitAndTools.gitFull;
+
+      userName = "Jaren Glenn";
+      userEmail = lib.mkDefault "jarenglenn@gmail.com";
+      diff-so-fancy.enable = true;
+      lfs.enable = true;
+      extraConfig = {
+        init.defaultBranch = "main";
+        core.editor = "nvim";
+        credential.helper = "cache --timeout=3600";
+        push.autoSetupremote = true;
+        pull.ff = "only";
+      };
+
+      includes = [
+        {
+          condition = "gitdir:~/development/dragonarmy/**/*";
+          contents.user.email = "jaren.glenn@df-nn.com";
+        }
+      ];
+
+      aliases = aliases;
+
+      ignores = [
+        ".venv"
+        ".tool-versions"
+        ".envrc"
+        ".local/"
+        ".nvim.lua"
+        ".vscode/"
+        ".lazy.lua"
+        "**/*.local"
+        "*.local.*"
+        ".direnv/"
+        ".python-version"
+        ".typos.toml"
+        "**/.golangci.yml"
+      ];
+    };
+
+    programs.fish.shellAbbrs = lib.mkIf config.programs.fish.enable shellAbbrs;
+  };
 }
