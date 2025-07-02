@@ -2,7 +2,6 @@
   imports = [
     ./tmux
     ./starship.nix
-    ./zoxide.nix
   ];
 
   home.packages = with pkgs; [

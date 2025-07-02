@@ -20,6 +20,7 @@
     fish.enable = true;
     trashy.enable = true;
     direnv.enable = true;
+    zoxide.enable = true;
   };
   hardware = {
     nvidia.enable = true;
