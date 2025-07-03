@@ -17,7 +17,7 @@ in {
     programs.firefox = {
       enable = true;
       package =
-        if config.nixGL.enable or false
+        if config.tools.nixgl.enable or false
         then config.lib.nixGL.wrap firefoxPkg
         else firefoxPkg;
       policies = {

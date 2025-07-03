@@ -1,6 +1,5 @@
 {pkgs, ...}: {
   imports = [
-    ./chromium.nix
     ./gtk.nix
   ];
 

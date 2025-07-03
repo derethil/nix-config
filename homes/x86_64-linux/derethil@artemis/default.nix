@@ -13,6 +13,7 @@ with internal; {
   };
   apps = {
     firefox = enabled;
+    chromium = enabled;
     foot = enabled;
     insomnia = enabled;
     mattermost = enabled;
