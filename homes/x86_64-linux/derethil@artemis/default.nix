@@ -17,6 +17,11 @@ with internal; {
     insomnia = enabled;
     mattermost = enabled;
   };
+  desktop = {
+    addons = {
+      wlsunset = enabled;
+    };
+  };
   tools = {
     nixgl = enabled;
     aws-cli = enabled;

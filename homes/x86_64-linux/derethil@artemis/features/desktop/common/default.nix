@@ -2,7 +2,6 @@
   imports = [
     ./chromium.nix
     ./gtk.nix
-    ./wayland
   ];
 
   home.packages = with pkgs; [
