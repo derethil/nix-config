@@ -3,7 +3,6 @@ with lib;
 with internal; {
   imports = [
     ./global
-    ./features/games
   ];
 
   user = {
@@ -11,16 +10,19 @@ with internal; {
     location.longitude = -104.9903;
   };
   apps = {
+    foot = enabled;
     firefox = enabled;
     chromium = enabled;
     discord = enabled;
+    vesktop = enabled;
     obs = enabled;
     obsidian = enabled;
     spotify = enabled;
-    vesktop = enabled;
-    foot = enabled;
     insomnia = enabled;
     mattermost = enabled;
+    gdlauncher = enabled;
+    heroic = enabled;
+    r2modman = enabled;
   };
   desktop = {
     addons = {

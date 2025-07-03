@@ -5,7 +5,6 @@ with internal; let
 in {
   imports = [
     ./${pc-path}/global
-    ./${pc-path}/features/games
   ];
 
   user = {
@@ -13,16 +12,19 @@ in {
     location.longitude = -104.9903;
   };
   apps = {
+    foot = enabled;
     firefox = enabled;
     chromium = enabled;
     discord = enabled;
+    vesktop = enabled;
     obs = enabled;
     obsidian = enabled;
     spotify = enabled;
-    vesktop = enabled;
-    foot = enabled;
     insomnia = enabled;
     mattermost = enabled;
+    gdlauncher = disabled;
+    heroic = disabled;
+    r2modman = disabled;
   };
   desktop = {
     addons = {
