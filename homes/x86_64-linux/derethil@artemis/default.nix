@@ -4,7 +4,6 @@ with internal; {
   imports = [
     ./global
     ./features/games
-    ./features/desktop/hyprland
   ];
 
   user = {
@@ -26,6 +25,7 @@ with internal; {
   desktop = {
     addons = {
       wlsunset = enabled;
+      gtk = enabled;
     };
   };
   tools = {

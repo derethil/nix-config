@@ -6,7 +6,6 @@ in {
   imports = [
     ./${pc-path}/global
     ./${pc-path}/features/games
-    ./${pc-path}/features/desktop/hyprland
   ];
 
   user = {
@@ -28,6 +27,7 @@ in {
   desktop = {
     addons = {
       wlsunset = enabled;
+      gtk = enabled;
     };
   };
   tools = {
