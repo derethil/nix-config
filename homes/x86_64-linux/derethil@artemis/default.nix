@@ -14,6 +14,11 @@ with internal; {
   apps = {
     firefox = enabled;
     chromium = enabled;
+    discord = enabled;
+    obs = enabled;
+    obsidian = enabled;
+    spotify = enabled;
+    vesktop = enabled;
     foot = enabled;
     insomnia = enabled;
     mattermost = enabled;

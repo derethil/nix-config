@@ -5,14 +5,14 @@
   ...
 }:
 with lib;
-with internal; {
+with internal; let
+  cfg = config.apps.insomnia;
+in {
   options.apps.insomnia = {
     enable = mkBoolOpt false "Whether to enable Insomnia.";
   };
 
-  config = mkIf config.apps.insomnia.enable {
-    home.packages = with pkgs; [
-      insomnia
-    ];
-  };
+  config.home.packages = with pkgs; [
+    (mkIf cfg.enable insomnia)
+  ];
 }
