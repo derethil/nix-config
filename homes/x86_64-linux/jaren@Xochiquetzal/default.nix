@@ -1,12 +1,6 @@
 {lib, ...}:
 with lib;
-with internal; let
-  pc-path = "../derethil@artemis";
-in {
-  imports = [
-    ./${pc-path}/global
-  ];
-
+with internal; {
   user = {
     location.latitude = 39.7392;
     location.longitude = -104.9903;

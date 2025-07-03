@@ -1,4 +1,6 @@
 let
+  # TODO: This will likely be obsolute once all of these things are configured by Nix.
+  # I'd rather place each variable in the configuration of its associated tool.
   sessionVariables = rec {
     XDG_CACHE_HOME = "$HOME/.cache";
     XDG_CONFIG_HOME = "$HOME/.config";
