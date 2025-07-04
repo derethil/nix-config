@@ -21,6 +21,7 @@ with internal; {
     r2modman = enabled;
   };
   desktop = {
+    hyprland = enabled;
     addons = {
       wlsunset = enabled;
       gtk = enabled;

@@ -29,12 +29,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # CLI
+
     trashy = {
       url = "github:oberblastmeister/trashy";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Tmux Plugins
 
     tmux-theme = {
       url = "github:derethil/tmux-theme";
@@ -44,6 +44,17 @@
     tmux-power-zoom = {
       url = "github:jaclu/tmux-power-zoom";
       flake = false;
+    };
+
+    # Desktop
+
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hyprland-plugins = {
+      url = "github:hyprwm/Hyprland";
+      inputs.hyprland.follows = "hyprland";
     };
   };
 
