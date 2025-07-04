@@ -7,7 +7,7 @@
         defaultPackage = (flake.defaultPackage or {}).${final.system} or {};
       in
         if legacyPackages != {}
-        then legacyPackages
+        then legacyPackages // packages # Merge packages into legacyPackages
         else if defaultPackage != {}
         then defaultPackage
         else packages

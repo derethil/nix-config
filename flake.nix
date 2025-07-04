@@ -40,7 +40,6 @@
       url = "github:derethil/tmux-theme";
       flake = false;
     };
-
     tmux-power-zoom = {
       url = "github:jaclu/tmux-power-zoom";
       flake = false;
@@ -53,8 +52,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland-plugins = {
-      url = "github:hyprwm/Hyprland";
+      url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
+    };
+    hypr-x-primary = {
+      url = "github:zakk4223/hyprXPrimary";
+      flake = false;
     };
   };
 

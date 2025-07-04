@@ -19,6 +19,7 @@ in {
       portalPackage = null;
       plugins = with pkgs; [
         inputs.hyprland-plugins.hyprexpo
+        internal.hypr-x-primary
       ];
     };
   };
