@@ -20,6 +20,7 @@ in {
       shellAliases = config.cli.aliases;
 
       interactiveShellInit = ''
+        set fish_greeting
         fish_vi_key_bindings
         set fish_cursor_default     block      blink
         set fish_cursor_insert      line       blink
@@ -30,7 +31,6 @@ in {
 
       functions = {
         activate = "source ./.venv/bin/activate.fish";
-        fish_greeting = lib.readFile ./functions/fish_greeting.fish;
         go-coverage = lib.readFile ./functions/go_coverage.fish;
       };
     };
