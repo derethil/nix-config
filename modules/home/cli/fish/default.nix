@@ -12,6 +12,10 @@ in {
     enable = mkBoolOpt false "Whether to enable the Fish shell.";
   };
 
+  imports = [
+    ./theme.nix
+  ];
+
   config = mkIf cfg.enable {
     programs.fish = {
       enable = true;
