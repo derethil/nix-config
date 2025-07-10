@@ -27,5 +27,10 @@ with internal; {
       yaylf = "yay -Ql"; # list files
       yayo = "yay -O"; # open AUR page
     };
+
+    home.file.".config/arch-update/arch-update.conf".text = ''
+      NoNotification
+      DiffProg=nvim
+    '';
   };
 }
