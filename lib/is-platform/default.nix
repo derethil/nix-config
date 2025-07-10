@@ -6,6 +6,8 @@
 in {
   platform = {
     isNixOS = builtins.pathExists /etc/NIXOS;
-    isArch = lib.strings.hasInfix "ID=arch" osRelease;
+    isArch =
+      lib.strings.hasInfix "ID_LIKE=arch" osRelease
+      || lib.strings.hasInfix "ID=arch" osRelease;
   };
 }
