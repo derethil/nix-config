@@ -1,6 +1,7 @@
 {lib, ...}:
 with lib;
 with internal; {
+  distro = "arch";
   user = {
     location.latitude = 39.7392;
     location.longitude = -104.9903;

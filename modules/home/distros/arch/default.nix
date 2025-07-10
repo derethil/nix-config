@@ -1,7 +1,11 @@
-{lib, ...}:
+{
+  lib,
+  config,
+  ...
+}:
 with lib;
 with internal; {
-  config = mkIf (platform.isArch) {
+  config = mkIf (isArch config.distro) {
     cli.abbreviations = {
       paca = "pacman -S"; # install
       pacu = "pacman -Syua"; # update
