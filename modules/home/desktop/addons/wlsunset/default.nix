@@ -12,6 +12,7 @@ with internal; {
   config = mkIf config.desktop.addons.wlsunset.enable {
     services.wlsunset = {
       enable = true;
+      systemdTarget = "graphical-session.target";
       latitude = config.user.location.latitude;
       longitude = config.user.location.longitude;
       temperature = {
