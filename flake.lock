@@ -509,6 +509,26 @@
         "type": "github"
       }
     },
+    "icon-browser": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1750156740,
+        "narHash": "sha256-IyMEXdh7caLXXUjMyp9IRXOxqtW967LOyA7UkiiFWK0=",
+        "owner": "aylur",
+        "repo": "icon-browser",
+        "rev": "68c7343cd9c5fbffe726819a5256876065e67da4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "aylur",
+        "repo": "icon-browser",
+        "type": "github"
+      }
+    },
     "naersk": {
       "inputs": {
         "nixpkgs": [
@@ -614,6 +634,7 @@
         "hypr-x-primary": "hypr-x-primary",
         "hyprland": "hyprland",
         "hyprland-plugins": "hyprland-plugins",
+        "icon-browser": "icon-browser",
         "nixgl": "nixgl",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",

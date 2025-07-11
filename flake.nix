@@ -29,6 +29,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    icon-browser = {
+      url = "github:aylur/icon-browser";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # CLI
 
     trashy = {

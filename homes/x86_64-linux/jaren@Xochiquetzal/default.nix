@@ -9,6 +9,7 @@ with internal; {
   apps = {
     foot = enabled;
     firefox = enabled;
+    gtk-icon-browser = enabled;
     chromium = enabled;
     discord = enabled;
     vesktop = enabled;

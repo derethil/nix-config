@@ -10,6 +10,7 @@ with internal; {
     foot = enabled;
     firefox = enabled;
     chromium = enabled;
+    gtk-icon-browser = enabled;
     discord = enabled;
     vesktop = enabled;
     obs = enabled;
