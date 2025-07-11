@@ -6,16 +6,14 @@
 with lib;
 with internal; let
   cfg = config.desktop.addons.hyprpaper;
-  displays = config.hardware.displays;
-  enabledDisplays = filter (d: d.enabled) displays;
+  enabledDisplays = filter (d: d.enabled) config.hardware.displays;
   displaysWithWallpaper = filter (d: d.wallpaper != null) enabledDisplays;
-  hasAnyWallpaper = length displaysWithWallpaper > 0;
 in {
   options.desktop.addons.hyprpaper = {
     enable = mkBoolOpt false "Whether to enable hyprpaper for wallpaper management";
   };
 
-  config = mkIf (cfg.enable && hasAnyWallpaper) {
+  config = mkIf (cfg.enable && length displaysWithWallpaper > 0) {
     services.hyprpaper = {
       enable = true;
       settings = {

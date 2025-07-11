@@ -1,4 +1,8 @@
-{lib, ...}:
+{
+  lib,
+  config,
+  ...
+}:
 with lib;
 with internal; let
   defaultPosition = {
@@ -23,4 +27,13 @@ with internal; let
   };
 in {
   options.hardware.displays = mkOpt (types.listOf display) [] "List of monitors to configure";
+
+  config.assertions = let
+    path = config.desktop.addons.wallpapers.sourceDir;
+  in
+    map (d: {
+      assertion = d.wallpaper == null || pathExists "${path}/${d.wallpaper}";
+      message = "wallpaper not found: ${path}/${d.wallpaper} for display ${d.name}";
+    })
+    config.hardware.displays;
 }
