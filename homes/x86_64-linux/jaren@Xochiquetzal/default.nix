@@ -32,6 +32,8 @@ with internal; {
       wlsunset = enabled;
       cliphist = enabled;
       gtk = enabled;
+      wallpapers = enabled;
+      hyprpaper = enabled;
     };
   };
   tools = {
@@ -59,6 +61,7 @@ with internal; {
         resolution = "1920x1080";
         framerate = 60;
         vrr = 1;
+        wallpaper = "fuji-bird.jpeg";
       }
     ];
   };

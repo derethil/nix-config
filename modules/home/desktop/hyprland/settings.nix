@@ -12,11 +12,9 @@ in {
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland = {
       settings = {
-        exec = [
-          "hyprctl dispatch workspace 1"
-          "ags run --directory ~/.config/astal"
-        ];
         exec-once = [
+          "ags run --directory ~/.config/astal"
+          "hyprctl dispatch workspace 1"
           "${pkgs.internal.import-env-tmux}/bin/import-env-tmux tmux HYPRLAND_CMD HYPRLAND_INSTANCE_SIGNATURE"
         ];
         general = {

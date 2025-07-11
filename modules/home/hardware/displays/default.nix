@@ -18,6 +18,7 @@ with internal; let
       rotation = mkOpt (enum ["0" "90" "180" "270"]) "0" "Monitor rotation";
       primary = mkBoolOpt false "Whether this is the primary monitor";
       vrr = mkOpt int 1 "Variable refresh rate setting for the monitor";
+      wallpaper = mkOpt str null "Path to the wallpaper for this monitor";
     };
   };
 in {
