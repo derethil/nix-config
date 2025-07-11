@@ -10,9 +10,7 @@ in {
   options.system.boot = with types; {
     enable = mkBoolOpt false "Whether or not to enable the boot loader.";
     timeout = mkOpt int 5 "Timeout (in seconds) for the bootloader.";
-    plymouth = mkOpt submodule {
-      enable = mkBoolOpt false "Whether or not to enable Plymouth boot splash.";
-    };
+    plymouth.enable = mkBoolOpt false "Whether or not to enable Plymouth boot splash.";
   };
 
   config = mkIf cfg.enable {

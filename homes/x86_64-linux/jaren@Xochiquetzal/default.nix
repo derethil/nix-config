@@ -23,9 +23,14 @@ with internal; {
     r2modman = disabled;
   };
   desktop = {
-    hyprland = disabled;
+    hyprland = {
+      enable = true;
+      withPackage = false;
+      smallerLoneWindows.enable = false;
+    };
     addons = {
       wlsunset = enabled;
+      cliphist = enabled;
       gtk = enabled;
     };
   };
@@ -46,6 +51,16 @@ with internal; {
   };
   hardware = {
     nvidia = disabled;
+    displays = [
+      {
+        name = "Laptop";
+        primary = true;
+        port = "eDP-1";
+        resolution = "1920x1080";
+        framerate = 60;
+        vrr = 1;
+      }
+    ];
   };
 
   home.stateVersion = "25.05";

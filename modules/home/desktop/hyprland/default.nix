@@ -1,26 +1,33 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 with lib;
 with internal; let
   cfg = config.desktop.hyprland;
 in {
-  options.desktop.hyprland = {
-    enable = mkBoolOpt false "Hyprland desktop environment";
+  options.desktop.hyprland = with types; {
+    enable = mkBoolOpt false "Whether to enable Hyprland desktop environment.";
+    withPackage = mkBoolOpt false "Whether to use the Hyprland package from the Nixpkgs repository.";
+    gap = mkOpt int 9 "Default outer gap size for Hyprland.";
   };
+
+  imports = [
+    ./displays.nix
+    ./environment.nix
+    ./settings.nix
+    ./binds.nix
+    ./layerrules.nix
+    ./windowrules.nix
+    ./workspacerules.nix
+  ];
 
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland = {
       enable = true;
-      package = null;
-      portalPackage = null;
-      plugins = with pkgs; [
-        inputs.hyprland-plugins.hyprexpo
-        internal.hypr-x-primary
-      ];
+      package = mkIf (!cfg.withPackage) null;
+      portalPackage = mkIf (!cfg.withPackage) null;
     };
   };
 }
