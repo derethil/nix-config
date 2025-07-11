@@ -72,6 +72,21 @@ in {
               icon = "https://nixos.wiki/favicon.png";
               definedAliases = ["@np"];
             };
+            "NixOS Options" = {
+              urls = [
+                {
+                  template = "https://search.nixos.org/options?query={searchTerms}";
+                  params = [
+                    {
+                      name = "query";
+                      value = "{searchTerms}";
+                    }
+                  ];
+                }
+              ];
+              icon = "https://nixos.wiki/favicon.png";
+              definedAliases = ["@no"];
+            };
             "NixOS Wiki" = {
               urls = [
                 {
