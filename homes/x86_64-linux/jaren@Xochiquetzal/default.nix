@@ -22,6 +22,9 @@ with internal; {
     heroic = disabled;
     r2modman = disabled;
   };
+  languages = {
+    golang = enabled;
+  };
   desktop = {
     xdg = enabled;
     hyprland = {
