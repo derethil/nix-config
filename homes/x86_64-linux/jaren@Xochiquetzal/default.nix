@@ -23,6 +23,7 @@ with internal; {
     r2modman = disabled;
   };
   desktop = {
+    xdg = enabled;
     hyprland = {
       enable = true;
       withPackage = false;
