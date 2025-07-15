@@ -54,9 +54,6 @@ in {
         "fullscreen,class:^(m|M)(inecraft.*)$"
         "fullscreen,class:^(steam_app_[0-9]+)$"
       ];
-      plugins = mkIf (cfg.withPackage) [
-        pkgs.internal.hypr-x-primary
-      ];
     };
   };
 }

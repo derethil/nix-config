@@ -29,7 +29,7 @@ with internal; {
     xdg = enabled;
     hyprland = {
       enable = true;
-      withPackage = false;
+      withPackage = true;
       smallerLoneWindows.enable = false;
     };
     addons = {

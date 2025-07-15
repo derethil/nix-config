@@ -20,7 +20,7 @@ in {
         gesture_positive = true;
       };
       plugins = mkIf (cfg.withPackage) [
-        pkgs.internal.hypr-x-primary
+        pkgs.inputs.hyprland-plugins.hyprexpo
       ];
     };
   };

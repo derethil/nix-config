@@ -202,14 +202,22 @@
         "type": "github"
       }
     },
-    "hypr-x-primary": {
-      "flake": false,
+    "hyprXPrimary": {
+      "inputs": {
+        "hyprland": [
+          "hyprland"
+        ],
+        "nixpkgs": [
+          "hyprland",
+          "nixpkgs"
+        ]
+      },
       "locked": {
-        "lastModified": 1751742988,
-        "narHash": "sha256-hm+Nsp7BGhgUvRvHnsxqO48igxrMLzsH+3/4njrluUQ=",
+        "lastModified": 1752371501,
+        "narHash": "sha256-oN6lAZd1jm+D9kCM4ud8Bm5L4UvyggGygheqJVQ0VtA=",
         "owner": "zakk4223",
         "repo": "hyprXPrimary",
-        "rev": "676ee91bba9ca921fe69714e1c2108f089d77a00",
+        "rev": "99268328e74829e8c2280cb512f9a26ab2cf5c4e",
         "type": "github"
       },
       "original": {
@@ -313,7 +321,6 @@
           "hyprland"
         ],
         "nixpkgs": [
-          "hyprland-plugins",
           "hyprland",
           "nixpkgs"
         ],
@@ -631,7 +638,7 @@
       "inputs": {
         "firefox-addons": "firefox-addons",
         "home-manager": "home-manager",
-        "hypr-x-primary": "hypr-x-primary",
+        "hyprXPrimary": "hyprXPrimary",
         "hyprland": "hyprland",
         "hyprland-plugins": "hyprland-plugins",
         "icon-browser": "icon-browser",

@@ -1,7 +1,8 @@
 {
   lib,
   config,
-  pkgs,
+  inputs,
+  system,
   ...
 }:
 with lib;
@@ -15,7 +16,7 @@ in {
         display = primaryMonitor.port;
       };
       plugins = mkIf (cfg.withPackage) [
-        pkgs.internal.hypr-x-primary
+        inputs.hyprXPrimary.packages.${system}.default
       ];
     };
   };

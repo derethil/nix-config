@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 with lib;
@@ -28,9 +27,6 @@ in {
         # Miscellaneous Applications
         "noanim, selection"
         "noanim, hyprpicker "
-      ];
-      plugins = mkIf (cfg.withPackage) [
-        pkgs.internal.hypr-x-primary
       ];
     };
   };
