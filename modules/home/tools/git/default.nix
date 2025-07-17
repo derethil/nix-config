@@ -85,6 +85,10 @@ with internal; let
     sl = "shortlog -s -n --all --no-merges";
     op = "open";
     w = "switch";
+    ri = "rebase --interactive";
+    rc = "rebase --continue";
+    rk = "rebase --skip";
+    ra = "rebase --abort";
   };
 
   abbreviations = builtins.listToAttrs (map
@@ -141,6 +145,7 @@ in {
         ".python-version"
         ".typos.toml"
         "**/.golangci.yml"
+        "CLAUDE.md"
       ];
     };
   };

@@ -13,8 +13,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      manix
-    ];
+    home.packages = [pkgs.manix];
   };
 }
