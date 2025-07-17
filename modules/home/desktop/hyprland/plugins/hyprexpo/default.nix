@@ -19,6 +19,9 @@ in {
         gesture_distance = 300;
         gesture_positive = true;
       };
+      settings.bind = [
+        "ALT, TAB, hyprexpo:expo, toggle"
+      ];
       plugins = mkIf (cfg.withPackage) [
         pkgs.inputs.hyprland-plugins.hyprexpo
       ];

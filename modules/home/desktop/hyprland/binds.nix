@@ -63,7 +63,6 @@ in {
           # Window Commands
           "$mod, Q, killactive"
           "$mod SHIFT, R, exec, wofi  --show drun"
-          "ALT, TAB, hyprexpo:expo, toggle"
           "$mod, F, fullscreen"
           "$mod SHIFT, F, fullscreenstate, -1, 2"
 
