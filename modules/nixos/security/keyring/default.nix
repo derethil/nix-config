@@ -3,7 +3,8 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+with internal; let
   cfg = config.security.keyring;
 in {
   options.security.keyring = {

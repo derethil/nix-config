@@ -14,23 +14,20 @@ in {
   };
 
   config = mkIf cfg.enable {
-    consoleLogLevel = mkIf cfg.plymouth.enable 3;
-
-    boot.loader = {
-      systemd-boot.enable = true;
-      systemd-boot.configurationLimit = 10;
-      systemd-boot.timeout = cfg.timeout;
-      efi.canTouchEfiVariables = true;
+    boot = {
+      loader = {
+        systemd-boot.enable = true;
+        systemd-boot.configurationLimit = 10;
+        efi.canTouchEfiVariables = true;
+        timeout = cfg.timeout;
+      };
+      kernelParams = mkIf cfg.plymouth.enable [
+        "quiet"
+        "systemd.show_status=auto"
+        "rd.udev.log_level=3"
+      ];
+      consoleLogLevel = mkIf cfg.plymouth.enable 3;
+      plymouth.enable = cfg.plymouth.enable;
     };
-
-    plymouth = {
-      enable = cfg.plymouth.enable;
-    };
-
-    kernelParams = mkIf cfg.plymouth.enable [
-      "quiet"
-      "systemd.show_status=auto"
-      "rd.udev.log_level=3"
-    ];
   };
 }
