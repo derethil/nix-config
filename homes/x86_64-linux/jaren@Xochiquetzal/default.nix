@@ -55,6 +55,7 @@ with internal; {
     starship = enabled;
     tmux = enabled;
     misc = enabled;
+    wl-clipboard = enabled;
   };
   hardware = {
     nvidia = disabled;
