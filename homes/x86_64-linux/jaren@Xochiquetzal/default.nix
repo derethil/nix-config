@@ -49,6 +49,7 @@ with internal; {
     jira-cli = enabled;
     hyprprop = enabled;
     hyprshot = enabled;
+    hyprpicker = enabled;
   };
   cli = {
     fish = enabled;
