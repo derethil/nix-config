@@ -1,10 +1,13 @@
 {
   lib,
   config,
+  inputs,
+  pkgs,
   ...
 }:
 with lib; let
   cfg = config.desktop.hyprland;
+  relativeworkspace = getExe inputs.rust-system-scripts.packages.${pkgs.system}.relativeworkspace;
 
   mkWorkspaceBinds = mod: dispatcher:
     map (i: "${mod}, ${
@@ -79,8 +82,8 @@ in {
 
           # Switch workspaces
           "$mod, backslash, workspace, previous_per_monitor"
-          "$mod, bracketright, exec, ~/.local/bin/scrollworkspace next"
-          "$mod, bracketleft, exec, ~/.local/bin/scrollworkspace previous"
+          "$mod, bracketright, exec, ${relativeworkspace} next"
+          "$mod, bracketleft, exec, ${relativeworkspace} previous"
 
           # Workspace management
           (mkWorkspaceBinds "$mod" "workspace")

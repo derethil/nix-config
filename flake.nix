@@ -50,6 +50,11 @@
       flake = false;
     };
 
+    rust-system-scripts = {
+      url = "github:derethil/rust-system-scripts";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Desktop
 
     hyprland = {
