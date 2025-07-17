@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 with lib;
@@ -26,7 +27,10 @@ in {
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland = {
       enable = true;
-      package = mkIf (!cfg.withPackage) null;
+      package = mkMerge [
+        (mkIf (!cfg.withPackage) null)
+        (mkIf cfg.withPackage (config.lib.nixGL.wrap pkgs.hyprland))
+      ];
       portalPackage = mkIf (!cfg.withPackage) null;
     };
   };
