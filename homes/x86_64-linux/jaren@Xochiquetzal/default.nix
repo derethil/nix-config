@@ -43,7 +43,6 @@ with internal; {
   };
   tools = {
     manix = enabled;
-    nixgl = enabled;
     aws-cli = enabled;
     git = enabled;
     jira-cli = enabled;

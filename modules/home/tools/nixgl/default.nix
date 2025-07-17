@@ -8,9 +8,10 @@ with lib;
 with internal; let
   cfg = config.tools.nixgl;
   nvidia = config.hardware.nvidia.enable or false;
+  isNonNixOS = config.distro or "nixos" != "nixos";
 in {
   options.tools.nixgl = with types; {
-    enable = mkBoolOpt false "Whether to enable nixGL.";
+    enable = mkBoolOpt isNonNixOS "Whether to enable nixGL.";
     defaultWrapper = mkOpt str "" "Explicitly set default wrapper to use for NixGL-enabled applications.";
   };
 
