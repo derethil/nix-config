@@ -28,6 +28,7 @@ with internal; {
   };
   desktop = {
     xdg = enabled;
+    glace-shell = enabled;
     hyprland = {
       enable = true;
       withPackage = true;

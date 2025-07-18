@@ -71,6 +71,11 @@
       inputs.hyprland.follows = "hyprland";
       inputs.nixpkgs.follows = "hyprland/nixpkgs";
     };
+
+    glace-shell = {
+      url = "github:derethil/glace-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {snowfall-lib, ...} @ inputs: (snowfall-lib.mkFlake {
