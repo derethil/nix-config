@@ -60,6 +60,7 @@ with internal; {
     tmux = enabled;
     misc = enabled;
     wl-clipboard = enabled;
+    chafa = enabled;
   };
   hardware = {
     nvidia = disabled;
