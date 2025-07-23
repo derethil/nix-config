@@ -19,7 +19,7 @@ with internal; {
     stremio = enabled;
     insomnia = enabled;
     mattermost = enabled;
-    gdlauncher = disabled;
+    gdlauncher = enabled;
     heroic = disabled;
     r2modman = disabled;
   };
