@@ -34,6 +34,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nvim-config = {
+      url = "github:derethil/nvim-config";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # CLI
 
     trashy = {
