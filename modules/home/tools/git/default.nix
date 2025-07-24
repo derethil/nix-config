@@ -139,6 +139,7 @@ in {
         ".nvim.lua"
         ".vscode/"
         ".lazy.lua"
+        ".nvim.lua"
         "**/*.local"
         "*.local.*"
         ".direnv/"

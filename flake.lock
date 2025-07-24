@@ -960,11 +960,11 @@
         "sonarlint-nvim": "sonarlint-nvim"
       },
       "locked": {
-        "lastModified": 1753347410,
-        "narHash": "sha256-BHo7Mfrx6pJW5nVcgLQxsNZ3kyxnOtvMSljSF0DNxM8=",
+        "lastModified": 1753349564,
+        "narHash": "sha256-JUouBywAEJcLFb8VcmlhxsdXPsqBhJu2UiVhy420v9M=",
         "owner": "derethil",
         "repo": "nvim-config",
-        "rev": "c2b7d34e023cd2a868f4c757a9fcb16f8efadcbc",
+        "rev": "229cfdaf879c1ad4c5cc986200fb00b9512b6689",
         "type": "github"
       },
       "original": {
