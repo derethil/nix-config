@@ -51,6 +51,7 @@ with internal; {
     hyprshot = enabled;
     hyprpicker = enabled;
     neovim = enabled;
+    sober = enabled;
   };
   cli = {
     fish = enabled;

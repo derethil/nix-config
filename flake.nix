@@ -22,6 +22,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-flatpak = {
+      url = "github:gmodena/nix-flatpak/?ref=latest";
+    };
+
     # Applications
 
     firefox-addons = {
@@ -90,6 +94,9 @@
       allowUnfree = true;
       allowUnfreePredicate = _: true;
     };
+    homes.modules = with inputs; [
+      nix-flatpak.homeManagerModules.nix-flatpak
+    ];
     nix.settings = {
       substituters = [
         "https://nix-community.cachix.org"
