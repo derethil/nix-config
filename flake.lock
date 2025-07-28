@@ -227,11 +227,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1749398372,
-        "narHash": "sha256-tYBdgS56eXYaWVW3fsnPQ/nFlgWi/Z2Ymhyu21zVM98=",
+        "lastModified": 1753121425,
+        "narHash": "sha256-TVcTNvOeWWk1DXljFxVRp+E0tzG1LhrVjOGGoMHuXio=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "9305fe4e5c2a6fcf5ba6a3ff155720fbe4076569",
+        "rev": "644e0fc48951a860279da645ba77fe4a6e814c5e",
         "type": "github"
       },
       "original": {
@@ -949,11 +949,11 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1753130867,
-        "narHash": "sha256-+/9b3MjATQqnlCcahoRGbLVIn/+WQHxXmpSIybpFoNk=",
+        "lastModified": 1753369692,
+        "narHash": "sha256-PpeSQWUZCKXinsFO/tJ+T1V8zfrd8XPS1eWZhYu6jKk=",
         "owner": "notashelf",
         "repo": "nvf",
-        "rev": "0115325759fca0d5991d06cd7ba3b6f141eca36e",
+        "rev": "a125a61d6bec1594d0378dab06169dd92272f63b",
         "type": "github"
       },
       "original": {
@@ -976,11 +976,11 @@
         "sonarlint-nvim": "sonarlint-nvim"
       },
       "locked": {
-        "lastModified": 1753466110,
-        "narHash": "sha256-huceR10lKxMNH7KnqGcUoQM9t3JYgJrn7MU8ra8o8ik=",
+        "lastModified": 1753730603,
+        "narHash": "sha256-08v/TSrChsWca5aPJaWl2UMwol2SASxBY5pQ4mT63yk=",
         "owner": "derethil",
         "repo": "nvim-config",
-        "rev": "f997a0ca3eaed9915e144d915e9734a025fc2292",
+        "rev": "5bf4a9b90476a48ea8432c1b76a586d1e2c356ee",
         "type": "github"
       },
       "original": {

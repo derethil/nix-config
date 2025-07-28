@@ -56,9 +56,15 @@ in {
           "SHIFT, Print, exec, shader=$(hyprshade current) ; hyprshade off ; hyprshot -m region -o ~/Pictures/Screenshots/ ; hyprshade on \"$${shader}\""
 
           # Application Shortcuts
-          "$mod, RETURN, exec, footclient tmux new-session -As base"
-          "$mod SHIFT, RETURN, exec, footclient"
-          "$mod SHIFT CONTROL, RETURN, exec, foot"
+          (optionals config.apps.foot.enable [
+            "$mod, RETURN, exec, footclient tmux new-session -As base"
+            "$mod SHIFT, RETURN, exec, footclient"
+            "$mod SHIFT CONTROL, RETURN, exec, foot"
+          ])
+          (optionals config.apps.alacritty.enable [
+            "$mod, RETURN, exec, alacritty -e 'tmux new-session -As base'"
+            "$mod SHIFT, RETURN, exec, alacritty"
+          ])
 
           # Window Commands
           "$mod, Q, killactive"
