@@ -8,6 +8,7 @@ with internal; {
   };
   apps = {
     foot = enabled;
+    alacritty = enabled;
     firefox = enabled;
     gtk-icon-browser = enabled;
     chromium = enabled;
