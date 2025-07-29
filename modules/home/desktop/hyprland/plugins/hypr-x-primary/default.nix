@@ -15,7 +15,7 @@ in {
       settings.plugin.xwaylandprimary = {
         display = primaryMonitor.port;
       };
-      plugins = mkIf (cfg.withPackage) [
+      plugins = [
         inputs.hyprXPrimary.packages.${system}.default
       ];
     };

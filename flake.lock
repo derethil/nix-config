@@ -922,6 +922,22 @@
     },
     "nixpkgs_2": {
       "locked": {
+        "lastModified": 1753250450,
+        "narHash": "sha256-i+CQV2rPmP8wHxj0aq4siYyohHwVlsh40kV89f3nw1s=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "fc02ee70efb805d3b2865908a13ddd4474557ecf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
         "lastModified": 1744536153,
         "narHash": "sha256-awS2zRgF4uTwrOKwwiJcByDzDOdo3Q1rPZbiHQg/N38=",
         "owner": "NixOS",
@@ -968,19 +984,17 @@
         "close-buffers-nvim": "close-buffers-nvim",
         "flake-parts": "flake-parts_2",
         "import-nvim": "import-nvim",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
+        "nixpkgs": "nixpkgs_2",
         "nvf": "nvf",
         "root-nvim": "root-nvim",
         "sonarlint-nvim": "sonarlint-nvim"
       },
       "locked": {
-        "lastModified": 1753776786,
-        "narHash": "sha256-k5p9uWql//fQg3EgcA8SZ2+571y05M0aBHF9cQxb2AE=",
+        "lastModified": 1753817448,
+        "narHash": "sha256-3knrySHpM4Li+gxJVLfq3zU2fQlJZ5Df7Xoe8L/HnWo=",
         "owner": "derethil",
         "repo": "nvim-config",
-        "rev": "7c4f0c5801461dfb197b36c3724396cd9a2d3838",
+        "rev": "82a9f8e616b9dae3f95a18589effb884b0f4e5db",
         "type": "github"
       },
       "original": {
@@ -1051,7 +1065,7 @@
     },
     "rust-overlay": {
       "inputs": {
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_3"
       },
       "locked": {
         "lastModified": 1752720268,

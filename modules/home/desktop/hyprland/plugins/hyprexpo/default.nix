@@ -22,7 +22,7 @@ in {
       settings.bind = [
         "ALT, TAB, hyprexpo:expo, toggle"
       ];
-      plugins = mkIf (cfg.withPackage) [
+      plugins = [
         pkgs.inputs.hyprland-plugins.hyprexpo
       ];
     };
