@@ -27,7 +27,6 @@ in {
     wayland.windowManager.hyprland = {
       enable = true;
       package = config.lib.nixGL.wrap pkgs.hyprland;
-      portalPackage = mkIf (!cfg.withPackage) null;
     };
   };
 }

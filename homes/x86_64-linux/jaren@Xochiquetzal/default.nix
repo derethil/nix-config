@@ -32,7 +32,6 @@ with internal; {
     glace-shell = enabled;
     hyprland = {
       enable = true;
-      withPackage = true;
       smallerLoneWindows.enable = false;
     };
     addons = {
