@@ -95,6 +95,7 @@
     };
     homes.modules = with inputs; [
       nix-flatpak.homeManagerModules.nix-flatpak
+      glace-shell.flakeModules.default
     ];
     nix.settings = {
       substituters = [

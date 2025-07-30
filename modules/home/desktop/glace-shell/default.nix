@@ -1,5 +1,4 @@
 {
-  pkgs,
   config,
   lib,
   ...
@@ -13,6 +12,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = [pkgs.inputs.glace-shell];
+    services.glace-shell.enable = true;
   };
 }

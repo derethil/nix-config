@@ -29,7 +29,7 @@ with internal; {
   };
   desktop = {
     xdg = enabled;
-    glace-shell = enabled;
+    glace-shell = disabled;
     hyprland = {
       enable = true;
       smallerLoneWindows.enable = false;
