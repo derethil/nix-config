@@ -21,33 +21,41 @@ in {
       udb = "sudo updatedb";
     };
 
-    home.packages = with pkgs; [
-      bat # Better cat
-      libarchive # Archiver / unarchiver
-      bottom # System monitor
-      diff-so-fancy # Better diff
-      duf # Disk Usage
-      ncdu
-      eza # Better ls
-      fd # Better find
-      fzf # Fuzzy finder
-      glow # Markdown viewer
-      httpie # Better curl
-      hwinfo # Hardware info
-      jq # JSON processor
-      libqalculate # CLI Calculator
-      ripgrep # Better grep
-      scc # Project statistics
-      tldr # Command help
-      unar # Unarchiver
-      watchexec # Run commands based on file changes
+    home.packages = with pkgs;
+      flatten [
+        # Cross-platform packages
+        [
+          bat # Better cat
+          libarchive # Archiver / unarchiver
+          bottom # System monitor
+          diff-so-fancy # Better diff
+          duf # Disk Usage
+          ncdu
+          eza # Better ls
+          fd # Better find
+          fzf # Fuzzy finder
+          glow # Markdown viewer
+          httpie # Better curl
+          jq # JSON processor
+          libqalculate # CLI Calculator
+          ripgrep # Better grep
+          scc # Project statistics
+          tldr # Command help
+          unar # Unarchiver
+          watchexec # Run commands based on file changes
 
-      # Nix Tools
-      alejandra # Formatter
-      nixfmt-rfc-style
-      nvd # Differ
-      nix-diff # More detailed differ
-      nh # Nix command wrapper
-    ];
+          # Nix Tools
+          alejandra # Formatter
+          nixfmt-rfc-style
+          nvd # Differ
+          nix-diff # More detailed differ
+          nh # Nix command wrapper
+        ]
+
+        # Linx-only packages
+        (lib.optionals pkgs.stdenv.hostPlatform.isLinux [
+          hwinfo # Hardware info
+        ])
+      ];
   };
 }
