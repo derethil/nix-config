@@ -7,16 +7,13 @@ with internal; {
     location.longitude = -104.9903;
   };
   apps = {
-    foot = disabled;
     alacritty = enabled;
     firefox = enabled;
     discord = enabled;
     obsidian = enabled;
     spotify = enabled;
     insomnia = enabled;
-    mattermost = enabled;
-    heroic = disabled;
-    r2modman = disabled;
+    mattermost = disabled;
   };
   languages = {
     golang = enabled;
@@ -34,7 +31,6 @@ with internal; {
   };
   cli = {
     fish = enabled;
-    trashy = enabled;
     direnv = enabled;
     zoxide = enabled;
     starship = enabled;
