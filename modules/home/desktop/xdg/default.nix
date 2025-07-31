@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 with lib;
@@ -79,7 +80,7 @@ in {
       enable = true;
       autostart.readOnly = true;
       cacheHome = "${config.home.homeDirectory}/.local/cache";
-      userDirs = {
+      userDirs = mkIf pkgs.stdenv.hostPlatform.isLinux {
         enable = true;
         createDirectories = true;
         extraConfig = {
