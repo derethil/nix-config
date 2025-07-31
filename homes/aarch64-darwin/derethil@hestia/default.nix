@@ -17,7 +17,6 @@ with internal; {
     obs = enabled;
     obsidian = enabled;
     spotify = enabled;
-    stremio = enabled;
     insomnia = enabled;
     mattermost = enabled;
     gdlauncher = enabled;
