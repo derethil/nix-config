@@ -36,9 +36,6 @@ with internal; {
     aws-cli = enabled;
     git = enabled;
     jira-cli = enabled;
-    hyprprop = enabled;
-    hyprshot = enabled;
-    hyprpicker = enabled;
     neovim = enabled;
   };
   cli = {
