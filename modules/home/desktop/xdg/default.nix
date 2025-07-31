@@ -34,14 +34,6 @@ with internal; let
     # Docker
     DOCKER_CONFIG = "${configHome}/docker";
 
-    # GnuPG is commented out in your Fish config, so keeping it commented here
-    # GNUPGHOME = "${XDG_DATA_HOME}/gnupg";
-
-    # Gradle / Java
-    GRADLE_USER = "${dataHome}/gradle";
-    __JAVA_OPTIONS = "-Djava.util.prefs.userRoot ${configHome}/java";
-    JAVA_HOME = "/usr/lib/jvm/default";
-
     # Histfile
     HISTFILE = "${dataHome}/bash/history";
 
