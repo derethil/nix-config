@@ -95,18 +95,26 @@
     };
   };
 
-  outputs = {snowfall-lib, ...} @ inputs: (snowfall-lib.mkFlake {
+  outputs = {snowfall-lib, ...} @ inputs: let
+    shared-modules = snowfall-lib.snowfall.internal-lib.fs.get-default-nix-files-recursive ./modules/shared;
+  in (snowfall-lib.mkFlake {
     inherit inputs;
     src = ./.;
     channels-config = {
       allowUnfree = true;
       allowUnfreePredicate = _: true;
     };
-    homes.modules = with inputs; [
-      nix-flatpak.homeManagerModules.nix-flatpak
-      glace-shell.flakeModules.default
+    systems.modules.darwin = with inputs;
+      nixpkgs.lib.flatten [
+        shared-modules
+      ];
+    homes.modules = with inputs;
+      nixpkgs.lib.flatten [
+        nix-flatpak.homeManagerModules.nix-flatpak
+        glace-shell.flakeModules.default
         mac-app-util.homeManagerModules.default
-    ];
+        shared-modules
+      ];
     nix.settings = {
       substituters = [
         "https://nix-community.cachix.org"
