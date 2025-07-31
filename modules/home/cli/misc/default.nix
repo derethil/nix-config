@@ -39,6 +39,7 @@ in {
           jq # JSON processor
           libqalculate # CLI Calculator
           ripgrep # Better grep
+          rsync # File synchronization
           scc # Project statistics
           tldr # Command help
           unar # Unarchiver
