@@ -4,7 +4,7 @@
   ...
 }: let
   inherit (lib) types pathExists;
-  inherit (lib.internal) mkSubmoduleListOpt mkOpt mkBoolOpt;
+  inherit (lib.internal) mkSubmoduleListOpt mkOpt mkNullableOpt mkBoolOpt;
 
   defaultPosition = {
     x = 0;
@@ -13,7 +13,7 @@
 in {
   options.hardware.displays = mkSubmoduleListOpt "List of monitors to configure." (with types; {
     name = mkOpt str "Monitor" "Human-readable name for the monitor";
-    port = mkOpt str null "Monitor port/connector name (e.g., DP-1)";
+    port = mkNullableOpt str null "Monitor port/connector name (e.g., DP-1)";
     resolution = mkOpt str "1920x1080" "Monitor resolution in format WIDTHxHEIGHT";
     framerate = mkOpt int 60 "Monitor refresh rate in Hz";
     position = mkOpt (attrsOf int) defaultPosition "Monitor position coordinates";
