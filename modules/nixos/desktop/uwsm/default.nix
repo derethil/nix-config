@@ -3,13 +3,14 @@
   config,
   pkgs,
   ...
-}:
-with lib;
-with internal; let
+}: let
+  inherit (lib) mkIf mkMerge getExe;
+  inherit (lib.internal) mkBoolOpt;
+
   cfg = config.desktop.uwsm;
   nixgl = config.tools.nixgl;
 in {
-  options.desktop.uwsm = with types; {
+  options.desktop.uwsm = {
     enable = mkBoolOpt false "Whether to enable uwsm (universal wayland session manager).";
   };
 

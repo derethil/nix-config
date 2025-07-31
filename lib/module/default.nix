@@ -1,8 +1,8 @@
 {lib, ...}:
 with lib; rec {
-  # MkOpt
+  ## MkOpt
 
-  ## Create a NixOS module option.
+  ## Create a Nix module option.
   ##
   ## ```nix
   ## lib.mkOpt nixpkgs.lib.types.str "My default" "Description of my option."
@@ -12,7 +12,7 @@ with lib; rec {
   mkOpt = type: default: description:
     mkOption {inherit type default description;};
 
-  ## Create a NixOS module option without a description.
+  ## Create a Nix module option without a description.
   ##
   ## ```nix
   ## lib.mkOpt' nixpkgs.lib.types.str "My default"
@@ -21,50 +21,52 @@ with lib; rec {
   #@ Type -> Any -> String
   mkOpt' = type: default: mkOpt type default null;
 
-  # mkSubmoduleOpt
+  ## mkNullableOpt
 
-  ## Create a NixOS submodule option without a description.
+  ## Create a nullable Nix module option.
   ##
   ## ```nix
-  ## lib.mkSubmoduleOpt' { options = { ... }; }
-  ## ```
-  ##
-  #@ Submodule -> Any
-  mkSubmoduleOpt' = options: mkOpt (types.submodule {inherit options;}) null null;
-
-  ## Create a NixOS submodule option.
-  ##
-  ## ```nix
-  ## lib.mkSubmoduleOpt { inherit description; options = { ... }; }
-  ## ```
-  ##
-  #@ Submodule -> String -> Any
-  mkSubmoduleOpt = description: options: mkOpt (types.submodule {inherit options;}) null description;
-
-  # mkNullableOpt
-
-  ## Create a nullable NixOS module option.
-  ##
-  ## ```nix
-  ## lib.mkNullableOpt nixpkgs.lib.types.nullOr nixpkgs.lib.types.str "My default" "Description of my option."
+  ## lib.mkNullableOpt lib.types.str "My default" "Description of my option."
   ## ```
   ##
   #@ Type -> Any -> String
   mkNullableOpt = type: default: description:
     mkOpt (types.nullOr type) default description;
 
-  ## Create a nullable NixOS module option without a description.
+  ## Create a nullable Nix module option without a description.
   ##
   ## ```nix
-  ## lib.mkNullableOpt' nixpkgs.lib.types.nullOr nixpkgs.lib.types.str "My default"
+  ## lib.mkNullableOpt' lib.types.str "My default"
   ## ```
   ##
   #@ Type -> Any -> String
   mkNullableOpt' = type: default: mkOpt (types.nullOr type) default null;
 
-  # mkBoolOpt
+  ## mkSubmoduleListOpt
 
-  ## Create a boolean NixOS module option.
+  ## Create a submodule list Nix option without a description.
+  ##
+  ## ```nix
+  ## lib.mkSubmoduleListOpt' { ... };
+  ## ```
+  ##
+  ## Options
+  mkSubmoduleListOpt' = options:
+    mkOpt (types.listOf (types.submodule {inherit options;})) [] null;
+
+  ## Create a submodule list Nix option with a description.
+  ##
+  ## ```nix
+  ## lib.mkSubmoduleListOpt "Description of my option." { ... };
+  ## ```
+  ##
+  ## String -> Options
+  mkSubmoduleListOpt = description: options:
+    mkOpt (types.listOf (types.submodule {inherit options;})) [] description;
+
+  ## mkBoolOpt
+
+  ## Create a boolean Nix module option.
   ##
   ## ```nix
   ## lib.mkBoolOpt true "Description of my option."
@@ -73,7 +75,7 @@ with lib; rec {
   #@ Type -> Any -> String
   mkBoolOpt = mkOpt types.bool;
 
-  ## Create a boolean NixOS module option without a description.
+  ## Create a boolean Nix module option without a description.
   ##
   ## ```nix
   ## lib.mkBoolOpt true
@@ -82,7 +84,7 @@ with lib; rec {
   #@ Type -> Any -> String
   mkBoolOpt' = mkOpt' types.bool;
 
-  # Enable/Disable Helpers
+  ## Enable/Disable Helpers
 
   enabled = {
     ## Quickly enable an option.
