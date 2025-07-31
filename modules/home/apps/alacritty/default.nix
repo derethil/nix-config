@@ -1,10 +1,11 @@
 {
   lib,
   config,
+  pkgs,
   ...
-}:
-with lib;
-with lib.internal; let
+}: let
+  inherit (lib) mkIf;
+  inherit (lib.internal) mkBoolOpt;
   cfg = config.apps.alacritty;
   fontName = config.system.fonts.mono.name;
 in {
@@ -25,6 +26,7 @@ in {
             y = 6;
           };
           opacity = 1.0;
+          option_as_alt = mkIf pkgs.stdenv.hostPlatform.isDarwin "Both";
         };
         font = {
           normal = {
@@ -85,4 +87,3 @@ in {
     };
   };
 }
-
