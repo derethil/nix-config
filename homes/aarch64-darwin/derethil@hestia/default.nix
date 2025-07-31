@@ -5,6 +5,7 @@ with internal; {
   user = {
     location.latitude = 39.7392;
     location.longitude = -104.9903;
+    userdirs = enabled;
   };
   apps = {
     alacritty = enabled;

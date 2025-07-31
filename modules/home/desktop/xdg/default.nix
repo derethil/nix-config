@@ -72,11 +72,19 @@ in {
       enable = true;
       autostart.readOnly = true;
       cacheHome = "${config.home.homeDirectory}/.local/cache";
-      userDirs = mkIf pkgs.stdenv.hostPlatform.isLinux {
+      userDirs = mkIf (pkgs.stdenv.hostPlatform.isLinux && config.user.userdirs.enable) {
         enable = true;
         createDirectories = true;
+        desktop = config.user.userdirs.desktop;
+        documents = config.user.userdirs.documents;
+        download = config.user.userdirs.download;
+        music = config.user.userdirs.music;
+        pictures = config.user.userdirs.pictures;
+        videos = config.user.userdirs.videos;
+        templates = config.user.userdirs.templates;
+        publicShare = config.user.userdirs.publicShare;
         extraConfig = {
-          XDG_SCREENSHOTS_DIR = "${config.xdg.userDirs.pictures}/screenshots";
+          XDG_SCREENSHOTS_DIR = "${config.user.userdirs.pictures}/screenshots";
         };
       };
     };

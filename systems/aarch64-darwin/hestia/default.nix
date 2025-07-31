@@ -3,6 +3,7 @@
 in {
   user = {
     name = "derethil";
+    userdirs = enabled;
   };
   system = {
     fonts = enabled;
