@@ -19,9 +19,17 @@ with internal; let
 in {
   options.apps.mattermost = {
     enable = mkBoolOpt false "Whether to enable Mattermost.";
+    package =
+      mkOpt types.package
+      (
+        if pkgs.stdenv.hostPlatform.isLinux
+        then mattermost-desktop-x11
+        else pkgs.mattermost-desktop
+      )
+      "Mattermost package to use.";
   };
 
   config = mkIf config.apps.mattermost.enable {
-    home.packages = [mattermost-desktop-x11];
+    home.packages = [config.apps.mattermost.package];
   };
 }
