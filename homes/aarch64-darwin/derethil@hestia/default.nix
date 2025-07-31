@@ -38,6 +38,9 @@ with internal; {
     tmux = enabled;
     misc = enabled;
   };
+  system = {
+    fonts = enabled;
+  };
 
   home.stateVersion = "25.05";
 }

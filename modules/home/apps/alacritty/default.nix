@@ -4,8 +4,9 @@
   ...
 }:
 with lib;
-with internal; let
+with lib.internal; let
   cfg = config.apps.alacritty;
+  fontName = config.system.fonts.mono.name;
 in {
   options.apps.alacritty = {
     enable = mkBoolOpt false "Whether to enable the Alacritty terminal.";
@@ -27,19 +28,19 @@ in {
         };
         font = {
           normal = {
-            family = "GeistMono NF";
+            family = fontName;
             style = "SemiBold";
           };
           bold = {
-            family = "GeistMono NF";
+            family = fontName;
             style = "Bold";
           };
           italic = {
-            family = "GeistMono NF";
+            family = fontName;
             style = "SemiBold Italic";
           };
           bold_italic = {
-            family = "GeistMono NF";
+            family = fontName;
             style = "Bold Italic";
           };
           size = 12;
@@ -84,3 +85,4 @@ in {
     };
   };
 }
+
