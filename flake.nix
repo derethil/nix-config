@@ -17,6 +17,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixgl = {
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,6 +29,10 @@
 
     nix-flatpak = {
       url = "github:gmodena/nix-flatpak/?ref=latest";
+    };
+
+    mac-app-util = {
+      url = "github:hraban/mac-app-util";
     };
 
     # Applications
@@ -96,6 +105,7 @@
     homes.modules = with inputs; [
       nix-flatpak.homeManagerModules.nix-flatpak
       glace-shell.flakeModules.default
+        mac-app-util.homeManagerModules.default
     ];
     nix.settings = {
       substituters = [
