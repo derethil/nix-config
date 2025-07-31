@@ -3,15 +3,10 @@
   config,
   lib,
   ...
-}:
-with lib;
-with internal; let
+}: let
+  inherit (lib) mkIf;
   cfg = config.cli.fish;
 in {
-  options.cli.fish = {
-    enable = mkBoolOpt false "Whether to enable the Fish shell.";
-  };
-
   imports = [
     ./theme.nix
   ];
