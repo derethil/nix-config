@@ -10,10 +10,7 @@ with internal; {
     foot = disabled;
     alacritty = enabled;
     firefox = enabled;
-    gtk-icon-browser = disabled;
-    chromium = enabled;
     discord = enabled;
-    vesktop = disabled;
     obsidian = enabled;
     spotify = enabled;
     insomnia = enabled;
