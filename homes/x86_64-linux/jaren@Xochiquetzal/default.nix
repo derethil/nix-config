@@ -52,6 +52,7 @@ with internal; {
     hyprpicker = enabled;
     neovim = enabled;
     sober = enabled;
+    claude-code = enabled;
   };
   cli = {
     fish = enabled;

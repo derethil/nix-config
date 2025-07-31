@@ -28,6 +28,7 @@ with internal; {
     git = enabled;
     jira-cli = enabled;
     neovim = enabled;
+    claude-code = enabled;
   };
   cli = {
     fish = enabled;
