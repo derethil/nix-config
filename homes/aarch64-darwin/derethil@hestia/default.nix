@@ -18,7 +18,6 @@ with internal; {
     spotify = enabled;
     insomnia = enabled;
     mattermost = enabled;
-    gdlauncher = enabled;
     heroic = disabled;
     r2modman = disabled;
   };
