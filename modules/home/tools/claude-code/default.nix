@@ -4,8 +4,8 @@
   pkgs,
   ...
 }: let
-  inherit (lib) internal mkIf;
-  inherit (internal) mkBoolOpt;
+  inherit (lib) mkIf;
+  inherit (lib.internal) mkBoolOpt;
   cfg = config.tools.claude-code;
 in {
   options.tools.claude-code = {

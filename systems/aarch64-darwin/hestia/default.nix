@@ -1,9 +1,15 @@
-{pkgs, ...}: {
-  system.stateVersion = 5;
-
-  users.users.derethil = {
-    shell = pkgs.fish;
+{lib, ...}: let
+  inherit (lib.internal) enabled;
+in {
+  user = {
+    name = "derethil";
+  };
+  system = {
+    fonts = enabled;
+  };
+  cli = {
+    fish = enabled;
   };
 
-  system.fonts.enable = true;
+  system.stateVersion = 5;
 }
