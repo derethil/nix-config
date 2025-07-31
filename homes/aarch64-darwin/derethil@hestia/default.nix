@@ -14,7 +14,6 @@ with internal; {
     chromium = enabled;
     discord = enabled;
     vesktop = disabled;
-    obs = enabled;
     obsidian = enabled;
     spotify = enabled;
     insomnia = enabled;
