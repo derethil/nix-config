@@ -1,12 +1,14 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 with lib; let
   gtk = config.desktop.addons.gtk;
+  enable = (config.services.flatpak.packages != []) && (pkgs.stdenv.hostPlatform.isLinux);
 in {
-  config = mkIf (config.services.flatpak.packages != []) {
+  config = mkIf enable {
     services.flatpak = {
       enable = true;
       update.auto = {
