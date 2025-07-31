@@ -1,6 +1,9 @@
-{...}: {
+{pkgs, ...}: {
   system.stateVersion = 5;
-  users.users.derethil.home = "/Users/derethil";
+
+  users.users.derethil = {
+    shell = pkgs.fish;
+  };
 
   system.fonts.enable = true;
 }
