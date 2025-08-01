@@ -28,9 +28,6 @@ in {
   cli = {
     fish = enabled;
   };
-  tools = {
-    darwin-option = true;
-  };
 
   system.stateVersion = 5;
 }
