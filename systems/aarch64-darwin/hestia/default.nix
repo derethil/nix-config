@@ -7,6 +7,7 @@ in {
   };
   system = {
     fonts = enabled;
+    nix = enabled;
   };
   cli = {
     fish = enabled;
