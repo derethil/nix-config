@@ -27,19 +27,18 @@ in {
         warn-dirty = false;
         log-lines = 50;
         sandbox = "relaxed";
-        auto-optimise-store = true;
         trusted-users = users;
-        allowed-users = users;
 
         extra-nix-path = "nixpkgs=flake:nixpkgs";
         build-users-group = "nixbld";
       };
 
+      optimise.automatic = true;
+
       gc = {
         automatic = true;
         interval = {Day = 7;};
         options = "--delete-older-than 30d";
-        user = config.user.name;
       };
 
       # flake-utils-plus
@@ -49,4 +48,3 @@ in {
     };
   };
 }
-
