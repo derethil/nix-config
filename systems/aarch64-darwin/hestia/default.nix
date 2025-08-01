@@ -1,4 +1,8 @@
-{lib, ...}: let
+{
+  lib,
+  config,
+  ...
+}: let
   inherit (lib.internal) enabled enabled';
 in {
   user = {
@@ -10,16 +14,13 @@ in {
     nix = enabled;
     settings = enabled' {
       dock-apps = [
-        {app = "~/Applications/Home Manager Trampolines/Alacritty.app";}
-        {app = "~/Applications/Home Manager Trampolines/Firefox.app";}
-        {spacer = {small = true;};}
+        {app = "/Users/${config.user.name}/Applications/Home Manager Apps/Alacritty.app";}
+        {app = "/Users/${config.user.name}/Applications/Home Manager Apps/Firefox.app";}
         {app = "/System/Applications/Messages.app";}
-        {app = "~/Applications/Home Manager Trampolines/Discord.app";}
-        {spacer = {small = true;};}
-        {app = "~/Applications/Home Manager Trampolines/Insomnia.app";}
-        {app = "~/Applications/Home Manager Trampolines/Obsidian.app";}
-        {spacer = {small = true;};}
-        {app = "~/Applications/Home Manager Trampolines/Spotify.app";}
+        {app = "/Users/${config.user.name}/Applications/Home Manager Apps/Discord.app";}
+        {app = "/Users/${config.user.name}/Applications/Home Manager Apps/Insomnia.app";}
+        {app = "/Users/${config.user.name}/Applications/Home Manager Apps/Obsidian.app";}
+        {app = "/Users/${config.user.name}/Applications/Home Manager Apps/Spotify.app";}
         {app = "/Applications/Stremio.app";}
         {app = "/Applications/GDLauncher.app";}
       ];
