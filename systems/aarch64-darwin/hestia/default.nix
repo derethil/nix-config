@@ -3,11 +3,14 @@
   config,
   ...
 }: let
-  inherit (lib.internal) enabled enabled';
+  inherit (lib.internal) disabled enabled enabled';
 in {
   user = {
     name = "derethil";
     userdirs = enabled;
+  };
+  desktop = {
+    yabai = disabled;
   };
   system = {
     fonts = enabled;
