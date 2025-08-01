@@ -21,7 +21,9 @@ with internal; {
   };
   desktop = {
     xdg = enabled;
-    glace-shell = disabled;
+    addons = {
+      wallpapers = enabled;
+    };
   };
   tools = {
     manix = enabled;
