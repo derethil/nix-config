@@ -8,6 +8,7 @@ in {
   system = {
     fonts = enabled;
     nix = enabled;
+    keyboard = enabled;
   };
   cli = {
     fish = enabled;
