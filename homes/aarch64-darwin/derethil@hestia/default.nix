@@ -32,6 +32,7 @@ with internal; {
     jira-cli = enabled;
     neovim = enabled;
     claude-code = enabled;
+    nix-index = enabled;
   };
   cli = {
     fish = enabled;
