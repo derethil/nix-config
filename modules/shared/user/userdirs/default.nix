@@ -22,7 +22,7 @@
   darwinDefaultPaths =
     defaultPaths
     // {
-      videos = "${config.home.homeDirectory}/Movies";
+      videos = "Users/${config.user.name}/Movies";
     };
 
   paths =
@@ -43,4 +43,3 @@ in {
     publicShare = mkOpt (nullOr str) paths.publicShare "Public share directory path";
   };
 }
-
