@@ -145,13 +145,6 @@ in {
       keyboard = {
         enableKeyMapping = true;
         remapCapsLockToEscape = true;
-        userKeyMapping = [
-          # remap escape to caps lock
-          {
-            HIDKeyboardModifierMappingSrc = 30064771113;
-            HIDKeyboardModifierMappingDst = 30064771129;
-          }
-        ];
       };
     };
   };
