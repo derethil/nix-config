@@ -107,4 +107,22 @@ with lib; rec {
     #@ false
     enable = false;
   };
+
+  ## Create an enabled attrset with additional options merged in.
+  ##
+  ## ```nix
+  ## services.nginx = enabled' { workers = 4; };
+  ## ```
+  ##
+  #@ AttrSet -> AttrSet
+  enabled' = attrs: attrs // enabled;
+
+  ## Create a disabled attrset with additional options merged in.
+  ##
+  ## ```nix
+  ## services.nginx = disabled' { workers = 2; };
+  ## ```
+  ##
+  #@ AttrSet -> AttrSet
+  disabled' = attrs: attrs // disabled;
 }
