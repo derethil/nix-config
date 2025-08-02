@@ -24,6 +24,7 @@ with internal; {
     xdg = enabled;
     addons = {
       wallpapers = enabled;
+      osascript-wallpaper = enabled;
     };
   };
   tools = {
@@ -44,6 +45,12 @@ with internal; {
     misc = enabled;
     trash-cli = enabled;
   };
+  hardware.displays = [
+    {
+      wallpaper = "fuji-bird.jpeg";
+    }
+  ];
+
   system = {
     fonts = enabled;
   };
