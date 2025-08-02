@@ -41,6 +41,7 @@ with internal; {
     starship = enabled;
     tmux = enabled;
     misc = enabled;
+    trash-cli = enabled;
   };
   system = {
     fonts = enabled;
