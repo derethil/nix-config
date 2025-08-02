@@ -22,9 +22,11 @@
     ],
     "nav-bar": [
       "sidebar-button",
+      "sync-button",
       "back-button",
       "forward-button",
       "stop-reload-button",
+      "spring",
       "_3c078156-979c-498b-8990-85f7987dd929_-browser-action",
       "urlbar-container",
       "downloads-button",
@@ -43,6 +45,7 @@
   },
   "seen": [
     "save-to-pocket-button",
+    "sync-button",
     "developer-button",
     "ublock0_raymondhill_net-browser-action",
     "jid1-kkzogwgsw3ao4q_jetpack-browser-action",
