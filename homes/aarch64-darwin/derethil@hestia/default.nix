@@ -20,6 +20,7 @@ with internal; {
     golang = enabled;
   };
   desktop = {
+    aerospace = enabled;
     xdg = enabled;
     addons = {
       wallpapers = enabled;
