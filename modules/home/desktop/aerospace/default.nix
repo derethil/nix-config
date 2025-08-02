@@ -25,7 +25,6 @@
   mkAppRule = appid: commands: {
     "if" = {
       app-id = appid;
-      during-aerospace-startup = true;
     };
     run = commands;
   };
