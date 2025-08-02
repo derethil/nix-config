@@ -28,6 +28,13 @@
     };
     run = commands;
   };
+
+  mkTitleRule = title: commands: {
+    "if" = {
+      window-title-regex-substring = title;
+    };
+    run = commands;
+  };
 in {
   options.desktop.aerospace = {
     enable = mkBoolOpt false "Whether or not to enable the Aerospace window manager.";
@@ -133,6 +140,7 @@ in {
           (mkAppRule "com.apple.systempreferences" "layout floating")
           (mkAppRule "com.apple.ActivityMonitor" "layout floating")
           (mkAppRule "com.apple.Finder" "layout floating")
+          (mkTitleRule "Bitwarden" "layout floating")
 
           # Workspace assignment rules
           (mkAppRule "org.nixos.Firefox" "move-node-to-workspace 1")
