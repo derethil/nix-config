@@ -79,49 +79,51 @@ in {
         mode.main.binding = lib.foldl lib.mergeAttrs {} [
           {
             # Terminal shortcuts (migrated from skhd)
-            "alt-enter" = "exec-and-forget ${getExe pkgs.alacritty} -e ${getExe pkgs.tmux} new-session -As base";
-            "alt-shift-enter" = "exec-and-forget ${getExe pkgs.alacritty}";
+            alt-enter = "exec-and-forget ${getExe pkgs.alacritty} -e ${getExe pkgs.tmux} new-session -As base";
+            alt-shift-enter = "exec-and-forget ${getExe pkgs.alacritty}";
 
             # Window management
-            "alt-q" = "close";
-            "alt-f" = "fullscreen";
-            "alt-shift-f" = "macos-native-fullscreen";
-            "alt-shift-m" = "macos-native-minimize";
+            alt-q = "close";
+            alt-f = "fullscreen";
+            alt-shift-f = "macos-native-fullscreen";
+            alt-shift-m = "macos-native-minimize";
 
             # Focus window
-            "alt-h" = "focus left";
-            "alt-j" = "focus down";
-            "alt-k" = "focus up";
-            "alt-l" = "focus right";
+            alt-h = "focus left";
+            alt-j = "focus down";
+            alt-k = "focus up";
+            alt-l = "focus right";
             alt-tab = "exec-and-forget ${getExe back-and-forth}";
 
             # Move window
-            "alt-ctrl-h" = "move left";
-            "alt-ctrl-j" = "move down";
-            "alt-ctrl-k" = "move up";
-            "alt-ctrl-l" = "move right";
+            alt-ctrl-h = "move left";
+            alt-ctrl-j = "move down";
+            alt-ctrl-k = "move up";
+            alt-ctrl-l = "move right";
 
             # Resize window
-            "alt-r" = "mode main";
+            alt-r = "mode main";
 
             # Layout
-            "alt-t" = "layout tiles horizontal vertical";
-            "alt-s" = "layout accordion horizontal vertical";
-            "alt-space" = "layout floating tiling";
-
-            # Focus monitor
-            "alt-shift-space" = "focus-monitor --wrap-around next";
+            alt-t = "layout tiles horizontal vertical";
+            alt-s = "layout accordion horizontal vertical";
+            alt-space = "layout floating tiling";
 
             # Move workspace to monitor
-            "alt-m" = "move-workspace-to-monitor --wrap-around next";
+            alt-m = "move-workspace-to-monitor --wrap-around next";
 
             # Navigate between workspaces
-            "alt-leftSquareBracket" = "workspace --wrap-around prev";
-            "alt-rightSquareBracket" = "workspace --wrap-around next";
+            alt-leftSquareBracket = "workspace --wrap-around prev";
+            alt-rightSquareBracket = "workspace --wrap-around next";
+
+            # Navigate between monitors
+            alt-shift-leftSquareBracket = "focus-monitor --wrap-around prev";
+            alt-shift-rightSquareBracket = "focus-monitor --wrap-around next";
 
             # Reload config
-            "alt-shift-r" = "reload-config";
+            alt-shift-r = "reload-config";
           }
+
           # Move to workspace
           (mkWorkspaceBinds "alt" ["workspace"])
 
