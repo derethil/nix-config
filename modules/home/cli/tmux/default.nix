@@ -31,13 +31,19 @@ in {
   config = mkIf cfg.enable {
     programs.tmux = {
       enable = true;
-      shell = "${pkgs.fish}/bin/fish"; # Adjust if you use a different shell
+      shell = mkIf (!pkgs.stdenv.isDarwin) "${pkgs.fish}/bin/fish";
       terminal = "tmux-256color";
       prefix = "C-Space";
       keyMode = "vi";
       customPaneNavigationAndResize = true;
 
       extraConfig = ''
+        # Force fish shell on Darwin as it doesn't seem to work with just shell=
+        ${lib.optionalString pkgs.stdenv.isDarwin ''
+          set-option -g default-shell "${pkgs.fish}/bin/fish"
+          set-option -g default-command "${pkgs.fish}/bin/fish"
+        ''}
+
         # True Color Support
         set -sa terminal-overrides ",*:Tc"
 
