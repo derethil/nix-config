@@ -8,6 +8,10 @@
   inherit (lib.internal) mkBoolOpt;
   cfg = config.desktop.aerospace;
 
+  back-and-forth = pkgs.writeShellScriptBin "back-and-forth" ''
+    ${getExe pkgs.aerospace} focus-back-and-forth || ${getExe pkgs.aerospace} workspace-back-and-forth
+  '';
+
   mkWorkspaceBinds = mod: commands:
     lib.listToAttrs (lib.map (i: {
       name = "${mod}-${
@@ -83,6 +87,7 @@ in {
             "alt-j" = "focus down";
             "alt-k" = "focus up";
             "alt-l" = "focus right";
+            alt-tab = "exec-and-forget ${getExe back-and-forth}";
 
             # Move window
             "alt-ctrl-h" = "move left";
