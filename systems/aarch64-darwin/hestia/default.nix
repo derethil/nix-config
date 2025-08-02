@@ -11,6 +11,7 @@ in {
   };
   desktop = {
     yabai = disabled;
+    night-shift = enabled;
   };
   system = {
     fonts = enabled;
