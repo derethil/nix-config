@@ -28,6 +28,7 @@ with internal; {
     };
   };
   tools = {
+    devenv = enabled;
     manix = enabled;
     aws-cli = enabled;
     git = enabled;
