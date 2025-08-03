@@ -15,6 +15,7 @@ in {
   system = {
     fonts = enabled;
     nix = enabled;
+    locate = enabled;
     settings = enabled' {
       dock-apps = [
         {app = "/Users/${config.user.name}/Applications/Home Manager Apps/Alacritty.app";}
