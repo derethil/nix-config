@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   pkgs,
   lib,
   ...
@@ -11,18 +10,6 @@ with internal; let
 
   themes = ./themes;
   modules = ./modules;
-
-  tmux-theme = pkgs.tmuxPlugins.mkTmuxPlugin {
-    pluginName = "tmux-theme";
-    version = "flake-input";
-    src = inputs.tmux-theme;
-  };
-
-  power-zoom = pkgs.tmuxPlugins.mkTmuxPlugin {
-    pluginName = "tmux-power-zoom";
-    version = "flake-input";
-    src = inputs.tmux-power-zoom;
-  };
 in {
   options.cli.tmux = {
     enable = mkBoolOpt false "Whether to enable Tmux";
@@ -30,7 +17,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-
     programs.tmux = {
       package = pkgs.internal.tmux-wrapper.override {inherit config lib;};
       enable = true;
@@ -118,7 +104,7 @@ in {
         yank
         vim-tmux-navigator
         {
-          plugin = power-zoom;
+          plugin = pkgs.internal.tmux-power-zoom;
           extraConfig = "";
         }
         {
@@ -154,7 +140,7 @@ in {
           '';
         }
         {
-          plugin = tmux-theme;
+          plugin = pkgs.internal.tmux-theme;
           extraConfig = ''
             # Statusline
             set -g @theme_custom_theme_dir "${themes}"
