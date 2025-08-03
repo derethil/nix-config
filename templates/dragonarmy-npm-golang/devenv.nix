@@ -7,6 +7,7 @@
 
   packages = [
     pkgs.golangci-lint
+    pkgs.golangci-lint-langserver
     pkgs.awscli2
   ];
 
