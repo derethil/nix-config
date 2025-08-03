@@ -133,20 +133,19 @@ in {
       ];
       ignores = [
         ".venv"
-        ".tool-versions"
         ".envrc"
-        ".local/"
         ".nvim.lua"
-        ".vscode/"
-        ".lazy.lua"
         ".nvim.lua"
-        "**/*.local"
-        "*.local.*"
         ".direnv/"
         ".python-version"
         ".typos.toml"
         "**/.golangci.yml"
         "CLAUDE.md"
+
+        ".denvenv*"
+        "devenv.nix"
+        "devenv.yaml"
+        "devenv.lock"
       ];
     };
   };
