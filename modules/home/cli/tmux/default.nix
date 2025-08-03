@@ -26,10 +26,13 @@ with internal; let
 in {
   options.cli.tmux = {
     enable = mkBoolOpt false "Whether to enable Tmux";
+    extraVariables = mkOpt (types.listOf types.str) [] "Additional environment variables to refresh in tmux sessions.";
   };
 
   config = mkIf cfg.enable {
+
     programs.tmux = {
+      package = pkgs.internal.tmux-wrapper.override {inherit config lib;};
       enable = true;
       shell = mkIf (!pkgs.stdenv.isDarwin) "${pkgs.fish}/bin/fish";
       terminal = "tmux-256color";
@@ -107,6 +110,7 @@ in {
         bind -T copy-mode-vi v send-keys -X begin-selection
         bind -T copy-mode-vi C-v send-keys -X rectangle-toggle
         bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel
+
       '';
 
       plugins = with pkgs.tmuxPlugins; [

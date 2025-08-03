@@ -1,21 +1,22 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 with lib;
 with internal; let
   cfg = config.desktop.hyprland;
+  tmux = config.cli.tmux;
   gap = toString cfg.gap;
 in {
   config = mkIf cfg.enable {
+    cli.tmux.extraVariables = mkIf tmux.enable ["HYPRLAND_CMD" "HYPRLAND_INSTANCE_SIGNATURE"];
+
     wayland.windowManager.hyprland = {
       settings = {
         exec-once = [
           "ags run --directory ~/.config/astal"
           "hyprctl dispatch workspace 1"
-          "${pkgs.internal.import-env-tmux}/bin/import-env-tmux tmux HYPRLAND_CMD HYPRLAND_INSTANCE_SIGNATURE"
         ];
         general = {
           border_size = 2;
