@@ -124,25 +124,8 @@ in {
           '';
         }
         {
-          plugin = resurrect;
-          extraConfig = ''
-            set -g @resurrect-dir "${config.xdg.stateHome}/tmux/resurrect"
-            set -g @resurrect-processes 'false'
-            set -g @resurrect-save 'S'
-            set -g @resurrect-restore 'R'
-          '';
-        }
-        {
-          plugin = continuum;
-          extraConfig = ''
-            set -g @continuum-restore 'on'
-            set -g @continuum-save-interval '5'
-          '';
-        }
-        {
           plugin = pkgs.internal.tmux-theme;
           extraConfig = ''
-            # Statusline
             set -g @theme_custom_theme_dir "${themes}"
             set -g @theme_custom_plugin_dir "${modules}"
             set -g @theme_flavour "gruvbox-material"
@@ -161,6 +144,22 @@ in {
 
             set -g @theme_status_modules_right "directory continuum session"
             set -g @theme_directory_text "#( echo #{pane_current_path} | sed 's|$HOME|~|' | rev | cut -d'/' -f-3 | rev )"
+          '';
+        }
+        {
+          plugin = resurrect;
+          extraConfig = ''
+            set -g @resurrect-dir "${config.xdg.stateHome}/tmux/resurrect"
+            set -g @resurrect-processes 'false'
+            set -g @resurrect-save 'S'
+            set -g @resurrect-restore 'R'
+          '';
+        }
+        {
+          plugin = continuum;
+          extraConfig = ''
+            set -g @continuum-restore 'on'
+            set -g @continuum-save-interval '5'
           '';
         }
       ];
