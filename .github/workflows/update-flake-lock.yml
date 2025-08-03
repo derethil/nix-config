@@ -23,6 +23,7 @@ jobs:
         id: update
         uses: DeterminateSystems/update-flake-lock@main
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           branch: update_flake/${{ github.ref_name }}
           pr-labels: |
             dependencies
