@@ -38,16 +38,23 @@ in {
 
     tools.postgresql.servers = mkDefault [
       {
-        name = "Vigil [Test]";
+        name = "Vigil [Test] [jarenglenn]";
         hostSecret = "postgresql/dragonfire/test/host";
         database = "vigil";
         username = "jarenglenn";
         passwordSecret = "postgresql/dragonfire/test/personal_password";
       }
       {
-        name = "DragonFire [Test]";
+        name = "DragonFire [Test] [lambdauser]";
         hostSecret = "postgresql/dragonfire/test/host";
         database = "dragon_fire";
+        username = "lambdauser";
+        passwordSecret = "postgresql/dragonfire/test/system_password";
+      }
+      {
+        name = "Vigil [Test] [lambdauser]";
+        hostSecret = "postgresql/dragonfire/test/host";
+        database = "vigil";
         username = "lambdauser";
         passwordSecret = "postgresql/dragonfire/test/system_password";
       }
