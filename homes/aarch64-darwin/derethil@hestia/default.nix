@@ -36,6 +36,7 @@ with internal; {
     neovim = enabled;
     claude-code = enabled;
     nix-index = enabled;
+    postgresql = enabled;
   };
   cli = {
     fish = enabled;
