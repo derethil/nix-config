@@ -1,0 +1,9 @@
+
+keys:
+  - &hestia age1a5qhde7fv4uxp4408yy708xk0ec7gthu2t7p0dmperaghcj7lffq7l0sl4
+
+creation_rules:
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini|sops)$
+    key_groups:
+      - age:
+          - *hestia

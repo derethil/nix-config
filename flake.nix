@@ -35,6 +35,16 @@
       url = "github:hraban/mac-app-util";
     };
 
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    secrets = {
+      url = "git+ssh://git@github.com/derethil/nix-secrets";
+      flake = false;
+    };
+
     # Applications
 
     firefox-addons = {
@@ -113,6 +123,7 @@
         nix-flatpak.homeManagerModules.nix-flatpak
         glace-shell.flakeModules.default
         mac-app-util.homeManagerModules.default
+        sops-nix.homeManagerModules.sops
         shared-modules
       ];
     nix.settings = {

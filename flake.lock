@@ -1141,7 +1141,9 @@
         "nixpkgs-stable": "nixpkgs-stable",
         "nvim-config": "nvim-config",
         "rust-system-scripts": "rust-system-scripts",
+        "secrets": "secrets",
         "snowfall-lib": "snowfall-lib",
+        "sops-nix": "sops-nix",
         "tmux-power-zoom": "tmux-power-zoom",
         "tmux-theme": "tmux-theme",
         "trashy": "trashy"
@@ -1203,6 +1205,22 @@
         "type": "github"
       }
     },
+    "secrets": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1754328510,
+        "narHash": "sha256-iX9Pf1wmR719168tDcUdbWKTicupH42rXwqVaVmSsOg=",
+        "ref": "refs/heads/main",
+        "rev": "12a874becc1ba049b39555944225ca6a41d3d0ee",
+        "revCount": 1,
+        "type": "git",
+        "url": "ssh://git@github.com/derethil/nix-secrets"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/derethil/nix-secrets"
+      }
+    },
     "snowfall-lib": {
       "inputs": {
         "flake-compat": "flake-compat_4",
@@ -1239,6 +1257,26 @@
         "owner": "Alfaixx",
         "repo": "sonarlint.nvim",
         "type": "gitlab"
+      }
+    },
+    "sops-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1752544651,
+        "narHash": "sha256-GllP7cmQu7zLZTs9z0J2gIL42IZHa9CBEXwBY9szT0U=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "2c8def626f54708a9c38a5861866660395bb3461",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "type": "github"
       }
     },
     "systems": {
