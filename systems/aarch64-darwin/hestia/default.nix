@@ -9,6 +9,9 @@ in {
     name = "derethil";
     userdirs = enabled;
   };
+  apps = {
+    mattermost = enabled;
+  };
   desktop = {
     night-shift = enabled;
   };
