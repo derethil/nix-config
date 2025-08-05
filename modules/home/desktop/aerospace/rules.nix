@@ -33,6 +33,7 @@ in {
         (mkAppRule "org.nixos.Firefox" "move-node-to-workspace 1")
         (mkAppRule "org.alacritty" "move-node-to-workspace 2")
         (mkAppRule "com.hnc.Discord" "move-node-to-workspace 3")
+        (mkAppRule "Mattermost.Desktop" "move-node-to-workspace 3")
         (mkAppRule "com.apple.MobileSMS" "move-node-to-workspace 3")
         (mkAppRule "com.insomnia.app" "move-node-to-workspace 4")
         (mkAppRule "md.obsidian" "move-node-to-workspace 4")
