@@ -26,8 +26,8 @@ in {
       mode.main.binding = lib.foldl lib.mergeAttrs {} [
         {
           # Terminal shortcuts (migrated from skhd)
-          alt-enter = "exec-and-forget ${getExe pkgs.alacritty} -e ${getExe pkgs.tmux} new-session -As base";
-          alt-shift-enter = "exec-and-forget ${getExe pkgs.alacritty}";
+          alt-enter = "exec-and-forget open -n -a Alacritty --args -e ${getExe pkgs.tmux} new-session -As base";
+          alt-shift-enter = "exec-and-forget open -n -a Alacritty";
 
           # Window management
           alt-q = "close";
