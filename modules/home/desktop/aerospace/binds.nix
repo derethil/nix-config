@@ -49,7 +49,7 @@ in {
           alt-ctrl-l = "move right";
 
           # Resize window
-          alt-r = "mode main";
+          alt-r = "mode resize";
 
           # Layout
           alt-t = "layout tiles horizontal vertical";
@@ -79,9 +79,9 @@ in {
       ];
 
       mode.resize.binding = {
-        "minus" = "resize smart -50";
-        "equal" = "resize smart +50";
-        "esc" = "mode main";
+        minus = "resize smart -50";
+        equal = "resize smart +50";
+        esc = "mode main";
       };
     };
   };
