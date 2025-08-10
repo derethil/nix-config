@@ -13,7 +13,7 @@ with internal; {
     discord = enabled;
     obsidian = enabled;
     spotify = enabled;
-    insomnia = enabled;
+    bruno = enabled;
     mattermost = disabled;
   };
   languages = {
