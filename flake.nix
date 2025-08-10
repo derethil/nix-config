@@ -106,7 +106,7 @@
   };
 
   outputs = {snowfall-lib, ...} @ inputs: let
-    shared-modules = snowfall-lib.snowfall.internal-lib.fs.get-default-nix-files-recursive ./modules/shared;
+    common-modules = snowfall-lib.snowfall.internal-lib.fs.get-default-nix-files-recursive ./modules/common;
   in (snowfall-lib.mkFlake {
     inherit inputs;
     src = ./.;
@@ -116,7 +116,7 @@
     };
     systems.modules.darwin = with inputs;
       nixpkgs.lib.flatten [
-        shared-modules
+        common-modules
       ];
     homes.modules = with inputs;
       nixpkgs.lib.flatten [
@@ -124,7 +124,7 @@
         glace-shell.flakeModules.default
         mac-app-util.homeManagerModules.default
         sops-nix.homeManagerModules.sops
-        shared-modules
+        common-modules
       ];
     nix.settings = {
       substituters = [
