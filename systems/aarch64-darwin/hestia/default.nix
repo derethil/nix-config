@@ -26,7 +26,7 @@ in {
         {app = "/System/Applications/Messages.app";}
         {app = "/Applications/Mattermost.app";}
         {app = "/Users/${config.user.name}/Applications/Home Manager Apps/Discord.app";}
-        {app = "/Users/${config.user.name}/Applications/Home Manager Apps/Insomnia.app";}
+        {app = "/Users/${config.user.name}/Applications/Home Manager Apps/Bruno.app";}
         {app = "/Users/${config.user.name}/Applications/Home Manager Apps/Obsidian.app";}
         {app = "/Users/${config.user.name}/Applications/Home Manager Apps/Spotify.app";}
         {app = "/Applications/Stremio.app";}
