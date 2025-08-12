@@ -23,8 +23,5 @@ in {
       validateSopsFiles = false;
       secrets = config.secrets;
     };
-    home.activation.sopsDirectories = config.lib.dag.entryAfter ["writeBoundary"] ''
-      $DRY_RUN_CMD mkdir -p "${config.home.homeDirectory}/.config/sops/age"
-    '';
   };
 }
