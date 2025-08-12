@@ -37,6 +37,7 @@ with internal; {
     claude-code = enabled;
     nix-index = enabled;
     postgresql = enabled;
+    home-manager = enabled;
   };
   cli = {
     fish = enabled;
