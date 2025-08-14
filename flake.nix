@@ -41,7 +41,7 @@
     };
 
     secrets = {
-      url = "git+ssh://git@github.com/derethil/nix-secrets";
+      url = "git+ssh://git@github.com/derethil/nix-secrets?ref=main";
       flake = false;
     };
 
