@@ -11,21 +11,17 @@ with internal; let
 in {
   options.tools.neovim = {
     enable = mkBoolOpt false "Whether to enable Neovim.";
-    variant = mkOpt (types.enum ["nvf" "vanilla"]) "nvf" "Which Neovim variant to use: 'nvf' for configured nvim-config flake, 'vanilla' for standard neovim.";
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      (
-        if cfg.variant == "nvf"
-        then inputs.nvim-config.packages.${pkgs.system}.default
-        else neovim
-      )
+    home.packages = [
+      inputs.nvim-config.packages.${pkgs.system}.default
     ];
-
+    secrets. "neovim/tavily_api_key" = {};
     home.sessionVariables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
+      TAVILY_API_KEY = "$(cat ${config.sops.secrets."neovim/tavily_api_key".path})";
     };
   };
 }
