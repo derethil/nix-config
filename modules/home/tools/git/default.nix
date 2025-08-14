@@ -112,7 +112,7 @@ in {
     ];
     programs.git = {
       enable = true;
-      package = pkgs.gitAndTools.gitFull;
+      package = pkgs.git;
       userName = "Jaren Glenn";
       userEmail = lib.mkDefault "jarenglenn@gmail.com";
       aliases = aliases;
