@@ -111,6 +111,38 @@
         "type": "github"
       }
     },
+    "claude-fzf-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1753522442,
+        "narHash": "sha256-SeoijCY470vz1xd7FTvEqLCwfD4k75yRrjtKBvyQS+U=",
+        "owner": "pittcat",
+        "repo": "claude-fzf.nvim",
+        "rev": "49f48154c5abf2d07281bdb6f244ae0cde6eb5eb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pittcat",
+        "repo": "claude-fzf.nvim",
+        "type": "github"
+      }
+    },
+    "claudecode-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1754661792,
+        "narHash": "sha256-b4jCKIqowkVuWhI9jxthluZISBOnIc8eOIgkw5++HRY=",
+        "owner": "coder",
+        "repo": "claudecode.nvim",
+        "rev": "985b4b117ea13ec85c92830ecac8f63543dd5ead",
+        "type": "github"
+      },
+      "original": {
+        "owner": "coder",
+        "repo": "claudecode.nvim",
+        "type": "github"
+      }
+    },
     "close-buffers-nvim": {
       "flake": false,
       "locked": {
@@ -1072,6 +1104,8 @@
     "nvim-config": {
       "inputs": {
         "blink-cmp-yanky": "blink-cmp-yanky",
+        "claude-fzf-nvim": "claude-fzf-nvim",
+        "claudecode-nvim": "claudecode-nvim",
         "close-buffers-nvim": "close-buffers-nvim",
         "flake-parts": "flake-parts_2",
         "import-nvim": "import-nvim",
@@ -1082,11 +1116,11 @@
         "sonarlint-nvim": "sonarlint-nvim"
       },
       "locked": {
-        "lastModified": 1754446392,
-        "narHash": "sha256-1dP2r009ofHEMxcFE0O7Egk+M5BLKjiw+TWyhfdnMn4=",
+        "lastModified": 1755308636,
+        "narHash": "sha256-8CW5ZxH9dirF/BAzZBgqUt9MatPnue1DYTQxTir6U5k=",
         "owner": "derethil",
         "repo": "nvim-config",
-        "rev": "17a33ac9a6c468aea159ce8ad2cf33fe7e3c3907",
+        "rev": "4455ad43d6ecc34f454e513cf3e1acbaa54b673f",
         "type": "github"
       },
       "original": {

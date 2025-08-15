@@ -124,6 +124,7 @@
         glace-shell.flakeModules.default
         mac-app-util.homeManagerModules.default
         sops-nix.homeManagerModules.sops
+        nvim-config.homeManagerModules.nvim-config
         common-modules
       ];
     nix.settings = {
