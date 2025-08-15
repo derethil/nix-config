@@ -16,7 +16,7 @@ in {
       nightStartHour = mkOpt types.int 22 "Hour when Night Shift turns on (0-23).";
       nightStartMinute = mkOpt types.int 0 "Minute when Night Shift turns on (0-59).";
     };
-    colorTemperature = mkOpt types.float 3433.05 "Color temperature target (2000-6500K range).";
+    colorTemperature = mkOpt types.float 3233.05 "Color temperature target (2000-6500K range).";
   };
 
   config = mkIf cfg.enable {
