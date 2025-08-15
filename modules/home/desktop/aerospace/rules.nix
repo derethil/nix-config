@@ -37,9 +37,10 @@ in {
         (mkAppRule "com.apple.MobileSMS" "move-node-to-workspace 3")
         (mkAppRule "com.usebruno.app" "move-node-to-workspace 4")
         (mkAppRule "md.obsidian" "move-node-to-workspace 4")
+        (mkAppRule "com.spotify.client" "move-node-to-workspace 4")
         (mkAppRule "org.gorilladevs.GDLauncher" "move-node-to-workspace 5")
         (mkAppRule "com.smartcodeltd.stremio" "move-node-to-workspace 5")
-        (mkAppRule "com.spotify.client" "move-node-to-workspace 5")
+        (mkAppRule "com.valvesoftware.steam" "move-node-to-workspace 5")
       ];
     };
   };

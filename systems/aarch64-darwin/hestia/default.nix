@@ -11,6 +11,7 @@ in {
   };
   apps = {
     mattermost = enabled;
+    steam = enabled;
   };
   desktop = {
     night-shift = enabled;
@@ -31,6 +32,7 @@ in {
         {app = "/Users/${config.user.name}/Applications/Home Manager Apps/Spotify.app";}
         {app = "/Applications/Stremio.app";}
         {app = "/Applications/GDLauncher.app";}
+        {app = "/Applications/Steam.app";}
       ];
     };
   };
