@@ -7,17 +7,13 @@
   cfg = config.desktop.aerospace;
 
   mkAppRule = appid: commands: {
-    "if" = {
-      app-id = appid;
-    };
     run = commands;
+    "if" = {app-id = appid;};
   };
 
   mkTitleRule = title: commands: {
-    "if" = {
-      window-title-regex-substring = title;
-    };
     run = commands;
+    "if" = {window-title-regex-substring = title;};
   };
 in {
   config = mkIf cfg.enable {
