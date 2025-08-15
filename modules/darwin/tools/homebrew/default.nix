@@ -9,8 +9,9 @@
   cfg = config.tools.homebrew;
 in {
   options.tools.homebrew = {
-    enable = mkBoolOpt true "Whether to enable Homebrew configuration.";
+    enable = mkBoolOpt (cfg.macApps != {} || cfg.casks != []) "Whether to enable Homebrew configuration.";
     macApps = mkOpt (types.attrsOf types.int) {} "List of Mac App Store application IDs to install.";
+    casks = mkOpt (types.listOf types.str) [] "List of Homebrew casks to install.";
   };
 
   config = mkIf cfg.enable {
@@ -20,6 +21,7 @@ in {
     homebrew = {
       enable = true;
       masApps = mkIf (cfg.macApps != {}) cfg.macApps;
+      casks = mkIf (cfg.casks != []) cfg.casks;
       onActivation = {
         cleanup = "zap";
       };
