@@ -1,12 +1,11 @@
 {
-  pkgs,
   config,
   lib,
-  inputs,
+  pkgs,
   ...
-}:
-with lib;
-with internal; let
+}: let
+  inherit (lib) mkIf;
+  inherit (lib.internal) mkBoolOpt;
   cfg = config.tools.neovim;
 in {
   options.tools.neovim = {
@@ -14,14 +13,13 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = [
-      inputs.nvim-config.packages.${pkgs.system}.default
-    ];
-    secrets. "neovim/tavily_api_key" = {};
-    home.sessionVariables = {
-      EDITOR = "nvim";
-      VISUAL = "nvim";
-      TAVILY_API_KEY = "$(cat ${config.sops.secrets."neovim/tavily_api_key".path})";
+    programs.nvim-config = {
+      enable = true;
+      defaultEditor = true;
+      claude = {
+        enable = true;
+        package = pkgs.claude-code;
+      };
     };
   };
 }
