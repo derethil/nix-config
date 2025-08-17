@@ -1116,11 +1116,11 @@
         "sonarlint-nvim": "sonarlint-nvim"
       },
       "locked": {
-        "lastModified": 1755308636,
-        "narHash": "sha256-8CW5ZxH9dirF/BAzZBgqUt9MatPnue1DYTQxTir6U5k=",
+        "lastModified": 1755467903,
+        "narHash": "sha256-JmMF3DLMPS7/si/6svGV7qCWrIGwYzNuPmsMne3+OIQ=",
         "owner": "derethil",
         "repo": "nvim-config",
-        "rev": "4455ad43d6ecc34f454e513cf3e1acbaa54b673f",
+        "rev": "2f0b62d3564b7767e78adf129b16508e62028fdd",
         "type": "github"
       },
       "original": {
@@ -1236,11 +1236,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1755190637,
-        "narHash": "sha256-bEt1kTvvEzPugB2YW2nx9HWZ6ArR7Dvkce/UYxCcqO8=",
+        "lastModified": 1755464140,
+        "narHash": "sha256-NaTVjNvRNUQ2cGZIIsmYCx5A+h6/5EeUxWH8wMSh9dM=",
         "ref": "main",
-        "rev": "3c6d7c3f0480c6b7ac92c8732a89e0e108a9ebc9",
-        "revCount": 3,
+        "rev": "2fc483a73c69828c26beb12ceba11995492f3999",
+        "revCount": 4,
         "type": "git",
         "url": "ssh://git@github.com/derethil/nix-secrets"
       },
