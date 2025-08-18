@@ -114,6 +114,9 @@
       allowUnfree = true;
       allowUnfreePredicate = _: true;
     };
+    templates = {
+      dragonarmy-npm-golang.description = "A template for Node.js and Go development using devenv";
+    };
     systems.modules.darwin = with inputs;
       nixpkgs.lib.flatten [
         common-modules
