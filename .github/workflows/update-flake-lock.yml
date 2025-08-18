@@ -36,8 +36,6 @@ jobs:
           pr-labels: |
             dependencies
             automation
-          pr-reviewers: |
-            derethil
       - name: Print summary
         env:
           num: ${{ steps.update.outputs.pull-request-number }}
