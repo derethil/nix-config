@@ -33,6 +33,10 @@ jobs:
           branch: update-flake/${{ github.ref_name }}
           commit-msg: "chore(flake): update lockfile"
           pr-title: "chore(flake): update flake inputs"
+          pr-body: |
+            Automated updates by the [update-flake-lock](https://github.com/DeterminateSystems/update-flake-lock) GitHub Action.
+
+            ```{{ env.GIT_COMMIT_MESSAGE }}```
           pr-labels: |
             dependencies
             automation
