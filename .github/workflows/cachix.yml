@@ -1,0 +1,62 @@
+name: "Build and populate cache"
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ contains(matrix.system, 'darwin') && 'macos-latest' || 'ubuntu-latest' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Darwin Systems
+          - type: "darwinConfigurations"
+            config: "hestia"
+            system: "aarch64-darwin"
+            attribute: "system"
+          
+          # Home Configurations
+          - type: "homeConfigurations"
+            config: "derethil@hestia"
+            system: "aarch64-darwin"
+            attribute: "activationPackage"
+          # Can't run for now, needs --impure on an Nvidia system due to NixGL
+          # - type: "homeConfigurations"
+          #   config: "derethil@artemis" 
+          #   system: "x86_64-linux"
+          #   attribute: "activationPackage"
+          #   impure: true
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up SSH for nix-secrets repository access
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.NIX_SECRETS_SSH_KEY }}
+
+      - name: Install nix
+        uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+          extra_nix_config: |
+            system-features = nixos-test benchmark big-parallel kvm
+
+      - name: Setup cachix
+        uses: cachix/cachix-action@v16
+        with:
+          name: derethil
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+
+      - name: Build ${{ matrix.type }}.${{ matrix.config }}
+        run: |
+          nix build .#${{ matrix.type }}.${{ matrix.config }}.${{ matrix.attribute }} \
+            ${{ matrix.impure && '--impure' || '' }} \
+            --print-build-logs \
+            --system ${{ matrix.system }}
+
