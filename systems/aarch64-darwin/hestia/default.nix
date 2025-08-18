@@ -12,6 +12,7 @@ in {
   apps = {
     mattermost = enabled;
     steam = enabled;
+    stremio = enabled;
   };
   desktop = {
     night-shift = enabled;

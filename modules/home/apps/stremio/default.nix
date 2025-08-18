@@ -3,9 +3,9 @@
   config,
   pkgs,
   ...
-}:
-with lib;
-with internal; let
+}: let
+  inherit (lib) mkIf;
+  inherit (lib.internal) mkBoolOpt;
   cfg = config.apps.stremio;
 in {
   options.apps.stremio = {
@@ -16,3 +16,4 @@ in {
     (mkIf cfg.enable stremio)
   ];
 }
+
