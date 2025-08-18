@@ -1,4 +1,4 @@
-name: Update flake.lock
+name: "chore(flake): update flake inputs"
 on:
   workflow_dispatch:
   schedule:
@@ -29,8 +29,10 @@ jobs:
         id: update
         uses: DeterminateSystems/update-flake-lock@main
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: update_flake/${{ github.ref_name }}
+          token: ${{ secrets.GH_TOKEN_FOR_FLAKE_UPDATE }}
+          branch: update-flake/${{ github.ref_name }}
+          commit-msg: "chore(flake): update lockfile"
+          pr-title: "chore(flake): update flake inputs"
           pr-labels: |
             dependencies
             automation
