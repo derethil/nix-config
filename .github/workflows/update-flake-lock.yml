@@ -1,4 +1,4 @@
-name: "chore(flake): update flake inputs"
+name: Update Flake Inputs
 on:
   workflow_dispatch:
   schedule:
@@ -36,8 +36,6 @@ jobs:
           pr-labels: |
             dependencies
             automation
-          pr-reviewers: |
-            derethil
       - name: Print summary
         env:
           num: ${{ steps.update.outputs.pull-request-number }}
