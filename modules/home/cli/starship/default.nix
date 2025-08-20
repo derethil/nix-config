@@ -37,6 +37,7 @@ in {
         git_branch.style = "bold cyan";
         git_metrics.disabled = false;
         nodejs.style = "bold green";
+        nix_shell.symbol = "❄️";
         package.disabled = true;
         python.symbol = " ";
       };
