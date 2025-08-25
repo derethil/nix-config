@@ -26,7 +26,7 @@ in {
             y = 6;
           };
           opacity = 1.0;
-          option_as_alt = mkIf pkgs.stdenv.hostPlatform.isDarwin "Both";
+          option_as_alt = mkIf pkgs.stdenv.hostPlatform.isDarwin "OnlyLeft";
         };
         font = {
           normal = {
