@@ -23,7 +23,7 @@ in {
           Bluetooth = false;
           Display = false;
           FocusModes = true;
-          NowPlaying = true;
+          NowPlaying = !config.apps.mediamate.enable;
           Sound = true;
         };
 
