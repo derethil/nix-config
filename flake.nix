@@ -120,6 +120,7 @@
     };
     systems.modules.darwin = with inputs;
       nixpkgs.lib.flatten [
+        sops-nix.darwinModules.sops
         common-modules
       ];
     homes.modules = with inputs;
