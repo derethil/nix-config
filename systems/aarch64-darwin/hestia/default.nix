@@ -18,6 +18,9 @@ in {
   desktop = {
     night-shift = enabled;
   };
+  tools = {
+    nh = enabled;
+  };
   system = {
     fonts = enabled;
     nix = enabled;
