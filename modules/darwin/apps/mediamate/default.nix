@@ -45,6 +45,11 @@ in {
         nowPlayingHideSongTitleExtras = false;
         nowPlayingNotchThemeButtons = 7;
         nowPlayingShowCloseButton = false;
+        nowPlayingShowOnChange = 2;
+        nowPlayingShowOnLockscreen = 0;
+        nowPlayingShowOnPause = false;
+        nowPlayingShowOnPlay = false;
+        nowPlayingShowOnVolumeChange = false;
         nowPlayingTheme = "{\"all\":{\"_0\":{\"notch\":{}}}}";
         nowPlayingUseScriptingBridge = false;
 
