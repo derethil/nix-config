@@ -33,6 +33,9 @@ in {
         SUEnableAutomaticChecks = true;
         SUSendProfileInfo = false;
 
+        # Volume
+        listenToExternalChanges = true;
+
         # HUD Settings
         hideNativeHUDsForAudio = "{\"name\":\"Lunar\"}";
         hideNativeHUDsForBrightness = "{\"name\":\"Lunar\"}";
@@ -50,8 +53,9 @@ in {
         nowPlayingShowOnPause = false;
         nowPlayingShowOnPlay = false;
         nowPlayingShowOnVolumeChange = false;
+        nowPlayingHideDelay = 3;
         nowPlayingTheme = "{\"all\":{\"_0\":{\"notch\":{}}}}";
-        nowPlayingUseScriptingBridge = false;
+        nowPlayingUseScriptingBridge = true;
 
         # Display Settings
         notchUseMenubarHeightOnNormalDisplays = false;
