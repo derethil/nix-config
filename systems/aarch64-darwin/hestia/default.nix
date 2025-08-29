@@ -3,7 +3,7 @@
   config,
   ...
 }: let
-  inherit (lib.internal) enabled enabled';
+  inherit (lib.internal) enabled enabled' disabled;
 in {
   user = {
     name = "derethil";
@@ -39,6 +39,11 @@ in {
         {app = "/Applications/GDLauncher.app";}
         {app = "/Applications/Steam.app";}
       ];
+    };
+    hotkeys = enabled' {
+      windows = disabled;
+      spotlight = enabled;
+      inputSources = disabled;
     };
   };
   cli = {

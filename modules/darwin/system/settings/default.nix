@@ -141,11 +141,6 @@ in {
           StandardHideDesktopIcons = false;
         };
       };
-
-      keyboard = {
-        enableKeyMapping = true;
-        remapCapsLockToEscape = true;
-      };
     };
   };
 }
