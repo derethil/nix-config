@@ -13,10 +13,10 @@ in {
     mattermost = enabled;
     steam = enabled;
     stremio = enabled;
-    mediamate = enabled;
   };
   desktop = {
     night-shift = enabled;
+    mediamate = enabled;
   };
   tools = {
     nh = enabled;

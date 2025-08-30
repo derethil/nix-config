@@ -5,9 +5,9 @@
 }: let
   inherit (lib) mkIf;
   inherit (lib.internal) mkBoolOpt;
-  cfg = config.apps.mediamate;
+  cfg = config.desktop.mediamate;
 in {
-  options.apps.mediamate = {
+  options.desktop.mediamate = {
     enable = mkBoolOpt true "Whether to enable Mediamate, a Dynamic Island app for media controls.";
   };
 
