@@ -41,7 +41,7 @@ in {
         DisplayBookmarksToolbar = "never";
         PasswordManagerEnabled = false;
         # Lock configuration
-        BlockAboutAddons = true;
+        BlockAboutAddons = false;
         DisableSystemAddonUpdate = true;
       };
 
@@ -118,7 +118,7 @@ in {
           private-relay
 
           bitwarden
-          darkreader
+          pkgs.internal.ultimadark
           theater-mode-for-youtube
           tridactyl
 

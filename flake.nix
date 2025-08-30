@@ -52,6 +52,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    ultimadark = {
+      url = "github:ThomazPom/Moz-Ext-UltimaDark";
+      flake = false;
+    };
+
     icon-browser = {
       url = "github:aylur/icon-browser";
       inputs.nixpkgs.follows = "nixpkgs";

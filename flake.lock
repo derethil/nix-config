@@ -1377,7 +1377,8 @@
         "sops-nix": "sops-nix",
         "tmux-power-zoom": "tmux-power-zoom",
         "tmux-theme": "tmux-theme",
-        "trashy": "trashy"
+        "trashy": "trashy",
+        "ultimadark": "ultimadark"
       }
     },
     "root-nvim": {
@@ -1689,6 +1690,22 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "ultimadark": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1755982510,
+        "narHash": "sha256-PzjU32g3b4V83xJeJDbC2zLKlVU2x1WZ2AwLkaZeGHE=",
+        "owner": "ThomazPom",
+        "repo": "Moz-Ext-UltimaDark",
+        "rev": "9021d8475dd82f0c576cb357b94e9aede006c7fc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ThomazPom",
+        "repo": "Moz-Ext-UltimaDark",
         "type": "github"
       }
     },
