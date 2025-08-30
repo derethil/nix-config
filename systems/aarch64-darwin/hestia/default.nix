@@ -17,6 +17,7 @@ in {
   desktop = {
     night-shift = enabled;
     mediamate = enabled;
+    homerow = enabled;
   };
   tools = {
     nh = enabled;
