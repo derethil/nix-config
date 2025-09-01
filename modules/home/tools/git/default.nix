@@ -121,7 +121,10 @@ in {
       extraConfig = {
         init.defaultBranch = "main";
         core.editor = "nvim";
-        credential.helper = if pkgs.stdenv.isDarwin then "osxkeychain" else "cache --timeout=3600";
+        credential.helper =
+          if pkgs.stdenv.isDarwin
+          then "osxkeychain"
+          else "cache --timeout=3600";
         push.autoSetupremote = true;
         pull.ff = "only";
       };
@@ -140,7 +143,9 @@ in {
         ".python-version"
         ".typos.toml"
         "**/.golangci.yml"
+
         "CLAUDE.md"
+        ".claude/"
 
         ".devenv*"
         "devenv.nix"
