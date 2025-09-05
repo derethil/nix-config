@@ -80,6 +80,22 @@
         "type": "github"
       }
     },
+    "beam-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1756577172,
+        "narHash": "sha256-wMSB9nUvgzep8xdEONO3HXxp8ozqrldK4wIi1sqtWV4=",
+        "owner": "Piotr1215",
+        "repo": "beam.nvim",
+        "rev": "a37feb828398426f1ee0e6c7ea31ae9b282a1703",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Piotr1215",
+        "repo": "beam.nvim",
+        "type": "github"
+      }
+    },
     "blink-cmp-yanky": {
       "flake": false,
       "locked": {
@@ -1322,6 +1338,7 @@
     },
     "nvim-config": {
       "inputs": {
+        "beam-nvim": "beam-nvim",
         "blink-cmp-yanky": "blink-cmp-yanky",
         "claude-fzf-nvim": "claude-fzf-nvim",
         "claudecode-nvim": "claudecode-nvim",
@@ -1336,11 +1353,11 @@
         "sonarlint-nvim": "sonarlint-nvim"
       },
       "locked": {
-        "lastModified": 1756252278,
-        "narHash": "sha256-uIP0+bUJYPO5Solu0njsMXs+lKmNioD1YEE2eLr7S6I=",
+        "lastModified": 1757111868,
+        "narHash": "sha256-wbNZqr6dBH4UQ0/S/8ITQPY8WjYItf4a5BcE3LMgqMA=",
         "owner": "derethil",
         "repo": "nvim-config",
-        "rev": "697c681f2328ce7a91bf8e86d28d41ef409b636b",
+        "rev": "2cb2bd8ae9a47831768d96c011916ef51108223a",
         "type": "github"
       },
       "original": {
