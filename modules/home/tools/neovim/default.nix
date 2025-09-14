@@ -15,7 +15,10 @@ in {
   config = mkIf cfg.enable {
     programs.nvim-config = {
       enable = true;
-      defaultEditor = true;
+      neovim = {
+        defaultEditor = true;
+        nightly = false;
+      };
       claude = {
         enable = true;
         package = pkgs.claude-code;
