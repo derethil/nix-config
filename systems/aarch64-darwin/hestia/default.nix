@@ -21,6 +21,7 @@ in {
   };
   tools = {
     nh = enabled;
+    reset-launch-services = enabled;
   };
   system = {
     fonts = enabled;
