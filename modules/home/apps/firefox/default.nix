@@ -116,6 +116,7 @@ in {
           sponsorblock
           ublock-origin
           private-relay
+          clearurls
 
           bitwarden
           darkreader
