@@ -117,6 +117,7 @@
     templates = {
       dragonarmy-npm-golang.description = "A template for Node.js and Go development using devenv";
       npm.description = "A template for Node.js development using devenv";
+      python.description = "A template for Python development using devenv and uv";
     };
     systems.modules.darwin = with inputs;
       nixpkgs.lib.flatten [
