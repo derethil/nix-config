@@ -117,6 +117,7 @@ in {
           ublock-origin
           private-relay
           clearurls
+          i-dont-care-about-cookies
 
           bitwarden
           darkreader
