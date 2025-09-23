@@ -11,14 +11,15 @@ in {
 
   options.languages.golang = {
     enable = mkBoolOpt false "Whether to enable Golang language support";
-    goPath = mkOpt types.str "${config.xdg.dataHome}/go" "GOPATH directory";
   };
 
   config = mkIf cfg.enable {
     programs.go = {
       enable = true;
-      goBin = ".local/bin";
-      goPath = cfg.goPath;
+      env = {
+        GOBIN = "${config.home.homeDirectory}/.local/bin";
+        GOPATH = "${config.xdg.dataHome}/go";
+      };
     };
   };
 }
