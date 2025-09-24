@@ -122,14 +122,15 @@
     systems.modules.darwin = with inputs;
       nixpkgs.lib.flatten [
         sops-nix.darwinModules.sops
+        mac-app-util.darwinModules.default
         common-modules
       ];
     homes.modules = with inputs;
       nixpkgs.lib.flatten [
         nix-flatpak.homeManagerModules.nix-flatpak
         glace-shell.flakeModules.default
-        mac-app-util.homeManagerModules.default
         sops-nix.homeManagerModules.sops
+        mac-app-util.homeManagerModules.default
         nvim-config.homeManagerModules.nvim-config
         common-modules
       ];
