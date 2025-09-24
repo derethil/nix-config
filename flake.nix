@@ -134,31 +134,18 @@
         nvim-config.homeManagerModules.nvim-config
         common-modules
       ];
-    nix.settings = {
-      substituters = [
-        "https://nix-community.cachix.org"
-        "https://hyprland.cachix.org"
-        "https://cache.nixos.org"
-      ];
-      trusted-substituters = [
-        "https://nix-community.cachix.org"
-        "https://hyprland.cachix.org"
-        "https://cache.nixos.org"
-      ];
-      trusted-public-keys = [
-        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-      ];
-    };
   });
 
   nixConfig = {
     extra-substituters = [
+      "https://nix-community.cachix.org"
       "https://derethil.cachix.org"
+      "https://hyprland.cachix.org"
     ];
     extra-trusted-public-keys = [
       "derethil.cachix.org-1:4v8v6Oo2UHdB3FKutgQ2z3O9L++ukejhGvQFg6Pjsfc="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
     ];
   };
 }
