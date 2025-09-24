@@ -1353,11 +1353,11 @@
         "sonarlint-nvim": "sonarlint-nvim"
       },
       "locked": {
-        "lastModified": 1757896415,
-        "narHash": "sha256-DBKv3r68RX/48C2Cv/kWQdheEYfMA0pZ4mkf4b4dKA4=",
+        "lastModified": 1758748435,
+        "narHash": "sha256-8MT20afsNYXL1K0Eckl5/hO+klpbsLL2dQFZmoFW7k0=",
         "owner": "derethil",
         "repo": "nvim-config",
-        "rev": "f66f3b124a5df6b1de9f10eb97bb2a36e3da403e",
+        "rev": "166cfb3a3360b6a731dbeee65b65d1cca0e6d8ce",
         "type": "github"
       },
       "original": {
