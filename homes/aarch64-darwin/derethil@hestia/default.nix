@@ -38,6 +38,7 @@ with internal; {
     nix-index = enabled;
     postgresql = enabled;
     home-manager = enabled;
+    qemu = enabled;
   };
   cli = {
     fish = enabled;
