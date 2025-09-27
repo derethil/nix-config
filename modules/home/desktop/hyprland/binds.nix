@@ -27,8 +27,7 @@ in {
           "$mod, C, exec, shader=$(hyprshade current) ; hyprshade off ; hyprpicker -a ; hyprshade on \"$${shader}\""
 
           # Exit Session
-          # "$mod, End, exec, uwsm stop"
-          "$mod, End, exec, hyprctl exit"
+          "$mod, End, exec, uwsm stop"
 
           # Pulse (Command Palette)
           "$mod, Slash, exec, astal toggle pulse"
