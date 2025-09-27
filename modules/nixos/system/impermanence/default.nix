@@ -21,6 +21,7 @@ in {
         "/var/db/sudo"
         "/var/lib/nixos"
         "/var/lib/systemd/coredump"
+        "/var/lib/bluetooth"
       ];
 
       files = [

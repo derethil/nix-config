@@ -15,13 +15,24 @@ in {
   config = mkIf cfg.enable {
     services.greetd = {
       enable = true;
-      settings = {
+      useTextGreeter = true;
+      settings = rec {
         default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd uwsm start";
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --remember-session";
           user = "greeter";
         };
+        initial_session = default_session;
       };
+    };
+
+    # Fix greeter user/group to prevent dbus reload issues
+    users.users.greeter = {
+      isSystemUser = true;
+      group = "greeter";
+      uid = 995;
+    };
+    users.groups.greeter = {
+      gid = 993;
     };
   };
 }
-
