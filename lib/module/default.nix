@@ -126,24 +126,24 @@ with lib; rec {
   #@ AttrSet -> AttrSet
   disabled' = attrs: attrs // disabled;
 
-  ## mkPackageOption
+  ## mkPackageOpt
 
   ## Create a nullable package option with null default.
   ##
   ## ```nix
-  ## lib.mkPackageOption "Web browser package to use."
+  ## lib.mkPackageOpt "Web browser package to use."
   ## ```
   ##
-  #@ String -> Option
-  mkPackageOption = description:
-    mkNullableOpt types.package null description;
+  #@ Package -> String -> Option
+  mkPackageOpt = package: description:
+    mkNullableOpt types.package package description;
 
   ## Create a nullable package option without a description.
   ##
   ## ```nix
-  ## lib.mkPackageOption'
+  ## lib.mkPackageOpt'
   ## ```
   ##
-  #@ Option
-  mkPackageOption' = mkNullableOpt types.package null null;
+  #@ Package -> Option
+  mkPackageOpt' = package: mkNullableOpt types.package package null;
 }

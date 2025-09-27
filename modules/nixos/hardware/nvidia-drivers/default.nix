@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (lib) mkIf mkOption types;
-  inherit (lib.internal) mkBoolOpt mkPackageOption;
+  inherit (lib.internal) mkBoolOpt mkPackageOpt;
   cfg = config.hardware.nvidia-drivers;
 in {
   options.hardware.nvidia-drivers = {
@@ -26,7 +26,7 @@ in {
       default = "stable";
       description = "The NVIDIA driver channel to use. Specify 'custom' to use a custom driver package.";
     };
-    package = mkPackageOption "Custom NVIDIA driver package to use. This option is used when 'channel' is set to 'custom'";
+    package = mkPackageOpt "Custom NVIDIA driver package to use. This option is used when 'channel' is set to 'custom'";
   };
 
   config = mkIf cfg.enable {
