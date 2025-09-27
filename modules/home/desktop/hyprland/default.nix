@@ -29,6 +29,5 @@ in {
       package = config.lib.nixGL.wrap pkgs.hyprland;
       systemd.enable = false;
     };
-    programs.hyprland.withUSM = true;
   };
 }

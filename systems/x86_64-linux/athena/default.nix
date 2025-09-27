@@ -19,6 +19,10 @@ in {
     fonts = enabled;
     impermanence = enabled;
   };
+  desktop = {
+    hyprland = enabled;
+    uwsm = enabled;
+  };
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
