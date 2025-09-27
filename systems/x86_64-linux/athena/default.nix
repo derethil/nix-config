@@ -25,6 +25,9 @@ in {
     display-managers = {
       tuigreet = enabled;
     };
+    addons = {
+      dconf = enabled;
+    };
   };
 
   boot.loader.systemd-boot.enable = true;
