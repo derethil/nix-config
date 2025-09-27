@@ -22,6 +22,9 @@ in {
   desktop = {
     hyprland = enabled;
     uwsm = enabled;
+    display-managers = {
+      tuigreet = enabled;
+    };
   };
 
   boot.loader.systemd-boot.enable = true;
