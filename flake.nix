@@ -40,6 +40,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    impermanence = {
+      url = "github:nix-community/impermanence";
+    };
+
     secrets = {
       url = "git+ssh://git@github.com/derethil/nix-secrets?ref=main";
       flake = false;
@@ -128,6 +132,7 @@
     systems.modules.nixos = with inputs;
       nixpkgs.lib.flatten [
         sops-nix.nixosModules.sops
+        impermanence.nixosModules.impermanence
         common-modules
       ];
     homes.modules = with inputs;
@@ -137,6 +142,7 @@
         sops-nix.homeManagerModules.sops
         mac-app-util.homeManagerModules.default
         nvim-config.homeManagerModules.nvim-config
+        impermanence.homeManagerModules.impermanence
         common-modules
       ];
   });

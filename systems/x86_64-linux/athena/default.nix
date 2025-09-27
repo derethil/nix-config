@@ -17,6 +17,7 @@ in {
   };
   system = {
     fonts = enabled;
+    impermanence = enabled;
   };
 
   boot.loader.systemd-boot.enable = true;
