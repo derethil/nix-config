@@ -125,6 +125,11 @@
         mac-app-util.darwinModules.default
         common-modules
       ];
+    systems.modules.nixos = with inputs;
+      nixpkgs.lib.flatten [
+        sops-nix.nixosModules.sops
+        common-modules
+      ];
     homes.modules = with inputs;
       nixpkgs.lib.flatten [
         nix-flatpak.homeManagerModules.nix-flatpak
