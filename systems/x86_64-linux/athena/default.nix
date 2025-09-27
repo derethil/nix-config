@@ -1,9 +1,5 @@
-{
-  pkgs,
-  lib,
-  ...
-}: let
-  inherit (lib.internal) enabled;
+{lib, ...}: let
+  inherit (lib.internal) enabled enabled';
 in {
   imports = [
     ./hardware.nix
@@ -18,6 +14,9 @@ in {
   system = {
     fonts = enabled;
     impermanence = enabled;
+    boot = enabled' {
+      plymouth = enabled;
+    };
   };
   desktop = {
     hyprland = enabled;
@@ -29,11 +28,6 @@ in {
       dconf = enabled;
     };
   };
-
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "athena";
 
