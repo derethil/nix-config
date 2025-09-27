@@ -12,6 +12,9 @@ in {
   tools = {
     nh = enabled;
   };
+  hardware = {
+    nvidia-drivers = enabled;
+  };
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

@@ -1,7 +1,6 @@
 {lib, ...}:
 with lib;
 with internal; {
-  distro = "arch";
   user = {
     location.latitude = 39.7392;
     location.longitude = -104.9903;
@@ -39,7 +38,6 @@ with internal; {
   tools = {
     devenv = enabled;
     manix = enabled;
-    nixgl = enabled;
     aws-cli = enabled;
     git = enabled;
     jira-cli = enabled;
@@ -65,7 +63,6 @@ with internal; {
     chafa = enabled;
   };
   hardware = {
-    nvidia = enabled;
     displays = [
       {
         name = "Ultrawide";
