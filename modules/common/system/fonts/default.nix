@@ -18,9 +18,18 @@ in {
   };
 
   config = mkIf cfg.enable {
-    system.fonts.mono = {
-      name = "GeistMono Nerd Font Mono";
-      package = pkgs.nerd-fonts.geist-mono;
+    system.fonts = {
+      mono = {
+        name = "GeistMono Nerd Font Mono";
+        package = pkgs.nerd-fonts.geist-mono;
+      };
+      extraFonts = with pkgs; [
+        noto-fonts
+        noto-fonts-emoji
+        noto-fonts-color-emoji
+        noto-fonts-cjk-sans
+        noto-fonts-cjk-serif
+      ];
     };
   };
 }
