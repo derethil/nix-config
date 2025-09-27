@@ -50,6 +50,21 @@ in {
       x11.enable = true;
     };
 
+    dconf = {
+      enable = true;
+      settings = {
+        "org/gnome/desktop/interface" = {
+          color-scheme = "prefer-dark";
+          cursor-size = cfg.cursor.size;
+          cursor-theme = cfg.cursor.name;
+          enable-hot-corners = false;
+          font-name = "${cfg.font.name} ${toString cfg.font.size}";
+          gtk-theme = cfg.theme.name;
+          icon-theme = cfg.icon-theme.name;
+        };
+      };
+    };
+
     gtk = {
       enable = true;
       gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
