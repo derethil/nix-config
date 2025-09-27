@@ -7,35 +7,35 @@ with internal; {
     location.longitude = -104.9903;
     userdirs = enabled;
   };
-  apps = {
-    foot = enabled;
-    firefox = enabled;
-    chromium = enabled;
-    gtk-icon-browser = enabled;
-    discord = enabled;
-    vesktop = disabled;
-    stremio = disabled;
-    obs = enabled;
-    obsidian = enabled;
-    spotify = enabled;
-    insomnia = enabled;
-    mattermost = enabled;
-    gdlauncher = enabled;
-    heroic = disabled;
-    r2modman = enabled;
-  };
-  desktop = {
-    glace-shell = disabled;
-    hyprland = enabled;
-    xdg = enabled;
-    addons = {
-      wlsunset = enabled;
-      cliphist = enabled;
-      gtk = enabled;
-      wallpapers = enabled;
-      hyprpaper = enabled;
-    };
-  };
+  # apps = {
+  #   foot = enabled;
+  #   firefox = enabled;
+  #   chromium = enabled;
+  #   gtk-icon-browser = enabled;
+  #   discord = enabled;
+  #   vesktop = disabled;
+  #   stremio = disabled;
+  #   obs = enabled;
+  #   obsidian = enabled;
+  #   spotify = enabled;
+  #   insomnia = enabled;
+  #   mattermost = enabled;
+  #   gdlauncher = enabled;
+  #   heroic = disabled;
+  #   r2modman = enabled;
+  # };
+  # desktop = {
+  #   glace-shell = disabled;
+  #   hyprland = enabled;
+  #   xdg = enabled;
+  #   addons = {
+  #     wlsunset = enabled;
+  #     cliphist = enabled;
+  #     gtk = enabled;
+  #     wallpapers = enabled;
+  #     hyprpaper = enabled;
+  #   };
+  # };
   tools = {
     devenv = enabled;
     manix = enabled;
@@ -48,10 +48,10 @@ with internal; {
     nix-index = enabled;
     postgresql = enabled;
     home-manager = enabled;
-    sober = enabled;
-    hyprpicker = enabled;
-    hyprshot = enabled;
-    hyprprop = enabled;
+    # sober = enabled;
+    # hyprpicker = enabled;
+    # hyprshot = enabled;
+    # hyprprop = enabled;
   };
   cli = {
     fish = enabled;
