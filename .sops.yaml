@@ -1,9 +1,10 @@
-
 keys:
   - &hestia age1a5qhde7fv4uxp4408yy708xk0ec7gthu2t7p0dmperaghcj7lffq7l0sl4
+  - &athena age10hsnvtcqralufks4kxujncn3aqvx0dveddx66vhgv6ksgrwspe2s6eecre
 
 creation_rules:
   - path_regex: .*secrets\.yaml$
     key_groups:
       - age:
           - *hestia
+          - *athena
