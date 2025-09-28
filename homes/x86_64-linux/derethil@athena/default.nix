@@ -24,15 +24,14 @@ with internal; {
     r2modman = enabled;
   };
   desktop = {
-    glace-shell = disabled;
     hyprland = enabled;
+    dank-material-shell = enabled;
     xdg = enabled;
     addons = {
       wlsunset = enabled;
       cliphist = enabled;
       gtk = enabled;
       wallpapers = enabled;
-      hyprpaper = enabled;
     };
   };
   tools = {

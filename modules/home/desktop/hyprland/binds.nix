@@ -24,32 +24,27 @@ in {
 
         bind = flatten [
           # Color Picker
-          "$mod, C, exec, shader=$(hyprshade current) ; hyprshade off ; hyprpicker -a ; hyprshade on \"$${shader}\""
+          "$mod, R, exec, shader=$(hyprshade current) ; hyprshade off ; hyprpicker -a ; hyprshade on \"$${shader}\""
 
           # Exit Session
           "$mod, End, exec, uwsm stop"
 
-          # Pulse (Command Palette)
-          "$mod, Slash, exec, astal toggle pulse"
-
           # Audio Control
-          ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+"
-          ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-"
-          ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+          (optionals cfg.binds.defaultAudioBinds [
+            ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+"
+            ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-"
+            ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
 
-          "CONTROL, XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 10%+"
-          "CONTROL, XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 10%-"
-          "CONTROL, XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+            "CONTROL, XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 10%+"
+            "CONTROL, XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 10%-"
+            "CONTROL, XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+          ])
 
           # Screen Backlight Control
-          ", XF86MonBrightnessUp, exec, brightnessctl set 10%+"
-          ", XF86MonBrightnessDown, exec, brightnessctl set 10%-"
-
-          # Media Control
-          ", XF86AudioStop, exec, astal-mpris stop"
-          ", XF86AudioPause, exec, astal-mpris play-pause"
-          ", XF86AudioNext, exec, astal-mpris next"
-          ", XF86AudioPrev, exec, astal-mpris previous"
+          (optionals cfg.binds.defaultBrightnessBinds [
+            ", XF86MonBrightnessUp, exec, brightnessctl set 10%+"
+            ", XF86MonBrightnessDown, exec, brightnessctl set 10%-"
+          ])
 
           # Screenshots
           ", Print, exec, shader=$(hyprshade current) ; hyprshade off ; hyprshot -m region --clipboard-only ; hyprshade on \"$${shader}\""
@@ -110,12 +105,6 @@ in {
           # Scroll through existing workspaces
           "$mod, mouse_up, exec, ~/.local/bin/scrollworkspace next"
           "$mod, mouse_down, exec, ~/.local/bin/scrollworkspace previous"
-
-          # Reload astal
-          "CTRL SHIFT, R, exec, astal -q; ags run --directory ~/.config/astal"
-
-          # DPMS
-          "$mod, P, exec, hyprctl dispatch dpms on"
         ];
 
         bindm = [

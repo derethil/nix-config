@@ -107,6 +107,11 @@
       url = "github:derethil/glace-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    dank-material-shell = {
+      url = "github:AvengeMedia/DankMaterialShell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {snowfall-lib, ...} @ inputs: let
@@ -148,6 +153,7 @@
         mac-app-util.homeManagerModules.default
         nvim-config.homeManagerModules.nvim-config
         impermanence.homeManagerModules.impermanence
+        dank-material-shell.homeModules.dankMaterialShell.default
         common-modules
       ];
   });

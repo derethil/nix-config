@@ -11,6 +11,10 @@ in {
   options.desktop.hyprland = with types; {
     enable = mkBoolOpt false "Whether to enable Hyprland desktop environment.";
     gap = mkOpt int 9 "Default outer gap size for Hyprland.";
+    binds = {
+      defaultAudioBinds = mkBoolOpt true "Whether to enable the default audio control binds that use wpctl.";
+      defaultBrightnessBinds = mkBoolOpt true "Whether to enable the default brightness control binds that use brightnessctl.";
+    };
   };
 
   imports = [
