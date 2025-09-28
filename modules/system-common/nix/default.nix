@@ -4,8 +4,9 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf types;
+  inherit (lib) mkIf types optionalAttrs;
   inherit (lib.internal) mkBoolOpt mkOpt;
+  inherit (pkgs.stdenv.hostPlatform) isDarwin;
   cfg = config.nix.config;
 in {
   options.nix.config = {
@@ -19,11 +20,14 @@ in {
     nix = {
       package = cfg.package;
 
-      optimise = {
-        automatic = true;
-        persistent = true;
-        dates = ["03:45"];
-      };
+      optimise =
+        {
+          automatic = true;
+        }
+        // optionalAttrs (!isDarwin) {
+          persistent = true;
+          dates = ["03:45"];
+        };
 
       settings = {
         experimental-features = ["nix-command" "flakes"];
