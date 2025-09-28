@@ -14,10 +14,13 @@ in {
   config = mkIf cfg.enable {
     programs.ssh = {
       enable = true;
-      addKeysToAgent = "yes";
-      forwardAgent = false;
-      serverAliveInterval = 60;
-      serverAliveCountMax = 3;
+      enableDefaultConfig = false;
+      matchBlocks."*" = {
+        addKeysToAgent = "yes";
+        forwardAgent = false;
+        serverAliveInterval = 60;
+        serverAliveCountMax = 3;
+      };
     };
 
     services.ssh-agent.enable = true;
