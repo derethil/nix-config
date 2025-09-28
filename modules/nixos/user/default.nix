@@ -13,7 +13,6 @@ in {
     email = mkOpt str "jarenglenn@gmail.com" "The email of the user.";
     uid = mkOpt int 1000 "UID of the user.";
     extraGroups = mkOpt (listOf str) [] "Groups for the user to be assigned.";
-    extraOptions = mkOpt attrs {} "Extra options passed to <option>users.user.<name></option>.";
     superuser = mkBoolOpt true "Whether the user is a superuser.";
     home = mkOpt str "/home/${cfg.name}" "Home directory of the user";
   };
@@ -21,8 +20,6 @@ in {
   config = let
     passwordPath = "nixos/users/${cfg.name}/hashedPassword";
   in {
-    users.users.root = cfg.extraOptions;
-
     secrets.${passwordPath} = {};
 
     users.users.${cfg.name} = {

@@ -4,21 +4,24 @@
   ...
 }: let
   inherit (lib) types mkIf;
-  inherit (lib.internal) mkOpt;
+  inherit (lib.internal) mkOpt mkBoolOpt;
 
   cfg = config.user;
 in {
-  options.user = {
-    name = mkOpt types.str "derethil" "The user account.";
-    fullName = mkOpt types.str "Jaren Glenn" "The full name of the user.";
-    email = mkOpt types.str "jarenglenn@gmail.com" "The email of the user.";
-    uid = mkOpt (types.nullOr types.int) 501 "The uid for the user account.";
+  options.user = with types; {
+    name = mkOpt str "derethil" "The name to use for the user account.";
+    fullName = mkOpt str "Jaren Glenn" "The full name of the user.";
+    email = mkOpt str "jarenglenn@gmail.com" "The email of the user.";
+    uid = mkOpt (nullOr int) 501 "UID of the user.";
+    extraGroups = mkOpt (listOf str) [] "Groups for the user to be assigned.";
+    superuser = mkBoolOpt true "Whether the user is a superuser.";
+    home = mkOpt str "/Users/${cfg.name}" "Home directory of the user";
   };
 
   config = {
     users.users.${cfg.name} = {
+      inherit (cfg) name home;
       uid = mkIf (cfg.uid != null) cfg.uid;
     };
   };
 }
-
