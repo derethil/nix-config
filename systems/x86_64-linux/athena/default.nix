@@ -11,6 +11,9 @@ in {
   };
   hardware = {
     nvidia-drivers = enabled;
+    networking = enabled' {
+      avahi = enabled;
+    };
   };
   system = {
     fonts = enabled;
@@ -29,10 +32,6 @@ in {
       dconf = enabled;
     };
   };
-
-  networking.hostName = "athena";
-
-  networking.networkmanager.enable = true;
 
   time.timeZone = "US/Denver";
 
