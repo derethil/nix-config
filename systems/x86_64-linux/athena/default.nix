@@ -7,6 +7,7 @@ in {
 
   tools = {
     nh = enabled;
+    neovim = enabled;
   };
   hardware = {
     nvidia-drivers = enabled;

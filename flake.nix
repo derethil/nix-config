@@ -133,6 +133,7 @@
       nixpkgs.lib.flatten [
         sops-nix.nixosModules.sops
         impermanence.nixosModules.impermanence
+        nvim-config.nixosModules.nvim-config
         common-modules
       ];
     homes.modules = with inputs;
