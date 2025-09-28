@@ -18,6 +18,7 @@ in {
   system = {
     fonts = enabled;
     impermanence = enabled;
+    time = enabled;
     boot = enabled' {
       plymouth = enabled;
     };
@@ -32,8 +33,6 @@ in {
       dconf = enabled;
     };
   };
-
-  time.timeZone = "US/Denver";
 
   services.pipewire = {
     enable = true;
