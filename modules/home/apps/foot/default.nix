@@ -6,6 +6,7 @@
 with lib;
 with internal; let
   cfg = config.apps.foot;
+  monoFont = config.system.fonts.mono;
 in {
   options.apps.foot = {
     enable = mkBoolOpt false "Whether to enable the Foot terminal.";
@@ -17,7 +18,7 @@ in {
       server.enable = true;
       settings = {
         main = {
-          font = "GeistMono NF SemiBold:size=12";
+          font = "${monoFont.name}:weight=${monoFont.style}:size=${toString monoFont.size}";
           pad = "6x6";
           selection-target = "both";
         };

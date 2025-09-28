@@ -7,7 +7,7 @@
   inherit (lib) mkIf;
   inherit (lib.internal) mkBoolOpt;
   cfg = config.apps.alacritty;
-  fontName = config.system.fonts.mono.name;
+  monoFont = config.system.fonts.mono;
 in {
   options.apps.alacritty = {
     enable = mkBoolOpt false "Whether to enable the Alacritty terminal.";
@@ -30,22 +30,22 @@ in {
         };
         font = {
           normal = {
-            family = fontName;
-            style = "SemiBold";
+            family = monoFont.name;
+            style = monoFont.style;
           };
           bold = {
-            family = fontName;
+            family = monoFont.name;
             style = "Bold";
           };
           italic = {
-            family = fontName;
+            family = monoFont.name;
             style = "SemiBold Italic";
           };
           bold_italic = {
-            family = fontName;
+            family = monoFont.name;
             style = "Bold Italic";
           };
-          size = 12;
+          size = monoFont.size;
         };
         colors = {
           primary = {

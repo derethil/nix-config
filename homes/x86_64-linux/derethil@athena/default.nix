@@ -64,6 +64,9 @@ with internal; {
     wl-clipboard = enabled;
     chafa = enabled;
   };
+  system = {
+    fonts = enabled;
+  };
   hardware = {
     displays = [
       {
