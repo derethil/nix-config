@@ -15,6 +15,7 @@ in {
     extraGroups = mkOpt (listOf str) [] "Groups for the user to be assigned.";
     extraOptions = mkOpt attrs {} "Extra options passed to <option>users.user.<name></option>.";
     superuser = mkBoolOpt true "Whether the user is a superuser.";
+    home = mkOpt str "/home/${cfg.name}" "Home directory of the user";
   };
 
   config = let
@@ -25,10 +26,9 @@ in {
     secrets.${passwordPath} = {};
 
     users.users.${cfg.name} = {
-      inherit (cfg) name uid;
+      inherit (cfg) name uid home;
       isNormalUser = true;
       hashedPasswordFile = config.sops.secrets.${passwordPath}.path;
-      home = "/home/${cfg.name}";
       group = "users";
       extraGroups = cfg.extraGroups ++ (optional cfg.superuser "wheel");
     };
