@@ -29,10 +29,5 @@ in {
         enable = cfg.plymouth.enable;
       };
     };
-    system.nixos.label = lib.mkForce (let
-      formattedDate = lib.strings.removeSuffix "\n" (builtins.readFile (pkgs.runCommand "current-date" {} ''
-        date "+%m-%d-%y_%I:%M%p" > $out
-      ''));
-    in "${config.system.nixos.version}_Generation_${toString config.system.nixos.revision or "unknown"}_${formattedDate}");
   };
 }
