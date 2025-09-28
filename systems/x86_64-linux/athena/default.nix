@@ -16,9 +16,10 @@ in {
     };
   };
   system = {
-    fonts = enabled;
     impermanence = enabled;
+    audio = enabled;
     time = enabled;
+    fonts = enabled;
     boot = enabled' {
       plymouth = enabled;
     };
@@ -32,11 +33,6 @@ in {
     addons = {
       dconf = enabled;
     };
-  };
-
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
   };
 
   services.openssh.enable = true;
