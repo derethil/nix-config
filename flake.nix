@@ -128,6 +128,7 @@
       nixpkgs.lib.flatten [
         sops-nix.darwinModules.sops
         mac-app-util.darwinModules.default
+        nvim-config.darwinModules.nvim-config
         common-modules
         system-common-modules
       ];
