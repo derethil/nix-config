@@ -15,6 +15,9 @@ in {
       avahi = enabled;
     };
   };
+  services = {
+    openssh = enabled;
+  };
   system = {
     impermanence = enabled;
     audio = enabled;
