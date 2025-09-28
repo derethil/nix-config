@@ -5,6 +5,9 @@ in {
     ./hardware.nix
   ];
 
+  apps = {
+    steam = enabled;
+  };
   tools = {
     nh = enabled;
     neovim = enabled;
