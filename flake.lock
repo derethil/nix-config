@@ -1489,11 +1489,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1758964761,
-        "narHash": "sha256-2V/B+uZJWIBchDm8R+grvid7A7uNVGcepraRMEttVkE=",
+        "lastModified": 1759080799,
+        "narHash": "sha256-6BZxXSogH0ob6ksx0T/bagEiwgkn5aBvYW28hyzVrrk=",
         "ref": "main",
-        "rev": "5b929de90e3e7bcf2567a4f96f7f27b92ad842e1",
-        "revCount": 6,
+        "rev": "8bcf20a741b5f1168ddee352243f0bb6e90c5530",
+        "revCount": 7,
         "type": "git",
         "url": "ssh://git@github.com/derethil/nix-secrets"
       },

@@ -40,11 +40,6 @@ in {
     pulse.enable = true;
   };
 
-  users.users.derethil = {
-    isNormalUser = true;
-    extraGroups = ["wheel" "networkmanager"];
-  };
-
   services.openssh.enable = true;
 
   system.stateVersion = "25.11";
