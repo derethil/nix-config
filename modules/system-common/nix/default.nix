@@ -13,7 +13,7 @@ in {
     enable = mkBoolOpt false "Whether to enable Nix configuration optimizations.";
     package = mkOpt types.package pkgs.nixVersions.stable "Which nix package to use.";
     extraTrustedUsers = mkOpt (types.listOf types.str) [] "List of trusted users.";
-    garbageCollection = mkBoolOpt false "Whether to enable automatic garbage collection.";
+    garbageCollection.enable = mkBoolOpt false "Whether to enable automatic garbage collection.";
   };
 
   config = mkIf cfg.enable {
@@ -41,7 +41,7 @@ in {
         keep-derivations = true;
       };
 
-      gc = mkIf cfg.garbageCollection {
+      gc = mkIf cfg.garbageCollection.enable {
         automatic = true;
         options = "--delete-older-than 7d";
         dates = "weekly";
