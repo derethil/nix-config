@@ -111,6 +111,7 @@
 
   outputs = {snowfall-lib, ...} @ inputs: let
     common-modules = snowfall-lib.snowfall.internal-lib.fs.get-default-nix-files-recursive ./modules/common;
+    system-common-modules = snowfall-lib.snowfall.internal-lib.fs.get-default-nix-files-recursive ./modules/system-common;
   in (snowfall-lib.mkFlake {
     inherit inputs;
     src = ./.;
@@ -128,6 +129,7 @@
         sops-nix.darwinModules.sops
         mac-app-util.darwinModules.default
         common-modules
+        system-common-modules
       ];
     systems.modules.nixos = with inputs;
       nixpkgs.lib.flatten [
@@ -135,6 +137,7 @@
         impermanence.nixosModules.impermanence
         nvim-config.nixosModules.nvim-config
         common-modules
+        system-common-modules
       ];
     homes.modules = with inputs;
       nixpkgs.lib.flatten [

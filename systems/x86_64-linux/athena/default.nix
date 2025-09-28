@@ -24,6 +24,9 @@ in {
       plymouth = enabled;
     };
   };
+  nix = {
+    config = enabled;
+  };
   desktop = {
     hyprland = enabled;
     uwsm = enabled;
