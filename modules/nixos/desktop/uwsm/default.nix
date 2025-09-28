@@ -18,7 +18,7 @@ in {
       waylandCompositors = mkMerge [
         (lib.mkIf config.desktop.hyprland.enable {
           hyprland = {
-            prettyName = "Hyprland [UWSM]";
+            prettyName = "Hyprland";
             comment = "Hyprland managed by UWSM.";
             binPath = getExe pkgs.hyprland;
           };
@@ -27,4 +27,3 @@ in {
     };
   };
 }
-
