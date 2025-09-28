@@ -47,8 +47,6 @@ in {
       inputSources = disabled;
     };
   };
-  cli = {
-    fish = enabled;
   nix = {
     config = enabled' {
       garbageCollection = enabled;
