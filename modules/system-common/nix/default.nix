@@ -41,11 +41,16 @@ in {
         keep-derivations = true;
       };
 
-      gc = mkIf cfg.garbageCollection.enable {
-        automatic = true;
-        options = "--delete-older-than 7d";
-        dates = "weekly";
-      };
+      gc = mkIf cfg.garbageCollection.enable (
+        {
+          automatic = true;
+          options = "--delete-older-than 7d";
+        }
+        # darwin already defaults to weekly with interval = { Hour = 3; Minute = 15; Weekday = 7; }
+        // optionalAttrs (!isDarwin) {
+          dates = "weekly";
+        }
+      );
 
       inputs = {
         generateRegistryFromInputs = true;
