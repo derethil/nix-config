@@ -24,6 +24,9 @@ in {
         bind = [
           "ALT, TAB, hyprexpo:expo, toggle"
         ];
+        gesture = [
+          "4, up, dispatcher, hyprexpo:expo, toggle"
+        ];
       };
     };
   };

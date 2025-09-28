@@ -99,7 +99,6 @@ in {
         };
 
         gestures = {
-          workspace_swipe = true;
           workspace_swipe_touch = true;
         };
 

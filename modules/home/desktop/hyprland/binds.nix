@@ -1,7 +1,7 @@
 {
-  lib,
   config,
   inputs,
+  lib,
   pkgs,
   ...
 }:
@@ -57,9 +57,9 @@ in {
 
           # Application Shortcuts
           (optionals config.apps.foot.enable [
-            "$mod, RETURN, exec, footclient tmux new-session -As base"
-            "$mod SHIFT, RETURN, exec, footclient"
-            "$mod SHIFT CONTROL, RETURN, exec, foot"
+            "$mod, RETURN, exec, ${pkgs.foot}/bin/footclient tmux new-session -As base"
+            "$mod SHIFT, RETURN, exec, ${pkgs.foot}/bin/footclient"
+            "$mod SHIFT CONTROL, RETURN, exec, ${pkgs.foot}/bin/foot"
           ])
           (optionals config.apps.alacritty.enable [
             "$mod, RETURN, exec, alacritty -e 'tmux new-session -As base'"
@@ -121,6 +121,11 @@ in {
         bindm = [
           "$mod, mouse:272, movewindow"
           "$mod, mouse:273, resizewindow"
+        ];
+
+        gesture = [
+          "3, vertical, workspace"
+          "3, pinchout, fullscreen"
         ];
       };
     };

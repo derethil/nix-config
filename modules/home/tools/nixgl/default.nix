@@ -16,7 +16,7 @@ in {
   };
 
   # TODO: this needs to be moved to a nixos module once I'm off Arch
-  options.hardware.nvidia.enable = mkBoolOpt false "Whether to enable NVIDIA support (for use with nixGL).";
+  options.hardware.nvidia-drivers.enable = mkBoolOpt false "Whether to enable NVIDIA support (for use with nixGL).";
 
   config = mkIf cfg.enable {
     nixGL.packages = pkgs.inputs.nixgl;

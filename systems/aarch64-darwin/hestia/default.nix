@@ -25,7 +25,6 @@ in {
   };
   system = {
     fonts = enabled;
-    nix = enabled;
     locate = enabled;
     settings = enabled' {
       dock-apps = [
@@ -48,8 +47,10 @@ in {
       inputSources = disabled;
     };
   };
-  cli = {
-    fish = enabled;
+  nix = {
+    config = enabled' {
+      garbageCollection = enabled;
+    };
   };
 
   system.stateVersion = 5;

@@ -1015,6 +1015,21 @@
         "type": "github"
       }
     },
+    "impermanence": {
+      "locked": {
+        "lastModified": 1737831083,
+        "narHash": "sha256-LJggUHbpyeDvNagTUrdhe/pRVp4pnS6wVKALS782gRI=",
+        "owner": "nix-community",
+        "repo": "impermanence",
+        "rev": "4b3e914cdf97a5b536a889e939fb2fd2b043a170",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "impermanence",
+        "type": "github"
+      }
+    },
     "import-nvim": {
       "flake": false,
       "locked": {
@@ -1353,11 +1368,11 @@
         "sonarlint-nvim": "sonarlint-nvim"
       },
       "locked": {
-        "lastModified": 1758748435,
-        "narHash": "sha256-8MT20afsNYXL1K0Eckl5/hO+klpbsLL2dQFZmoFW7k0=",
+        "lastModified": 1759092938,
+        "narHash": "sha256-+iazbSDv5klE3zwfuoYI2iSFtpZuYJ1snwExKf3nlRo=",
         "owner": "derethil",
         "repo": "nvim-config",
-        "rev": "166cfb3a3360b6a731dbeee65b65d1cca0e6d8ce",
+        "rev": "69f512bd76b034442e85bb3d4401762ad77dd776",
         "type": "github"
       },
       "original": {
@@ -1399,6 +1414,7 @@
         "hyprland": "hyprland",
         "hyprland-plugins": "hyprland-plugins",
         "icon-browser": "icon-browser",
+        "impermanence": "impermanence",
         "mac-app-util": "mac-app-util",
         "nix-flatpak": "nix-flatpak",
         "nixgl": "nixgl",
@@ -1473,11 +1489,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1758964761,
-        "narHash": "sha256-2V/B+uZJWIBchDm8R+grvid7A7uNVGcepraRMEttVkE=",
+        "lastModified": 1759080799,
+        "narHash": "sha256-6BZxXSogH0ob6ksx0T/bagEiwgkn5aBvYW28hyzVrrk=",
         "ref": "main",
-        "rev": "5b929de90e3e7bcf2567a4f96f7f27b92ad842e1",
-        "revCount": 6,
+        "rev": "8bcf20a741b5f1168ddee352243f0bb6e90c5530",
+        "revCount": 7,
         "type": "git",
         "url": "ssh://git@github.com/derethil/nix-secrets"
       },

@@ -1,40 +1,48 @@
-{
-  pkgs,
-  lib,
-  ...
-}: let
-  inherit (lib.internal) enabled;
+{lib, ...}: let
+  inherit (lib.internal) enabled enabled';
 in {
   imports = [
     ./hardware.nix
   ];
 
+  apps = {
+    steam = enabled;
+  };
   tools = {
     nh = enabled;
+    neovim = enabled;
   };
-
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  networking.hostName = "athena";
-
-  networking.networkmanager.enable = true;
-
-  time.timeZone = "US/Denver";
-
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
+  hardware = {
+    nvidia-drivers = enabled;
+    networking = enabled' {
+      avahi = enabled;
+    };
   };
-
-  users.users.derethil = {
-    isNormalUser = true;
-    extraGroups = ["wheel" "networkmanager"];
+  services = {
+    openssh = enabled;
   };
-
-  services.openssh.enable = true;
+  system = {
+    impermanence = enabled;
+    audio = enabled;
+    time = enabled;
+    fonts = enabled;
+    boot = enabled' {
+      plymouth = enabled;
+    };
+  };
+  nix = {
+    config = enabled;
+  };
+  desktop = {
+    hyprland = enabled;
+    uwsm = enabled;
+    display-managers = {
+      tuigreet = enabled;
+    };
+    addons = {
+      dconf = enabled;
+    };
+  };
 
   system.stateVersion = "25.11";
 }

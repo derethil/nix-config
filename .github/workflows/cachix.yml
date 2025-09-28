@@ -18,22 +18,31 @@ jobs:
             config: "hestia"
             system: "aarch64-darwin"
             attribute: "system"
-          
+
+          # NixOS Systems
+          - type: "nixosConfigurations"
+            config: "athena"
+            system: "x86_64-linux"
+            attribute: "config.system.build.toplevel"
+
           # Home Configurations
           - type: "homeConfigurations"
             config: "derethil@hestia"
             system: "aarch64-darwin"
             attribute: "activationPackage"
-          # Can't run for now, needs --impure on an Nvidia system due to NixGL
-          # - type: "homeConfigurations"
-          #   config: "derethil@artemis" 
-          #   system: "x86_64-linux"
-          #   attribute: "activationPackage"
-          #   impure: true
+
+          - type: "homeConfigurations"
+            config: "derethil@athena"
+            system: "x86_64-linux"
+            attribute: "activationPackage"
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Free up disk space
+        if: ${{ !contains(matrix.system, 'darwin') }}
+        uses: wimpysworld/nothing-but-nix@main
 
       - name: Set up SSH for nix-secrets repository access
         uses: webfactory/ssh-agent@v0.9.0
@@ -46,6 +55,8 @@ jobs:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
           extra_nix_config: |
             system-features = nixos-test benchmark big-parallel kvm
+            substituters = https://cache.nixos.org https://nix-community.cachix.org https://derethil.cachix.org https://hyprland.cachix.org
+            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= derethil.cachix.org-1:4v8v6Oo2UHdB3FKutgQ2z3O9L++ukejhGvQFg6Pjsfc= hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=
 
       - name: Setup cachix
         uses: cachix/cachix-action@v16
@@ -59,4 +70,3 @@ jobs:
             ${{ matrix.impure && '--impure' || '' }} \
             --print-build-logs \
             --system ${{ matrix.system }}
-

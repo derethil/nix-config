@@ -40,6 +40,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    impermanence = {
+      url = "github:nix-community/impermanence";
+    };
+
     secrets = {
       url = "git+ssh://git@github.com/derethil/nix-secrets?ref=main";
       flake = false;
@@ -107,6 +111,7 @@
 
   outputs = {snowfall-lib, ...} @ inputs: let
     common-modules = snowfall-lib.snowfall.internal-lib.fs.get-default-nix-files-recursive ./modules/common;
+    system-common-modules = snowfall-lib.snowfall.internal-lib.fs.get-default-nix-files-recursive ./modules/system-common;
   in (snowfall-lib.mkFlake {
     inherit inputs;
     src = ./.;
@@ -123,7 +128,17 @@
       nixpkgs.lib.flatten [
         sops-nix.darwinModules.sops
         mac-app-util.darwinModules.default
+        nvim-config.darwinModules.nvim-config
         common-modules
+        system-common-modules
+      ];
+    systems.modules.nixos = with inputs;
+      nixpkgs.lib.flatten [
+        sops-nix.nixosModules.sops
+        impermanence.nixosModules.impermanence
+        nvim-config.nixosModules.nvim-config
+        common-modules
+        system-common-modules
       ];
     homes.modules = with inputs;
       nixpkgs.lib.flatten [
@@ -132,6 +147,7 @@
         sops-nix.homeManagerModules.sops
         mac-app-util.homeManagerModules.default
         nvim-config.homeManagerModules.nvim-config
+        impermanence.homeManagerModules.impermanence
         common-modules
       ];
   });
