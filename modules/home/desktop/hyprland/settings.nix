@@ -20,8 +20,7 @@ in {
         ];
         general = {
           border_size = 2;
-          # TODO: dynamic gap calculation from ags bar
-          gaps_out = "${gap}, ${gap}, ${gap}, 83";
+          gaps_out = gap;
           gaps_in = 5;
           "col.active_border" = "rgba(7FB4CAee) rgba(98BB9Cee) 45deg";
           "col.inactive_border" = "rgba(727169aa)";
