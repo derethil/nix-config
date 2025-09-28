@@ -10,17 +10,15 @@
 in {
   options.tools.nh = {
     enable = mkBoolOpt false "Whether to enable nh (Nix helper) configuration.";
-    clean = {
-      enable = mkBoolOpt true "Whether to enable automatic nh clean service.";
-      flake = mkOpt types.str "${config.snowfallorg.users.${config.user.name}.home.path}/.config/nix-config" "Path to the flake directory";
-    };
+    clean.enable = mkBoolOpt true "Whether to enable automatic nh clean service.";
+    flake = mkOpt types.str "~/.config/nix-config" "Path to the flake directory.";
   };
 
   config = mkIf cfg.enable {
     environment = {
       systemPackages = [pkgs.nh];
       variables = {
-        NH_FLAKE = cfg.clean.flake;
+        NH_FLAKE = cfg.flake;
       };
     };
 
