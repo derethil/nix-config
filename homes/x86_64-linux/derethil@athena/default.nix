@@ -51,6 +51,9 @@ with internal; {
     hyprshot = enabled;
     hyprprop = enabled;
   };
+  services = {
+    openssh = enabled;
+  };
   cli = {
     fish = enabled;
     trashy = enabled;

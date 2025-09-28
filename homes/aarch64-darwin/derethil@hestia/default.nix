@@ -27,6 +27,9 @@ with internal; {
       osascript-wallpaper = enabled;
     };
   };
+  services = {
+    openssh = enabled;
+  };
   tools = {
     devenv = enabled;
     manix = enabled;
