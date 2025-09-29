@@ -5,7 +5,6 @@
 }: let
   inherit (lib) mkIf mkAfter types optionalString;
   inherit (lib.glace) mkBoolOpt mkOpt mkSubmoduleListOpt;
-
   cfg = config.glace.system.keychain;
 
   keychainPath = "/Users/${config.glace.user.name}/Library/Keychains/login.keychain-db";

@@ -6,7 +6,7 @@
   inherit (lib) mkIf;
   inherit (lib.glace) isArch;
 in {
-  config = mkIf (isArch config.distro) {
+  config = mkIf (isArch config.glace.distro) {
     glace.cli.abbreviations = {
       paca = "pacman -S"; # install
       pacu = "pacman -Syua"; # update

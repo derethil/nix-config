@@ -12,7 +12,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    tools.homebrew.macApps = {
+    glace.tools.homebrew.macApps = {
       "Mattermost Desktop" = 1614666244;
     };
   };

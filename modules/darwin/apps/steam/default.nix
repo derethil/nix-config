@@ -12,6 +12,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    tools.homebrew.casks = [ "steam" ];
+    glace.tools.homebrew.casks = ["steam"];
   };
 }
+

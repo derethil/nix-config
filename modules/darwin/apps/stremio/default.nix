@@ -14,6 +14,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    tools.homebrew.casks = [ "stremio" ];
+    glace.tools.homebrew.casks = ["stremio"];
   };
 }

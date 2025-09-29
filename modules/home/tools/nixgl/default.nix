@@ -8,7 +8,7 @@
   inherit (lib.glace) mkOpt mkBoolOpt;
   cfg = config.glace.tools.nixgl;
   nvidia = config.glace.hardware.nvidia.enable or false;
-  isNonNixOS = config.distro or "nixos" != "nixos";
+  isNonNixOS = config.glace.distro or "nixos" != "nixos";
 in {
   options.glace.tools.nixgl = with types; {
     enable = mkBoolOpt (isNonNixOS && pkgs.stdenv.hostPlatform.isLinux) "Whether to enable nixGL.";

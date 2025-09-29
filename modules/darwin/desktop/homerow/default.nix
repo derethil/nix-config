@@ -12,7 +12,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    tools.homebrew.casks = ["homerow"];
+    glace.tools.homebrew.casks = ["homerow"];
 
     system.defaults.CustomUserPreferences = {
       "com.superultra.Homerow" = {
