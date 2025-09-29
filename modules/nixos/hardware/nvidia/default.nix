@@ -6,9 +6,9 @@
 }: let
   inherit (lib) mkIf mkOption types;
   inherit (lib.glace) mkBoolOpt mkPackageOpt;
-  cfg = config.glace.hardware.nvidia-drivers;
+  cfg = config.glace.hardware.nvidia;
 in {
-  options.glace.hardware.nvidia-drivers = {
+  options.glace.hardware.nvidia = {
     enable = mkBoolOpt false "Whether to enable Nvidia drivers on this system.";
     channel = mkOption {
       type = types.enum [

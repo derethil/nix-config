@@ -15,7 +15,7 @@ in {
       neovim = enabled;
     };
     hardware = {
-      nvidia-drivers = enabled;
+      nvidia = enabled;
       networking = enabled' {
         avahi = enabled;
       };
