@@ -7,6 +7,7 @@ in {
 
   apps = {
     steam = enabled;
+    sober = enabled;
   };
   tools = {
     nh = enabled;

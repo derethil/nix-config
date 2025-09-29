@@ -45,7 +45,6 @@ with internal; {
     nix-index = enabled;
     postgresql = enabled;
     home-manager = enabled;
-    sober = enabled;
     hyprpicker = enabled;
     hyprshot = enabled;
     hyprprop = enabled;

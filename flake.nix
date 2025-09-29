@@ -139,6 +139,7 @@
       ];
     systems.modules.nixos = with inputs;
       nixpkgs.lib.flatten [
+        nix-flatpak.nixosModules.nix-flatpak
         sops-nix.nixosModules.sops
         impermanence.nixosModules.impermanence
         nvim-config.nixosModules.nvim-config
@@ -147,7 +148,6 @@
       ];
     homes.modules = with inputs;
       nixpkgs.lib.flatten [
-        nix-flatpak.homeManagerModules.nix-flatpak
         glace-shell.flakeModules.default
         sops-nix.homeManagerModules.sops
         mac-app-util.homeManagerModules.default
