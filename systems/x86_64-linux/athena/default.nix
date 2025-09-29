@@ -16,6 +16,7 @@ in {
     };
     hardware = {
       nvidia = enabled;
+      audio = enabled;
       bluetooth = enabled;
       networking = enabled' {
         avahi = enabled;
@@ -27,7 +28,6 @@ in {
     };
     system = {
       impermanence = enabled;
-      audio = enabled;
       time = enabled;
       fonts = enabled;
       boot = enabled' {
