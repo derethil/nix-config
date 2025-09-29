@@ -5,11 +5,11 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.apps.firefox;
+with glace; let
+  cfg = config.glace.apps.firefox;
   firefoxPkg = pkgs.firefox.override {nativeMessagingHosts = with pkgs; [tridactyl-native];};
 in {
-  options.apps.firefox = {
+  options.glace.apps.firefox = {
     enable = mkBoolOpt false "Whether to enable Firefox.";
   };
 
@@ -17,7 +17,7 @@ in {
     programs.firefox = {
       enable = true;
       package =
-        if config.tools.nixgl.enable or false
+        if config.glace.tools.nixgl.enable or false
         then config.lib.nixGL.wrap firefoxPkg
         else firefoxPkg;
       policies = {

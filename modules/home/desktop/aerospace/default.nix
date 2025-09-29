@@ -4,10 +4,10 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.internal) mkBoolOpt;
-  cfg = config.desktop.aerospace;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.glace.desktop.aerospace;
 in {
-  options.desktop.aerospace = {
+  options.glace.desktop.aerospace = {
     enable = mkBoolOpt false "Whether or not to enable the Aerospace window manager.";
   };
 

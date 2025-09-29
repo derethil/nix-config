@@ -5,20 +5,20 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.cli.tmux;
+with glace; let
+  cfg = config.glace.cli.tmux;
 
   themes = ./themes;
   modules = ./modules;
 in {
-  options.cli.tmux = {
+  options.glace.cli.tmux = {
     enable = mkBoolOpt false "Whether to enable Tmux";
     extraVariables = mkOpt (types.listOf types.str) [] "Additional environment variables to refresh in tmux sessions.";
   };
 
   config = mkIf cfg.enable {
     programs.tmux = {
-      package = pkgs.internal.tmux-wrapper.override {inherit config lib;};
+      package = pkgs.glace.tmux-wrapper.override {inherit config lib;};
       enable = true;
       shell = mkIf (!pkgs.stdenv.isDarwin) "${pkgs.fish}/bin/fish";
       terminal = "tmux-256color";
@@ -104,7 +104,7 @@ in {
         yank
         vim-tmux-navigator
         {
-          plugin = pkgs.internal.tmux-power-zoom;
+          plugin = pkgs.glace.tmux-power-zoom;
           extraConfig = "";
         }
         {
@@ -124,7 +124,7 @@ in {
           '';
         }
         {
-          plugin = pkgs.internal.tmux-theme;
+          plugin = pkgs.glace.tmux-theme;
           extraConfig = ''
             set -g @theme_custom_theme_dir "${themes}"
             set -g @theme_custom_plugin_dir "${modules}"

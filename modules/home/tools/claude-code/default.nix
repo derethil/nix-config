@@ -5,10 +5,10 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.internal) mkBoolOpt;
-  cfg = config.tools.claude-code;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.glace.tools.claude-code;
 in {
-  options.tools.claude-code = {
+  options.glace.tools.claude-code = {
     enable = mkBoolOpt false "Whether to enable Claude Code.";
   };
 

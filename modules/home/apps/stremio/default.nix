@@ -5,10 +5,10 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.internal) mkBoolOpt;
-  cfg = config.apps.stremio;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.glace.apps.stremio;
 in {
-  options.apps.stremio = {
+  options.glace.apps.stremio = {
     enable = mkBoolOpt false "Whether to enable Stremio";
   };
 

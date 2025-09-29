@@ -5,16 +5,16 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.internal) mkBoolOpt;
-  cfg = config.tools.reset-launch-services;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.glace.tools.reset-launch-services;
 in {
-  options.tools.reset-launch-services = {
+  options.glace.tools.reset-launch-services = {
     enable = mkBoolOpt false "Whether to enable the reset-launch-services tool for fixing macOS default application associations.";
   };
 
   config = mkIf cfg.enable {
     environment.systemPackages = [
-      pkgs.internal.reset-launch-services
+      pkgs.glace.reset-launch-services
     ];
   };
 }

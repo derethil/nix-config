@@ -5,10 +5,10 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.internal) mkBoolOpt;
-  cfg = config.tools.neovim;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.glace.tools.neovim;
 in {
-  options.tools.neovim = {
+  options.glace.tools.neovim = {
     enable = mkBoolOpt false "Whether to enable Neovim.";
   };
 

@@ -5,10 +5,10 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.tools.hyprprop;
+with glace; let
+  cfg = config.glace.tools.hyprprop;
 in {
-  options.tools.hyprprop = with types; {
+  options.glace.tools.hyprprop = with types; {
     enable = mkBoolOpt false "Whether to enable hyprprop.";
   };
 

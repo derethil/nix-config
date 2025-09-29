@@ -4,12 +4,12 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.desktop.addons.hyprpaper;
-  enabledDisplays = filter (d: d.enabled) config.hardware.displays;
+with glace; let
+  cfg = config.glace.desktop.addons.hyprpaper;
+  enabledDisplays = filter (d: d.enabled) config.glace.hardware.displays;
   displaysWithWallpaper = filter (d: d.wallpaper != null) enabledDisplays;
 in {
-  options.desktop.addons.hyprpaper = {
+  options.glace.desktop.addons.hyprpaper = {
     enable = mkBoolOpt false "Whether to enable hyprpaper for wallpaper management";
   };
 
@@ -17,8 +17,8 @@ in {
     services.hyprpaper = {
       enable = true;
       settings = {
-        preload = map (d: "${config.desktop.addons.wallpapers.targetDir}/${d.wallpaper}") displaysWithWallpaper;
-        wallpaper = map (d: "${d.port},${config.desktop.addons.wallpapers.targetDir}/${d.wallpaper}") displaysWithWallpaper;
+        preload = map (d: "${config.glace.desktop.addons.wallpapers.targetDir}/${d.wallpaper}") displaysWithWallpaper;
+        wallpaper = map (d: "${d.port},${config.glace.desktop.addons.wallpapers.targetDir}/${d.wallpaper}") displaysWithWallpaper;
         ipc = false;
         splash = false;
       };

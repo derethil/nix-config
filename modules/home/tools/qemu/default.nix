@@ -5,10 +5,10 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.tools.qemu;
+with glace; let
+  cfg = config.glace.tools.qemu;
 in {
-  options.tools.qemu = {
+  options.glace.tools.qemu = {
     enable = mkBoolOpt false "Whether to enable QEMU virtualization.";
   };
 

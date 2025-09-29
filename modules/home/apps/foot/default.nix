@@ -4,11 +4,11 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.apps.foot;
-  monoFont = config.system.fonts.mono;
+with lib.glace; let
+  cfg = config.glace.apps.foot;
+  monoFont = config.glace.system.fonts.mono;
 in {
-  options.apps.foot = {
+  options.glace.apps.foot = {
     enable = mkBoolOpt false "Whether to enable the Foot terminal.";
   };
 

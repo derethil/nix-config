@@ -3,9 +3,9 @@
   lib,
   config,
   ...
-}:
-with lib;
-with internal; let
+}: let
+  inherit (lib) mkIf types;
+  inherit (lib.glace) mkBoolOpt mkOpt;
   mattermost-desktop-x11 = pkgs.mattermost-desktop.overrideAttrs (oldAttrs: {
     postFixup =
       (oldAttrs.postFixup or "")
@@ -17,7 +17,7 @@ with internal; let
       '';
   });
 in {
-  options.apps.mattermost = {
+  options.glace.apps.mattermost = {
     enable = mkBoolOpt false "Whether to enable Mattermost.";
     package =
       mkOpt types.package
@@ -29,7 +29,7 @@ in {
       "Mattermost package to use.";
   };
 
-  config = mkIf config.apps.mattermost.enable {
-    home.packages = [config.apps.mattermost.package];
+  config = mkIf config.glace.apps.mattermost.enable {
+    home.packages = [config.glace.apps.mattermost.package];
   };
 }

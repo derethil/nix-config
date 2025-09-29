@@ -1,16 +1,17 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 with lib; let
   inherit (lib) types;
-  inherit (lib.internal) mkBoolOpt mkOpt;
-  cfg = config.services.flatpak;
+  inherit (lib.glace) mkBoolOpt mkOpt;
+  cfg = config.glace.services.flatpak;
 in {
-  options.services.flatpak = {
+  options.glace.services.flatpak = {
     enable = mkBoolOpt false "Whether to enable flatpak support";
-    packages = mkOpt types.attr {} "Packages to install with Flatpak.";
+    packages = mkOpt (types.listOf types.attrs) [] "Packages to install with Flatpak.";
   };
 
   config = mkIf cfg.enable {
@@ -23,7 +24,14 @@ in {
       };
     };
 
-    system.impermanence.extraDirectories = [
+    # flatpak requires xdg portals
+    glace.services.portals = {
+      enable = true;
+      portals = [pkgs.kdePackages.xdg-desktop-portal-kde];
+      config.common.default = "kde";
+    };
+
+    glace.system.impermanence.extraDirectories = [
       "/var/lib/flatpak"
       "/var/cache/flatpak"
     ];

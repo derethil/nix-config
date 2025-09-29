@@ -5,11 +5,11 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.internal) mkBoolOpt;
-  cfg = config.apps.alacritty;
-  monoFont = config.system.fonts.mono;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.glace.apps.alacritty;
+  monoFont = config.glace.system.fonts.mono;
 in {
-  options.apps.alacritty = {
+  options.glace.apps.alacritty = {
     enable = mkBoolOpt false "Whether to enable the Alacritty terminal.";
   };
 

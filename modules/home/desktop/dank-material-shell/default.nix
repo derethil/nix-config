@@ -4,10 +4,10 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.internal) mkBoolOpt;
-  cfg = config.desktop.dank-material-shell;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.glace.desktop.dank-material-shell;
 in {
-  options.desktop.dank-material-shell = {
+  options.glace.desktop.dank-material-shell = {
     enable = mkBoolOpt false "Whether to enable Dank Material Shell.";
     enableBrightnessControl = mkBoolOpt false "Whether to enable DMS brightness/backlight contro.";
   };

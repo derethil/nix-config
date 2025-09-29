@@ -6,7 +6,7 @@
   ...
 }:
 with lib; let
-  cfg = config.desktop.hyprland;
+  cfg = config.glace.desktop.hyprland;
   relativeworkspace = getExe inputs.rust-system-scripts.packages.${pkgs.system}.relativeworkspace;
 
   mkWorkspaceBinds = mod: dispatcher:
@@ -51,12 +51,12 @@ in {
           "SHIFT, Print, exec, shader=$(hyprshade current) ; hyprshade off ; hyprshot -m region -o ~/Pictures/Screenshots/ ; hyprshade on \"$${shader}\""
 
           # Application Shortcuts
-          (optionals config.apps.foot.enable [
+          (optionals config.glace.apps.foot.enable [
             "$mod, RETURN, exec, ${pkgs.foot}/bin/footclient tmux new-session -As base"
             "$mod SHIFT, RETURN, exec, ${pkgs.foot}/bin/footclient"
             "$mod SHIFT CONTROL, RETURN, exec, ${pkgs.foot}/bin/foot"
           ])
-          (optionals config.apps.alacritty.enable [
+          (optionals config.glace.apps.alacritty.enable [
             "$mod, RETURN, exec, alacritty -e 'tmux new-session -As base'"
             "$mod SHIFT, RETURN, exec, alacritty"
           ])

@@ -1,7 +1,7 @@
 {lib, ...}: let
-  inherit (lib.internal) mkBoolOpt;
+  inherit (lib.glace) mkBoolOpt;
 in {
-  options.desktop.hyprland = {
+  options.glace.desktop.hyprland = {
     enable = mkBoolOpt false "Whether to enable Hyprland desktop environment.";
   };
 }

@@ -4,10 +4,10 @@
   ...
 }: let
   inherit (lib) mkIf types;
-  inherit (lib.internal) mkBoolOpt mkOpt;
-  cfg = config.desktop.night-shift;
+  inherit (lib.glace) mkBoolOpt mkOpt;
+  cfg = config.glace.desktop.night-shift;
 in {
-  options.desktop.night-shift = {
+  options.glace.desktop.night-shift = {
     enable = mkBoolOpt false "Whether to enable Night Shift.";
     automatic = mkBoolOpt true "Whether to enable automatic Night Shift based on time of day.";
     schedule = {

@@ -5,10 +5,10 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.cli.chafa;
+with glace; let
+  cfg = config.glace.cli.chafa;
 in {
-  options.cli.chafa = {
+  options.glace.cli.chafa = {
     enable = mkBoolOpt false "Whether to enable Chafa terminal image viewer.";
   };
 

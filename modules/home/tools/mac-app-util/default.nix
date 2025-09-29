@@ -5,10 +5,10 @@
   ...
 }: let
   inherit (lib) mkForce;
-  inherit (lib.internal) mkBoolOpt;
-  cfg = config.tools.mac-app-util;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.glace.tools.mac-app-util;
 in {
-  options.tools.mac-app-util = {
+  options.glace.tools.mac-app-util = {
     enable = mkBoolOpt pkgs.stdenv.isDarwin "Whether to enable mac-app-util for Darwin systems.";
   };
 

@@ -5,11 +5,11 @@
   ...
 }: let
   inherit (lib) mkIf types optionalAttrs;
-  inherit (lib.internal) mkBoolOpt mkOpt;
+  inherit (lib.glace) mkBoolOpt mkOpt;
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
-  cfg = config.nix.config;
+  cfg = config.glace.nix.config;
 in {
-  options.nix.config = {
+  options.glace.nix.config = {
     enable = mkBoolOpt false "Whether to enable Nix configuration optimizations.";
     package = mkOpt types.package pkgs.nixVersions.stable "Which nix package to use.";
     extraTrustedUsers = mkOpt (types.listOf types.str) [] "List of trusted users.";
@@ -31,7 +31,7 @@ in {
 
       settings = {
         experimental-features = ["nix-command" "flakes"];
-        trusted-users = ["root" config.user.name] ++ cfg.extraTrustedUsers;
+        trusted-users = ["root" config.glace.user.name] ++ cfg.extraTrustedUsers;
         fallback = true;
         http-connections = 50;
         warn-dirty = false;
@@ -51,12 +51,12 @@ in {
           dates = "weekly";
         }
       );
+    };
 
-      inputs = {
-        generateRegistryFromInputs = true;
-        generateNixPathFromInputs = true;
-        linkInputs = true;
-      };
+    glace.nix.inputs = {
+      generateRegistryFromInputs = true;
+      generateNixPathFromInputs = true;
+      linkInputs = true;
     };
   };
 }

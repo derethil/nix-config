@@ -5,16 +5,16 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.cli.trashy;
+with glace; let
+  cfg = config.glace.cli.trashy;
 in {
-  options.cli.trashy = {
+  options.glace.cli.trashy = {
     enable = mkBoolOpt false "Whether to enable Trashy.";
   };
 
   config = mkIf cfg.enable {
     home.packages = [pkgs.inputs.trashy];
-    cli.aliases = {
+    glace.cli.aliases = {
       del = "trashy put";
     };
   };

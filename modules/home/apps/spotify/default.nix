@@ -5,10 +5,10 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.apps.spotify;
+with glace; let
+  cfg = config.glace.apps.spotify;
 in {
-  options.apps.spotify = {
+  options.glace.apps.spotify = {
     enable = mkBoolOpt false "Whether to enable Spotify";
   };
 

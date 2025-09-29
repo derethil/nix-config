@@ -4,10 +4,10 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.cli.starship;
+with glace; let
+  cfg = config.glace.cli.starship;
 in {
-  options.cli.starship = {
+  options.glace.cli.starship = {
     enable = mkBoolOpt false "Whether to enable starship prompt.";
   };
 

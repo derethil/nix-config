@@ -4,10 +4,10 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.internal) mkBoolOpt;
-  cfg = config.desktop.addons.dconf;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.glace.desktop.addons.dconf;
 in {
-  options.desktop.addons.dconf = {
+  options.glace.desktop.addons.dconf = {
     enable = mkBoolOpt false "Whether to enable dconf.";
   };
 

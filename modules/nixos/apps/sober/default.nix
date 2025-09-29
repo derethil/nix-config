@@ -4,15 +4,15 @@
   ...
 }:
 with lib;
-with lib.internal; let
-  cfg = config.apps.sober;
+with lib.glace; let
+  cfg = config.glace.apps.sober;
 in {
-  options.apps.sober = {
+  options.glace.apps.sober = {
     enable = mkBoolOpt false "Whether to enable Sober, the Roblox-Linux compatibility layer.";
   };
 
   config = mkIf cfg.enable {
-    services.flatpak = {
+    glace.services.flatpak = {
       enable = true;
       packages = [
         {

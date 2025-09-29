@@ -3,12 +3,12 @@
   config,
   pkgs,
   ...
-}:
-with lib;
-with internal; let
-  cfg = config.apps.gtk-icon-browser;
+}: let
+  inherit (lib) mkIf;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.glace.apps.gtk-icon-browser;
 in {
-  options.apps.gtk-icon-browser = {
+  options.glace.apps.gtk-icon-browser = {
     enable = mkBoolOpt false "Whether to enable GTK Icon Browser";
   };
 

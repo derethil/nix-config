@@ -4,10 +4,10 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.internal) mkBoolOpt;
-  cfg = config.desktop.mediamate;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.glace.desktop.mediamate;
 in {
-  options.desktop.mediamate = {
+  options.glace.desktop.mediamate = {
     enable = mkBoolOpt true "Whether to enable Mediamate, a Dynamic Island app for media controls.";
   };
 

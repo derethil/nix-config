@@ -4,10 +4,10 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.internal) mkBoolOpt;
-  cfg = config.apps.steam;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.glace.apps.steam;
 in {
-  options.apps.steam = {
+  options.glace.apps.steam = {
     enable = mkBoolOpt false "Whether to enable Steam gaming platform.";
   };
 

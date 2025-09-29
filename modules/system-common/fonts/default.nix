@@ -4,7 +4,7 @@
   ...
 }: let
   inherit (lib) mkIf;
-  cfg = config.system.fonts;
+  cfg = config.glace.system.fonts;
 in {
   config = mkIf cfg.enable {
     fonts.packages = lib.flatten [

@@ -5,16 +5,16 @@
   ...
 }:
 with lib;
-with internal; {
-  options.apps.chromium = {
+with lib.glace; {
+  options.glace.apps.chromium = {
     enable = mkBoolOpt false "Whether to enable Chromium";
   };
 
-  config = mkIf config.apps.chromium.enable {
+  config = mkIf config.glace.apps.chromium.enable {
     programs.chromium = {
       enable = true;
       package =
-        if config.tools.nixgl.enable
+        if config.glace.tools.nixgl.enable
         then config.lib.nixGL.wrap pkgs.chromium
         else pkgs.chromium;
     };

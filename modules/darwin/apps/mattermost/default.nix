@@ -4,10 +4,10 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.internal) mkBoolOpt;
-  cfg = config.apps.mattermost;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.glace.apps.mattermost;
 in {
-  options.apps.mattermost = {
+  options.glace.apps.mattermost = {
     enable = mkBoolOpt true "Whether to enable the Mattermost desktop client.";
   };
 

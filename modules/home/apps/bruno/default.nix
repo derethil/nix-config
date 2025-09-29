@@ -5,10 +5,10 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.apps.bruno;
+with glace; let
+  cfg = config.glace.apps.bruno;
 in {
-  options.apps.bruno = {
+  options.glace.apps.bruno = {
     enable = mkBoolOpt false "Whether to enable Bruno.";
   };
 

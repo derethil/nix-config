@@ -5,16 +5,16 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.cli.wl-clipboard;
+with glace; let
+  cfg = config.glace.cli.wl-clipboard;
 in {
-  options.cli.wl-clipboard = {
+  options.glace.cli.wl-clipboard = {
     enable = mkBoolOpt false "Whether to enable wl-clipboard.";
   };
 
   config = mkIf cfg.enable {
     home.packages = [pkgs.wl-clipboard];
-    cli.aliases = {
+    glace.cli.aliases = {
       wcl = "wl-copy";
     };
   };

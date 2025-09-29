@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (lib) mkIf getExe;
-  cfg = config.desktop.aerospace;
+  cfg = config.glace.desktop.aerospace;
 
   back-and-forth = pkgs.writeShellScriptBin "back-and-forth" ''
     ${getExe pkgs.aerospace} focus-back-and-forth || ${getExe pkgs.aerospace} workspace-back-and-forth

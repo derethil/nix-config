@@ -1,4 +1,4 @@
-# Taken from: https://github.com/gytis-ivaskevicius/flake-utils-plus/blob/afcb15b845e74ac5e998358709b2b5fe42a948d1/lib/options.nix
+# Taken from: https://github.com/gytis-ivaskevicius/flake-utils-plus/blob/afcb15b845e74ac5e998358709b2b5fe42a948d1/lib/options.glace.nix
 {
   lib,
   config,
@@ -6,7 +6,7 @@
   ...
 }: let
   inherit (lib) mkIf filterAttrs mapAttrs';
-  inherit (lib.internal) mkBoolOpt;
+  inherit (lib.glace) mkBoolOpt;
 
   flakes = filterAttrs (name: value: value ? outputs) inputs;
 
@@ -15,15 +15,15 @@
     (name: v: {flake = v;})
     flakes;
 
-  cfg = config.nix.inputs;
+  cfg = config.glace.nix.inputs;
 in {
-  options.nix.inputs = {
+  options.glace.nix.inputs = {
     generateNixPathFromInputs = mkBoolOpt false "Generate NIX_PATH from available inputs.";
     generateRegistryFromInputs = mkBoolOpt false "Generate Nix registry from available inputs.";
     linkInputs = mkBoolOpt false "Symlink inputs to /etc/nix/inputs.";
   };
 
-  config = mkIf config.nix.config.enable {
+  config = mkIf config.glace.nix.config.enable {
     assertions = [
       {
         assertion = !cfg.generateNixPathFromInputs || cfg.linkInputs;

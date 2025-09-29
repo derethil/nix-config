@@ -4,9 +4,9 @@
   ...
 }:
 with lib; let
-  cfg = config.desktop.addons.cliphist;
+  cfg = config.glace.desktop.addons.cliphist;
 in {
-  options.desktop.addons.cliphist = with types; {
+  options.glace.desktop.addons.cliphist = with types; {
     enable = mkEnableOption "Enable cliphist clipboard manager";
   };
 

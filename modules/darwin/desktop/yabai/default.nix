@@ -4,8 +4,8 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.internal) mkBoolOpt;
-  cfg = config.desktop.yabai;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.glace.desktop.yabai;
 
   # Generate workspace binds similar to Hyprland config
   mkWorkspaceBinds = mod: dispatcher:
@@ -15,7 +15,7 @@
       else toString i
     } : yabai -m ${dispatcher} ${toString i}") (lib.range 1 10);
 in {
-  options.desktop.yabai = {
+  options.glace.desktop.yabai = {
     enable = mkBoolOpt false "Whether or not to enable the Yabai window manager.";
   };
 

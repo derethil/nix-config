@@ -1,6 +1,6 @@
 {lib, ...}:
 with lib;
-with internal;
+with glace;
 with types; let
   distros = enum ["arch" "nixos" "darwin"];
 in {

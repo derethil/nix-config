@@ -4,12 +4,12 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.internal) mkBoolOpt;
+  inherit (lib.glace) mkBoolOpt;
   inherit (lib.types) listOf str;
 
-  cfg = config.system.impermanence;
+  cfg = config.glace.system.impermanence;
 in {
-  options.system.impermanence = {
+  options.glace.system.impermanence = {
     enable = mkBoolOpt false "Whether to enable impermanence with BTRFS root rollback.";
 
     extraDirectories = lib.mkOption {

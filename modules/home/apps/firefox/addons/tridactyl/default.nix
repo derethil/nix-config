@@ -4,7 +4,7 @@
   ...
 }:
 with lib; let
-  cfg = config.apps.firefox;
+  cfg = config.glace.apps.firefox;
 in {
   config = mkIf cfg.enable {
     xdg.configFile."tridactyl/tridactylrc".text = ''

@@ -4,9 +4,9 @@
   ...
 }: let
   inherit (lib) types;
-  inherit (lib.internal) mkNullableOpt mkBoolOpt mkOpt;
+  inherit (lib.glace) mkNullableOpt mkBoolOpt mkOpt;
 in {
-  options.system.fonts = with types; {
+  options.glace.system.fonts = with types; {
     enable = mkBoolOpt false "Whether to enable custom fonts.";
     mono = {
       name = mkNullableOpt str null "Name of the system Mono font.";
@@ -17,7 +17,7 @@ in {
     extraFonts = mkOpt (listOf package) [] "Additional font packages to install.";
   };
 
-  config.system.fonts = {
+  config.glace.system.fonts = {
     mono = {
       name = "GeistMono Nerd Font Mono";
       package = pkgs.nerd-fonts.geist-mono;

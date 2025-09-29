@@ -5,8 +5,8 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.tools.git;
+with glace; let
+  cfg = config.glace.tools.git;
 
   # git commit --amend, but for older commits
   git-fixup = pkgs.writeShellScriptBin "git-fixup" ''
@@ -98,12 +98,12 @@ with internal; let
     })
     (builtins.attrNames aliases));
 in {
-  options.tools.git = {
+  options.glace.tools.git = {
     enable = mkBoolOpt true "Whether to enable Git tool.";
   };
 
   config = mkIf cfg.enable {
-    cli.abbreviations = abbreviations;
+    glace.cli.abbreviations = abbreviations;
     home.packages = with pkgs; [
       git-fixup
       git-root

@@ -5,10 +5,10 @@
   ...
 }: let
   inherit (lib) mkIf mkMerge getExe;
-  inherit (lib.internal) mkBoolOpt;
-  cfg = config.desktop.uwsm;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.glace.desktop.uwsm;
 in {
-  options.desktop.uwsm = {
+  options.glace.desktop.uwsm = {
     enable = mkBoolOpt false "Whether to enable uwsm (Universal Wayland Session Manager).";
   };
 
@@ -16,7 +16,7 @@ in {
     programs.uwsm = {
       enable = true;
       waylandCompositors = mkMerge [
-        (lib.mkIf config.desktop.hyprland.enable {
+        (lib.mkIf config.glace.desktop.hyprland.enable {
           hyprland = {
             prettyName = "Hyprland";
             comment = "Hyprland managed by UWSM.";

@@ -5,15 +5,15 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.apps.gdlauncher;
+with glace; let
+  cfg = config.glace.apps.gdlauncher;
 
   pkg =
-    if config.tools.nixgl.enable or false
+    if config.glace.tools.nixgl.enable or false
     then config.lib.nixGL.wrap pkgs.gdlauncher-carbon
     else pkgs.gdlauncher-carbon;
 in {
-  options.apps.gdlauncher = {
+  options.glace.apps.gdlauncher = {
     enable = mkBoolOpt false "Whether to enable GDLauncher-Carbon";
   };
 

@@ -1,47 +1,50 @@
 {lib, ...}: let
-  inherit (lib.internal) enabled enabled';
+  inherit (lib.glace) enabled enabled';
 in {
   imports = [
     ./hardware.nix
   ];
 
-  apps = {
-    steam = enabled;
-    sober = enabled;
-  };
-  tools = {
-    nh = enabled;
-    neovim = enabled;
-  };
-  hardware = {
-    nvidia-drivers = enabled;
-    networking = enabled' {
-      avahi = enabled;
+  glace = {
+    apps = {
+      steam = enabled;
+      sober = enabled;
     };
-  };
-  services = {
-    openssh = enabled;
-  };
-  system = {
-    impermanence = enabled;
-    audio = enabled;
-    time = enabled;
-    fonts = enabled;
-    boot = enabled' {
-      plymouth = enabled;
+    tools = {
+      nh = enabled;
+      neovim = enabled;
     };
-  };
-  nix = {
-    config = enabled;
-  };
-  desktop = {
-    hyprland = enabled;
-    uwsm = enabled;
-    display-managers = {
-      tuigreet = enabled;
+    hardware = {
+      nvidia-drivers = enabled;
+      networking = enabled' {
+        avahi = enabled;
+      };
     };
-    addons = {
-      dconf = enabled;
+    services = {
+      openssh-server = enabled;
+      flatpak = enabled;
+    };
+    system = {
+      impermanence = enabled;
+      audio = enabled;
+      time = enabled;
+      fonts = enabled;
+      boot = enabled' {
+        plymouth = enabled;
+      };
+    };
+    nix = {
+      config = enabled;
+    };
+    desktop = {
+      hyprland = enabled;
+      uwsm = enabled;
+      display-managers = {
+        tuigreet = enabled;
+      };
+      addons = {
+        dconf = enabled;
+      };
     };
   };
 

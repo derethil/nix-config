@@ -4,7 +4,7 @@
   config,
   ...
 }: let
-  inherit (lib.internal) mkOpt mkBoolOpt;
+  inherit (lib.glace) mkOpt mkBoolOpt;
   inherit (lib.types) str nullOr;
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
 
@@ -22,7 +22,7 @@
   darwinDefaultPaths =
     defaultPaths
     // {
-      videos = "Users/${config.user.name}/Movies";
+      videos = "Users/${config.glace.user.name}/Movies";
     };
 
   paths =
@@ -30,7 +30,7 @@
     then darwinDefaultPaths
     else defaultPaths;
 in {
-  options.user.userdirs = {
+  options.glace.user.userdirs = {
     enable = mkBoolOpt false "user directories configuration";
 
     desktop = mkOpt (nullOr str) paths.desktop "Desktop directory path";

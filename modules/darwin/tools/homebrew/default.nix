@@ -5,10 +5,10 @@
   ...
 }: let
   inherit (lib) mkIf types;
-  inherit (lib.internal) mkBoolOpt mkOpt;
-  cfg = config.tools.homebrew;
+  inherit (lib.glace) mkBoolOpt mkOpt;
+  cfg = config.glace.tools.homebrew;
 in {
-  options.tools.homebrew = {
+  options.glace.tools.homebrew = {
     enable = mkBoolOpt (cfg.macApps != {} || cfg.casks != []) "Whether to enable Homebrew configuration.";
     macApps = mkOpt (types.attrsOf types.int) {} "List of Mac App Store application IDs to install.";
     casks = mkOpt (types.listOf types.str) [] "List of Homebrew casks to install.";

@@ -5,10 +5,10 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.tools.manix;
+with glace; let
+  cfg = config.glace.tools.manix;
 in {
-  options.tools.manix = {
+  options.glace.tools.manix = {
     enable = mkBoolOpt false "Whether to enable Manix.";
   };
 

@@ -4,10 +4,10 @@
   ...
 }: let
   inherit (lib) types optional;
-  inherit (lib.internal) mkOpt mkBoolOpt;
-  cfg = config.user;
+  inherit (lib.glace) mkOpt mkBoolOpt;
+  cfg = config.glace.user;
 in {
-  options.user = with types; {
+  options.glace.user = with types; {
     name = mkOpt str "derethil" "The name to use for the user account.";
     fullName = mkOpt str "Jaren Glenn" "The full name of the user.";
     email = mkOpt str "jarenglenn@gmail.com" "The email of the user.";

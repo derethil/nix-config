@@ -4,7 +4,7 @@
   ...
 }: let
   inherit (lib) mkIf;
-  cfg = config.desktop.aerospace;
+  cfg = config.glace.desktop.aerospace;
 in {
   config = mkIf cfg.enable {
     programs.aerospace.userSettings = {

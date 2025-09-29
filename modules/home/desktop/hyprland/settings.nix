@@ -4,13 +4,13 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.desktop.hyprland;
-  tmux = config.cli.tmux;
+with lib.glace; let
+  cfg = config.glace.desktop.hyprland;
+  tmux = config.glace.cli.tmux;
   gap = toString cfg.gap;
 in {
   config = mkIf cfg.enable {
-    cli.tmux.extraVariables = mkIf tmux.enable ["HYPRLAND_CMD" "HYPRLAND_INSTANCE_SIGNATURE"];
+    glace.cli.tmux.extraVariables = mkIf tmux.enable ["HYPRLAND_CMD" "HYPRLAND_INSTANCE_SIGNATURE"];
 
     wayland.windowManager.hyprland = {
       settings = {

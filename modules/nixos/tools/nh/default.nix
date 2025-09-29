@@ -4,10 +4,10 @@
   ...
 }: let
   inherit (lib) mkIf types;
-  inherit (lib.internal) mkBoolOpt mkOpt;
-  cfg = config.tools.nh;
+  inherit (lib.glace) mkBoolOpt mkOpt;
+  cfg = config.glace.tools.nh;
 in {
-  options.tools.nh = {
+  options.glace.tools.nh = {
     enable = mkBoolOpt false "Whether to enable nh (Nix helper) configuration.";
     clean.enable = mkBoolOpt true "Whether to enable automatic nh clean service.";
     flake = mkOpt types.str "~/.config/nix-config" "Path to the flake directory.";

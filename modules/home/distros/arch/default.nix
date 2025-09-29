@@ -4,9 +4,9 @@
   ...
 }:
 with lib;
-with internal; {
+with glace; {
   config = mkIf (isArch config.distro) {
-    cli.abbreviations = {
+    glace.cli.abbreviations = {
       paca = "pacman -S"; # install
       pacu = "pacman -Syua"; # update
       pacr = "pacman -Rns"; # remove

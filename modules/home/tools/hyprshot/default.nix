@@ -5,10 +5,10 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.tools.hyprshot;
+with glace; let
+  cfg = config.glace.tools.hyprshot;
 in {
-  options.tools.hyprshot = with types; {
+  options.glace.tools.hyprshot = with types; {
     enable = mkBoolOpt false "Whether to enable hyprshot.";
   };
 

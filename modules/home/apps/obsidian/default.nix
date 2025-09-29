@@ -5,10 +5,10 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.apps.obsidian;
+with glace; let
+  cfg = config.glace.apps.obsidian;
 in {
-  options.apps.obsidian = {
+  options.glace.apps.obsidian = {
     enable = mkBoolOpt false "Whether to enable Obsidian";
   };
 

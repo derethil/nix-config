@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (lib) types;
-  inherit (lib.internal) mkOpt;
+  inherit (lib.glace) mkOpt;
 in {
   options = {
     secrets = mkOpt types.attrs {} "Secrets to manage with SOPS.";

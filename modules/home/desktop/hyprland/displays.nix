@@ -4,9 +4,9 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.desktop.hyprland;
-  displays = config.hardware.displays;
+with lib.glace; let
+  cfg = config.glace.desktop.hyprland;
+  displays = config.glace.hardware.displays;
   primaryDisplay = findFirst (d: d.primary) null displays;
 
   toHyprlandMonitor = d: let

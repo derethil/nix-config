@@ -5,10 +5,10 @@
   ...
 }: let
   inherit (lib) mkIf types;
-  inherit (lib.internal) mkBoolOpt mkOpt;
-  cfg = config.system.boot;
+  inherit (lib.glace) mkBoolOpt mkOpt;
+  cfg = config.glace.system.boot;
 in {
-  options.system.boot = {
+  options.glace.system.boot = {
     enable = mkBoolOpt false "Whether to enable systemd-boot configuration.";
     kernelPackages = mkOpt types.raw pkgs.linuxPackages_latest "Kernel packages to use.";
     plymouth.enable = mkBoolOpt false "Whether to enable Plymouth splash screens.";

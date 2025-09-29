@@ -5,10 +5,10 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.desktop.addons.gtk;
+with glace; let
+  cfg = config.glace.desktop.addons.gtk;
 in {
-  options.desktop.addons.gtk = {
+  options.glace.desktop.addons.gtk = {
     enable = mkBoolOpt false "Whether to enable GTK configuration.";
 
     cursor = {

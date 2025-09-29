@@ -5,10 +5,10 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.tools.home-manager;
+with glace; let
+  cfg = config.glace.tools.home-manager;
 in {
-  options.tools.home-manager = {
+  options.glace.tools.home-manager = {
     enable = mkBoolOpt false "Whether to enable the Home Manager CLI tool.";
   };
 

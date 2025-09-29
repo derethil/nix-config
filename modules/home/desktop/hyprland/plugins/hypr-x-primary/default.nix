@@ -6,9 +6,9 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.desktop.hyprland;
-  primaryMonitor = findFirst (m: m.primary) null config.hardware.displays;
+with glace; let
+  cfg = config.glace.desktop.hyprland;
+  primaryMonitor = findFirst (m: m.primary) null config.glace.hardware.displays;
 in {
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland = {

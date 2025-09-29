@@ -4,12 +4,12 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.desktop.addons.wallpapers;
+with glace; let
+  cfg = config.glace.desktop.addons.wallpapers;
 in {
-  options.desktop.addons.wallpapers = with types; {
+  options.glace.desktop.addons.wallpapers = with types; {
     enable = mkBoolOpt false "Enable wallpapers synchronization.";
-    targetDir = mkOpt path "${config.user.userdirs.pictures}/wallpapers" "Directory where wallpapers will be stored.";
+    targetDir = mkOpt path "${config.glace.user.userdirs.pictures}/wallpapers" "Directory where wallpapers will be stored.";
     sourceDir = mkOpt path ./wallpapers "Source directory for wallpapers.";
   };
 

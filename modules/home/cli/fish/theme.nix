@@ -4,8 +4,8 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.cli.fish;
+with lib.glace; let
+  cfg = config.glace.cli.fish;
 in {
   config = mkIf cfg.enable {
     programs.fish.interactiveShellInit = ''

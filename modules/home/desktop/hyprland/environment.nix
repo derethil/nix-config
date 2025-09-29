@@ -4,13 +4,13 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.desktop.hyprland;
+with lib.glace; let
+  cfg = config.glace.desktop.hyprland;
 in {
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland = {
       settings.environment = flatten [
-        (optionals config.hardware.nvidia-drivers.enable [
+        (optionals config.glace.hardware.nvidia-drivers.enable [
           "LIBVA_DRIVER_NAME, nvidia"
           "XDG_SESSION_TYPE, wayland"
           "GBM_BACKEND, nvidia-drm"

@@ -4,11 +4,11 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.internal) mkBoolOpt;
+  inherit (lib.glace) mkBoolOpt;
 
-  cfg = config.system.locate;
+  cfg = config.glace.system.locate;
 in {
-  options.system.locate = {
+  options.glace.system.locate = {
     enable = mkBoolOpt false "Whether to enable the locate database service.";
   };
 

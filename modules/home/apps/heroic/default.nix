@@ -5,10 +5,10 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.apps.heroic;
+with glace; let
+  cfg = config.glace.apps.heroic;
 in {
-  options.apps.heroic = {
+  options.glace.apps.heroic = {
     enable = mkBoolOpt false "Whether to enable Heroic Games Launcher";
   };
 

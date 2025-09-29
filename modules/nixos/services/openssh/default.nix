@@ -4,10 +4,10 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.internal) mkBoolOpt;
-  cfg = config.services.openssh-server;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.glace.services.openssh-server;
 in {
-  options.services.openssh-server = {
+  options.glace.services.openssh-server = {
     enable = mkBoolOpt false "Whether to enable OpenSSH server.";
   };
 

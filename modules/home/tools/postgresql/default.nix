@@ -5,10 +5,10 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.tools.postgresql;
+with glace; let
+  cfg = config.glace.tools.postgresql;
 in {
-  options.tools.postgresql = with types; {
+  options.glace.tools.postgresql = with types; {
     enable = mkBoolOpt false "Whether to enable PostgreSQL client tools.";
 
     servers = mkSubmoduleListOpt "PostgreSQL server configurations." {
@@ -36,7 +36,7 @@ in {
   in {
     secrets = secretsConfig;
 
-    tools.postgresql.servers = mkDefault [
+    glace.tools.postgresql.servers = mkDefault [
       {
         name = "Vigil [Test] [jarenglenn]";
         hostSecret = "postgresql/dragonfire/test/host";

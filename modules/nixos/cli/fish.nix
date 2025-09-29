@@ -5,11 +5,11 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.internal) mkBoolOpt;
-  cfg = config.programs.fish;
-  userCfg = config.user;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.cli.fish;
+  userCfg = config.glace.user;
 in {
-  options.programs.fish = {
+  options.cli.fish = {
     enable = mkBoolOpt false "Whether to enable fish shell system-wide.";
   };
 

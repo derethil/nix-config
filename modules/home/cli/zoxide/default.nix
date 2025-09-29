@@ -4,10 +4,10 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.cli.zoxide;
+with glace; let
+  cfg = config.glace.cli.zoxide;
 in {
-  options.cli.zoxide = {
+  options.glace.cli.zoxide = {
     enable = mkBoolOpt false "Whether to enable zoxide.";
   };
 

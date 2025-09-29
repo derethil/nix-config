@@ -5,10 +5,10 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.internal) mkBoolOpt;
-  cfg = config.cli.trash-cli;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.glace.cli.trash-cli;
 in {
-  options.cli.trash-cli = {
+  options.glace.cli.trash-cli = {
     enable = mkBoolOpt false "Whether to enable trash-cli.";
   };
 
@@ -16,10 +16,11 @@ in {
     home.packages = builtins.attrValues {
       inherit (pkgs) trash-cli;
     };
-    
-    cli.aliases = {
+
+    glace.cli.aliases = {
       del = "trash-put";
       trash = "trash-put";
     };
   };
 }
+

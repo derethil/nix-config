@@ -5,8 +5,8 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.desktop.hyprland;
+with glace; let
+  cfg = config.glace.desktop.hyprland;
 in {
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland = {

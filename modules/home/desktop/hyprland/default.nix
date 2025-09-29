@@ -5,10 +5,10 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.desktop.hyprland;
+with glace; let
+  cfg = config.glace.desktop.hyprland;
 in {
-  options.desktop.hyprland = with types; {
+  options.glace.desktop.hyprland = with types; {
     enable = mkBoolOpt false "Whether to enable Hyprland desktop environment.";
     gap = mkOpt int 9 "Default outer gap size for Hyprland.";
     binds = {

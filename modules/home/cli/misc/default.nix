@@ -5,15 +5,15 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.cli.misc;
+with glace; let
+  cfg = config.glace.cli.misc;
 in {
-  options.cli.misc = {
+  options.glace.cli.misc = {
     enable = mkEnableOption "Whether to enable the various CLI tools and utilities.";
   };
 
   config = mkIf cfg.enable {
-    cli.aliases = {
+    glace.cli.aliases = {
       l = "eza -la --icons --group-directories-first --time-style=relative";
       lt = "eza --tree --icons --group-directories-first --level=3";
       cat = "bat";

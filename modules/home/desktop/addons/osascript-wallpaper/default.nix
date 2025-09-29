@@ -5,12 +5,12 @@
   ...
 }: let
   inherit (lib) mkIf getExe;
-  inherit (lib.internal) mkBoolOpt;
+  inherit (lib.glace) mkBoolOpt;
 
-  cfg = config.desktop.addons.osascript-wallpaper;
+  cfg = config.glace.desktop.addons.osascript-wallpaper;
 
-  displays = config.hardware.displays;
-  wallpapersDir = config.desktop.addons.wallpapers.targetDir;
+  displays = config.glace.hardware.displays;
+  wallpapersDir = config.glace.desktop.addons.wallpapers.targetDir;
 
   setWallpaper = pkgs.writeShellScriptBin "set-wallpapers" ''
     ${lib.concatMapStringsSep "\n" (
@@ -22,7 +22,7 @@
       displays}
   '';
 in {
-  options.desktop.addons.osascript-wallpaper = {
+  options.glace.desktop.addons.osascript-wallpaper = {
     enable = mkBoolOpt false "Enable osascript wallpaper management for macOS";
   };
 

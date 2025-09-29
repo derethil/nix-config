@@ -4,7 +4,7 @@
   lib,
   ...
 }: let
-  refresh-env = lib.getExe (pkgs.internal.tmux-refresh-hm-env.override {inherit config lib;});
+  refresh-env = lib.getExe (pkgs.glace.tmux-refresh-hm-env.override {inherit config lib;});
 in
   pkgs.symlinkJoin {
     name = "tmux";

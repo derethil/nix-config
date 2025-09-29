@@ -5,10 +5,10 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.tools.jira-cli;
+with glace; let
+  cfg = config.glace.tools.jira-cli;
 in {
-  options.tools.jira-cli = {
+  options.glace.tools.jira-cli = {
     enable = mkBoolOpt false "Whether to enable the Jira CLI tool.";
   };
 

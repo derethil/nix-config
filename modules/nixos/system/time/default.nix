@@ -4,10 +4,10 @@
   ...
 }: let
   inherit (lib) mkIf mkDefault types;
-  inherit (lib.internal) mkBoolOpt mkNullableOpt;
-  cfg = config.system.time;
+  inherit (lib.glace) mkBoolOpt mkNullableOpt;
+  cfg = config.glace.system.time;
 in {
-  options.system.time = {
+  options.glace.system.time = {
     enable = mkBoolOpt false "Whether to enable time management.";
     automatic = mkBoolOpt true "Whether to enable automatic timezone detection based on location.";
     timeZone = mkNullableOpt types.str null "Manually set timezone (overrides automatic detection).";

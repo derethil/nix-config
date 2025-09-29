@@ -1,8 +1,8 @@
 {lib, ...}:
 with lib;
-with internal;
+with glace;
 with types; {
-  options.user.location = {
+  options.glace.user.location = {
     latitude = mkOpt (types.nullOr types.float) null "Location latitude.";
     longitude = mkOpt (types.nullOr types.float) null "Location longitude.";
   };

@@ -1,5 +1,5 @@
 {lib, ...}: let
-  inherit (lib.internal) mkBoolOpt;
+  inherit (lib.glace) mkBoolOpt;
 in {
-  options.cli.fish.enable = mkBoolOpt false "Whether to enable the Fish shell.";
+  options.glace.cli.fish.enable = mkBoolOpt false "Whether to enable the Fish shell.";
 }

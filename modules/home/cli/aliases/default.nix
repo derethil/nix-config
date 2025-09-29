@@ -1,7 +1,7 @@
 {lib, ...}:
 with lib;
-with internal; {
-  options.cli = with types; {
+with glace; {
+  options.glace.cli = with types; {
     aliases = mkOption {
       type = attrsOf str;
       default = {};
@@ -15,7 +15,7 @@ with internal; {
   };
 
   config = {
-    cli = {
+    glace.cli = {
       aliases = {
         agsv2 = "ags run --directory ~/.config/astal";
         wget = "wget --hsts-file=$XDG_DATA_HOME/wget-hsts";

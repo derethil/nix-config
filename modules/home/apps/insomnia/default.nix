@@ -5,10 +5,10 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.apps.insomnia;
+with glace; let
+  cfg = config.glace.apps.insomnia;
 in {
-  options.apps.insomnia = {
+  options.glace.apps.insomnia = {
     enable = mkBoolOpt false "Whether to enable Insomnia.";
   };
 

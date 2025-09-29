@@ -4,10 +4,10 @@
   ...
 }: let
   inherit (lib) mkIf mkMerge types;
-  inherit (lib.internal) mkBoolOpt mkOpt;
-  cfg = config.hardware.networking;
+  inherit (lib.glace) mkBoolOpt mkOpt;
+  cfg = config.glace.hardware.networking;
 in {
-  options.hardware.networking = with types; {
+  options.glace.hardware.networking = with types; {
     enable = mkBoolOpt false "Whether or not to enable networking support";
     hosts = mkOpt attrs {} "An attribute set to merge with <option>networking.hosts</option>";
     avahi.enable = mkBoolOpt false "Whether or not to enable Avahi host resolution on local networks.";
@@ -26,7 +26,7 @@ in {
       };
     };
 
-    user.extraGroups = ["networkmanager"];
+    glace.user.extraGroups = ["networkmanager"];
 
     services.avahi = mkIf cfg.avahi.enable {
       enable = true;

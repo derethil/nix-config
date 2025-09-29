@@ -5,10 +5,10 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.internal) mkBoolOpt;
-  cfg = config.tools.devenv;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.glace.tools.devenv;
 in {
-  options.tools.devenv = {
+  options.glace.tools.devenv = {
     enable = mkBoolOpt false "Whether to enable devenv.";
   };
 

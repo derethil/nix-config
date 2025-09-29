@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (lib) mkIf;
-  cfg = config.cli.fish;
+  cfg = config.glace.cli.fish;
 in {
   imports = [
     ./theme.nix
@@ -15,8 +15,8 @@ in {
     programs.fish = {
       enable = true;
       generateCompletions = true;
-      shellAbbrs = config.cli.abbreviations;
-      shellAliases = config.cli.aliases;
+      shellAbbrs = config.glace.cli.abbreviations;
+      shellAliases = config.glace.cli.aliases;
 
       interactiveShellInit = ''
         set fish_greeting
@@ -25,7 +25,7 @@ in {
         set fish_cursor_insert      line       blink
         set fish_cursor_replace_one underscore blink
         set fish_cursor_visual      block
-        ${lib.optionalString config.tools.aws-cli.enable "complete --command aws --no-files --arguments '(begin; set --local --export COMP_SHELL fish; set --local --export COMP_LINE (commandline); aws_completer | sed \"s/ \\$//\"; end)'"}
+        ${lib.optionalString config.glace.tools.aws-cli.enable "complete --command aws --no-files --arguments '(begin; set --local --export COMP_SHELL fish; set --local --export COMP_LINE (commandline); aws_completer | sed \"s/ \\$//\"; end)'"}
       '';
 
       functions = {

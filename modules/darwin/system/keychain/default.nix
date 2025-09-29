@@ -4,21 +4,21 @@
   ...
 }: let
   inherit (lib) mkIf mkAfter types optionalString;
-  inherit (lib.internal) mkBoolOpt mkOpt mkSubmoduleListOpt;
+  inherit (lib.glace) mkBoolOpt mkOpt mkSubmoduleListOpt;
 
-  cfg = config.system.keychain;
+  cfg = config.glace.system.keychain;
 
-  keychainPath = "/Users/${config.user.name}/Library/Keychains/login.keychain-db";
+  keychainPath = "/Users/${config.glace.user.name}/Library/Keychains/login.keychain-db";
 
   mkKeychainScript = item: ''
     echo >&2 "Syncing keychain entry for ${item.service}..."
 
     # Check if secret needs updating by comparing with existing keychain entry
     NEW_SECRET="$(cat ${item.secretFile})"
-    EXISTING_SECRET="$(sudo -u "${config.user.name}" security find-generic-password -a "${item.account}" -s "${item.service}" -w "${keychainPath}" 2>/dev/null || echo "")"
+    EXISTING_SECRET="$(sudo -u "${config.glace.user.name}" security find-generic-password -a "${item.account}" -s "${item.service}" -w "${keychainPath}" 2>/dev/null || echo "")"
 
     if [ "$NEW_SECRET" != "$EXISTING_SECRET" ]; then
-      sudo -u "${config.user.name}" /usr/bin/security add-generic-password \
+      sudo -u "${config.glace.user.name}" /usr/bin/security add-generic-password \
         -U \
         -a "${item.account}" \
         -s "${item.service}" \
@@ -29,7 +29,7 @@
     fi
   '';
 in {
-  options.system.keychain = {
+  options.glace.system.keychain = {
     enable = mkBoolOpt (cfg.entries != []) "Whether to enable keychain management";
     entries = mkSubmoduleListOpt "Entries to add to the keychain." {
       secretFile = mkOpt types.str null "Path to the secret file (usually from SOPS)";

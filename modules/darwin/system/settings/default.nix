@@ -4,17 +4,17 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.internal) mkBoolOpt mkOpt;
-  cfg = config.system.settings;
+  inherit (lib.glace) mkBoolOpt mkOpt;
+  cfg = config.glace.system.settings;
 in {
-  options.system.settings = {
+  options.glace.system.settings = {
     enable = mkBoolOpt false "Whether or not to manage system settings.";
     dock-apps = mkOpt (lib.types.listOf lib.types.attrs) [] "Default persistent items to show on the dock.";
   };
 
   config = mkIf cfg.enable {
     system = {
-      primaryUser = config.user.name;
+      primaryUser = config.glace.user.name;
 
       defaults = {
         controlcenter = {
@@ -23,7 +23,7 @@ in {
           Bluetooth = false;
           Display = false;
           FocusModes = true;
-          NowPlaying = !config.desktop.mediamate.enable;
+          NowPlaying = !config.glace.desktop.mediamate.enable;
           Sound = true;
         };
 

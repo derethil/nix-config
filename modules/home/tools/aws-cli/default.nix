@@ -5,10 +5,10 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.tools.aws-cli;
+with glace; let
+  cfg = config.glace.tools.aws-cli;
 in {
-  options.tools.aws-cli = {
+  options.glace.tools.aws-cli = {
     enable = mkBoolOpt false "Whether to enable the AWS CLI.";
   };
 

@@ -5,10 +5,10 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.apps.obs;
+with glace; let
+  cfg = config.glace.apps.obs;
 in {
-  options.apps.obs = {
+  options.glace.apps.obs = {
     enable = mkBoolOpt false "Whether to enable OBS Studio";
   };
 

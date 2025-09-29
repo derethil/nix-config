@@ -5,10 +5,10 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.internal) mkBoolOpt;
-  cfg = config.desktop.display-managers.tuigreet;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.glace.desktop.display-managers.tuigreet;
 in {
-  options.desktop.display-managers.tuigreet = {
+  options.glace.desktop.display-managers.tuigreet = {
     enable = mkBoolOpt false "Whether to enable greetd with tuigreet.";
   };
 

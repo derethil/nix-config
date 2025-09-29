@@ -120,6 +120,7 @@
   in (snowfall-lib.mkFlake {
     inherit inputs;
     src = ./.;
+    snowfall.namespace = "glace";
     channels-config = {
       allowUnfree = true;
       allowUnfreePredicate = _: true;

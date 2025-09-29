@@ -5,8 +5,8 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.desktop.xdg;
+with glace; let
+  cfg = config.glace.desktop.xdg;
 
   cacheHome = config.xdg.cacheHome;
   configHome = config.xdg.configHome;
@@ -54,7 +54,7 @@ with internal; let
     WINEPREFIX = "${dataHome}/wine";
   };
 in {
-  options.desktop.xdg = {
+  options.glace.desktop.xdg = {
     enable = mkBoolOpt true "Whether to enable XDG base directory support";
   };
 
@@ -72,19 +72,19 @@ in {
       enable = true;
       autostart.readOnly = true;
       cacheHome = "${config.home.homeDirectory}/.local/cache";
-      userDirs = mkIf (pkgs.stdenv.hostPlatform.isLinux && config.user.userdirs.enable) {
+      userDirs = mkIf (pkgs.stdenv.hostPlatform.isLinux && config.glace.user.userdirs.enable) {
         enable = true;
         createDirectories = true;
-        desktop = config.user.userdirs.desktop;
-        documents = config.user.userdirs.documents;
-        download = config.user.userdirs.download;
-        music = config.user.userdirs.music;
-        pictures = config.user.userdirs.pictures;
-        videos = config.user.userdirs.videos;
-        templates = config.user.userdirs.templates;
-        publicShare = config.user.userdirs.publicShare;
+        desktop = config.glace.user.userdirs.desktop;
+        documents = config.glace.user.userdirs.documents;
+        download = config.glace.user.userdirs.download;
+        music = config.glace.user.userdirs.music;
+        pictures = config.glace.user.userdirs.pictures;
+        videos = config.glace.user.userdirs.videos;
+        templates = config.glace.user.userdirs.templates;
+        publicShare = config.glace.user.userdirs.publicShare;
         extraConfig = {
-          XDG_SCREENSHOTS_DIR = "${config.user.userdirs.pictures}/screenshots";
+          XDG_SCREENSHOTS_DIR = "${config.glace.user.userdirs.pictures}/screenshots";
         };
       };
     };

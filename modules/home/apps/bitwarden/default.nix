@@ -5,10 +5,10 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.internal) mkBoolOpt;
-  cfg = config.apps.bitwarden;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.glace.apps.bitwarden;
 in {
-  options.apps.bitwarden = {
+  options.glace.apps.bitwarden = {
     enable = mkBoolOpt false "Whether to enable the Bitwarden Desktop client.";
   };
 

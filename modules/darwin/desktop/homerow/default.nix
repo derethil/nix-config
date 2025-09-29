@@ -4,10 +4,10 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.internal) mkBoolOpt;
-  cfg = config.desktop.homerow;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.glace.desktop.homerow;
 in {
-  options.desktop.homerow = {
+  options.glace.desktop.homerow = {
     enable = mkBoolOpt false "Whether to enable Homerow, the MacOS keyboard shortcut utility.";
   };
 

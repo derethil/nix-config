@@ -4,10 +4,10 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.internal) mkBoolOpt;
-  cfg = config.system.hotkeys;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.glace.system.hotkeys;
 in {
-  options.system.hotkeys = {
+  options.glace.system.hotkeys = {
     enable = mkBoolOpt false "Whether or not to configure macOS keyboard shortcuts.";
     windows.enable = mkBoolOpt true "Whether or not to enable macOS window management keyboard shortcuts.";
     spotlight.enable = mkBoolOpt false "Whether or not to change the macOS Spotlight keyboard shortcut.";

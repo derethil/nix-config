@@ -5,10 +5,10 @@
   ...
 }: let
   inherit (lib) mkIf mkForce types flatten;
-  inherit (lib.internal) mkBoolOpt mkOpt;
-  cfg = config.system.audio;
+  inherit (lib.glace) mkBoolOpt mkOpt;
+  cfg = config.glace.system.audio;
 in {
-  options.system.audio = {
+  options.glace.system.audio = {
     enable = mkBoolOpt false "Whether to enable audio support.";
     extraPackages = mkOpt (types.listOf types.package) [pkgs.easyeffects] "Additional packages to install.";
   };
@@ -31,7 +31,6 @@ in {
         cfg.extraPackages
       ];
 
-    user.extraGroups = ["audio"];
+    glace.user.extraGroups = ["audio"];
   };
 }
-

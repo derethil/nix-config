@@ -4,10 +4,10 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.desktop.glace-shell;
+with glace; let
+  cfg = config.glace.desktop.glace-shell;
 in {
-  options.desktop.glace-shell = {
+  options.glace.desktop.glace-shell = {
     enable = mkBoolOpt false "Whether to enable glace-shell.";
   };
 

@@ -4,10 +4,10 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.cli.direnv;
+with glace; let
+  cfg = config.glace.cli.direnv;
 in {
-  options.cli.direnv = {
+  options.glace.cli.direnv = {
     enable = mkBoolOpt false "Whether to enable direnv.";
   };
 

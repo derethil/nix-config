@@ -4,10 +4,10 @@
   ...
 }: let
   inherit (lib) mkIf mkForce;
-  cfg = config.desktop.dank-material-shell;
+  cfg = config.glace.desktop.dank-material-shell;
 in {
-  config = mkIf (cfg.enable && config.desktop.hyprland.enable) {
-    desktop.hyprland.binds = {
+  config = mkIf (cfg.enable && config.glace.desktop.hyprland.enable) {
+    glace.desktop.hyprland.binds = {
       defaultAudioBinds = mkForce false;
       defaultBrightnessBinds = mkForce false;
     };

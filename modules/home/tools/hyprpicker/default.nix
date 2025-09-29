@@ -5,10 +5,10 @@
   ...
 }:
 with lib;
-with internal; let
-  cfg = config.tools.hyprpicker;
+with glace; let
+  cfg = config.glace.tools.hyprpicker;
 in {
-  options.tools.hyprpicker = with types; {
+  options.glace.tools.hyprpicker = with types; {
     enable = mkBoolOpt false "Whether to enable hyprpicker.";
   };
 
