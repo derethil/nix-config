@@ -1,6 +1,6 @@
-{lib, ...}:
-with lib;
-with lib.glace; {
+{lib, ...}: let
+  inherit (lib.glace) enabled disabled;
+in {
   glace = {
     distro = "darwin";
     user = {

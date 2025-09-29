@@ -2,9 +2,9 @@
   lib,
   config,
   ...
-}:
-with lib;
-with glace; let
+}: let
+  inherit (lib) mkIf types;
+  inherit (lib.glace) mkBoolOpt mkOpt;
   cfg = config.glace.desktop.addons.wallpapers;
 in {
   options.glace.desktop.addons.wallpapers = with types; {

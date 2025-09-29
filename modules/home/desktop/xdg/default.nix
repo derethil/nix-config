@@ -3,9 +3,9 @@
   config,
   pkgs,
   ...
-}:
-with lib;
-with glace; let
+}: let
+  inherit (lib) mkIf;
+  inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.desktop.xdg;
 
   cacheHome = config.xdg.cacheHome;

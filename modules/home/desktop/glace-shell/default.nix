@@ -2,9 +2,9 @@
   config,
   lib,
   ...
-}:
-with lib;
-with glace; let
+}: let
+  inherit (lib) mkIf;
+  inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.desktop.glace-shell;
 in {
   options.glace.desktop.glace-shell = {

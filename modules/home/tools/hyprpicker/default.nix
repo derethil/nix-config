@@ -3,12 +3,12 @@
   config,
   pkgs,
   ...
-}:
-with lib;
-with glace; let
+}: let
+  inherit (lib) mkIf;
+  inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.tools.hyprpicker;
 in {
-  options.glace.tools.hyprpicker = with types; {
+  options.glace.tools.hyprpicker = {
     enable = mkBoolOpt false "Whether to enable hyprpicker.";
   };
 

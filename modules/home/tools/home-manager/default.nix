@@ -3,9 +3,9 @@
   lib,
   config,
   ...
-}:
-with lib;
-with glace; let
+}: let
+  inherit (lib) mkIf;
+  inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.tools.home-manager;
 in {
   options.glace.tools.home-manager = {

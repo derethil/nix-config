@@ -4,8 +4,8 @@
   pkgs,
   ...
 }:
-with lib; let
-  inherit (lib) types;
+let
+  inherit (lib) types mkIf;
   inherit (lib.glace) mkBoolOpt mkOpt;
   cfg = config.glace.services.flatpak;
 in {

@@ -2,9 +2,9 @@
   lib,
   config,
   ...
-}:
-with lib;
-with lib.glace; let
+}: let
+  inherit (lib) mkIf;
+  inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.apps.sober;
 in {
   options.glace.apps.sober = {
@@ -23,4 +23,3 @@ in {
     };
   };
 }
-

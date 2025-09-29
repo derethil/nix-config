@@ -3,13 +3,13 @@
   lib,
   config,
   ...
-}:
-with lib;
-with glace; let
+}: let
+  inherit (lib) mkIf flatten;
+  inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.cli.misc;
 in {
   options.glace.cli.misc = {
-    enable = mkEnableOption "Whether to enable the various CLI tools and utilities.";
+    enable = mkBoolOpt false "Whether to enable the various CLI tools and utilities.";
   };
 
   config = mkIf cfg.enable {

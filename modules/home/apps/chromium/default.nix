@@ -3,14 +3,16 @@
   config,
   pkgs,
   ...
-}:
-with lib;
-with lib.glace; {
+}: let
+  inherit (lib) mkIf;
+  inherit (lib.glace) mkBoolOpt;
+  cfg = config.glace.apps.chromium;
+in {
   options.glace.apps.chromium = {
     enable = mkBoolOpt false "Whether to enable Chromium";
   };
 
-  config = mkIf config.glace.apps.chromium.enable {
+  config = mkIf cfg.enable {
     programs.chromium = {
       enable = true;
       package =

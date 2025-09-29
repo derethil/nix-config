@@ -3,9 +3,9 @@
   lib,
   config,
   ...
-}:
-with lib;
-with glace; let
+}: let
+  inherit (lib) mkIf types;
+  inherit (lib.glace) mkBoolOpt mkOpt;
   cfg = config.glace.desktop.addons.gtk;
 in {
   options.glace.desktop.addons.gtk = {

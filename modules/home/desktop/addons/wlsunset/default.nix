@@ -2,9 +2,10 @@
   lib,
   config,
   ...
-}:
-with lib;
-with glace; {
+}: let
+  inherit (lib) mkIf;
+  inherit (lib.glace) mkBoolOpt;
+in {
   options.glace.desktop.addons.wlsunset = {
     enable = mkBoolOpt false "Whether to enable wlsunset.";
   };

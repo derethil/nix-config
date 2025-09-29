@@ -3,9 +3,9 @@
   config,
   pkgs,
   ...
-}:
-with lib;
-with glace; let
+}: let
+  inherit (lib) mkIf;
+  inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.apps.firefox;
   firefoxPkg = pkgs.firefox.override {nativeMessagingHosts = with pkgs; [tridactyl-native];};
 in {
@@ -13,7 +13,7 @@ in {
     enable = mkBoolOpt false "Whether to enable Firefox.";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     programs.firefox = {
       enable = true;
       package =

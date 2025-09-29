@@ -2,12 +2,13 @@
   lib,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkIf;
+  inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.desktop.addons.cliphist;
 in {
-  options.glace.desktop.addons.cliphist = with types; {
-    enable = mkEnableOption "Enable cliphist clipboard manager";
+  options.glace.desktop.addons.cliphist = {
+    enable = mkBoolOpt false "Enable cliphist clipboard manager";
   };
 
   config = mkIf cfg.enable {

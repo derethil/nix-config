@@ -3,9 +3,9 @@
   pkgs,
   config,
   ...
-}:
-with lib;
-with glace; let
+}: let
+  inherit (lib) mkIf;
+  inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.tools.jira-cli;
 in {
   options.glace.tools.jira-cli = {

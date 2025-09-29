@@ -2,9 +2,9 @@
   lib,
   config,
   ...
-}:
-with lib;
-with lib.glace; let
+}: let
+  inherit (lib) mkIf;
+  inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.apps.foot;
   monoFont = config.glace.system.fonts.mono;
 in {

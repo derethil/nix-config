@@ -3,9 +3,9 @@
   config,
   lib,
   ...
-}:
-with lib;
-with glace; let
+}: let
+  inherit (lib) mkIf;
+  inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.cli.trashy;
 in {
   options.glace.cli.trashy = {

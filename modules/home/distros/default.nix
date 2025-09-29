@@ -1,8 +1,6 @@
-{lib, ...}:
-with lib;
-with glace;
-with types; let
-  distros = enum ["arch" "nixos" "darwin"];
+{lib, ...}: let
+  inherit (lib) types;
+  inherit (lib.glace) mkOpt;
 in {
-  options.distro = mkOpt distros "nixos" "Option to enable distro-specific configurations.";
+  options.distro = mkOpt (types.enum ["arch" "nixos" "darwin"]) "nixos" "Option to enable distro-specific configurations.";
 }

@@ -2,9 +2,9 @@
   lib,
   config,
   ...
-}:
-with lib;
-with lib.glace; let
+}: let
+  inherit (lib) mkIf types;
+  inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.desktop.hyprland;
   yGap = cfg.gap;
   xGap = cfg.smallerLoneWindows.gap or yGap;

@@ -2,9 +2,8 @@
   lib,
   config,
   ...
-}:
-with lib;
-with lib.glace; let
+}: let
+  inherit (lib) mkIf findFirst filter;
   cfg = config.glace.desktop.hyprland;
   displays = config.glace.hardware.displays;
   primaryDisplay = findFirst (d: d.primary) null displays;

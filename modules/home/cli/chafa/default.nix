@@ -3,9 +3,9 @@
   config,
   lib,
   ...
-}:
-with lib;
-with glace; let
+}: let
+  inherit (lib) mkIf;
+  inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.cli.chafa;
 in {
   options.glace.cli.chafa = {
@@ -16,3 +16,4 @@ in {
     home.packages = [pkgs.chafa];
   };
 }
+

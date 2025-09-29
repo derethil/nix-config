@@ -3,9 +3,9 @@
   config,
   pkgs,
   ...
-}:
-with lib;
-with glace; let
+}: let
+  inherit (lib) mkIf types;
+  inherit (lib.glace) mkBoolOpt mkOpt;
   cfg = config.glace.desktop.hyprland;
 in {
   options.glace.desktop.hyprland = with types; {

@@ -3,9 +3,8 @@
   config,
   pkgs,
   ...
-}:
-with lib;
-with glace; let
+}: let
+  inherit (lib) mkIf;
   cfg = config.glace.desktop.hyprland;
 in {
   config = mkIf cfg.enable {

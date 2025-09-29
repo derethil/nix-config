@@ -3,16 +3,16 @@
   lib,
   config,
   ...
-}:
-with lib;
-with glace; let
+}: let
+  inherit (lib) mkIf;
+  inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.apps.insomnia;
 in {
   options.glace.apps.insomnia = {
     enable = mkBoolOpt false "Whether to enable Insomnia.";
   };
 
-  config.home.packages = with pkgs; [
-    (mkIf cfg.enable insomnia)
-  ];
+  config = mkIf cfg.enable {
+    home.packages = [pkgs.insomnia];
+  };
 }

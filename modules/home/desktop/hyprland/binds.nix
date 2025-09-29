@@ -4,8 +4,8 @@
   lib,
   pkgs,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkIf getExe flatten optionals;
   cfg = config.glace.desktop.hyprland;
   relativeworkspace = getExe inputs.rust-system-scripts.packages.${pkgs.system}.relativeworkspace;
 

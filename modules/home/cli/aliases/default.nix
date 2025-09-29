@@ -1,6 +1,6 @@
-{lib, ...}:
-with lib;
-with glace; {
+{lib, ...}: let
+  inherit (lib) types mkOption;
+in {
   options.glace.cli = with types; {
     aliases = mkOption {
       type = attrsOf str;

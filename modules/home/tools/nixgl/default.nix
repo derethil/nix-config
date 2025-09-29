@@ -3,9 +3,9 @@
   pkgs,
   lib,
   ...
-}:
-with lib;
-with glace; let
+}: let
+  inherit (lib) types mkIf;
+  inherit (lib.glace) mkOpt mkBoolOpt;
   cfg = config.glace.tools.nixgl;
   nvidia = config.glace.hardware.nvidia.enable or false;
   isNonNixOS = config.distro or "nixos" != "nixos";

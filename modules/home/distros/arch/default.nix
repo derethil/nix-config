@@ -2,9 +2,10 @@
   lib,
   config,
   ...
-}:
-with lib;
-with glace; {
+}: let
+  inherit (lib) mkIf;
+  inherit (lib.glace) isArch;
+in {
   config = mkIf (isArch config.distro) {
     glace.cli.abbreviations = {
       paca = "pacman -S"; # install

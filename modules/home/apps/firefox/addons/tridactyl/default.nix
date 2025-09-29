@@ -2,8 +2,8 @@
   lib,
   config,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkIf;
   cfg = config.glace.apps.firefox;
 in {
   config = mkIf cfg.enable {

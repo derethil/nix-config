@@ -1,6 +1,6 @@
-{lib, ...}:
-with lib;
-with lib.glace; {
+{lib, ...}: let
+  inherit (lib.glace) enabled disabled;
+in {
   glace = {
     user = {
       location.latitude = 39.7392;

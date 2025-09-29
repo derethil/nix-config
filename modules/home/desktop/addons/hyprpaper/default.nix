@@ -2,9 +2,9 @@
   lib,
   config,
   ...
-}:
-with lib;
-with glace; let
+}: let
+  inherit (lib) mkIf filter length;
+  inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.desktop.addons.hyprpaper;
   enabledDisplays = filter (d: d.enabled) config.glace.hardware.displays;
   displaysWithWallpaper = filter (d: d.wallpaper != null) enabledDisplays;

@@ -3,9 +3,9 @@
   config,
   pkgs,
   ...
-}:
-with lib;
-with glace; let
+}: let
+  inherit (lib) types mkIf mkDefault concatMapStringsSep map;
+  inherit (lib.glace) mkBoolOpt mkSubmoduleListOpt mkOpt;
   cfg = config.glace.tools.postgresql;
 in {
   options.glace.tools.postgresql = with types; {

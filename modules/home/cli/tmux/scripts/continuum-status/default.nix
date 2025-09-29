@@ -3,9 +3,9 @@
   lib,
   config,
   ...
-}:
-with lib;
-with glace; let
+}: let
+  inherit (lib) mkIf;
+
   tmux-continuum-status = pkgs.writeShellScriptBin "tmux-continuum-status" ''
     #!${pkgs.bash}/bin/bash
 

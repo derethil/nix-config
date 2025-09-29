@@ -4,9 +4,8 @@
   inputs,
   system,
   ...
-}:
-with lib;
-with glace; let
+}: let
+  inherit (lib) mkIf findFirst;
   cfg = config.glace.desktop.hyprland;
   primaryMonitor = findFirst (m: m.primary) null config.glace.hardware.displays;
 in {

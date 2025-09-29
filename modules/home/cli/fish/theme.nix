@@ -2,9 +2,8 @@
   config,
   lib,
   ...
-}:
-with lib;
-with lib.glace; let
+}: let
+  inherit (lib) mkIf;
   cfg = config.glace.cli.fish;
 in {
   config = mkIf cfg.enable {

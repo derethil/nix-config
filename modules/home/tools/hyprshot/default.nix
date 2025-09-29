@@ -3,12 +3,12 @@
   config,
   pkgs,
   ...
-}:
-with lib;
-with glace; let
+}: let
+  inherit (lib) mkIf;
+  inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.tools.hyprshot;
 in {
-  options.glace.tools.hyprshot = with types; {
+  options.glace.tools.hyprshot = {
     enable = mkBoolOpt false "Whether to enable hyprshot.";
   };
 
@@ -18,3 +18,4 @@ in {
     ];
   };
 }
+
