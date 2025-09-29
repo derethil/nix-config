@@ -84,6 +84,8 @@ in {
           "$mod, backslash, workspace, previous_per_monitor"
           "$mod, bracketright, exec, ${relativeworkspace} next"
           "$mod, bracketleft, exec, ${relativeworkspace} previous"
+          "$mod, mouse_up, exec, ${relativeworkspace} next"
+          "$mod, mouse_down, exec, ${relativeworkspace} previous"
 
           # Workspace management
           (mkWorkspaceBinds "$mod" "workspace")
@@ -101,10 +103,6 @@ in {
           "$mod CTRL, L, resizeactive, $resizeAmount 0"
           "$mod CTRL, K, resizeactive, 0 -$resizeAmount"
           "$mod CTRL, J, resizeactive, 0 $resizeAmount"
-
-          # Scroll through existing workspaces
-          "$mod, mouse_up, exec, ~/.local/bin/scrollworkspace next"
-          "$mod, mouse_down, exec, ~/.local/bin/scrollworkspace previous"
         ];
 
         bindm = [
