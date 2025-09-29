@@ -23,11 +23,13 @@ in {
         "$resizeAmount" = "256";
 
         bind = flatten [
-          # Color Picker
-          "$mod, R, exec, shader=$(hyprshade current) ; hyprshade off ; hyprpicker -a ; hyprshade on \"$${shader}\""
-
           # Exit Session
           "$mod, End, exec, uwsm stop"
+
+          # Color Picker
+          (optionals config.glace.tools.hyprpicker.enable [
+            "$mod, R, exec, shader=$(hyprshade current) ; hyprshade off ; hyprpicker -a ; hyprshade on \"$${shader}\""
+          ])
 
           # Audio Control
           (optionals cfg.binds.defaultAudioBinds [
@@ -47,8 +49,10 @@ in {
           ])
 
           # Screenshots
-          ", Print, exec, shader=$(hyprshade current) ; hyprshade off ; hyprshot -m region --clipboard-only ; hyprshade on \"$${shader}\""
-          "SHIFT, Print, exec, shader=$(hyprshade current) ; hyprshade off ; hyprshot -m region -o ~/Pictures/Screenshots/ ; hyprshade on \"$${shader}\""
+          (optionals config.glace.tools.hyprshot.enable [
+            ", Print, exec, shader=$(hyprshade current) ; hyprshade off ; hyprshot -m region --clipboard-only ; hyprshade on \"$${shader}\""
+            "SHIFT, Print, exec, shader=$(hyprshade current) ; hyprshade off ; hyprshot -m region -o ~/Pictures/Screenshots/ ; hyprshade on \"$${shader}\""
+          ])
 
           # Application Shortcuts
           (optionals config.glace.apps.foot.enable [
@@ -56,14 +60,13 @@ in {
             "$mod SHIFT, RETURN, exec, ${pkgs.foot}/bin/footclient"
             "$mod SHIFT CONTROL, RETURN, exec, ${pkgs.foot}/bin/foot"
           ])
-          (optionals config.glace.apps.alacritty.enable [
+          (optionals (!config.glace.apps.foot.enable && config.glace.apps.alacritty.enable) [
             "$mod, RETURN, exec, alacritty -e 'tmux new-session -As base'"
             "$mod SHIFT, RETURN, exec, alacritty"
           ])
 
           # Window Commands
           "$mod, Q, killactive"
-          "$mod SHIFT, R, exec, wofi  --show drun"
           "$mod, F, fullscreen"
           "$mod SHIFT, F, fullscreenstate, -1, 2"
 
