@@ -16,6 +16,7 @@ in {
     };
     hardware = {
       nvidia = enabled;
+      bluetooth = enabled;
       networking = enabled' {
         avahi = enabled;
       };
