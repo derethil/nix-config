@@ -25,5 +25,10 @@ in {
         };
       };
     };
+
+    system.impermanence.extraDirectories = mkIf config.system.impermanence.enable [
+      "/var/lib/flatpak"
+      "/var/cache/flatpak"
+    ];
   };
 }

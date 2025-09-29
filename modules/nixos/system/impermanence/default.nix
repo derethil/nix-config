@@ -5,32 +5,49 @@
 }: let
   inherit (lib) mkIf;
   inherit (lib.internal) mkBoolOpt;
+  inherit (lib.types) listOf str;
 
   cfg = config.system.impermanence;
 in {
   options.system.impermanence = {
     enable = mkBoolOpt false "Whether to enable impermanence with BTRFS root rollback.";
+
+    extraDirectories = lib.mkOption {
+      type = listOf str;
+      default = [];
+      description = "Additional directories to persist beyond the defaults.";
+    };
+
+    extraFiles = lib.mkOption {
+      type = listOf str;
+      default = [];
+      description = "Additional files to persist beyond the defaults.";
+    };
   };
 
   config = mkIf cfg.enable {
     # TODO: move these to their relevant modules as appropriate
     environment.persistence."/persist" = {
-      directories = [
-        "/etc/NetworkManager/system-connections"
-        "/etc/secureboot"
-        "/var/db/sudo"
-        "/var/lib/nixos"
-        "/var/lib/systemd/coredump"
-        "/var/lib/bluetooth"
-      ];
+      directories =
+        [
+          "/etc/NetworkManager/system-connections"
+          "/etc/secureboot"
+          "/var/db/sudo"
+          "/var/lib/nixos"
+          "/var/lib/systemd/coredump"
+          "/var/lib/bluetooth"
+        ]
+        ++ cfg.extraDirectories;
 
-      files = [
-        "/etc/machine-id"
-        "/etc/ssh/ssh_host_ed25519_key"
-        "/etc/ssh/ssh_host_ed25519_key.pub"
-        "/etc/ssh/ssh_host_rsa_key"
-        "/etc/ssh/ssh_host_rsa_key.pub"
-      ];
+      files =
+        [
+          "/etc/machine-id"
+          "/etc/ssh/ssh_host_ed25519_key"
+          "/etc/ssh/ssh_host_ed25519_key.pub"
+          "/etc/ssh/ssh_host_rsa_key"
+          "/etc/ssh/ssh_host_rsa_key.pub"
+        ]
+        ++ cfg.extraFiles;
     };
 
     boot.initrd.systemd = {
