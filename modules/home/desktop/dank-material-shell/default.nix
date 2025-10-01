@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: let
   inherit (lib) mkIf;
@@ -28,6 +29,7 @@ in {
       enableAudioWavelength = true;
       enableCalendarEvents = true;
       inherit (cfg) enableBrightnessControl;
+      quickshell.package = pkgs.inputs.quickshell;
     };
   };
 }

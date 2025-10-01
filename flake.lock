@@ -1477,17 +1477,38 @@
         ]
       },
       "locked": {
-        "lastModified": 1756981260,
-        "narHash": "sha256-GhuD9QVimjynHI0OOyZsqJsnlXr2orowh9H+HYz4YMs=",
+        "lastModified": 1759208386,
+        "narHash": "sha256-IQCtGpy+Z1GupmTeJKSb/bXf097jL5fnsGnP8PArkPo=",
         "ref": "refs/heads/master",
-        "rev": "6eb12551baf924f8fdecdd04113863a754259c34",
-        "revCount": 672,
+        "rev": "482744cfa95cdb76a6175d08f29f35005b8e0887",
+        "revCount": 684,
         "type": "git",
         "url": "https://git.outfoxxed.me/quickshell/quickshell"
       },
       "original": {
         "type": "git",
         "url": "https://git.outfoxxed.me/quickshell/quickshell"
+      }
+    },
+    "quickshell_2": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1759208386,
+        "narHash": "sha256-IQCtGpy+Z1GupmTeJKSb/bXf097jL5fnsGnP8PArkPo=",
+        "ref": "master",
+        "rev": "482744cfa95cdb76a6175d08f29f35005b8e0887",
+        "revCount": 684,
+        "type": "git",
+        "url": "https://github.com/quickshell-mirror/quickshell"
+      },
+      "original": {
+        "ref": "master",
+        "type": "git",
+        "url": "https://github.com/quickshell-mirror/quickshell"
       }
     },
     "root": {
@@ -1508,6 +1529,7 @@
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-stable": "nixpkgs-stable",
         "nvim-config": "nvim-config",
+        "quickshell": "quickshell_2",
         "rust-system-scripts": "rust-system-scripts",
         "secrets": "secrets",
         "snowfall-lib": "snowfall-lib",

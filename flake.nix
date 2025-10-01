@@ -108,6 +108,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    quickshell = {
+      url = "git+https://github.com/quickshell-mirror/quickshell?ref=master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     dank-material-shell = {
       url = "github:AvengeMedia/DankMaterialShell";
       inputs.nixpkgs.follows = "nixpkgs";
