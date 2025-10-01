@@ -3,10 +3,10 @@
     "devenv": {
       "locked": {
         "dir": "src/modules",
-        "lastModified": 1754158015,
+        "lastModified": 1759339967,
         "owner": "cachix",
         "repo": "devenv",
-        "rev": "062f3f42de2f6bb7382f88f6dbcbbbaa118a3791",
+        "rev": "e7a45ed5e94dd286bce2a3b0f037fb4355e1ebdf",
         "type": "github"
       },
       "original": {
@@ -31,6 +31,23 @@
         "type": "github"
       }
     },
+    "flake-utils": {
+      "inputs": {
+        "systems": "systems"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "git-hooks": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -40,10 +57,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1750779888,
+        "lastModified": 1758108966,
         "owner": "cachix",
         "repo": "git-hooks.nix",
-        "rev": "16ec914f6fb6f599ce988427d9d94efddf25fe6d",
+        "rev": "54df955a695a84cd47d4a43e08e1feaf90b1fd9b",
         "type": "github"
       },
       "original": {
@@ -74,10 +91,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1753719760,
+        "lastModified": 1758532697,
         "owner": "cachix",
         "repo": "devenv-nixpkgs",
-        "rev": "0f871fffdc0e5852ec25af99ea5f09ca7be9b632",
+        "rev": "207a4cb0e1253c7658c6736becc6eb9cace1f25f",
         "type": "github"
       },
       "original": {
@@ -87,14 +104,61 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1759133924,
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "9547cfd27b5158eb612a6812dfc5c7b3d118b996",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "playwright": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1749618740,
+        "owner": "pietdevries94",
+        "repo": "playwright-web-flake",
+        "rev": "0d64d17a7ad8e7da32575f4ccb450f1d5eb5b136",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pietdevries94",
+        "ref": "1.53.0",
+        "repo": "playwright-web-flake",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "devenv": "devenv",
         "git-hooks": "git-hooks",
         "nixpkgs": "nixpkgs",
+        "playwright": "playwright",
         "pre-commit-hooks": [
           "git-hooks"
         ]
+      }
+    },
+    "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
       }
     }
   },

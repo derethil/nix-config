@@ -1,20 +1,31 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  inputs,
+  ...
+}: let
+  playwright = inputs.playwright.packages.${pkgs.system};
+in {
   env = {
     AWS_PROFILE = "DragonArmy";
     GOPRIVATE = "https://gitlab.dragonarmy.rocks";
     GIT_TERMINAL_PROMPT = "1";
+
+    PLAYWRIGHT_BROWSERS_PATH = playwright.playwright-driver.browsers;
+    PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = "1";
   };
 
-  packages = [
-    pkgs.golangci-lint
-    pkgs.golangci-lint-langserver
-    pkgs.awscli2
+  packages = with pkgs; [
+    golangci-lint
+    golangci-lint-langserver
+    awscli2
+    zip
+    templ
+    playwright.playwright-test
   ];
 
   languages = {
-    go = {
-      enable = true;
-    };
+    go.enable = true;
+
     javascript = {
       enable = true;
       npm.enable = true;
