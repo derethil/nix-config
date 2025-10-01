@@ -41,7 +41,7 @@ in {
         DisplayBookmarksToolbar = "never";
         PasswordManagerEnabled = false;
         # Lock configuration
-        BlockAboutAddons = true;
+        BlockAboutAddons = false;
         DisableSystemAddonUpdate = true;
       };
 
