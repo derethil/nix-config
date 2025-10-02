@@ -19,12 +19,12 @@ in {
       extest.enable = true;
       remotePlay.openFirewall = true;
       localNetworkGameTransfers.openFirewall = true;
+      gamescopeSession.enable = true;
       extraCompatPackages = with pkgs; [
         proton-ge-bin
+        mangohud
       ];
     };
-    environment.sessionVariables = {
-      STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
-    };
+    programs.gamemode.enable = true;
   };
 }
