@@ -25,6 +25,7 @@ in {
     services = {
       openssh-server = enabled;
       flatpak = enabled;
+      szuru = enabled;
     };
     system = {
       impermanence = enabled;
