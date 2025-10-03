@@ -16,7 +16,7 @@ in {
     hardware.steam-hardware.enable = true;
     programs.steam = {
       enable = true;
-      extest.enable = true;
+      extest.enable = false;
       remotePlay.openFirewall = true;
       localNetworkGameTransfers.openFirewall = true;
       gamescopeSession.enable = true;
