@@ -17,10 +17,22 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    impermanence = {
+      url = "github:nix-community/impermanence";
+    };
+
+    # Darwin
+
     darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    mac-app-util = {
+      url = "github:hraban/mac-app-util";
+    };
+
+    # Nix Utils
 
     nixgl = {
       url = "github:nix-community/nixGL";
@@ -31,17 +43,11 @@
       url = "github:gmodena/nix-flatpak/?ref=latest";
     };
 
-    mac-app-util = {
-      url = "github:hraban/mac-app-util";
-    };
+    # Secrets
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    impermanence = {
-      url = "github:nix-community/impermanence";
     };
 
     secrets = {
@@ -86,7 +92,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Desktop
+    # Hyprland
 
     hyprland = {
       url = "github:hyprwm/Hyprland";
@@ -102,6 +108,8 @@
       inputs.hyprland.follows = "hyprland";
       inputs.nixpkgs.follows = "hyprland/nixpkgs";
     };
+
+    # Desktop Shells
 
     glace-shell = {
       url = "github:derethil/glace-shell";
