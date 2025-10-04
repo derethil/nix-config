@@ -25,7 +25,9 @@ in {
     services = {
       openssh-server = enabled;
       flatpak = enabled;
-      szuru = enabled;
+      szuru = enabled' {
+        allowedIPs = ["100.110.152.90"];
+      };
     };
     system = {
       impermanence = enabled;

@@ -4,13 +4,14 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf types;
-  inherit (lib.glace) mkBoolOpt mkOpt;
+  inherit (lib) mkIf types concatMapStringsSep;
+  inherit (lib.glace) mkBoolOpt mkOpt mkNullableOpt;
   cfg = config.glace.services.szuru;
 in {
-  options.glace.services.szuru = {
+  options.glace.services.szuru = with types; {
     enable = mkBoolOpt false "Enable Szurubooru";
-    port = mkOpt types.port 9000 "Port for the web interface";
+    port = mkOpt port 9000 "Port for the web interface";
+    allowedIPs = mkNullableOpt (listOf str) null "List of IP addresses/subnets allowed to access szurubooru";
   };
 
   config = let
@@ -54,7 +55,7 @@ in {
         enable = true;
         inherit user group dataDir;
         server.settings = {
-          domain = "http://localhost:9000";
+          domain = "http://athena.local:${toString cfg.port}";
           delete_source_files = "yes";
           secretFile = config.sops.secrets."${szuruSecretPath}/secret".path;
         };
@@ -68,7 +69,7 @@ in {
 
       services.nginx = {
         enable = true;
-        virtualHosts."szuru.local" = {
+        virtualHosts."athena.local" = {
           listen = [
             {
               addr = "0.0.0.0";
@@ -95,6 +96,16 @@ in {
             };
           };
         };
+      };
+
+      networking.firewall = {
+        allowedTCPPorts = mkIf (cfg.allowedIPs == null) [cfg.port];
+        extraCommands = mkIf (cfg.allowedIPs != null) ''
+          ${concatMapStringsSep "\n" (ip: ''
+              iptables -A nixos-fw -p tcp --dport ${toString cfg.port} -s ${ip} -j nixos-fw-accept
+            '')
+            cfg.allowedIPs}
+        '';
       };
 
       glace.system.impermanence.extraDirectories = [dataDir];
