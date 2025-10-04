@@ -25,6 +25,7 @@
     device = "/dev/mapper/enc";
     fsType = "btrfs";
     options = ["subvol=home" "compress=zstd" "noatime"];
+    neededForBoot = true; # so sops can retrieve ~/.config/sops/age/keys.txt
   };
 
   fileSystems."/nix" = {
