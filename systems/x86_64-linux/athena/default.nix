@@ -1,4 +1,8 @@
-{lib, ...}: let
+{
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib.glace) enabled enabled';
 in {
   imports = [
@@ -15,7 +19,10 @@ in {
       neovim = enabled;
     };
     hardware = {
-      nvidia = enabled;
+      nvidia = enabled' {
+        channel = "custom";
+        package = pkgs.glace.nvidia-580-82-09;
+      };
       audio = enabled;
       bluetooth = enabled;
       networking = enabled' {

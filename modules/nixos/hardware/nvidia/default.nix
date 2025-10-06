@@ -26,7 +26,7 @@ in {
       default = "stable";
       description = "The NVIDIA driver channel to use. Specify 'custom' to use a custom driver package.";
     };
-    package = mkPackageOpt "Custom NVIDIA driver package to use. This option is used when 'channel' is set to 'custom'";
+    package = mkPackageOpt null "Custom NVIDIA driver package to use. This option is used when 'channel' is set to 'custom'";
   };
 
   config = mkIf cfg.enable {
@@ -58,7 +58,7 @@ in {
 
       package =
         if cfg.channel == "custom"
-        then cfg.package
+        then cfg.package.override { kernelPackages = config.boot.kernelPackages; }
         else config.boot.kernelPackages.nvidiaPackages.${cfg.channel};
     };
   };
