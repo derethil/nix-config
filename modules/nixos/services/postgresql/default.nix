@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf types flatten concatMapStringsSep optionalString mkAfter;
+  inherit (lib) mkIf types flatten concatMapStringsSep optionalString mkAfter getExe';
   inherit (lib.glace) mkBoolOpt mkSubmoduleListOpt mkOpt mkNullableOpt;
   cfg = config.glace.services.postgresql;
 in {
@@ -57,7 +57,7 @@ in {
               END $$;
             '';
           in
-            optionalString (user.passwordFile != null) "${pkgs.postgresql_18}/bin/psql -tAf ${setPassword}"
+            optionalString (user.passwordFile != null) "${getExe' pkgs.postgresql_18 "psql"} -tAf ${setPassword}"
         )
         users
       );

@@ -4,10 +4,10 @@
   config,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf getExe;
 
   tmux-continuum-status = pkgs.writeShellScriptBin "tmux-continuum-status" ''
-    #!${pkgs.bash}/bin/bash
+    #!${getExe pkgs.bash}
 
     CONTINUUM_DIR="${pkgs.tmuxPlugins.continuum}/share/tmux-plugins/continuum/scripts"
 

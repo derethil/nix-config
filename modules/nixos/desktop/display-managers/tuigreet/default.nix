@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf getExe;
   inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.desktop.display-managers.tuigreet;
 in {
@@ -18,7 +18,7 @@ in {
       useTextGreeter = true;
       settings = rec {
         default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --remember-session";
+          command = "${getExe pkgs.tuigreet} --time --remember --remember-session";
           user = "greeter";
         };
         initial_session = default_session;

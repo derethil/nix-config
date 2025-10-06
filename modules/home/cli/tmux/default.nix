@@ -4,7 +4,7 @@
   lib,
   ...
 }: let
-  inherit (lib) mkIf types;
+  inherit (lib) mkIf types getExe;
   inherit (lib.glace) mkBoolOpt mkOpt;
   cfg = config.glace.cli.tmux;
 
@@ -20,7 +20,7 @@ in {
     programs.tmux = {
       package = pkgs.glace.tmux-wrapper.override {inherit config lib;};
       enable = true;
-      shell = mkIf (!pkgs.stdenv.isDarwin) "${pkgs.fish}/bin/fish";
+      shell = mkIf (!pkgs.stdenv.isDarwin) "${getExe pkgs.fish}";
       terminal = "tmux-256color";
       prefix = "C-Space";
       keyMode = "vi";
@@ -29,8 +29,8 @@ in {
       extraConfig = ''
         # Force fish shell on Darwin as it doesn't seem to work with just shell=
         ${lib.optionalString pkgs.stdenv.isDarwin ''
-          set-option -g default-shell "${pkgs.fish}/bin/fish"
-          set-option -g default-command "${pkgs.fish}/bin/fish"
+          set-option -g default-shell "${getExe pkgs.fish}"
+          set-option -g default-command "${getExe pkgs.fish}"
         ''}
 
         # True Color Support
