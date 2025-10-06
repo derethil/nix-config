@@ -153,7 +153,6 @@ in {
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
 
           # No location telemetry
-          "beacon.enabled" = false;
           "device.sensors.enabled" = false;
           "geo.enabled" = false;
 
