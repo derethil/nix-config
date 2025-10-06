@@ -21,6 +21,7 @@ in {
       insomnia = enabled;
       mattermost = enabled;
       gdlauncher = enabled;
+      prismlauncher = disabled;
       heroic = disabled;
       r2modman = enabled;
     };
