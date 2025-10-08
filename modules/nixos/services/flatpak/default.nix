@@ -3,8 +3,7 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) types mkIf;
   inherit (lib.glace) mkBoolOpt mkOpt;
   cfg = config.glace.services.flatpak;
@@ -25,11 +24,7 @@ in {
     };
 
     # flatpak requires xdg portals
-    glace.services.portals = {
-      enable = true;
-      portals = [pkgs.kdePackages.xdg-desktop-portal-kde];
-      config.common.default = "kde";
-    };
+    glace.services.portals.enable = true;
 
     glace.system.impermanence.extraDirectories = [
       "/var/lib/flatpak"
