@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   schedule:
     # Every Saturday at noon
-    - cron: '0 12 * * sat'
+    - cron: "0 12 * * sat"
 
 permissions:
   contents: write
@@ -15,12 +15,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Set up SSH for nix-secrets repository access
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.NIX_SECRETS_SSH_KEY }}
-          
+
       - name: Install nix
         uses: cachix/install-nix-action@v30
         with:
@@ -31,8 +31,8 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN_FOR_FLAKE_UPDATE }}
           branch: update-flake/${{ github.ref_name }}
-          commit-msg: "chore(flake): update lockfile"
-          pr-title: "chore(flake): update flake inputs"
+          commit-msg: "build(flake): update lockfile"
+          pr-title: "build(flake): update flake inputs"
           pr-body: |
             Automated updates by the [update-flake-lock](https://github.com/DeterminateSystems/update-flake-lock) GitHub Action.
 
