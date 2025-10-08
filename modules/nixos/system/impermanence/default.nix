@@ -26,16 +26,12 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # TODO: move these to their relevant modules as appropriate
     environment.persistence."/persist" = {
       directories =
         [
-          "/etc/NetworkManager/system-connections"
-          "/etc/secureboot"
           "/var/db/sudo"
           "/var/lib/nixos"
           "/var/lib/systemd/coredump"
-          "/var/lib/bluetooth"
         ]
         ++ cfg.extraDirectories;
 

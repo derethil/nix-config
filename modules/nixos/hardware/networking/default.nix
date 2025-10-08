@@ -28,6 +28,10 @@ in {
 
     glace.user.extraGroups = ["networkmanager"];
 
+    glace.system.impermanence.extraDirectories = [
+      "/etc/NetworkManager/system-connections"
+    ];
+
     services.avahi = mkIf cfg.avahi.enable {
       enable = true;
       nssmdns4 = true;

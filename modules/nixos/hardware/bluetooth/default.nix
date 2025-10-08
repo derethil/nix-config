@@ -16,6 +16,9 @@ in {
     hardware.bluetooth.enable = true;
     hardware.bluetooth.powerOnBoot = true;
     environment.systemPackages = [pkgs.bluetuith];
+
+    glace.system.impermanence.extraDirectories = [
+      "/var/lib/bluetooth"
+    ];
   };
 }
-
