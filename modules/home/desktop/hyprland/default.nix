@@ -34,5 +34,11 @@ in {
       portalPackage = null;
       systemd.enable = false;
     };
+
+    xdg.configFile."hypr/xdph.conf".text = ''
+      screencopy {
+        allow_token_by_default = true
+      }
+    '';
   };
 }
