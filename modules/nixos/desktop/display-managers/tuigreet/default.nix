@@ -31,8 +31,11 @@ in {
       group = "greeter";
       uid = 995;
     };
+
     users.groups.greeter = {
       gid = 993;
     };
+
+    glace.system.impermanence.extraDirectories = ["/var/cache/tuigreet"];
   };
 }
