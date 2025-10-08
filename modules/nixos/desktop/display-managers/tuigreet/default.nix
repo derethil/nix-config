@@ -16,12 +16,11 @@ in {
     services.greetd = {
       enable = true;
       useTextGreeter = true;
-      settings = rec {
+      settings = {
         default_session = {
           command = "${getExe pkgs.tuigreet} --time --remember --remember-session";
           user = "greeter";
         };
-        initial_session = default_session;
       };
     };
 
