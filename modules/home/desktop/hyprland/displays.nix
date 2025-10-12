@@ -11,7 +11,7 @@
   toHyprlandMonitor = d: let
     # Required parameters
     position = "${toString d.position.x}x${toString d.position.y}";
-    refreshRate = "${d.resolution}@${toString d.framerate}";
+    refreshRate = "${toString d.resolution.width}x${toString d.resolution.height}@${toString d.framerate}";
     scale = toString d.scale;
     port =
       if d.port != null
@@ -19,13 +19,34 @@
       else "";
 
     # Optional parameters
+    transform =
+      # hyprland what the fuck is this syntax why not make a new option
+      if d.flipped
+      then
+        if d.rotation == 0
+        then 4
+        else if d.rotation == 90
+        then 5
+        else if d.rotation == 180
+        then 6
+        else 7 # 270
+      else if d.rotation == 0
+      then 0
+      else if d.rotation == 90
+      then 1
+      else if d.rotation == 180
+      then 2
+      else 3; # 270
+
     rotationParam =
-      if d.rotation != "0"
-      then ",transform,${d.rotation}"
+      if transform != 0
+      then ",transform,${toString transform}"
       else "";
     vrrParam =
-      if d.vrr != 0
-      then ",vrr,${toString d.vrr}"
+      if d.vrr == true
+      then ",vrr,1"
+      else if d.vrr == "on-demand"
+      then ",vrr,2"
       else "";
     #
     # Format the monitor string

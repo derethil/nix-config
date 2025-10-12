@@ -26,7 +26,8 @@ in {
       r2modman = enabled;
     };
     desktop = {
-      hyprland = enabled;
+      hyprland = disabled;
+      niri = enabled;
       dank-material-shell = enabled;
       xdg = enabled;
       addons = {
@@ -74,9 +75,12 @@ in {
           name = "Ultrawide";
           primary = true;
           port = "DP-3";
-          resolution = "3440x1440";
+          resolution = {
+            width = 3440;
+            height = 1440;
+          };
           framerate = 144;
-          vrr = 1;
+          vrr = true;
           wallpaper = "fuji-bird.jpeg";
         }
       ];
