@@ -15,6 +15,7 @@ in {
 
   imports = [
     ./hyprland.nix
+    ./niri.nix
   ];
 
   config = mkIf cfg.enable {
