@@ -1,5 +1,5 @@
 {lib, ...}: let
-  inherit (lib.glace) enabled enabled';
+  inherit (lib.glace) enabled disabled enabled';
 in {
   imports = [
     ./hardware.nix
@@ -41,7 +41,8 @@ in {
       config = enabled;
     };
     desktop = {
-      hyprland = enabled;
+      hyprland = disabled;
+      niri = enabled;
       uwsm = enabled;
       display-managers = {
         tuigreet = enabled;
