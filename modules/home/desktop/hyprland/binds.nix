@@ -24,11 +24,11 @@ in {
 
         bind = flatten [
           # Exit Session
-          "$mod, End, exec, uwsm stop"
+          "$mod Shift, E, exec, uwsm stop"
 
           # Color Picker
           (optionals config.glace.tools.hyprpicker.enable [
-            "$mod, R, exec, shader=$(hyprshade current) ; hyprshade off ; hyprpicker -a ; hyprshade on \"$${shader}\""
+            "$mod, B, exec, shader=$(hyprshade current) ; hyprshade off ; hyprpicker -a ; hyprshade on \"$${shader}\""
           ])
 
           # Audio Control
@@ -51,7 +51,7 @@ in {
           # Screenshots
           (optionals config.glace.tools.hyprshot.enable [
             ", Print, exec, shader=$(hyprshade current) ; hyprshade off ; hyprshot -m region --clipboard-only ; hyprshade on \"$${shader}\""
-            "SHIFT, Print, exec, shader=$(hyprshade current) ; hyprshade off ; hyprshot -m region -o ~/Pictures/Screenshots/ ; hyprshade on \"$${shader}\""
+            "SHIFT, Print, exec, shader=$(hyprshade current) ; hyprshade off ; hyprshot -m region -o ~/Pictures/screenshots/ ; hyprshade on \"$${shader}\""
           ])
 
           # Application Shortcuts
@@ -70,7 +70,7 @@ in {
           "$mod, F, fullscreen"
           "$mod SHIFT, F, fullscreenstate, -1, 2"
 
-          # Manage floating windows
+          # Floating Windows
           "$mod, mouse:276, pin"
           "$mod, mouse:275, togglefloating"
 
