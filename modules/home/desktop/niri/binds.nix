@@ -138,6 +138,7 @@ in {
 
         (mkIf (cfg.screenshots.builtin) {
           "Print".action = screenshot;
+          "Ctrl+Print".action = screenshot-window {write-to-disk = false;};
         })
 
         # Application Shortcuts
