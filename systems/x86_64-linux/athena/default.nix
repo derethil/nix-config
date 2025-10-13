@@ -10,6 +10,9 @@ in {
       steam = enabled;
       sober = enabled;
     };
+    cli = {
+      fish = enabled;
+    };
     tools = {
       nh = enabled;
       neovim = enabled;
