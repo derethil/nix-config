@@ -24,6 +24,7 @@ in {
         focus-follows-mouse.enable = true;
 
         mouse = {
+          accel-speed = 0.3;
           accel-profile = "flat";
           natural-scroll = false;
         };
