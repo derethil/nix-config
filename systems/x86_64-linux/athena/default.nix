@@ -45,7 +45,9 @@ in {
     };
     desktop = {
       hyprland = disabled;
-      niri = enabled;
+      niri = enabled' {
+        nvidia.limitVramHeap = true;
+      };
       uwsm = enabled;
       display-managers = {
         tuigreet = enabled;

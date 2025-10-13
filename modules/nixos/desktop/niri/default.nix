@@ -8,6 +8,10 @@
   inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.desktop.niri;
 in {
+  imports = [
+    ./nvidia.nix
+  ];
+
   options.glace.desktop.niri = {
     enable = mkBoolOpt false "Whether to enable niri desktop environment.";
   };
