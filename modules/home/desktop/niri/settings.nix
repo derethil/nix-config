@@ -5,9 +5,19 @@
 }: let
   inherit (lib) mkIf;
   cfg = config.glace.desktop.niri;
+
+  mkNumberedWorkspaces = count:
+    builtins.listToAttrs (map (i: {
+      name = toString i;
+      value = {
+        name = toString i;
+      };
+    }) (lib.range 1 count));
 in {
   config = mkIf cfg.enable {
     programs.niri.settings = {
+      workspaces = mkNumberedWorkspaces 5;
+
       switch-events = mkIf (cfg.events.defaultLidEvents) {
         lid-close.action.spawn = ["systemctl" "suspend"];
       };

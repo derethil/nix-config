@@ -9,11 +9,13 @@
   defaultWorkspaceRule = appId: workspace: {
     matches = [{app-id = appId;}];
     open-on-workspace = toString workspace;
+    open-focused = true;
   };
 
   fullscreenRule = appId: {
     matches = [{app-id = appId;}];
     open-fullscreen = true;
+    open-focused = true;
   };
 in {
   config = mkIf cfg.enable {
