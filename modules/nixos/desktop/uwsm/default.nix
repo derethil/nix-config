@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf mkMerge getExe;
+  inherit (lib) mkIf mkMerge getExe getExe';
   inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.desktop.uwsm;
 in {
@@ -21,6 +21,14 @@ in {
             prettyName = "Hyprland";
             comment = "Hyprland managed by UWSM.";
             binPath = getExe pkgs.hyprland;
+          };
+        })
+
+        (lib.mkIf config.glace.desktop.niri.enable {
+          niri = {
+            prettyName = "Niri";
+            comment = "Niri managed by UWSM.";
+            binPath = getExe' pkgs.niri-stable "niri-session";
           };
         })
       ];

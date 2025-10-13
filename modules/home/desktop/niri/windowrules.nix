@@ -1,0 +1,85 @@
+{
+  lib,
+  config,
+  ...
+}: let
+  inherit (lib) mkIf;
+  cfg = config.glace.desktop.niri;
+
+  defaultWorkspaceRule = appId: workspace: {
+    matches = [{app-id = appId;}];
+    open-on-workspace = toString workspace;
+  };
+
+  fullscreenRule = appId: {
+    matches = [{app-id = appId;}];
+    open-fullscreen = true;
+  };
+in {
+  config = mkIf cfg.enable {
+    programs.niri.settings.window-rules = [
+      # Rounded Borders
+      {
+        clip-to-geometry = true;
+        geometry-corner-radius = {
+          bottom-left = 8.0;
+          bottom-right = 8.0;
+          top-left = 8.0;
+          top-right = 8.0;
+        };
+      }
+
+      # Fix Steam Flickering
+      {
+        matches = [
+          {
+            app-id = "^steam$";
+            title = "^()$";
+          }
+        ];
+        open-focused = true;
+        min-width = 1;
+        min-height = 1;
+      }
+
+      # Default Workspaces
+      (defaultWorkspaceRule "^firefox$" 1)
+      (defaultWorkspaceRule "^chromium$" 1)
+
+      (defaultWorkspaceRule "^discord$" 2)
+      (defaultWorkspaceRule "^Mattermost$" 2)
+
+      (defaultWorkspaceRule "^Insomnia$" 3)
+      (defaultWorkspaceRule "^obsidian$" 3)
+
+      (defaultWorkspaceRule "^[Ss]team$" 4)
+      (defaultWorkspaceRule "^steam_app_[0-9]+$" 4)
+      (defaultWorkspaceRule "^heroic$" 4)
+      (defaultWorkspaceRule "^GDLauncher$" 4)
+      (defaultWorkspaceRule "^[mM]inecraft.*$" 4)
+
+      (defaultWorkspaceRule ".*Spotify.*" 5)
+
+      # Floating Windows
+      {
+        matches = [{app-id = "^[mM]inecraft.*$";}];
+        open-floating = false;
+        tiled-state = true;
+      }
+
+      {
+        matches = [
+          {
+            title = "^(Friends List)$";
+            app-id = "steam";
+          }
+        ];
+        open-floating = true;
+      }
+
+      # Fullscreen Windows
+      (fullscreenRule "^[mM]inecraft.*$")
+      (fullscreenRule "^steam_app_[0-9]+$")
+    ];
+  };
+}
