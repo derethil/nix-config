@@ -109,6 +109,13 @@
       inputs.nixpkgs.follows = "hyprland/nixpkgs";
     };
 
+    # Niri
+
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Desktop Shells
 
     glace-shell = {
@@ -133,16 +140,24 @@
   in (snowfall-lib.mkFlake {
     inherit inputs;
     src = ./.;
+
     snowfall.namespace = "glace";
+
     channels-config = {
       allowUnfree = true;
       allowUnfreePredicate = _: true;
     };
+
     templates = {
       dragonarmy-npm-golang.description = "A template for Node.js and Go development using devenv";
       npm.description = "A template for Node.js development using devenv";
       python.description = "A template for Python development using devenv and uv";
     };
+
+    overlays = with inputs; [
+      niri.overlays.niri
+    ];
+
     systems.modules.darwin = with inputs;
       nixpkgs.lib.flatten [
         sops-nix.darwinModules.sops
@@ -151,6 +166,7 @@
         common-modules
         system-common-modules
       ];
+
     systems.modules.nixos = with inputs;
       nixpkgs.lib.flatten [
         nix-flatpak.nixosModules.nix-flatpak
@@ -160,6 +176,7 @@
         common-modules
         system-common-modules
       ];
+
     homes.modules = with inputs;
       nixpkgs.lib.flatten [
         glace-shell.flakeModules.default
@@ -168,6 +185,7 @@
         nvim-config.homeManagerModules.nvim-config
         impermanence.homeManagerModules.impermanence
         dank-material-shell.homeModules.dankMaterialShell.default
+        niri.homeModules.niri
         common-modules
       ];
   });
@@ -177,11 +195,14 @@
       "https://nix-community.cachix.org"
       "https://derethil.cachix.org"
       "https://hyprland.cachix.org"
+      "https://niri.cachix.org"
     ];
+
     extra-trusted-public-keys = [
       "derethil.cachix.org-1:4v8v6Oo2UHdB3FKutgQ2z3O9L++ukejhGvQFg6Pjsfc="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+      "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
     ];
   };
 }
