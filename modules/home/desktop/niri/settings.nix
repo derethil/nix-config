@@ -109,6 +109,8 @@ in {
           proportion = 1. / 2.;
         };
 
+        default-column-display = "tabbed";
+
         tab-indicator = {
           enable = true;
           gap = 2;
