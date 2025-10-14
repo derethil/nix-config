@@ -14,7 +14,7 @@ in {
       gtk-icon-browser = enabled;
       discord = enabled;
       vesktop = disabled;
-      stremio = disabled;
+      stremio = enabled;
       obs = enabled;
       obsidian = enabled;
       spotify = enabled;
