@@ -12,8 +12,7 @@ in {
     enable = mkBoolOpt false "Whether to enable Stremio";
   };
 
-  config.home.packages = with pkgs; [
-    (mkIf cfg.enable stremio)
-  ];
+  config = mkIf cfg.enable {
+    home.packages = [pkgs.inputs.nixpkgs-for-stremio.stremio];
+  };
 }
-
