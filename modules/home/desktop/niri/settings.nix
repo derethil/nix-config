@@ -117,10 +117,10 @@ in {
           corner-radius = 4;
           hide-when-single-tab = true;
           place-within-column = true;
-          width = 4;
-          active.color = "#FFB59B";
-          inactive.color = "#A79087";
-          urgent.color = "#FFD59B";
+          width = 6;
+          active.color = "#CD532C";
+          inactive.color = "#6B5F5A";
+          urgent.color = "#D4A017";
         };
 
         gaps = 6;
