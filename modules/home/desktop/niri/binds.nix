@@ -22,16 +22,21 @@
     }) (lib.range 1 10));
 
   mkWorkspaceBinds = key: action: mkWorkspaceBinds' key action null;
+
+  action' = description: action: {
+    hotkey-overlay.title = description;
+    action = action;
+  };
 in {
   config = mkIf cfg.enable {
     programs.niri.settings.binds = with config.lib.niri.actions;
       mkMerge [
         {
           # Exit Session
-          "Mod+Shift+E".action.spawn-sh = "uwsm stop";
+          "Mod+Shift+E" = action' "Exit Session" (spawn-sh "uwsm stop");
 
           # Hotkey Overlay
-          "Mod+Shift+Escape".action.spawn = ["niri" "msg" "action" "toggle-hotkey-overlay"];
+          "Mod+Shift+Slash" = action' "Show Hotkey Overlay" (spawn-sh "niri msg action show-hotkey-overlay");
 
           # Window Commands
           "Mod+Q".action = close-window;
@@ -65,7 +70,7 @@ in {
 
           # Resize Columns
           "Mod+R".action = switch-preset-column-width;
-          "Mod+Shift+R".action = switch-preset-window-height;
+          "Mod+Shift+R".action = switch-preset-window-width-back;
           "Mod+S".action = toggle-column-tabbed-display;
 
           # Switch Workspaces
@@ -86,33 +91,39 @@ in {
 
         # Color Picker
         (mkIf config.glace.tools.hyprpicker.enable {
-          "Mod+B".action = spawn-sh "hyprpicker -a";
+          "Mod+B" = action' "Pick Color" (spawn-sh "hyprpicker -a");
         })
 
         # Audio Control
         (mkIf cfg.binds.defaultAudioBinds {
           "XF86AudioRaiseVolume" = {
+            hotkey-overlay.title = "Increase Volume";
             action = spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+";
             allow-when-locked = true;
           };
           "XF86AudioLowerVolume" = {
+            hotkey-overlay.title = "Decrease Volume";
             action = spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-";
             allow-when-locked = true;
           };
           "XF86AudioMute" = {
+            hotkey-overlay.title = "Toggle Mute";
             action = spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
             allow-when-locked = true;
           };
 
           "Ctrl+XF86AudioRaiseVolume" = {
+            hotkey-overlay.title = "Increase Mic Volume";
             action = spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 0.1+";
             allow-when-locked = true;
           };
           "Ctrl+XF86AudioLowerVolume" = {
+            hotkey-overlay.title = "Decrease Mic Volume";
             action = spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 0.1-";
             allow-when-locked = true;
           };
           "Ctrl+XF86AudioMute" = {
+            hotkey-overlay.title = "Toggle Mic Mute";
             action = spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
             allow-when-locked = true;
           };
@@ -121,10 +132,12 @@ in {
         # Screen Backlight Control
         (mkIf cfg.binds.defaultBrightnessBinds {
           "XF86MonBrightnessUp" = {
+            hotkey-overlay.title = "Increase Brightness";
             action = spawn-sh "brightnessctl set 10%+";
             allow-when-locked = true;
           };
           "XF86MonBrightnessDown" = {
+            hotkey-overlay.title = "Decrease Brightness";
             action = spawn-sh "brightnessctl set 10%-";
             allow-when-locked = true;
           };
@@ -132,8 +145,8 @@ in {
 
         # Screenshots
         (mkIf ((!cfg.screenshots.builtin) && config.glace.tools.hyprshot.enable) {
-          "Print".action = spawn-sh "hyprshot -m region --clipboard-only";
-          "Shift+Print".action = spawn-sh "hyprshot -m region -o ${cfg.screenshots.path}";
+          "Print" = action' "Screenshot Region" (spawn-sh "hyprshot -m region --clipboard-only");
+          "Shift+Print" = action' "Screenshot Region to File" (spawn-sh "hyprshot -m region -o ${cfg.screenshots.path}");
         })
 
         (mkIf (cfg.screenshots.builtin) {
@@ -143,13 +156,30 @@ in {
 
         # Application Shortcuts
         (mkIf config.glace.apps.foot.enable {
-          "Mod+Return".action.spawn = flatten ["${getExe' pkgs.foot "footclient"}" (getExe pkgs.tmux) "new-session" "-As" "base"];
-          "Mod+Shift+Return".action.spawn = ["${getExe' pkgs.foot "footclient"}"];
-          "Mod+Ctrl+Shift+Return".action.spawn = ["${getExe pkgs.foot}"];
+          "Mod+Return" =
+            action'
+            "Open Terminal (tmux)"
+            (spawn (flatten ["${getExe' pkgs.foot "footclient"}" (getExe pkgs.tmux) "new-session" "-As" "base"]));
+
+          "Mod+Shift+Return" =
+            action'
+            "Open Terminal"
+            (spawn ["${getExe' pkgs.foot "footclient"}"]);
+
+          "Mod+Ctrl+Shift+Return" =
+            action'
+            "Open Terminal (server)"
+            (spawn ["${getExe pkgs.foot}"]);
         })
         (mkIf (!config.glace.apps.foot.enable && config.glace.apps.alacritty.enable) {
-          "Mod+Return".action.spawn = flatten ["${getExe pkgs.alacritty}" "-e" (getExe pkgs.tmux) "new-session" "-As" "base"];
-          "Mod+Shift+Return".action.spawn = ["${getExe pkgs.alacritty}"];
+          "Mod+Return" =
+            action'
+            "Open Terminal (tmux)"
+            (spawn (flatten ["${getExe pkgs.alacritty}" "-e" (getExe pkgs.tmux) "new-session" "-As" "base"]));
+
+          "Mod+Shift+Return" =
+            action'
+            "Open Terminal" (spawn ["${getExe pkgs.alacritty}"]);
         })
       ];
   };

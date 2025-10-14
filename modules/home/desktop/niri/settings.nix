@@ -25,6 +25,7 @@ in {
       screenshot-path = "${cfg.screenshots.path}/%Y-%m-%d_%H-%M-%S.png";
 
       hotkey-overlay = {
+        hide-not-bound = true;
         skip-at-startup = true;
       };
 
