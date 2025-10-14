@@ -13,6 +13,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = [pkgs.insomnia];
+    home.packages = [pkgs.inputs.nixpkgs-for-stremio.stremio];
   };
 }
