@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: let
   inherit (lib) mkIf;
@@ -19,6 +20,10 @@
   };
 in {
   config = mkIf cfg.enable {
+    programs.niri.settings.spawn-at-startup = [
+      {argv = [(lib.getExe pkgs.glace.niri-dynamic-float-rules)];}
+    ];
+
     programs.niri.settings.window-rules = [
       # Rounded Borders
       {
