@@ -11,12 +11,14 @@ in {
   options.glace.desktop.dank-material-shell = {
     enable = mkBoolOpt false "Whether to enable Dank Material Shell.";
     enableBrightnessControl = mkBoolOpt false "Whether to enable DMS brightness/backlight contro.";
+    calendar = {
+      enable = mkBoolOpt cfg.enable "Whether to enable Dank Material Shell calendar event integration.";
+    };
   };
 
   imports = [
     ./hyprland.nix
     ./niri.nix
-    ./calendar.nix
   ];
 
   config = mkIf cfg.enable {
@@ -31,7 +33,12 @@ in {
       enableAudioWavelength = true;
       enableCalendarEvents = true;
       inherit (cfg) enableBrightnessControl;
+
       quickshell.package = pkgs.inputs.quickshell;
+    };
+
+    glace.services.calendars = mkIf cfg.calendar.enable {
+      enable = true;
     };
   };
 }
