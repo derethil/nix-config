@@ -36,6 +36,7 @@ in {
       impermanence = enabled;
       time = enabled;
       fonts = enabled;
+      ntsync = enabled;
       boot = enabled' {
         plymouth = enabled;
       };
