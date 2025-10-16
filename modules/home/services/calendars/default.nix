@@ -20,7 +20,7 @@ in {
       secrets.${outlookPasswordPath} = {};
 
       accounts.calendar = {
-        basePath = "${config.xdg.configHome}/calendars";
+        basePath = "${config.xdg.dataHome}/calendars";
         accounts = {
           outlook = {
             remote = {
@@ -42,6 +42,25 @@ in {
               enable = true;
               type = "discover";
               addresses = ["jaren.glenn@df-nn.com"];
+            };
+          };
+
+          holidays = {
+            remote = {
+              type = "http";
+              url = "https://www.calendarlabs.com/ical-calendar/ics/76/US_Holidays.ics";
+            };
+            local = {
+              type = "filesystem";
+              fileExt = ".ics";
+            };
+            vdirsyncer = {
+              enable = true;
+              collections = null;
+            };
+            khal = {
+              enable = true;
+              readOnly = true;
             };
           };
         };
