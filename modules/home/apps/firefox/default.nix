@@ -75,7 +75,7 @@ in {
             "NixOS Options" = {
               urls = [
                 {
-                  template = "https://search.nixos.org/options?query={searchTerms}";
+                  template = "https://searchix.ovh/?query={searchTerms}";
                   params = [
                     {
                       name = "query";
