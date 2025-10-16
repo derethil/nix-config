@@ -3,7 +3,7 @@
   config,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf getExe attrNames concatMapStringsSep;
   inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.services.calendars;
 in {
@@ -79,5 +79,19 @@ in {
         enable = true;
         frequency = "*:0/5";
       };
+
+      home.activation.vdirsyncerDiscover = let
+        calendarAccounts = config.accounts.calendar.accounts;
+        checkCalendars = concatMapStringsSep " || " (name: "[ ! -d \"$calendarsPath/${name}\" ]") (attrNames calendarAccounts);
+      in
+        config.lib.dag.entryAfter ["writeBoundary"] ''
+          calendarsPath="${config.accounts.calendar.basePath}"
+          if ${checkCalendars}; then
+            echo "Running vdirsyncer discover for missing calendars..."
+            $DRY_RUN_CMD ${getExe config.programs.vdirsyncer.package} discover || true
+          else
+            echo "All calendars exist, skipping vdirsyncer discover"
+          fi
+        '';
     };
 }
