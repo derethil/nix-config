@@ -139,6 +139,11 @@
       url = "github:AvengeMedia/DankMaterialShell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    khal-notify = {
+      url = "github:martiert/khal_notifications";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {snowfall-lib, ...} @ inputs: let

@@ -1,9 +1,10 @@
 {
   lib,
+  pkgs,
   config,
   ...
 }: let
-  inherit (lib) mkIf getExe attrNames concatMapStringsSep;
+  inherit (lib) mkIf getExe getExe' attrNames concatMapStringsSep;
   inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.services.calendars;
 in {
@@ -16,8 +17,9 @@ in {
   in
     mkIf cfg.enable {
       glace.services.davmail.enable = true;
-
       secrets.${outlookPasswordPath} = {};
+
+      # Calendars
 
       accounts.calendar = {
         basePath = "${config.xdg.dataHome}/calendars";
@@ -66,6 +68,8 @@ in {
         };
       };
 
+      # Khal
+
       programs.khal = {
         enable = true;
         locale = {
@@ -73,6 +77,26 @@ in {
           default_timezone = null;
         };
       };
+
+      systemd.user.services.khal-notify = {
+        Unit = {
+          Description = "Khal calendar notification service";
+          After = ["network.target" "graphical-session.target"];
+        };
+        Service = {
+          Type = "oneshot";
+          ExecStart = "${pkgs.inputs.khal-notify}/bin/khal-notify";
+        };
+      };
+
+      systemd.user.timers.khal-notify = {
+        Unit.Description = "Khal calendar notification timer";
+        Timer.OnCalendar = "*:0/1";
+        Install.WantedBy = ["timers.target" "graphical-session.target"];
+      };
+
+      # Vdirsyncer
+
       programs.vdirsyncer.enable = true;
 
       services.vdirsyncer = {
