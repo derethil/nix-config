@@ -52,6 +52,7 @@ in {
       hyprshot = enabled;
       hyprprop = enabled;
       protonup-qt = enabled;
+      lossless-scaling = enabled;
     };
     services = {
       openssh = enabled;
@@ -81,7 +82,7 @@ in {
             height = 1440;
           };
           framerate = 160;
-          vrr = true;
+          vrr = false;
           wallpaper = "fuji-bird.jpeg";
         }
       ];
