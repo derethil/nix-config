@@ -1544,20 +1544,37 @@
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nixpkgs": "nixpkgs_5",
         "nvf": "nvf",
+        "nvim-tcss": "nvim-tcss",
         "root-nvim": "root-nvim",
         "sonarlint-nvim": "sonarlint-nvim"
       },
       "locked": {
-        "lastModified": 1760463712,
-        "narHash": "sha256-vchvQLreAb+NyWolmcJyc4zv4Q9lDVB83OYU8W6Vn34=",
+        "lastModified": 1760744236,
+        "narHash": "sha256-oEGu++t4aehCrMiG2V1GdMMLptwhpofp4n+E/don6uo=",
         "owner": "derethil",
         "repo": "nvim-config",
-        "rev": "85be3ae7ad3a0548d6fcfcc917a4b67e8ad29fd0",
+        "rev": "b00321cb541509074e46a935a5ec96684eace770",
         "type": "github"
       },
       "original": {
         "owner": "derethil",
         "repo": "nvim-config",
+        "type": "github"
+      }
+    },
+    "nvim-tcss": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1738984127,
+        "narHash": "sha256-QHY+UzJrFir/gtj7KDzxvSgFfckG+xwGtd6YyDk81lc=",
+        "owner": "cachebag",
+        "repo": "nvim-tcss",
+        "rev": "bf9001416158f32fe7e92c42de94de3595aa13e5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cachebag",
+        "repo": "nvim-tcss",
         "type": "github"
       }
     },
