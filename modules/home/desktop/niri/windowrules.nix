@@ -60,6 +60,7 @@ in {
       (defaultWorkspaceRule "^obsidian$" 3)
 
       (defaultWorkspaceRule "^[Ss]team$" 4)
+      (defaultWorkspaceRule "^.*\\.exe$" 4)
       (defaultWorkspaceRule "^steam_app_[0-9]+$" 4)
       (defaultWorkspaceRule "^heroic$" 4)
       (defaultWorkspaceRule "^GDLauncher$" 4)
@@ -87,6 +88,7 @@ in {
 
       # Fullscreen Windows
       (fullscreenRule "^[mM]inecraft.*$")
+      (fullscreenRule "^.*\\.exe$")
       (fullscreenRule "^steam_app_[0-9]+$")
     ];
   };
