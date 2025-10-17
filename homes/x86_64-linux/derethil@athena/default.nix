@@ -51,6 +51,7 @@ in {
       hyprpicker = enabled;
       hyprshot = enabled;
       hyprprop = enabled;
+      protonup-qt = enabled;
     };
     services = {
       openssh = enabled;
