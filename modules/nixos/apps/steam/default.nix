@@ -21,10 +21,10 @@ in {
       localNetworkGameTransfers.openFirewall = true;
       gamescopeSession.enable = true;
       extraCompatPackages = with pkgs; [
-        proton-ge-bin
         mangohud
       ];
     };
+
     programs.gamemode.enable = true;
   };
 }
