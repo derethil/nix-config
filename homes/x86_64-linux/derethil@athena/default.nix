@@ -53,6 +53,7 @@ in {
       hyprprop = enabled;
       protonup-qt = enabled;
       lossless-scaling = enabled;
+      mangohud = enabled;
     };
     services = {
       openssh = enabled;
