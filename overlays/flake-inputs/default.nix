@@ -1,20 +1,21 @@
 {inputs, ...}: final: _: {
+  # Alias package inputs:
+  # - inputs.<input>.packages.<system>
+  # - inputs.<input>.legacyPackages.<system>
+  # - inputs.<input>.defaultPackage.<system>
+  # to pkgs.inputs.<input>
   inputs =
     builtins.mapAttrs (
       _: flake: let
-        legacyPackages = (flake.legacyPackages or {}).${final.system} or {};
         packages = (flake.packages or {}).${final.system} or {};
+        legacyPackages = (flake.legacyPackages or {}).${final.system} or {};
         defaultPackage = (flake.defaultPackage or {}).${final.system} or null;
+        merged = legacyPackages // packages;
       in
-        # If it's a big package set like nixpkgs, return the full set
-        if legacyPackages != {}
-        then legacyPackages // packages
-        # Otherwise, return the single default package directly
-        else if defaultPackage != null
-        then defaultPackage # Old schema
-        else if packages ? default
-        then packages.default # New schema
-        else packages # Fallback to package set if no default
+        # If using old defaultPackage schema, normalize to { default = ...; }
+        if merged == {} && defaultPackage != null
+        then {default = defaultPackage;}
+        else merged
     )
     inputs;
 }

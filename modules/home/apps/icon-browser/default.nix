@@ -13,6 +13,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = [pkgs.inputs.icon-browser];
+    home.packages = [pkgs.inputs.icon-browser.default];
   };
 }

@@ -34,7 +34,7 @@ in {
       enableCalendarEvents = true;
       inherit (cfg) enableBrightnessControl;
 
-      quickshell.package = pkgs.inputs.quickshell;
+      quickshell.package = pkgs.inputs.quickshell.default;
     };
 
     glace.services.calendars = mkIf cfg.calendar.enable {

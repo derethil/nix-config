@@ -7,7 +7,7 @@
 }: let
   inherit (lib) mkIf getExe flatten optionals;
   cfg = config.glace.desktop.hyprland;
-  relativeworkspace = getExe inputs.rust-system-scripts.packages.${pkgs.system}.relativeworkspace;
+  relativeworkspace = getExe pkgs.inputs.rust-system-scripts.relativeworkspace;
 
   mkWorkspaceBinds = mod: dispatcher:
     map (i: "${mod}, ${

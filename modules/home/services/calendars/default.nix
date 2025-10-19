@@ -85,7 +85,7 @@ in {
         };
         Service = {
           Type = "oneshot";
-          ExecStart = "${pkgs.inputs.khal-notify}/bin/khal-notify";
+          ExecStart = "${pkgs.inputs.khal-notify.default}/bin/khal-notify";
         };
       };
 

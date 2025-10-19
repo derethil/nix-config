@@ -13,7 +13,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = [pkgs.inputs.trashy];
+    home.packages = [pkgs.inputs.trashy.default];
     glace.cli.aliases = {
       del = "trashy put";
     };
