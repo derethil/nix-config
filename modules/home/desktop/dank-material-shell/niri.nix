@@ -18,27 +18,27 @@ in {
     };
 
     programs.niri.settings.binds = with config.lib.niri.actions; {
-      "Mod+Slash" = action' "Spotlight" (spawn-sh "dms ipc call spotlight toggle");
-      "Mod+V" = action' "Clipboard" (spawn-sh "dms ipc call clipboard toggle");
-      "Mod+M" = action' "Process List" (spawn-sh "dms ipc call processlist toggle");
-      "Mod+N" = action' "Notifications" (spawn-sh "dms ipc call notifications toggle");
-      "Mod+Comma" = action' "Settings" (spawn-sh "dms ipc call settings toggle");
-      "Mod+P" = action' "Notepad" (spawn-sh "dms ipc call notepad toggle");
-      "Mod+X" = action' "Power Menu" (spawn-sh "dms ipc call powermenu toggle");
-      "Mod+C" = action' "Control Center" (spawn-sh "dms ipc call control-center toggle");
-      "Mod+D" = action' "Dashboard" (spawn-sh "dms ipc call dash toggle overview");
+      "Mod+Slash" = action' "Open Spotlight" (spawn-sh "dms ipc call spotlight toggle");
+      "Mod+V" = action' "Open Clipboard" (spawn-sh "dms ipc call clipboard toggle");
+      "Mod+M" = action' "Open Process List" (spawn-sh "dms ipc call processlist toggle");
+      "Mod+N" = action' "Open Notifications" (spawn-sh "dms ipc call notifications toggle");
+      "Mod+Comma" = action' "Open Settings" (spawn-sh "dms ipc call settings toggle");
+      "Mod+P" = action' "Open Notepad" (spawn-sh "dms ipc call notepad toggle");
+      "Mod+X" = action' "Open Power Menu" (spawn-sh "dms ipc call powermenu toggle");
+      "Mod+C" = action' "Open Control Center" (spawn-sh "dms ipc call control-center toggle");
+      "Mod+D" = action' "Open Dashboard" (spawn-sh "dms ipc call dash toggle overview");
 
       "Mod+Alt+L" = action' "Lock Screen" (spawn-sh "dms ipc call lock lock");
 
       # Volume
       "XF86AudioRaiseVolume" = {
         hotkey-overlay.title = "Increase Volume";
-        action = spawn-sh "dms ipc call audio increment 10";
+        action = spawn-sh "dms ipc call audio increment 5";
         allow-when-locked = true;
       };
       "XF86AudioLowerVolume" = {
         hotkey-overlay.title = "Decrease Volume";
-        action = spawn-sh "dms ipc call audio decrement 10";
+        action = spawn-sh "dms ipc call audio decrement 5";
         allow-when-locked = true;
       };
       "XF86AudioMute" = {
@@ -72,4 +72,3 @@ in {
     };
   };
 }
-
