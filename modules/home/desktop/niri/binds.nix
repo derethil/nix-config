@@ -159,27 +159,27 @@ in {
           "Mod+Return" =
             action'
             "Open Terminal (tmux)"
-            (spawn (flatten ["${getExe' pkgs.foot "footclient"}" (getExe pkgs.tmux) "new-session" "-As" "base"]));
+            (spawn (flatten ["uwsm-app" "--" "${getExe' pkgs.foot "footclient"}" (getExe pkgs.tmux) "new-session" "-As" "base"]));
 
           "Mod+Shift+Return" =
             action'
             "Open Terminal"
-            (spawn ["${getExe' pkgs.foot "footclient"}"]);
+            (spawn ["uwsm-app" "--" "${getExe' pkgs.foot "footclient"}"]);
 
           "Mod+Ctrl+Shift+Return" =
             action'
             "Open Terminal (server)"
-            (spawn ["${getExe pkgs.foot}"]);
+            (spawn ["uwsm-app" "--" "${getExe pkgs.foot}"]);
         })
         (mkIf (!config.glace.apps.foot.enable && config.glace.apps.alacritty.enable) {
           "Mod+Return" =
             action'
             "Open Terminal (tmux)"
-            (spawn (flatten ["${getExe pkgs.alacritty}" "-e" (getExe pkgs.tmux) "new-session" "-As" "base"]));
+            (spawn (flatten ["uwsm-app" "--" "${getExe pkgs.alacritty}" "-e" (getExe pkgs.tmux) "new-session" "-As" "base"]));
 
           "Mod+Shift+Return" =
             action'
-            "Open Terminal" (spawn ["${getExe pkgs.alacritty}"]);
+            "Open Terminal" (spawn ["uwsm-app" "--" "${getExe pkgs.alacritty}"]);
         })
       ];
   };
