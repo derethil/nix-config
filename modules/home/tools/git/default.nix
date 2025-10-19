@@ -54,7 +54,7 @@
     rs = "restore --staged";
     bl = "branch --list";
     s = "status";
-    ca = "commit -a -m";
+    ca = "commit --amend --no-edit";
     m = "merge --no-ff";
     pt = "push --tags";
     P = "push";
