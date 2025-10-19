@@ -555,24 +555,6 @@
         "type": "github"
       }
     },
-    "flake-utils_5": {
-      "inputs": {
-        "systems": "systems_8"
-      },
-      "locked": {
-        "lastModified": 1694529238,
-        "narHash": "sha256-zsNZZGTGnMOf9YpHKJqMSsa0dXbfmxeoJ7xHlrt+xmY=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "ff7b65b44d01cf9ba6a71320833626af21126384",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
     "git-hooks": {
       "inputs": {
         "flake-compat": "flake-compat_4",
@@ -1191,28 +1173,6 @@
         "type": "github"
       }
     },
-    "naersk_2": {
-      "inputs": {
-        "nixpkgs": [
-          "trashy",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1694081375,
-        "narHash": "sha256-vzJXOUnmkMCm3xw8yfPP5m8kypQ3BhAIRe4RRCWpzy8=",
-        "owner": "nix-community",
-        "repo": "naersk",
-        "rev": "3f976d822b7b37fc6fb8e6f157c2dd05e7e94e89",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "ref": "master",
-        "repo": "naersk",
-        "type": "github"
-      }
-    },
     "neovim-nightly-overlay": {
       "inputs": {
         "flake-compat": "flake-compat_3",
@@ -1670,8 +1630,7 @@
         "snowfall-lib": "snowfall-lib",
         "sops-nix": "sops-nix",
         "tmux-power-zoom": "tmux-power-zoom",
-        "tmux-theme": "tmux-theme",
-        "trashy": "trashy"
+        "tmux-theme": "tmux-theme"
       }
     },
     "root-nvim": {
@@ -1910,21 +1869,6 @@
         "type": "github"
       }
     },
-    "systems_8": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
     "tmux-power-zoom": {
       "flake": false,
       "locked": {
@@ -1954,28 +1898,6 @@
       "original": {
         "owner": "derethil",
         "repo": "tmux-theme",
-        "type": "github"
-      }
-    },
-    "trashy": {
-      "inputs": {
-        "flake-utils": "flake-utils_5",
-        "naersk": "naersk_2",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1705630724,
-        "narHash": "sha256-1pxmeXUkgAITouO0mdW6DgZR6+ai2dax2S4hV9jcJLM=",
-        "owner": "oberblastmeister",
-        "repo": "trashy",
-        "rev": "7c48827e55bca5a3188d3de44afda3028837b34b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "oberblastmeister",
-        "repo": "trashy",
         "type": "github"
       }
     },

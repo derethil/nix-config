@@ -60,7 +60,7 @@ in {
     };
     cli = {
       fish = enabled;
-      trashy = enabled;
+      gtrash = enabled;
       direnv = enabled;
       zoxide = enabled;
       starship = enabled;

@@ -80,11 +80,6 @@
 
     # CLI
 
-    trashy = {
-      url = "github:oberblastmeister/trashy";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     tmux-theme = {
       url = "github:derethil/tmux-theme";
       flake = false;
