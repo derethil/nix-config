@@ -19,8 +19,8 @@ in {
   config = mkIf cfg.enable {
     glace.services.portals = {
       enable = true;
-      portals = [pkgs.xdg-desktop-portal-gnome];
-      config.niri.default = ["gnome" "gtk"];
+      portals = [pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-gnome];
+      config.niri.default = ["gtk" "gnome"];
     };
   };
 }

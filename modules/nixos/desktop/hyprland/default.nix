@@ -15,7 +15,7 @@ in {
   config = mkIf cfg.enable {
     glace.services.portals = {
       enable = true;
-      portals = [pkgs.xdg-desktop-portal-hyprland];
+      portals = [pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk];
       config.hyprland.default = ["hyprland" "gtk"];
     };
   };
