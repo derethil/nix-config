@@ -7,7 +7,7 @@
   cfg = config.glace.desktop.niri;
 in {
   config = mkIf cfg.enable {
-    programs.niri.settings.environment = mkMerge [
+    home.sessionVariables = mkMerge [
       (mkIf config.glace.hardware.nvidia-drivers.enable {
         LIBVA_DRIVER_NAME = "nvidia";
         XDG_SESSION_TYPE = "wayland";
