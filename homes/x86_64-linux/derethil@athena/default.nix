@@ -83,7 +83,7 @@ in {
             height = 1440;
           };
           framerate = 160;
-          vrr = false;
+          vrr = true;
           wallpaper = "fuji-bird.jpeg";
         }
       ];
