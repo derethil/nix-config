@@ -4,13 +4,12 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf mkForce types flatten;
-  inherit (lib.glace) mkBoolOpt mkOpt;
+  inherit (lib) mkIf mkForce;
+  inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.hardware.audio;
 in {
   options.glace.hardware.audio = {
     enable = mkBoolOpt false "Whether to enable audio support.";
-    extraPackages = mkOpt (types.listOf types.package) [pkgs.easyeffects] "Additional packages to install.";
   };
 
   config = mkIf cfg.enable {
@@ -19,17 +18,21 @@ in {
 
     services.pipewire = {
       enable = true;
+      audio.enable = true;
+
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
-      jack.enable = true;
+
+      # Provided by nix-gaming module
+      lowLatency = {
+        enable = true;
+        quantum = 96;
+        rate = 48000;
+      };
     };
 
-    environment.systemPackages = with pkgs;
-      flatten [
-        pulsemixer
-        cfg.extraPackages
-      ];
+    environment.systemPackages = [pkgs.pulsemixer];
 
     glace.user.extraGroups = ["audio"];
   };

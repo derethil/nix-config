@@ -78,6 +78,10 @@
       url = "github:derethil/nvim-config";
     };
 
+    nix-gaming = {
+      url = "github:fufexan/nix-gaming";
+    };
+
     # CLI
 
     tmux-theme = {
@@ -180,6 +184,7 @@
         sops-nix.nixosModules.sops
         impermanence.nixosModules.impermanence
         nvim-config.nixosModules.nvim-config
+        nix-gaming.nixosModules.pipewireLowLatency
         common-modules
         system-common-modules
       ];
