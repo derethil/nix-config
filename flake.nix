@@ -185,6 +185,7 @@
         impermanence.nixosModules.impermanence
         nvim-config.nixosModules.nvim-config
         nix-gaming.nixosModules.pipewireLowLatency
+        nix-gaming.nixosModules.platformOptimizations
         common-modules
         system-common-modules
       ];

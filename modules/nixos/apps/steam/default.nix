@@ -23,6 +23,8 @@ in {
       extraCompatPackages = with pkgs; [
         mangohud
       ];
+      # Provided by nix-gaming module
+      platformOptimizations.enable = true;
     };
 
     programs.gamemode.enable = true;
