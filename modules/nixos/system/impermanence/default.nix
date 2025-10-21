@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf flatten;
   inherit (lib.glace) mkBoolOpt;
   inherit (lib.types) listOf str;
 
@@ -27,23 +27,21 @@ in {
 
   config = mkIf cfg.enable {
     environment.persistence."/persist" = {
-      directories =
-        [
-          "/var/db/sudo"
-          "/var/lib/nixos"
-          "/var/lib/systemd/coredump"
-        ]
-        ++ cfg.extraDirectories;
+      directories = flatten [
+        "/var/db/sudo"
+        "/var/lib/nixos"
+        "/var/lib/systemd/coredump"
+        (cfg.extraDirectories)
+      ];
 
-      files =
-        [
-          "/etc/machine-id"
-          "/etc/ssh/ssh_host_ed25519_key"
-          "/etc/ssh/ssh_host_ed25519_key.pub"
-          "/etc/ssh/ssh_host_rsa_key"
-          "/etc/ssh/ssh_host_rsa_key.pub"
-        ]
-        ++ cfg.extraFiles;
+      files = flatten [
+        "/etc/machine-id"
+        "/etc/ssh/ssh_host_ed25519_key"
+        "/etc/ssh/ssh_host_ed25519_key.pub"
+        "/etc/ssh/ssh_host_rsa_key"
+        "/etc/ssh/ssh_host_rsa_key.pub"
+        (cfg.extraFiles)
+      ];
     };
 
     boot.initrd.systemd = {
