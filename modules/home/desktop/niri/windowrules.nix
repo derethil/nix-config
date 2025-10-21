@@ -65,6 +65,7 @@ in {
       (defaultWorkspaceRule "^heroic$" 4)
       (defaultWorkspaceRule "^GDLauncher$" 4)
       (defaultWorkspaceRule "^[mM]inecraft.*$" 4)
+      (defaultWorkspaceRule "^org.vinegarhq.Sober$" 4)
 
       (defaultWorkspaceRule ".*Spotify.*" 5)
       (defaultWorkspaceRule ".*stremio.*" 5)
@@ -90,6 +91,7 @@ in {
       (fullscreenRule "^[mM]inecraft.*$")
       (fullscreenRule "^.*\\.exe$")
       (fullscreenRule "^steam_app_[0-9]+$")
+      (fullscreenRule "^org.vinegarhq.Sober$")
     ];
   };
 }
