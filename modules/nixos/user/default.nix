@@ -20,14 +20,19 @@ in {
   config = let
     passwordPath = "nixos/users/${cfg.name}/hashedPassword";
   in {
-    secrets.${passwordPath} = {};
+    secrets.${passwordPath} = {
+      neededForUsers = true;
+    };
 
-    users.users.${cfg.name} = {
-      inherit (cfg) name uid home;
-      isNormalUser = true;
-      hashedPasswordFile = config.sops.secrets.${passwordPath}.path;
-      group = "users";
-      extraGroups = cfg.extraGroups ++ (optional cfg.superuser "wheel");
+    users = {
+      mutableUsers = false;
+      users.${cfg.name} = {
+        inherit (cfg) name uid home;
+        isNormalUser = true;
+        hashedPasswordFile = config.sops.secrets.${passwordPath}.path;
+        group = "users";
+        extraGroups = cfg.extraGroups ++ (optional cfg.superuser "wheel");
+      };
     };
   };
 }
