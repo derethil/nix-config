@@ -18,6 +18,11 @@
     open-fullscreen = true;
     open-focused = true;
   };
+
+  defaultWidthRule = appId: widthConfig: {
+    matches = [{app-id = appId;}];
+    default-column-width = widthConfig;
+  };
 in {
   config = mkIf cfg.enable {
     programs.niri.settings.spawn-at-startup = [
@@ -92,6 +97,11 @@ in {
       (fullscreenRule "^.*\\.exe$")
       (fullscreenRule "^steam_app_[0-9]+$")
       (fullscreenRule "^org.vinegarhq.Sober$")
+
+      # Default Column Widths
+      (defaultWidthRule "^[Ss]team$" {proportion = 2. / 3.;})
+      (defaultWidthRule ".*Spotify.*$" {proportion = 2. / 3.;})
+      (defaultWidthRule "^GDLauncher$" {proportion = 2. / 3.;})
     ];
   };
 }
