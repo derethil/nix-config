@@ -113,22 +113,26 @@ in {
         bookmarks = {};
 
         extensions.packages = with pkgs.inputs.firefox-addons; [
+          # Tools
+          tridactyl
+          bitwarden
+          darkreader
+
+          # Privacy / Enhancements
           sponsorblock
           ublock-origin
           private-relay
           clearurls
           i-dont-care-about-cookies
 
-          bitwarden
-          darkreader
-          theater-mode-for-youtube
-          tridactyl
-
-          react-devtools
-          reduxdevtools
+          # Site-specific
+          improved-tube
+          augmented-steam
           refined-github
 
-          augmented-steam
+          # Development
+          react-devtools
+          reduxdevtools
         ];
 
         settings = {
