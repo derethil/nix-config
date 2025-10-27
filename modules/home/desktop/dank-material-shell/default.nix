@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  inputs,
   pkgs,
   ...
 }: let
@@ -28,13 +29,23 @@ in {
       enableSystemMonitoring = true;
       enableClipboard = true;
       enableVPN = false;
-      enableNightMode = false;
+      enableColorPicker = true;
       enableDynamicTheming = true;
       enableAudioWavelength = true;
       enableCalendarEvents = true;
+      enableSystemSound = true;
+
       inherit (cfg) enableBrightnessControl;
 
       quickshell.package = pkgs.inputs.quickshell.default;
+
+      plugins = with inputs; {
+        DankPomodoroTimer.src = "${dms-official-plugins}/DankPomodoroTimer";
+        DankBatteryAlerts.src = "${dms-official-plugins}/DankBatteryAlerts";
+        DankCalculator.src = "${dms-calculator}";
+        DankPowerUsage.src = "${dms-power-usage}";
+        DankEmojiLauncher.src = "${dms-emoji-launcher}";
+      };
     };
 
     glace.services.calendars = mkIf cfg.calendar.enable {

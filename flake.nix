@@ -138,6 +138,22 @@
       url = "github:AvengeMedia/DankMaterialShell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    dms-official-plugins = {
+      url = "github:AvengeMedia/dms-plugins";
+      flake = false;
+    };
+    dms-calculator = {
+      url = "github:rochacbruno/DankCalculator";
+      flake = false;
+    };
+    dms-power-usage = {
+      url = "github:Daniel-42-z/dms-power-usage";
+      flake = false;
+    };
+    dms-emoji-launcher = {
+      url = "github:devnullvoid/dms-emoji-launcher";
+      flake = false;
+    };
 
     khal-notify = {
       url = "github:martiert/khal_notifications";
