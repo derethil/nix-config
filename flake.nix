@@ -167,6 +167,7 @@
 
     overlays = with inputs; [
       niri.overlays.niri
+      firefox-addons.overlays.default
     ];
 
     systems.modules.darwin = with inputs;

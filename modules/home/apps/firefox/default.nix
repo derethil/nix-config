@@ -112,7 +112,7 @@ in {
 
         bookmarks = {};
 
-        extensions.packages = with pkgs.inputs.firefox-addons; [
+        extensions.packages = with pkgs.firefox-addons; [
           # Tools
           tridactyl
           bitwarden
