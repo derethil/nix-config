@@ -1,25 +1,7 @@
 {
   "placements": {
     "widget-overflow-fixed-list": [],
-    "unified-extensions-area": [
-      "private-relay_firefox_com-browser-action",
-      "sponsorblocker_ajay_app-browser-action",
-      "_d7742d87-e61d-4b78-b8a1-b469842139fa_-browser-action",
-      "jid1-kkzogwgsw3ao4q_jetpack-browser-action",
-      "_477dbe5e-1742-4641-a2c3-b6113bb5cf6e_-browser-action",
-      "_59a39734-1e66-452e-a7b8-cc79f72062f0_-browser-action",
-      "_react-devtools-browser-action",
-      "_35dd5f9a-ca89-4643-b107-f07d09cc94b5_-browser-action",
-      "firefox_tampermonkey_net-browser-action",
-      "_aecec67f-0d10-4fa7-b7c7-609a2db280cf_-browser-action",
-      "treestyletab_piro_sakura_ne_jp-browser-action",
-      "redirector_einaregilsson_com-browser-action",
-      "_a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7_-browser-action",
-      "reqvester_gmail_com-browser-action",
-      "_46abbc04-ce38-475f-9ef8-e0a4a59d0c9f_-browser-action",
-      "firefoxpwa_filips_si-browser-action",
-      "_4c421bb7-c1de-4dc6-80c7-ce8625e34d24_-browser-action"
-    ],
+    "unified-extensions-area": [ ],
     "nav-bar": [
       "sidebar-button",
       "sync-button",
