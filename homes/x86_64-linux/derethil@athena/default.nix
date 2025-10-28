@@ -12,8 +12,8 @@ in {
       firefox = enabled;
       chromium = enabled;
       gtk-icon-browser = enabled;
-      discord = enabled;
-      vesktop = disabled;
+      discord = disabled;
+      vesktop = enabled;
       stremio = enabled;
       obs = enabled;
       obsidian = enabled;
