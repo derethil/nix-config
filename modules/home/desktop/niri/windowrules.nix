@@ -59,6 +59,7 @@ in {
       (defaultWorkspaceRule "^chromium$" 1)
 
       (defaultWorkspaceRule "^discord$" 2)
+      (defaultWorkspaceRule "^vesktop$" 2)
       (defaultWorkspaceRule "^Mattermost$" 2)
 
       (defaultWorkspaceRule "^Insomnia$" 3)
