@@ -32,7 +32,7 @@ in {
     mkIf cfg.enable {
       services.postgresql = {
         enable = true;
-        package = pkgs.postgresql_18;
+        package = pkgs.unstable.postgresql_18;
         ensureDatabases = map (db: db.name) cfg.databases;
         ensureUsers = map (user:
           {
@@ -57,7 +57,7 @@ in {
               END $$;
             '';
           in
-            optionalString (user.passwordFile != null) "${getExe' pkgs.postgresql_18 "psql"} -tAf ${setPassword}"
+            optionalString (user.passwordFile != null) "${getExe' pkgs.unstable.postgresql_18 "psql"} -tAf ${setPassword}"
         )
         users
       );

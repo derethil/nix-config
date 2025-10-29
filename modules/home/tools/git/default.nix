@@ -113,13 +113,12 @@ in {
     programs.git = {
       enable = true;
       package = pkgs.git;
+      userName = "Jaren Glenn";
+      userEmail = lib.mkDefault "jarenglenn@gmail.com";
+      aliases = aliases;
+      diff-so-fancy.enable = true;
       lfs.enable = true;
-      settings = {
-        user = {
-          name = "Jaren Glenn";
-          email = lib.mkDefault "jarenglenn@gmail.com";
-        };
-        alias = aliases;
+      extraConfig = {
         init.defaultBranch = "main";
         core.editor = "nvim";
         credential.helper =
@@ -153,11 +152,6 @@ in {
         "devenv.yaml"
         "devenv.lock"
       ];
-    };
-
-    programs.diff-so-fancy = {
-      enable = true;
-      enableGitIntegration = true;
     };
   };
 }

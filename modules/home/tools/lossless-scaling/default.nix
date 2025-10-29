@@ -14,7 +14,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
+    home.packages = with pkgs.unstable; [
       lsfg-vk
       lsfg-vk-ui
     ];

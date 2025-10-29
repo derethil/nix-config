@@ -15,10 +15,11 @@ in {
   config = mkIf cfg.enable {
     services.greetd = {
       enable = true;
-      useTextGreeter = true;
+      # TODO: Not on stable yet
+      # useTextGreeter = true;
       settings = {
         default_session = {
-          command = "${getExe pkgs.tuigreet} --time --remember --remember-session";
+          command = "${getExe pkgs.unstable.tuigreet} --time --remember --remember-session";
           user = "greeter";
         };
       };

@@ -60,7 +60,7 @@ in {
       }
     ];
 
-    home.packages = with pkgs; [
+    home.packages = with pkgs.unstable; [
       postgresql_18
       postgresql18Packages.postgis
     ];

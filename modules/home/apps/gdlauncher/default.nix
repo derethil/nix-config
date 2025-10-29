@@ -15,7 +15,7 @@ in {
   config = mkIf cfg.enable {
     home.packages =
       if config.glace.tools.nixgl.enable or false
-      then [config.lib.nixGL.wrap pkgs.gdlauncher-carbon pkgs.temurin-jre-bin-25]
-      else [pkgs.gdlauncher-carbon pkgs.temurin-jre-bin-25];
+      then [config.lib.nixGL.wrap pkgs.gdlauncher-carbon]
+      else [pkgs.gdlauncher-carbon];
   };
 }
