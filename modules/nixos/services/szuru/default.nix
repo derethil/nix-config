@@ -35,8 +35,17 @@ in {
   in
     mkIf cfg.enable {
       # NOTE: Disable NixOS manual generation to prevent build conflicts with unstable szurubooru module docs.
-      # Re-enable when upgrading to nixpkgs 26+
+      # Re-enable when upgrading to nixpkgs 25.11+
       documentation.nixos.enable = false;
+
+      # NOTE: This also doesn't need to be unstable after nixpkgs 25.11+
+      nixpkgs.overlays = [
+        (final: prev: {
+          szurubooru = prev.szurubooru.override {
+            python3 = inputs.nixpkgs-unstable.legacyPackages.${prev.system}.python3;
+          };
+        })
+      ];
 
       glace.services.postgresql = {
         enable = true;
