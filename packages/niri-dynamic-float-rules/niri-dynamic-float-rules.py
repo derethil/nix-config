@@ -51,14 +51,52 @@ class Rule:
         return True
 
 
-# Write your rules here. One Rule() = one window-rule {}.
-RULES = [
-    Rule([Match(title=".*Bitwarden.*", app_id="firefox")], width=600, height=600),
-]
+def load_rules_from_config():
+    """Load rules from the config file."""
+    config_path = os.path.expanduser("~/.config/niri/dynamic-float-rules.json")
+    
+    if not os.path.exists(config_path):
+        print(f"Config file not found: {config_path}")
+        return []
+    
+    try:
+        with open(config_path, 'r') as f:
+            config = json.load(f)
+        
+        rules = []
+        for rule_data in config.get("rules", []):
+            match_list = []
+            for match_data in rule_data.get("match", []):
+                match_list.append(Match(
+                    title=match_data.get("title"),
+                    app_id=match_data.get("app_id")
+                ))
+            
+            exclude_list = []
+            for exclude_data in rule_data.get("exclude", []):
+                exclude_list.append(Match(
+                    title=exclude_data.get("title"),
+                    app_id=exclude_data.get("app_id")
+                ))
+            
+            rule = Rule(
+                match=match_list,
+                exclude=exclude_list,
+                width=rule_data.get("width"),
+                height=rule_data.get("height")
+            )
+            rules.append(rule)
+        
+        return rules
+    except Exception as e:
+        print(f"Error loading config: {e}")
+        return []
 
+
+RULES = load_rules_from_config()
 
 if len(RULES) == 0:
-    print("fill in the RULES list, then run the script")
+    print("No rules found in config file. Please configure ~/.config/niri/dynamic-float-rules.json")
     exit()
 
 

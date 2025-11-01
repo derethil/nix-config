@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }: let
   inherit (lib) mkIf;
@@ -25,8 +24,17 @@
   };
 in {
   config = mkIf cfg.enable {
-    programs.niri.settings.spawn-at-startup = [
-      {argv = [(lib.getExe pkgs.glace.niri-dynamic-float-rules)];}
+    glace.desktop.niri.dynamic-float-rules = [
+      {
+        match = [
+          {
+            title = ".*Bitwarden.*";
+            app_id = "firefox";
+          }
+        ];
+        width = 600;
+        height = 600;
+      }
     ];
 
     programs.niri.settings.window-rules = [
