@@ -66,8 +66,8 @@
     co = "checkout";
     ba = "branch -a";
     cp = "cherry-pick";
-    l = "log --pretty=format:'%Cgreen%h%Creset - %Cblue%an%Creset @ %ar : %s'";
-    l2 = "log --pretty='format:%Cgreen%h%Creset %an - %s' --graph";
+    l = "log --pretty=format:'%Cgreen%h%Creset - %Cblue%an%Creset @ %ar : %s%C(yellow)%d%Creset'";
+    l2 = "log --pretty='format:%Cgreen%h%Creset %an - %s%C(yellow)%d%Creset' --graph";
     lv = "log --stat";
     pom = "pull origin master";
     gcd = "";
@@ -113,13 +113,12 @@ in {
     programs.git = {
       enable = true;
       package = pkgs.git;
+      userName = "Jaren Glenn";
+      userEmail = lib.mkDefault "jarenglenn@gmail.com";
+      aliases = aliases;
+      diff-so-fancy.enable = true;
       lfs.enable = true;
-      settings = {
-        user = {
-          name = "Jaren Glenn";
-          email = lib.mkDefault "jarenglenn@gmail.com";
-        };
-        alias = aliases;
+      extraConfig = {
         init.defaultBranch = "main";
         core.editor = "nvim";
         credential.helper =
@@ -153,11 +152,6 @@ in {
         "devenv.yaml"
         "devenv.lock"
       ];
-    };
-
-    programs.diff-so-fancy = {
-      enable = true;
-      enableGitIntegration = true;
     };
   };
 }

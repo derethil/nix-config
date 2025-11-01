@@ -10,7 +10,8 @@ in {
   config = mkIf cfg.enable {
     programs.niri.settings.xwayland-satellite = {
       enable = true;
-      path = getExe pkgs.xwayland-satellite-unstable;
+      path = getExe pkgs.xwayland-satellite-stable;
     };
   };
 }
+

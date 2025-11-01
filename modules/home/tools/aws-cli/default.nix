@@ -15,7 +15,7 @@ in {
   config = mkIf cfg.enable {
     programs.awscli = {
       enable = true;
-      package = pkgs.stable.awscli2;
+      package = pkgs.awscli2;
       settings = {
         default = {
           region = "us-gov-west-1";

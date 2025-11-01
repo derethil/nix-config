@@ -18,6 +18,7 @@ in {
   };
 
   imports = [
+    "${inputs.home-manager-unstable.outPath}/modules/programs/quickshell.nix"
     ./hyprland.nix
     ./niri.nix
   ];

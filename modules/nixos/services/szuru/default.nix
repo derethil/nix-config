@@ -2,12 +2,17 @@
   lib,
   config,
   pkgs,
+  inputs,
   ...
 }: let
   inherit (lib) mkIf types concatMapStringsSep;
   inherit (lib.glace) mkBoolOpt mkOpt mkNullableOpt;
   cfg = config.glace.services.szuru;
 in {
+  imports = [
+    "${inputs.nixpkgs-unstable}/nixos/modules/services/web-apps/szurubooru.nix"
+  ];
+
   options.glace.services.szuru = with types; {
     enable = mkBoolOpt false "Enable Szurubooru";
     port = mkOpt port 9000 "Port for the web interface";
@@ -29,6 +34,10 @@ in {
     };
   in
     mkIf cfg.enable {
+      # NOTE: Disable NixOS manual generation to prevent build conflicts with unstable szurubooru module docs.
+      # Re-enable when upgrading to nixpkgs 26+
+      documentation.nixos.enable = false;
+
       glace.services.postgresql = {
         enable = true;
         user.extraGroups = [group];
@@ -54,16 +63,19 @@ in {
       services.szurubooru = {
         enable = true;
         inherit user group dataDir;
-        server.settings = {
-          domain = "http://athena.local:${toString cfg.port}";
-          delete_source_files = "yes";
-          secretFile = config.sops.secrets."${szuruSecretPath}/secret".path;
+        server = {
+          package = pkgs.unstable.szurubooru.server;
+          settings = {
+            domain = "http://athena.local:${toString cfg.port}";
+            delete_source_files = "yes";
+            secretFile = config.sops.secrets."${szuruSecretPath}/secret".path;
+          };
         };
         database = {
           passwordFile = config.sops.secrets."${szuruSecretPath}/database_password".path;
         };
         client = {
-          package = pkgs.szurubooru.client;
+          package = pkgs.unstable.szurubooru.client;
         };
       };
 
@@ -92,7 +104,7 @@ in {
             };
             "/" = {
               tryFiles = "$uri /index.htm";
-              root = "${pkgs.szurubooru.client}";
+              root = "${pkgs.unstable.szurubooru.client}";
             };
           };
         };

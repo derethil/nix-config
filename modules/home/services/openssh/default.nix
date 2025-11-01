@@ -14,9 +14,11 @@ in {
   config = mkIf cfg.enable {
     programs.ssh = {
       enable = true;
-      enableDefaultConfig = false;
+      # TODO: only added in 25.11
+      # enableDefaultConfig = false;
       matchBlocks."*" = {
-        addKeysToAgent = "yes";
+        # TODO: only added in 25.11
+        # addKeysToAgent = "yes";
         forwardAgent = false;
         serverAliveInterval = 60;
         serverAliveCountMax = 3;
@@ -26,3 +28,4 @@ in {
     services.ssh-agent.enable = true;
   };
 }
+

@@ -36,6 +36,10 @@ in {
         fill.symbol = " ";
         git_branch.style = "bold cyan";
         git_metrics.disabled = false;
+        git_commit = {
+          tag_disabled = false;
+          only_detached = true;
+        };
         nodejs.style = "bold green";
         nix_shell.symbol = "❄️";
         package.disabled = true;
