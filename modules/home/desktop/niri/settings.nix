@@ -65,6 +65,10 @@ in {
         workspace-auto-back-and-forth = true;
       };
 
+      clipboard = {
+        disable-primary = true;
+      };
+
       cursor = {
         hide-when-typing = true;
         size = config.glace.desktop.addons.gtk.cursor.size;
