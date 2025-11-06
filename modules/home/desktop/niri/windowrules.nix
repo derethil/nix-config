@@ -18,10 +18,17 @@
     open-focused = true;
   };
 
-  defaultWidthRule = appId: widthConfig: {
-    matches = [{app-id = appId;}];
+  defaultWidthRule = appId: title: widthConfig: {
+    matches = [
+      {
+        app-id = appId;
+        title = title;
+      }
+    ];
     default-column-width = widthConfig;
   };
+
+  defaultWidthRule' = appId: widthConfig: defaultWidthRule appId ".*" widthConfig;
 in {
   config = mkIf cfg.enable {
     glace.desktop.niri.dynamic-float-rules = [
@@ -108,9 +115,9 @@ in {
       (fullscreenRule "^org.vinegarhq.Sober$")
 
       # Default Column Widths
-      (defaultWidthRule "^[Ss]team$" {proportion = 2. / 3.;})
-      (defaultWidthRule ".*Spotify.*$" {proportion = 2. / 3.;})
-      (defaultWidthRule "^GDLauncher$" {proportion = 2. / 3.;})
+      (defaultWidthRule "^[Ss]team$" "^[Ss]team$" {proportion = 2. / 3.;})
+      (defaultWidthRule' ".*Spotify.*$" {proportion = 2. / 3.;})
+      (defaultWidthRule' "^GDLauncher$" {proportion = 2. / 3.;})
     ];
   };
 }
