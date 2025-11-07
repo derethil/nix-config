@@ -23,6 +23,7 @@ in {
       gdlauncher = enabled;
       prismlauncher = disabled;
       heroic = disabled;
+      lutris = enabled;
       r2modman = enabled;
     };
     desktop = {
