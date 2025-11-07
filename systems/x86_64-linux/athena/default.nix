@@ -9,6 +9,7 @@ in {
     apps = {
       steam = enabled;
       sober = enabled;
+      lutris = enabled;
     };
     cli = {
       fish = enabled;
