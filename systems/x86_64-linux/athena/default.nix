@@ -9,7 +9,8 @@ in {
     apps = {
       steam = enabled;
       sober = enabled;
-      lutris = enabled;
+      lutris = disabled;
+      faugus-launcher = enabled;
     };
     cli = {
       fish = enabled;
