@@ -90,7 +90,7 @@ in {
         # (mkWorkspaceBinds' "Mod+Ctrl+Shift" "move-column-to-workspace" {focus = false;})
 
         # Color Picker
-        (mkIf config.glace.tools.hyprpicker.enable {
+        (mkIf config.glace.tools.desktop.hyprpicker.enable {
           "Mod+B" = action' "Pick Color" (spawn-sh "hyprpicker -a");
         })
 
@@ -144,7 +144,7 @@ in {
         })
 
         # Screenshots
-        (mkIf ((!cfg.screenshots.builtin) && config.glace.tools.hyprshot.enable) {
+        (mkIf ((!cfg.screenshots.builtin) && config.glace.tools.desktop.hyprshot.enable) {
           "Print" = action' "Screenshot Region" (spawn-sh "hyprshot -m region --clipboard-only");
           "Shift+Print" = action' "Screenshot Region to File" (spawn-sh "hyprshot -m region -o ${cfg.screenshots.path}");
         })

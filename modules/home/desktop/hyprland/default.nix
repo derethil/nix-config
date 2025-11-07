@@ -40,5 +40,7 @@ in {
         allow_token_by_default = true
       }
     '';
+
+    glace.tools.desktop.hyprprop.enable = true;
   };
 }

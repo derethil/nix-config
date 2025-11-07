@@ -15,7 +15,9 @@ in {
     };
     tools = {
       nh = enabled;
-      neovim = enabled;
+      development = {
+        neovim = enabled;
+      };
     };
     hardware = {
       nvidia = enabled;

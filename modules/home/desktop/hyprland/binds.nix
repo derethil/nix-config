@@ -27,7 +27,7 @@ in {
           "$mod Shift, E, exec, uwsm stop"
 
           # Color Picker
-          (optionals config.glace.tools.hyprpicker.enable [
+          (optionals config.glace.tools.desktop.hyprpicker.enable [
             "$mod, B, exec, shader=$(hyprshade current) ; hyprshade off ; hyprpicker -a ; hyprshade on \"$${shader}\""
           ])
 
@@ -49,7 +49,7 @@ in {
           ])
 
           # Screenshots
-          (optionals config.glace.tools.hyprshot.enable [
+          (optionals config.glace.tools.desktop.hyprshot.enable [
             ", Print, exec, shader=$(hyprshade current) ; hyprshade off ; hyprshot -m region --clipboard-only ; hyprshade on \"$${shader}\""
             "SHIFT, Print, exec, shader=$(hyprshade current) ; hyprshade off ; hyprshot -m region -o ~/Pictures/screenshots/ ; hyprshade on \"$${shader}\""
           ])

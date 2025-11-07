@@ -26,17 +26,21 @@ in {
       };
     };
     tools = {
-      devenv = enabled;
-      manix = enabled;
-      aws-cli = enabled;
-      git = enabled;
-      jira-cli = enabled;
-      neovim = enabled;
-      claude-code = enabled;
-      nix-index = enabled;
-      postgresql = enabled;
-      home-manager = enabled;
       qemu = enabled;
+      development = {
+        devenv = enabled;
+        aws-cli = enabled;
+        git = enabled;
+        jira-cli = enabled;
+        neovim = enabled;
+        claude-code = enabled;
+        postgresql = enabled;
+      };
+      nix = {
+        manix = enabled;
+        nix-index = enabled;
+        home-manager = enabled;
+      };
     };
     cli = {
       fish = enabled;

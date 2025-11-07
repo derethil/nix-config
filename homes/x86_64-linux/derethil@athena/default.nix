@@ -9,22 +9,28 @@ in {
     };
     apps = {
       foot = enabled;
-      firefox = enabled;
-      chromium = enabled;
       gtk-icon-browser = enabled;
-      discord = disabled;
-      vesktop = enabled;
       stremio = enabled;
       obs = enabled;
       obsidian = enabled;
       spotify = enabled;
       insomnia = enabled;
-      mattermost = enabled;
-      gdlauncher = enabled;
-      prismlauncher = disabled;
-      heroic = disabled;
-      lutris = enabled;
-      r2modman = enabled;
+      browsers = {
+        firefox = enabled;
+        chromium = enabled;
+      };
+      gaming = {
+        gdlauncher = enabled;
+        prismlauncher = disabled;
+        heroic = disabled;
+        lutris = enabled;
+        r2modman = enabled;
+      };
+      social = {
+        discord = disabled;
+        vesktop = enabled;
+        mattermost = enabled;
+      };
     };
     desktop = {
       hyprland = disabled;
@@ -39,22 +45,29 @@ in {
       };
     };
     tools = {
-      devenv = enabled;
-      manix = enabled;
-      aws-cli = enabled;
-      git = enabled;
-      jira-cli = enabled;
-      neovim = enabled;
-      claude-code = enabled;
-      nix-index = enabled;
-      postgresql = enabled;
-      home-manager = enabled;
-      hyprpicker = enabled;
-      hyprshot = enabled;
-      hyprprop = enabled;
-      protonup-qt = enabled;
-      lossless-scaling = enabled;
-      mangohud = enabled;
+      gaming = {
+        protonup-qt = enabled;
+        lossless-scaling = enabled;
+        mangohud = enabled;
+      };
+      desktop = {
+        hyprpicker = enabled;
+        hyprshot = disabled;
+      };
+      nix = {
+        manix = enabled;
+        nix-index = enabled;
+        home-manager = enabled;
+      };
+      development = {
+        devenv = enabled;
+        git = enabled;
+        jira-cli = enabled;
+        claude-code = enabled;
+        postgresql = enabled;
+        aws-cli = enabled;
+        neovim = enabled;
+      };
     };
     services = {
       openssh = enabled;
