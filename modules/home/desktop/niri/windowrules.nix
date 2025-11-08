@@ -82,7 +82,7 @@ in {
 
       (defaultWorkspaceRule "^[Ss]team$" 4)
       (defaultWorkspaceRule "^.*\\.exe$" 4)
-      (defaultWorkspaceRule "^steam_app_[0-9]+$" 4)
+      (defaultWorkspaceRule "^steam_app_[1-9][0-9]*$" 4)
       (defaultWorkspaceRule "^heroic$" 4)
       (defaultWorkspaceRule "^GDLauncher$" 4)
       (defaultWorkspaceRule "^[mM]inecraft.*$" 4)
