@@ -17,58 +17,69 @@ in {
       defaultBrightnessBinds = mkForce false;
     };
 
-    programs.niri.settings.binds = with config.lib.niri.actions; {
-      "Mod+Slash" = action' "Open Spotlight" (spawn-sh "dms ipc call spotlight toggle");
-      "Mod+V" = action' "Open Clipboard" (spawn-sh "dms ipc call clipboard toggle");
-      "Mod+M" = action' "Open Process List" (spawn-sh "dms ipc call processlist toggle");
-      "Mod+N" = action' "Open Notifications" (spawn-sh "dms ipc call notifications toggle");
-      "Mod+Comma" = action' "Open Settings" (spawn-sh "dms ipc call settings toggle");
-      "Mod+P" = action' "Open Notepad" (spawn-sh "dms ipc call notepad toggle");
-      "Mod+X" = action' "Open Power Menu" (spawn-sh "dms ipc call powermenu toggle");
-      "Mod+C" = action' "Open Control Center" (spawn-sh "dms ipc call control-center toggle");
-      "Mod+D" = action' "Open Dashboard" (spawn-sh "dms ipc call dash toggle overview");
+    programs.niri.settings = {
+      # Integrate DMS wallpapers onto the overview
+      layout.background-color = "transparent";
+      layer-rules = [
+        {
+          matches = [{namespace = "^quickshell$";}];
+          place-within-backdrop = true;
+        }
+      ];
 
-      "Mod+Alt+L" = action' "Lock Screen" (spawn-sh "dms ipc call lock lock");
+      binds = with config.lib.niri.actions; {
+        "Mod+Slash" = action' "Open Spotlight" (spawn-sh "dms ipc call spotlight toggle");
+        "Mod+V" = action' "Open Clipboard" (spawn-sh "dms ipc call clipboard toggle");
+        "Mod+M" = action' "Open Process List" (spawn-sh "dms ipc call processlist toggle");
+        "Mod+N" = action' "Open Notifications" (spawn-sh "dms ipc call notifications toggle");
+        "Mod+Comma" = action' "Open Settings" (spawn-sh "dms ipc call settings toggle");
+        "Mod+P" = action' "Open Notepad" (spawn-sh "dms ipc call notepad toggle");
+        "Mod+X" = action' "Open Power Menu" (spawn-sh "dms ipc call powermenu toggle");
+        "Mod+C" = action' "Open Control Center" (spawn-sh "dms ipc call control-center toggle");
+        "Mod+D" = action' "Open Dashboard" (spawn-sh "dms ipc call dash toggle overview");
 
-      # Volume
-      "XF86AudioRaiseVolume" = {
-        hotkey-overlay.title = "Increase Volume";
-        action = spawn-sh "dms ipc call audio increment 5";
-        allow-when-locked = true;
-      };
-      "XF86AudioLowerVolume" = {
-        hotkey-overlay.title = "Decrease Volume";
-        action = spawn-sh "dms ipc call audio decrement 5";
-        allow-when-locked = true;
-      };
-      "XF86AudioMute" = {
-        hotkey-overlay.title = "Toggle Mute";
-        action = spawn-sh "dms ipc call audio mute";
-        allow-when-locked = true;
-      };
-      "XF86AudioMicMute" = {
-        hotkey-overlay.title = "Toggle Mic Mute";
-        action = spawn-sh "dms ipc call audio micmute";
-        allow-when-locked = true;
-      };
+        "Mod+Alt+L" = action' "Lock Screen" (spawn-sh "dms ipc call lock lock");
 
-      # Backlight
-      "XF86MonBrightnessUp" = {
-        hotkey-overlay.title = "Increase Brightness";
-        action = spawn-sh "dms ipc call brightness increment 5 ''";
-        allow-when-locked = true;
-      };
-      "XF86MonBrightnessDown" = {
-        hotkey-overlay.title = "Decrease Brightness";
-        action = spawn-sh "dms ipc call brightness decrement 5 ''";
-        allow-when-locked = true;
-      };
+        # Volume
+        "XF86AudioRaiseVolume" = {
+          hotkey-overlay.title = "Increase Volume";
+          action = spawn-sh "dms ipc call audio increment 5";
+          allow-when-locked = true;
+        };
+        "XF86AudioLowerVolume" = {
+          hotkey-overlay.title = "Decrease Volume";
+          action = spawn-sh "dms ipc call audio decrement 5";
+          allow-when-locked = true;
+        };
+        "XF86AudioMute" = {
+          hotkey-overlay.title = "Toggle Mute";
+          action = spawn-sh "dms ipc call audio mute";
+          allow-when-locked = true;
+        };
+        "XF86AudioMicMute" = {
+          hotkey-overlay.title = "Toggle Mic Mute";
+          action = spawn-sh "dms ipc call audio micmute";
+          allow-when-locked = true;
+        };
 
-      # Media
-      "XF86AudioStop" = action' "Stop" (spawn-sh "dms ipc call mpris stop");
-      "XF86AudioPause" = action' "Play/Pause" (spawn-sh "dms ipc call mpris playPause");
-      "XF86AudioNext" = action' "Next Track" (spawn-sh "dms ipc call mpris next");
-      "XF86AudioPrev" = action' "Previous Track" (spawn-sh "dms ipc call mpris previous");
+        # Backlight
+        "XF86MonBrightnessUp" = {
+          hotkey-overlay.title = "Increase Brightness";
+          action = spawn-sh "dms ipc call brightness increment 5 ''";
+          allow-when-locked = true;
+        };
+        "XF86MonBrightnessDown" = {
+          hotkey-overlay.title = "Decrease Brightness";
+          action = spawn-sh "dms ipc call brightness decrement 5 ''";
+          allow-when-locked = true;
+        };
+
+        # Media
+        "XF86AudioStop" = action' "Stop" (spawn-sh "dms ipc call mpris stop");
+        "XF86AudioPause" = action' "Play/Pause" (spawn-sh "dms ipc call mpris playPause");
+        "XF86AudioNext" = action' "Next Track" (spawn-sh "dms ipc call mpris next");
+        "XF86AudioPrev" = action' "Previous Track" (spawn-sh "dms ipc call mpris previous");
+      };
     };
   };
 }
