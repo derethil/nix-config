@@ -27,7 +27,7 @@ in {
       # Provided by nix-gaming module
       lowLatency = {
         enable = true;
-        quantum = 96;
+        quantum = 1024;
         rate = 48000;
       };
     };
