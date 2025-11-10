@@ -14,7 +14,7 @@ in {
       obs = enabled;
       obsidian = enabled;
       spotify = enabled;
-      insomnia = enabled;
+      bruno = enabled;
       browsers = {
         firefox = enabled;
         chromium = enabled;

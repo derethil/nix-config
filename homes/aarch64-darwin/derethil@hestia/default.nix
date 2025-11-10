@@ -10,12 +10,16 @@ in {
     };
     apps = {
       alacritty = enabled;
-      firefox = enabled;
-      discord = enabled;
+      browsers = {
+        firefox = enabled;
+      };
+      social = {
+        discord = enabled;
+        mattermost = disabled;
+      };
       obsidian = enabled;
       spotify = enabled;
       bruno = enabled;
-      mattermost = disabled;
     };
     desktop = {
       aerospace = enabled;
