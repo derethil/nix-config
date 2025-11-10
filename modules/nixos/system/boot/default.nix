@@ -12,6 +12,9 @@ in {
     enable = mkBoolOpt false "Whether to enable systemd-boot configuration.";
     kernelPackages = mkOpt types.raw pkgs.linuxPackages_latest "Kernel packages to use.";
     plymouth.enable = mkBoolOpt false "Whether to enable Plymouth splash screens.";
+    kernelParams = {
+      fix-xhci-controllers.enable = mkBoolOpt false "Whether to add kernel parameters to fix Intel xHCI USB controller issues on some hardware.";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -24,10 +27,16 @@ in {
           configurationLimit = 5;
         };
       };
-      kernelPackages = cfg.kernelPackages;
+
       plymouth = {
         enable = cfg.plymouth.enable;
       };
+
+      kernelPackages = cfg.kernelPackages;
+
+      kernelParams = lib.optionals cfg.kernelParams.fix-xhci-controllers.enable [
+        "xhci_hcd.quirks=64"
+      ];
     };
   };
 }
