@@ -48,7 +48,7 @@ in {
       modesetting.enable = true;
 
       #  Power management can cause issues with sleep/suspend
-      powerManagement.enable = false;
+      powerManagement.enable = true;
       powerManagement.finegrained = false;
 
       # Use opensource kernel module
@@ -58,7 +58,7 @@ in {
 
       package =
         if cfg.channel == "custom"
-        then cfg.package.override { kernelPackages = config.boot.kernelPackages; }
+        then cfg.package.override {kernelPackages = config.boot.kernelPackages;}
         else config.boot.kernelPackages.nvidiaPackages.${cfg.channel};
     };
   };
