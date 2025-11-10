@@ -28,6 +28,7 @@ in {
       networking = enabled' {
         avahi = enabled;
       };
+      power-management = enabled;
     };
     services = {
       openssh-server = enabled;
