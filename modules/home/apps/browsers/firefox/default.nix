@@ -204,6 +204,10 @@ in {
           "sidebar.verticalTabs" = true;
           "extensions.activeThemeID" = "{c161a71c-fb42-4608-b001-5634b3f59a8b}";
           "browser.uiCustomization.state" = builtins.readFile ./ui-state.json;
+
+          # NOTE: Not needed after NVIDIA drivers are 575.64.5+
+          # Wayland screencasting fix
+          "widget.dmabuf.force-enabled" = true;
         };
       };
     };
