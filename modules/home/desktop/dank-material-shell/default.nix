@@ -26,7 +26,10 @@ in {
   config = mkIf cfg.enable {
     programs.dankMaterialShell = {
       enable = true;
-      enableSystemd = true;
+      systemd = {
+        enable = true;
+        restartIfChanged = true;
+      };
       enableSystemMonitoring = true;
       enableClipboard = true;
       enableVPN = false;
