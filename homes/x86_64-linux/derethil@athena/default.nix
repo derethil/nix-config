@@ -15,6 +15,7 @@ in {
       obsidian = enabled;
       spotify = enabled;
       bruno = enabled;
+      vlc = enabled;
       browsers = {
         firefox = enabled;
         chromium = enabled;
