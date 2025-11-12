@@ -121,6 +121,7 @@ in {
       extraConfig = {
         init.defaultBranch = "main";
         core.editor = "nvim";
+        core.hooksPath = ".githooks";
         credential.helper =
           if pkgs.stdenv.isDarwin
           then "osxkeychain"
