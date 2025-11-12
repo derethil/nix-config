@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# Extract substituters from flake.nix
+flake_substituters=$(grep -A 10 "extra-substituters = \[" flake.nix | grep -E 'https://.*\.cachix\.org' | sed 's/.*"\(https:\/\/[^"]*\)".*/\1/' | sort)
+
+# Extract substituters from GitHub Actions workflow
+workflow_substituters=$(grep "substituters =" .github/workflows/cachix.yml | sed 's/.*substituters = //' | tr ' ' '\n' | grep cachix | sort)
+
+# Compare the lists
+if [ "$flake_substituters" != "$workflow_substituters" ]; then
+  echo "ERROR: Substituters mismatch between flake.nix and .github/workflows/cachix.yml"
+  echo ""
+  echo "Flake substituters:"
+  echo "$flake_substituters"
+  echo ""
+  echo "Workflow substituters:"
+  echo "$workflow_substituters"
+  echo ""
+  echo "Please ensure both files have the same substituters before pushing."
+  exit 1
+fi
+
+echo "Verified substituters match between flake.nix and GitHub Actions workflow, pushing..."
+exit 0
+
