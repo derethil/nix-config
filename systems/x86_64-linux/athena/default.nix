@@ -17,6 +17,7 @@ in {
     };
     tools = {
       nh = enabled;
+      wine = enabled;
       development = {
         neovim = enabled;
       };

@@ -25,7 +25,7 @@ in {
       ];
       protontricks = {
         enable = true;
-        package = pkgs.unstable.protontricks;
+        package = pkgs.protontricks;
       };
       # Provided by nix-gaming module
       platformOptimizations.enable = true;
