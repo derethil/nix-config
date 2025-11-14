@@ -23,6 +23,10 @@ in {
       extraCompatPackages = with pkgs; [
         mangohud
       ];
+      protontricks = {
+        enable = true;
+        package = pkgs.unstable.protontricks;
+      };
       # Provided by nix-gaming module
       platformOptimizations.enable = true;
     };
