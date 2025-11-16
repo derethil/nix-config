@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   inherit (lib) mkIf;
@@ -14,7 +15,11 @@ in {
   config = mkIf cfg.enable {
     services.locate = {
       enable = true;
-      package = lib.mkDefault config.nixpkgs.pkgs.plocate;
+      package = lib.mkDefault pkgs.plocate;
     };
+
+    environment.systemPackages = [
+      pkgs.glace.ff
+    ];
   };
 }
