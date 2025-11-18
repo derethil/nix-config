@@ -19,8 +19,8 @@ in {
         chromium = enabled;
       };
       gaming = {
-        gdlauncher = enabled;
-        prismlauncher = disabled;
+        gdlauncher = disabled;
+        prismlauncher = enabled;
         heroic = disabled;
         r2modman = enabled;
       };
