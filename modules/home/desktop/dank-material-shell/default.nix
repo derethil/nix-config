@@ -46,6 +46,7 @@ in {
       plugins = with inputs; {
         DankPomodoroTimer.src = "${dms-official-plugins}/DankPomodoroTimer";
         DankBatteryAlerts.src = "${dms-official-plugins}/DankBatteryAlerts";
+        DankActions.src = "${dms-official-plugins}/DankActions";
         DankCalculator.src = "${dms-calculator}";
         DankPowerUsage.src = "${dms-power-usage}";
         DankEmojiLauncher.src = "${dms-emoji-launcher}";
