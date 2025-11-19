@@ -143,6 +143,11 @@ in {
           };
         })
 
+        # Night Light Toggle
+        (mkIf config.glace.desktop.addons.wlsunset.enable {
+          "Mod+Shift+N" = action' "Toggle Night Light" (spawn-sh "systemctl --user is-active wlsunset.service && systemctl --user stop wlsunset.service || systemctl --user start wlsunset.service");
+        })
+
         # Screenshots
         (mkIf ((!cfg.screenshots.builtin) && config.glace.tools.desktop.hyprshot.enable) {
           "Print" = action' "Screenshot Region" (spawn-sh "hyprshot -m region --clipboard-only");
