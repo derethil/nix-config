@@ -84,7 +84,7 @@ in {
       (defaultWorkspaceRule "^.*\\.exe$" 4)
       (defaultWorkspaceRule "^steam_app_[0-9]+$" 4)
       (defaultWorkspaceRule "^heroic$" 4)
-      (defaultWorkspaceRule "^GDLauncher$" 4)
+      (defaultWorkspaceRule "^org.prismlauncher.PrismLauncher$" 4)
       (defaultWorkspaceRule "^[mM]inecraft.*$" 4)
       (defaultWorkspaceRule "^org.vinegarhq.Sober$" 4)
 
@@ -118,7 +118,7 @@ in {
       (defaultWidthRule "^[Ss]team$" "^[Ss]team$" {proportion = 2. / 3.;})
       (defaultWidthRule' "^Ubisoft Connect" {proportion = 2. / 3.;})
       (defaultWidthRule' ".*Spotify.*$" {proportion = 2. / 3.;})
-      (defaultWidthRule' "^GDLauncher$" {proportion = 2. / 3.;})
+      (defaultWidthRule' "^org.prismlauncher.PrismLauncher$" {proportion = 2. / 3.;})
     ];
   };
 }
