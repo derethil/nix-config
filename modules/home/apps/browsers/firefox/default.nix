@@ -97,6 +97,15 @@ in {
               updateInterval = 24 * 60 * 60 * 1000; # every day
               definedAliases = ["@nw"];
             };
+            "ProtonDB" = {
+              urls = [
+                {
+                  template = "https://www.protondb.com/search?q={searchTerms}";
+                }
+              ];
+              icon = "https://www.protondb.com/sites/protondb/images/favicon.ico";
+              definedAliases = ["@pd"];
+            };
             "bing".metaData.hidden = true;
           };
         };
