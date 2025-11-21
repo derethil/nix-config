@@ -10,7 +10,7 @@
 in {
   options.glace.system.boot = {
     enable = mkBoolOpt false "Whether to enable systemd-boot configuration.";
-    kernelPackages = mkOpt types.raw pkgs.linuxPackages_latest "Kernel packages to use.";
+    kernelPackages = mkOpt types.raw pkgs.unstable.linuxPackages_latest "Kernel packages to use.";
     plymouth.enable = mkBoolOpt false "Whether to enable Plymouth splash screens.";
     kernelParams = {
       fix-xhci-controllers.enable = mkBoolOpt false "Whether to add kernel parameters to fix Intel xHCI USB controller issues on some hardware.";
@@ -18,6 +18,10 @@ in {
   };
 
   config = mkIf cfg.enable {
+    # TODO: workaround for module path change, remove when not needed
+    system = {
+      modulesTree = [(lib.getOutput "modules" config.glace.system.boot.kernelPackages.kernel)];
+    };
     boot = {
       bootspec.enable = true;
       loader = {
