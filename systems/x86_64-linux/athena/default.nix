@@ -1,4 +1,8 @@
-{lib, ...}: let
+{
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib.glace) enabled disabled enabled';
 in {
   imports = [
@@ -45,6 +49,7 @@ in {
       ntsync = enabled;
       boot = enabled' {
         plymouth = enabled;
+        kernelPackages = pkgs.linuxPackages_cachyos-lto;
         kernelParams = {
           fix-xhci-controllers = enabled;
         };

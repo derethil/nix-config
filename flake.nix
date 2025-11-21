@@ -33,6 +33,10 @@
       url = "github:nix-community/impermanence";
     };
 
+    chaotic = {
+      url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    };
+
     # Darwin
 
     darwin = {
@@ -208,6 +212,9 @@
         nvim-config.nixosModules.nvim-config
         nix-gaming.nixosModules.pipewireLowLatency
         nix-gaming.nixosModules.platformOptimizations
+        chaotic.nixosModules.nyx-cache
+        chaotic.nixosModules.nyx-overlay
+        chaotic.nixosModules.nyx-registry
         common-modules
         system-common-modules
       ];
@@ -231,6 +238,7 @@
       "https://derethil.cachix.org"
       "https://hyprland.cachix.org"
       "https://niri.cachix.org"
+      "https://chaotic-nyx.cachix.org/"
     ];
 
     extra-trusted-public-keys = [
@@ -238,6 +246,7 @@
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
+      "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
     ];
   };
 }
