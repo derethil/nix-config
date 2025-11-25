@@ -39,6 +39,7 @@ in {
         sandbox = "relaxed";
         keep-outputs = true;
         keep-derivations = true;
+        use-xdg-base-directories = true;
       };
 
       gc = mkIf cfg.garbageCollection.enable (

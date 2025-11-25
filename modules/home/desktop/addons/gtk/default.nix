@@ -48,6 +48,7 @@ in {
       inherit (cfg.cursor) size;
       gtk.enable = true;
       x11.enable = true;
+      dotIcons.enable = false;
     };
 
     dconf = {

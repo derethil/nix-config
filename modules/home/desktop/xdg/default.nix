@@ -15,6 +15,10 @@ in {
   config = mkIf cfg.enable {
     home = {
       sessionPath = ["~/.local/bin"];
+      preferXdgDirectories = true;
+      sessionVariables = {
+        CUDA_CACHE_PATH = "${config.xdg.cacheHome}/nv";
+      };
     };
     xdg = {
       enable = true;
