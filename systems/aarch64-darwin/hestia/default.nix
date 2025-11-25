@@ -22,6 +22,7 @@ in {
     };
     tools = {
       nh = enabled;
+      comma = enabled;
       reset-launch-services = enabled;
     };
     system = {

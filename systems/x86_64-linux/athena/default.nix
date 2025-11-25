@@ -22,6 +22,7 @@ in {
     tools = {
       nh = enabled;
       wine = enabled;
+      comma = enabled;
       development = {
         neovim = enabled;
       };

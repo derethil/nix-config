@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }: let
   inherit (lib) mkIf;
@@ -20,4 +19,3 @@ in {
     };
   };
 }
-

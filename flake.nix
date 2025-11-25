@@ -59,6 +59,11 @@
       url = "github:gmodena/nix-flatpak/?ref=latest";
     };
 
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Secrets
 
     sops-nix = {
@@ -200,6 +205,7 @@
         sops-nix.darwinModules.sops
         mac-app-util.darwinModules.default
         nvim-config.darwinModules.nvim-config
+        nix-index-database.darwinModules.nix-index
         common-modules
         system-common-modules
       ];
@@ -215,6 +221,7 @@
         chaotic.nixosModules.nyx-cache
         chaotic.nixosModules.nyx-overlay
         chaotic.nixosModules.nyx-registry
+        nix-index-database.nixosModules.nix-index
         common-modules
         system-common-modules
       ];
@@ -228,6 +235,7 @@
         impermanence.homeManagerModules.impermanence
         dank-material-shell.homeModules.dankMaterialShell.default
         niri.homeModules.niri
+        nix-index-database.homeModules.nix-index
         common-modules
       ];
   });
