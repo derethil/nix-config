@@ -138,11 +138,6 @@
 
     # Desktop Shells
 
-    glace-shell = {
-      url = "github:derethil/glace-shell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     quickshell = {
       url = "git+https://github.com/quickshell-mirror/quickshell?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -202,40 +197,48 @@
 
     systems.modules.darwin = with inputs;
       nixpkgs.lib.flatten [
+        # Nix Utils
         sops-nix.darwinModules.sops
         mac-app-util.darwinModules.default
-        nvim-config.darwinModules.nvim-config
         nix-index-database.darwinModules.nix-index
+        # Applications
+        nvim-config.darwinModules.nvim-config
+        # Common
         common-modules
         system-common-modules
       ];
 
     systems.modules.nixos = with inputs;
       nixpkgs.lib.flatten [
+        # Nix Utils
         nix-flatpak.nixosModules.nix-flatpak
         sops-nix.nixosModules.sops
         impermanence.nixosModules.impermanence
-        nvim-config.nixosModules.nvim-config
         nix-gaming.nixosModules.pipewireLowLatency
         nix-gaming.nixosModules.platformOptimizations
         chaotic.nixosModules.nyx-cache
         chaotic.nixosModules.nyx-overlay
         chaotic.nixosModules.nyx-registry
         nix-index-database.nixosModules.nix-index
+        # Applications
+        nvim-config.nixosModules.nvim-config
+        # Common
         common-modules
         system-common-modules
       ];
 
     homes.modules = with inputs;
       nixpkgs.lib.flatten [
-        glace-shell.flakeModules.default
+        # Nix Utils
         sops-nix.homeManagerModules.sops
         mac-app-util.homeManagerModules.default
-        nvim-config.homeManagerModules.nvim-config
         impermanence.homeManagerModules.impermanence
+        nix-index-database.homeModules.nix-index
+        # Applications
+        nvim-config.homeManagerModules.nvim-config
         dank-material-shell.homeModules.dankMaterialShell.default
         niri.homeModules.niri
-        nix-index-database.homeModules.nix-index
+        # Common
         common-modules
       ];
   });
