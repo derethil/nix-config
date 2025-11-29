@@ -26,13 +26,14 @@ in {
 
   config.glace.system.fonts = {
     default = {
-      sans = {
-        name = "Inter Display";
-        package = pkgs.inter;
+      serif = {
+        name = "NewYork Nerd Font";
+        package = pkgs.inputs.apple-fonts.ny-nerd;
       };
       sansSerif = {
-        name = "Noto Sans";
-        package = pkgs.noto-fonts;
+        name = "SFProDisplay Nerd Font Medium";
+        package = pkgs.inputs.apple-fonts.sf-pro-nerd;
+        style = "Medium";
       };
       monospace = {
         name = "GeistMono Nerd Font Mono";
@@ -45,6 +46,7 @@ in {
       };
     };
     extraFonts = with pkgs; [
+      noto-fonts
       noto-fonts-emoji
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif

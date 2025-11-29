@@ -136,7 +136,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Desktop Shells
+    # Desktop
+
+    apple-fonts = {
+      url = "github:Lyndeno/apple-fonts.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     quickshell = {
       url = "git+https://github.com/quickshell-mirror/quickshell?ref=master";
