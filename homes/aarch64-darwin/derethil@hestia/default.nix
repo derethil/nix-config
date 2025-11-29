@@ -42,6 +42,7 @@ in {
         manix = enabled;
         nix-index = enabled;
         home-manager = enabled;
+        cachix = enabled;
       };
     };
     cli = {
