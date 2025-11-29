@@ -7,7 +7,7 @@
   inherit (lib) mkIf;
   inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.apps.alacritty;
-  monoFont = config.glace.system.fonts.mono;
+  monoFont = config.glace.system.fonts.default.monospace;
 in {
   options.glace.apps.alacritty = {
     enable = mkBoolOpt false "Whether to enable the Alacritty terminal.";

@@ -6,7 +6,7 @@
   inherit (lib) mkIf;
   inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.apps.foot;
-  monoFont = config.glace.system.fonts.mono;
+  monoFont = config.glace.system.fonts.default.monospace;
 in {
   options.glace.apps.foot = {
     enable = mkBoolOpt false "Whether to enable the Foot terminal.";
