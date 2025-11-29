@@ -83,6 +83,7 @@ in {
       (defaultWorkspaceRule "^[Ss]team$" 4)
       (defaultWorkspaceRule "^.*\\.exe$" 4)
       (defaultWorkspaceRule "^steam_app_[0-9]+$" 4)
+      (defaultWorkspaceRule ".*gamescope.*" 4)
       (defaultWorkspaceRule "^heroic$" 4)
       (defaultWorkspaceRule "^org.prismlauncher.PrismLauncher$" 4)
       (defaultWorkspaceRule "^[mM]inecraft.*$" 4)
@@ -112,6 +113,7 @@ in {
       (fullscreenRule "^[mM]inecraft.*$")
       (fullscreenRule "^.*\\.exe$")
       (fullscreenRule "^steam_app_[1-9][0-9]*$")
+      (fullscreenRule ".*gamescope.*")
       (fullscreenRule "^org.vinegarhq.Sober$")
 
       # Default Column Widths
