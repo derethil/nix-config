@@ -8,7 +8,6 @@
 in {
   config = mkIf cfg.enable {
     fonts = {
-      enableDefaultPackages = false;
       enableGhostscriptFonts = true;
 
       fontconfig.defaultFonts = {
