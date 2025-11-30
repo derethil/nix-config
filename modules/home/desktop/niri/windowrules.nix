@@ -86,7 +86,7 @@ in {
       (defaultWorkspaceRule ".*gamescope.*" 4)
       (defaultWorkspaceRule "^heroic$" 4)
       (defaultWorkspaceRule "^org.prismlauncher.PrismLauncher$" 4)
-      (defaultWorkspaceRule "^[mM]inecraft.*$" 4)
+      (defaultWorkspaceRule ".*[mM]inecraft.*" 4)
       (defaultWorkspaceRule "^org.vinegarhq.Sober$" 4)
 
       (defaultWorkspaceRule ".*Spotify.*" 5)
@@ -110,7 +110,7 @@ in {
       }
 
       # Fullscreen Windows
-      (fullscreenRule "^[mM]inecraft.*$")
+      (fullscreenRule ".*[mM]inecraft.*")
       (fullscreenRule "^.*\\.exe$")
       (fullscreenRule "^steam_app_[1-9][0-9]*$")
       (fullscreenRule ".*gamescope.*")
