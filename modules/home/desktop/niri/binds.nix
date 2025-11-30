@@ -187,5 +187,9 @@ in {
             "Open Terminal" (spawn ["uwsm-app" "--" "${getExe pkgs.alacritty}"]);
         })
       ];
+
+    glace.cli.aliases = {
+      kill-window = "kill -9 $(niri msg -j pick-window | jq -r '.pid')";
+    };
   };
 }
