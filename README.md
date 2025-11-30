@@ -20,17 +20,9 @@
 
 </div>
 
-Welcome to my comprehensive Nix ecosystem, featuring a meticulously crafted
-configuration that bridges Linux and macOS environments. This repository
-showcases advanced window management, gaming optimization, development tooling,
-and security-focused system design using modern Wayland compositors and
-cutting-edge Nix patterns.
+My Nix configurations for NixOS, Nix Darwin, and Home Manager.
 
-## Getting Started
-
-Before diving in, ensure that you have Nix installed on your system with flakes
-enabled. If not, you can download and install it from the official
-[Nix website](https://nixos.org/download.html).
+## Usage
 
 ### Clone this repository to your local machine
 
@@ -67,7 +59,7 @@ Here's an overview of what my Nix configuration offers:
   QOL features.
 
 - **[Gaming](./modules/nixos/apps)**: Integrated CachyOS kernel optimization,
-  Steam with Proton optimizations, GameMode, lossless scaling technology, and
+  Steam with Proton optimizations, lossless scaling technology, and
   comprehensive launcher and game (Heroic, PrismLauncher, GDLauncher, Sober).
 
 - **[Advanced Security and Impermanence](./modules/system-common)**: BTRFS
@@ -100,23 +92,3 @@ Here's an overview of what my Nix configuration offers:
 - **Nix Darwin**: Declarative MacOS settings and program management
 - **SOPS**: Encrypted secrets with private repository integration
 - **Cachix**: Binary caching for faster rebuilds
-
-## Customization
-
-Leveraging the Snowfall Org lib architecture, my configuration provides:
-
-- **Glace Namespace**: All modules use the `glace` namespace for consistent
-  option naming
-- **Modular Design**: Platform-specific modules (nixos/, darwin/, home/) with
-  shared common modules
-- **Custom Packages**:
-  [Rust system scripts](https://github.com/derethil/rust-system-scripts), tmux
-  enhancements, and utility tools
-- **Template System**: Development environment templates for immediate
-  productivity
-- **Binary Caching**: Pre-configured caches for Hyprland, Niri, and
-  nix-community for faster builds
-
-This methodology creates a powerful yet maintainable Nix configuration that
-scales across multiple platforms while maintaining consistency and security.
-
