@@ -9,7 +9,7 @@ in {
   config = mkIf cfg.enable {
     fonts = {
       enableGhostscriptFonts = true;
-      enableDefaultFonts = false;
+      enableDefaultPackages = false;
 
       fontconfig.defaultFonts = {
         serif = mkIf (cfg.default.serif.name != null) [cfg.default.serif.name];
