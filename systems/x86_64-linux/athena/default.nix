@@ -64,7 +64,6 @@ in {
       niri = enabled' {
         nvidia.limitVramHeap = true;
       };
-      uwsm = enabled;
       display-managers = {
         tuigreet = enabled;
       };
