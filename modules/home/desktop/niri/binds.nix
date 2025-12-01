@@ -172,33 +172,33 @@ in {
         })
 
         # Application Shortcuts
-        (mkIf config.glace.apps.foot.enable {
+        (mkIf config.glace.apps.foot.enable (with pkgs; {
           "Mod+Return" =
             mkAppKeybind
             "Open Terminal (tmux)"
-            (flatten ["${getExe' pkgs.foot "footclient"}" (getExe pkgs.tmux) "new-session" "-As" "base"]);
+            (flatten ["${getExe' foot "footclient"}" (getExe tmux) "new-session" "-As" "base"]);
 
           "Mod+Shift+Return" =
             mkAppKeybind
             "Open Terminal"
-            ["${getExe' pkgs.foot "footclient"}"];
+            ["${getExe' foot "footclient"}"];
 
           "Mod+Ctrl+Shift+Return" =
             mkAppKeybind
             "Open Terminal (standalone)"
-            ["${getExe pkgs.foot}"];
-        })
-        (mkIf (!config.glace.apps.foot.enable && config.glace.apps.alacritty.enable) {
+            ["${getExe foot}"];
+        }))
+        (mkIf (!config.glace.apps.foot.enable && config.glace.apps.alacritty.enable) (with pkgs; {
           "Mod+Return" =
             mkAppKeybind
             "Open Terminal (tmux)"
-            (flatten ["${getExe pkgs.alacritty}" "-e" (getExe pkgs.tmux) "new-session" "-As" "base"]);
+            (flatten ["${getExe alacritty}" "-e" (getExe tmux) "new-session" "-As" "base"]);
 
           "Mod+Shift+Return" =
             mkAppKeybind
             "Open Terminal"
-            ["${getExe pkgs.alacritty}"];
-        })
+            ["${getExe alacritty}"];
+        }))
       ];
 
     glace.cli.aliases = {
