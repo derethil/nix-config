@@ -21,6 +21,16 @@ with lib; rec {
   #@ Type -> Any -> String
   mkOpt' = type: default: mkOpt type default null;
 
+  ## Create a required Nix module option.
+  ##
+  ## ```nix
+  ## lib.mkRequiredOpt nixpkgs.lib.types.str "Description of my option."
+  ## ```
+  ##
+  #@ Type -> String -> Option
+  mkRequiredOpt = type: description:
+    mkOption {inherit type description;};
+
   ## mkNullableOpt
 
   ## Create a nullable Nix module option.
@@ -63,6 +73,28 @@ with lib; rec {
   ## String -> Options
   mkSubmoduleListOpt = description: options:
     mkOpt (types.listOf (types.submodule {inherit options;})) [] description;
+
+  ## mkSubmoduleAttrs
+
+  ## Create a submodule attrs Nix option without a description.
+  ##
+  ## ```nix
+  ## lib.mkSubmoduleAttrs' { ... };
+  ## ```
+  ##
+  ## Options
+  mkSubmoduleAttrs' = options:
+    mkOpt (types.attrsOf (types.submodule {inherit options;})) {} null;
+
+  ## Create a submodule attrs Nix option with a description.
+  ##
+  ## ```nix
+  ## lib.mkSubmoduleAttrs "Description of my option." { ... };
+  ## ```
+  ##
+  ## String -> Options
+  mkSubmoduleAttrs = description: options:
+    mkOpt (types.attrsOf (types.submodule {inherit options;})) {} description;
 
   ## mkBoolOpt
 

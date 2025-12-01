@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf getExe;
   inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.desktop.hyprland;
 in {
@@ -17,6 +17,17 @@ in {
       enable = true;
       portals = [pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk];
       config.hyprland.default = ["hyprland" "gtk"];
+    };
+
+    glace.desktop.displayManagers.sessions = {
+      enable = true;
+      sessionPackages = {
+        hyprland = {
+          desktopName = "Hyprland";
+          comment = "Hyprland";
+          exec = getExe pkgs.hyprland;
+        };
+      };
     };
   };
 }

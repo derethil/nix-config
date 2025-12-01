@@ -64,7 +64,7 @@ in {
       niri = enabled' {
         nvidia.limitVramHeap = true;
       };
-      display-managers = {
+      displayManagers = {
         tuigreet = enabled;
       };
       addons = {
