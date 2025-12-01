@@ -27,13 +27,25 @@
     hotkey-overlay.title = description;
     action = action;
   };
+
+  mkAppKeybind = description: args: let
+    command =
+      if config.glace.desktop.uwsm.enable
+      then ["uwsm-app" "--"] ++ args
+      else args;
+  in
+    action' description (config.lib.niri.actions.spawn command);
 in {
   config = mkIf cfg.enable {
     programs.niri.settings.binds = with config.lib.niri.actions;
       mkMerge [
         {
           # Exit Session
-          "Mod+Shift+E" = action' "Exit Session" (spawn-sh "uwsm stop");
+          "Mod+Shift+E" = action' "Exit Session" (
+            if config.glace.desktop.uwsm.enable
+            then spawn-sh "uwsm stop"
+            else {quit.skip-confirmation = true;}
+          );
 
           # Hotkey Overlay
           "Mod+Shift+Slash" = action' "Show Hotkey Overlay" (spawn-sh "niri msg action show-hotkey-overlay");
@@ -162,29 +174,30 @@ in {
         # Application Shortcuts
         (mkIf config.glace.apps.foot.enable {
           "Mod+Return" =
-            action'
+            mkAppKeybind
             "Open Terminal (tmux)"
-            (spawn (flatten ["uwsm-app" "--" "${getExe' pkgs.foot "footclient"}" (getExe pkgs.tmux) "new-session" "-As" "base"]));
+            (flatten ["${getExe' pkgs.foot "footclient"}" (getExe pkgs.tmux) "new-session" "-As" "base"]);
 
           "Mod+Shift+Return" =
-            action'
+            mkAppKeybind
             "Open Terminal"
-            (spawn ["uwsm-app" "--" "${getExe' pkgs.foot "footclient"}"]);
+            ["${getExe' pkgs.foot "footclient"}"];
 
           "Mod+Ctrl+Shift+Return" =
-            action'
-            "Open Terminal (server)"
-            (spawn ["uwsm-app" "--" "${getExe pkgs.foot}"]);
+            mkAppKeybind
+            "Open Terminal (standalone)"
+            ["${getExe pkgs.foot}"];
         })
         (mkIf (!config.glace.apps.foot.enable && config.glace.apps.alacritty.enable) {
           "Mod+Return" =
-            action'
+            mkAppKeybind
             "Open Terminal (tmux)"
-            (spawn (flatten ["uwsm-app" "--" "${getExe pkgs.alacritty}" "-e" (getExe pkgs.tmux) "new-session" "-As" "base"]));
+            (flatten ["${getExe pkgs.alacritty}" "-e" (getExe pkgs.tmux) "new-session" "-As" "base"]);
 
           "Mod+Shift+Return" =
-            action'
-            "Open Terminal" (spawn ["uwsm-app" "--" "${getExe pkgs.alacritty}"]);
+            mkAppKeybind
+            "Open Terminal"
+            ["${getExe pkgs.alacritty}"];
         })
       ];
 
