@@ -16,6 +16,16 @@ in {
     services.locate = {
       enable = true;
       package = lib.mkDefault pkgs.plocate;
+      # I don't want to prune /nix/store, so just copy the default path list aside from that
+      prunePaths = [
+        "/tmp"
+        "/var/tmp"
+        "/var/cache"
+        "/var/lock"
+        "/var/run"
+        "/var/spool"
+        "/nix/var/log/nix"
+      ];
     };
 
     environment.systemPackages = [
