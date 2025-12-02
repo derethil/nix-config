@@ -28,7 +28,6 @@ in {
   config = mkIf cfg.enable {
     environment.persistence."/persist" = {
       directories = flatten [
-        "/var/db/sudo"
         "/var/lib/nixos"
         "/var/lib/systemd/coredump"
         (cfg.extraDirectories)
