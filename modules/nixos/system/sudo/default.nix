@@ -18,7 +18,7 @@ in {
       extraConfig = ''
         Defaults lecture = never
         Defaults pwfeedback
-        Defaults env_keep += "DISPLAY EDITOR PATH";
+        Defaults env_keep += "DISPLAY EDITOR PATH"
       '';
     };
 

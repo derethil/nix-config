@@ -15,8 +15,7 @@ in {
   config = mkIf cfg.enable {
     services.greetd = {
       enable = true;
-      # TODO: Not on stable yet
-      # useTextGreeter = true;
+      useTextGreeter = true;
       settings = {
         default_session = {
           command = "${getExe pkgs.unstable.tuigreet} --time --remember --remember-session";

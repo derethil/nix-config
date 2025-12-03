@@ -7,9 +7,9 @@
   inputs =
     builtins.mapAttrs (
       _: flake: let
-        packages = (flake.packages or {}).${final.system} or {};
-        legacyPackages = (flake.legacyPackages or {}).${final.system} or {};
-        defaultPackage = (flake.defaultPackage or {}).${final.system} or null;
+        packages = (flake.packages or {}).${final.stdenv.hostPlatform.system} or {};
+        legacyPackages = (flake.legacyPackages or {}).${final.stdenv.hostPlatform.system} or {};
+        defaultPackage = (flake.defaultPackage or {}).${final.stdenv.hostPlatform.system} or null;
         merged = legacyPackages // packages;
       in
         # If using old defaultPackage schema, normalize to { default = ...; }

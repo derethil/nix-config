@@ -32,7 +32,7 @@ in {
       pkgs.glace.ff
     ];
 
-    glace.system.impermanence.extraFiles = [
+    glace.system.impermanence.extraDirectories = [
       "/var/cache/locatedb"
     ];
   };

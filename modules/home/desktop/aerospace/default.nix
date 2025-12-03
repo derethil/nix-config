@@ -1,17 +1,13 @@
 {
   lib,
   config,
-  inputs,
   ...
 }: let
   inherit (lib) mkIf;
   inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.desktop.aerospace;
 in {
-  disabledModules = ["programs/aerospace.nix"];
-
   imports = [
-    "${inputs.home-manager-unstable.outPath}/modules/programs/aerospace.nix"
     ./rules.nix
     ./binds.nix
     ./settings.nix

@@ -7,12 +7,24 @@
   inherit (lib) mkIf;
   inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.apps.spotify;
+
+  # TODO:: https://github.com/NixOS/nixpkgs/issues/465676
+  spotify = pkgs.spotify.overrideAttrs (oldAttrs: {
+    src =
+      if (pkgs.stdenv.isDarwin && pkgs.stdenv.isAarch64)
+      then
+        pkgs.fetchurl {
+          url = "https://web.archive.org/web/20251029235406/https://download.scdn.co/SpotifyARM64.dmg";
+          hash = "sha256-0gwoptqLBJBM0qJQ+dGAZdCD6WXzDJEs0BfOxz7f2nQ=";
+        }
+      else oldAttrs.src;
+  });
 in {
   options.glace.apps.spotify = {
     enable = mkBoolOpt false "Whether to enable Spotify";
   };
 
-  config.home.packages = with pkgs; [
+  config.home.packages = [
     (mkIf cfg.enable spotify)
   ];
 }
