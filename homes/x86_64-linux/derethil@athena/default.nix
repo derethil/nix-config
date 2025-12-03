@@ -67,6 +67,7 @@ in {
         aws-cli = enabled;
         neovim = enabled;
       };
+      openhue = enabled;
     };
     services = {
       openssh = enabled;
