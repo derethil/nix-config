@@ -40,6 +40,7 @@ in {
         keep-outputs = true;
         keep-derivations = true;
         use-xdg-base-directories = true;
+        abort-on-warn = true;
       };
 
       gc = mkIf cfg.garbageCollection.enable (
