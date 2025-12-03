@@ -2,17 +2,12 @@
   lib,
   config,
   pkgs,
-  inputs,
   ...
 }: let
   inherit (lib) mkIf types concatMapStringsSep;
   inherit (lib.glace) mkBoolOpt mkOpt mkNullableOpt;
   cfg = config.glace.services.szuru;
 in {
-  imports = [
-    "${inputs.nixpkgs-unstable}/nixos/modules/services/web-apps/szurubooru.nix"
-  ];
-
   options.glace.services.szuru = with types; {
     enable = mkBoolOpt false "Enable Szurubooru";
     port = mkOpt port 9000 "Port for the web interface";
@@ -34,18 +29,7 @@ in {
     };
   in
     mkIf cfg.enable {
-      # NOTE: Disable NixOS manual generation to prevent build conflicts with unstable szurubooru module docs.
-      # Re-enable when upgrading to nixpkgs 25.11+
-      documentation.nixos.enable = false;
-
-      # NOTE: This also doesn't need to be unstable after nixpkgs 25.11+
-      nixpkgs.overlays = [
-        (final: prev: {
-          szurubooru = prev.szurubooru.override {
-            python3 = inputs.nixpkgs-unstable.legacyPackages.${prev.system}.python3;
-          };
-        })
-      ];
+      documentation.nixos.enable = true;
 
       glace.services.postgresql = {
         enable = true;

@@ -18,10 +18,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # TODO: workaround for module path change, remove when not needed
-    system = {
-      modulesTree = [(lib.getOutput "modules" config.glace.system.boot.kernelPackages.kernel)];
-    };
     boot = {
       bootspec.enable = true;
       loader = {

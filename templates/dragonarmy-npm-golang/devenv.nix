@@ -3,7 +3,7 @@
   inputs,
   ...
 }: let
-  playwright = inputs.playwright.packages.${pkgs.system};
+  playwright = inputs.playwright.packages.${pkgs.stdenv.hostPlatform.system};
 in {
   env = {
     AWS_PROFILE = "DragonArmy";

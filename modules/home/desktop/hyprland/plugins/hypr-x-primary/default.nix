@@ -2,7 +2,7 @@
   lib,
   config,
   inputs,
-  system,
+  pkgs,
   ...
 }: let
   inherit (lib) mkIf findFirst;
@@ -15,7 +15,7 @@ in {
         display = primaryMonitor.port;
       };
       plugins = [
-        inputs.hyprXPrimary.packages.${system}.default
+        inputs.hyprXPrimary.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
     };
   };
