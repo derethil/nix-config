@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf getExe;
   inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.tools.openhue;
 in {
@@ -16,6 +16,9 @@ in {
     home.packages = with pkgs; [
       openhue-cli
     ];
+
+    programs.fish.interactiveShellInit = ''
+      ${getExe pkgs.openhue-cli} completion fish | source
+    '';
   };
 }
-
