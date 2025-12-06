@@ -27,6 +27,7 @@ in {
       description = "The NVIDIA driver channel to use. Specify 'custom' to use a custom driver package.";
     };
     package = mkPackageOpt null "Custom NVIDIA driver package to use. This option is used when 'channel' is set to 'custom'";
+    useUnstable = mkBoolOpt false "Whether to use nvidia packages from nixpkgs-unstable instead of stable.";
   };
 
   config = mkIf cfg.enable {
@@ -54,11 +55,13 @@ in {
       # Use opensource kernel module
       open = true;
 
-      nvidiaSettings = true;
+      nvidiaSettings = false;
 
       package =
         if cfg.channel == "custom"
         then cfg.package.override { kernelPackages = config.boot.kernelPackages; }
+        else if cfg.useUnstable
+        then (pkgs.unstable.linuxKernel.packagesFor config.boot.kernelPackages.kernel).nvidiaPackages.${cfg.channel}
         else config.boot.kernelPackages.nvidiaPackages.${cfg.channel};
     };
   };
