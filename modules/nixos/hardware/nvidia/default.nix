@@ -55,7 +55,7 @@ in {
       # Use opensource kernel module
       open = true;
 
-      nvidiaSettings = true;
+      nvidiaSettings = false;
 
       package =
         if cfg.channel == "custom"
