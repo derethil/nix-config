@@ -18,14 +18,14 @@ in {
     };
 
     font = {
-      name = mkOpt types.str "Inter" "The font name to use.";
-      package = mkOpt types.package (pkgs.google-fonts.override {fonts = ["Inter"];}) "The font package to use.";
+      name = mkOpt types.str "SFProDisplay Nerd Font Medium" "The font name to use.";
+      package = mkOpt types.package pkgs.inputs.apple-fonts.sf-pro-nerd "The font package to use.";
       size = mkOpt types.int 9 "The font size.";
     };
 
     icon-theme = {
-      name = mkOpt types.str "MoreWaita" "The icon theme name to use.";
-      package = mkOpt types.package pkgs.morewaita-icon-theme "The icon theme package to use.";
+      name = mkOpt types.str "Tela" "The icon theme name to use.";
+      package = mkOpt types.package pkgs.tela-icon-theme "The icon theme package to use.";
     };
 
     theme = {
