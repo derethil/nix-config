@@ -11,7 +11,6 @@ in {
   options.glace.desktop.niri = {
     enable = mkBoolOpt false "Whether to enable niri desktop environment.";
     screenshots = {
-      builtin = mkBoolOpt true "Whether to enable the built-in screenshot functionality of niri.";
       path = mkOpt types.str "~/Pictures/screenshots" "The path where screenshots will be saved to disk.";
     };
     binds = {

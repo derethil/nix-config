@@ -28,6 +28,7 @@ in {
       ];
 
       binds = with config.lib.niri.actions; {
+        "Mod+Shift+Slash" = action' "Show Hotkey Overlay" (spawn-sh "dms ipc call keybinds toggle niri");
         "Mod+Slash" = action' "Open Spotlight" (spawn-sh "dms ipc call spotlight toggle");
         "Mod+V" = action' "Open Clipboard" (spawn-sh "dms ipc call clipboard toggle");
         "Mod+M" = action' "Open Process List" (spawn-sh "dms ipc call processlist toggle");
@@ -39,6 +40,9 @@ in {
         "Mod+D" = action' "Open Dashboard" (spawn-sh "dms ipc call dash toggle overview");
 
         "Mod+Alt+L" = action' "Lock Screen" (spawn-sh "dms ipc call lock lock");
+
+        "Print" = action' "Take Screenshot" (spawn-sh "dms screenshot --no-file");
+        "Ctrl+Print" = action' "Take Screenshot [File]" (spawn-sh "dms screenshot -d ${config.glace.desktop.niri.screenshots.path}");
 
         # Volume
         "XF86AudioRaiseVolume" = {

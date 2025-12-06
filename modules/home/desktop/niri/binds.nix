@@ -48,7 +48,9 @@ in {
           );
 
           # Hotkey Overlay
-          "Mod+Shift+Slash" = action' "Show Hotkey Overlay" (spawn-sh "niri msg action show-hotkey-overlay");
+          "Mod+Shift+Slash" = mkIf (!config.glace.desktop.dank-material-shell.enable) (
+            action' "Show Hotkey Overlay" (spawn-sh "niri msg action show-hotkey-overlay")
+          );
 
           # Window Commands
           "Mod+Q".action = close-window;
@@ -161,14 +163,8 @@ in {
         })
 
         # Screenshots
-        (mkIf ((!cfg.screenshots.builtin) && config.glace.tools.desktop.hyprshot.enable) {
-          "Print" = action' "Screenshot Region" (spawn-sh "hyprshot -m region --clipboard-only");
-          "Shift+Print" = action' "Screenshot Region to File" (spawn-sh "hyprshot -m region -o ${cfg.screenshots.path}");
-        })
-
-        (mkIf (cfg.screenshots.builtin) {
+        (mkIf (!config.glace.desktop.dank-material-shell.enable) {
           "Print".action.screenshot = [];
-          "Ctrl+Print".action.screenshot-window = [];
         })
 
         # Application Shortcuts
