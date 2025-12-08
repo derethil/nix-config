@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf getExe';
+  inherit (lib) mkIf;
   inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.desktop.niri;
 in {
@@ -19,19 +19,13 @@ in {
   config = mkIf cfg.enable {
     glace.services.portals = {
       enable = true;
-      portals = [pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-gnome];
-      config.niri.default = ["gtk" "gnome"];
+      portals = [pkgs.xdg-desktop-portal-gnome pkgs.xdg-desktop-portal-gtk];
+      config.niri.default = ["gnome" "gtk"];
     };
 
-    glace.desktop.displayManagers.sessions = {
+    services.displayManager = {
       enable = true;
-      sessionPackages = {
-        niri-session = {
-          desktopName = "Niri";
-          comment = "Niri Desktop Environment";
-          exec = getExe' pkgs.niri-stable "niri-session";
-        };
-      };
+      sessionPackages = [pkgs.niri-stable];
     };
   };
 }
