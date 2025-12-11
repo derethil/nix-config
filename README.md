@@ -50,40 +50,36 @@ github:derethil/nix-config#python
 
 Here's an overview of what my Nix configuration offers:
 
-- **[Next-Gen Wayland Compositors](./modules/home/desktop)**: Featuring Niri
-  (scrollable tiling) and Hyprland, both optimized for NVIDIA and high-refresh
-  displays with VRR support.
+- **Multiple Compositors**: Heavily configured and opinionated Hyprland,
+  Aerospace, and Niri configurations with unified options where possible
 
-- **[Custom Desktop Shells](./modules/home/desktop)**: Dank Material Shell
-  support including various third-party plugins to improve productivity and add
-  QOL features.
+- **Desktop Shells**: A Dank Material Shell installation including various
+  plugins to add QoL features and functionality like Outlook calendar
+  integration,
+  [Philips Hue management](https://github.com/derethil/dms-hue-manager/tree/main),
+  and more
 
-- **[Gaming](./modules/nixos/apps)**: Integrated CachyOS kernel optimization,
-  Steam with Proton optimizations, lossless scaling technology, and
-  comprehensive launcher and game (Heroic, PrismLauncher, GDLauncher, Sober).
+- **Gaming**: CachyOS kernel optimizations, low-latency audio configuration,
+  modding tools, and a comprehensive launchers list including Steam,
+  PrismLauncher, and Sober
 
-- **[Advanced Security and Impermanence](./modules/system-common)**: BTRFS
-  impermanence with encrypted root rollback, SOPS secret management with age
-  encryption, and LUKS full-disk encryption with secure boot.
+- **Advanced Security and Impermanence**: BTRFS impermanence with root rollback,
+  SOPS encrypted secret management, and LUKS full-disk encryption
 
-- **[Development](./modules/home/tools)**: Provides my Neovim configuration
-  through NVF via a **[custom flake](https://github.com/derethil/nvim-config)**
-  as well as comprehensive DevEnv templates and a suite of CLI utilities and
-  tool configurations.
+- **Development**: My Neovim configuration is provided via a
+  [custom flake](https://github.com/derethil/nvim-config) as well as my common
+  DevEnv templates and a suite of useful developmental tools and utilities
 
-- **[Cross-Platform Window Management](./modules/home/desktop)**: AeroSpace
-  tiling for macOS with unified keybindings across all platforms.
-
-- **[Privacy-Hardened Browsing](./modules/home/apps/firefox)**: Firefox with
-  custom CSS theming and vim bindings among other addons and privacy
-  configurations including telemetry disabling.
+- **Privacy-Hardened Browsing**: Firefox comes preconfigured with the addons I
+  use as well as a host of privacy and security-focused configurations.
 
 ## System Architecture
 
 ### Hosts
 
-- **Athena** (x86_64-linux): NixOS desktop with NVIDIA optimizations
-- **Hestia** (aarch64-darwin): Apple Silicon macOS development machine
+- **Athena** (x86_64-linux): NixOS main desktop for day-to-day development and
+  gaming
+- **Hestia** (aarch64-darwin): Nix-Darwin managed macOS laptop
 
 ### Core Technologies
 
