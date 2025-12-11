@@ -36,7 +36,6 @@ in {
           glow # Markdown viewer
           httpie # Better curl
           jq # JSON processor
-          libqalculate # CLI Calculator
           ripgrep # Better grep
           rsync # File synchronization
           scc # Project statistics

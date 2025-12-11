@@ -100,13 +100,23 @@ in {
       }
 
       {
+        open-floating = true;
         matches = [
           {
             title = "^(Friends List)$";
             app-id = "steam";
           }
         ];
+      }
+      {
         open-floating = true;
+        default-window-height = {fixed = 720;};
+        default-column-width = {fixed = 800;};
+        matches = [
+          {
+            app-id = ".*qalculate.*";
+          }
+        ];
       }
 
       # Fullscreen Windows

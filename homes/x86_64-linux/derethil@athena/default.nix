@@ -14,6 +14,7 @@ in {
       spotify = enabled;
       bruno = enabled;
       vlc = enabled;
+      qalculate = enabled;
       browsers = {
         firefox = enabled;
         chromium = enabled;
