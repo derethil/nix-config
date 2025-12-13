@@ -31,19 +31,6 @@
   defaultWidthRule' = appId: widthConfig: defaultWidthRule appId ".*" widthConfig;
 in {
   config = mkIf cfg.enable {
-    glace.desktop.niri.dynamic-float-rules = [
-      {
-        match = [
-          {
-            title = ".*Bitwarden.*";
-            app_id = "firefox";
-          }
-        ];
-        width = 600;
-        height = 600;
-      }
-    ];
-
     programs.niri.settings.window-rules = [
       # Rounded Borders
       {
@@ -118,6 +105,14 @@ in {
           }
         ];
       }
+      {
+        open-floating = true;
+        matches = [
+          {
+            title = ".*Picture-in-Picture.*";
+          }
+        ];
+      }
 
       # Fullscreen Windows
       (fullscreenRule ".*[mM]inecraft.*")
@@ -131,6 +126,31 @@ in {
       (defaultWidthRule' "^Ubisoft Connect" {proportion = 2. / 3.;})
       (defaultWidthRule' ".*Spotify.*$" {proportion = 2. / 3.;})
       (defaultWidthRule' "^org.prismlauncher.PrismLauncher$" {proportion = 2. / 3.;})
+    ];
+
+    # Force float state for windows that set their title after launch (only known case is Bitwarden)
+    glace.desktop.niri.dynamic-float-rules = [
+      {
+        match = [
+          {
+            title = ".*Bitwarden.*";
+            app_id = "firefox";
+          }
+        ];
+        width = 600;
+        height = 600;
+      }
+    ];
+
+    # Script-based pinned windows, see: https://github.com/YaLTeR/niri/issues/932
+    glace.desktop.niri.sticky-float-rules = [
+      {
+        match = [
+          {
+            title = ".*Picture-in-Picture.*";
+          }
+        ];
+      }
     ];
   };
 }

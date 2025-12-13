@@ -31,6 +31,7 @@ in {
     ./windowrules.nix
     ./xwayland.nix
     ./dynamic-float-rules.nix
+    ./sticky-float-rules.nix
   ];
 
   config = mkIf cfg.enable {
