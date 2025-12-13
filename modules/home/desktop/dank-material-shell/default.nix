@@ -11,7 +11,6 @@
 in {
   options.glace.desktop.dank-material-shell = {
     enable = mkBoolOpt false "Whether to enable Dank Material Shell.";
-    enableBrightnessControl = mkBoolOpt false "Whether to enable DMS brightness/backlight control.";
     calendar = {
       enable = mkBoolOpt cfg.enable "Whether to enable Dank Material Shell calendar event integration.";
     };
@@ -30,15 +29,10 @@ in {
         restartIfChanged = true;
       };
       enableSystemMonitoring = true;
-      enableClipboard = true;
       enableVPN = false;
-      enableColorPicker = true;
       enableDynamicTheming = true;
       enableAudioWavelength = true;
       enableCalendarEvents = true;
-      enableSystemSound = true;
-
-      inherit (cfg) enableBrightnessControl;
 
       quickshell.package = pkgs.inputs.quickshell.default;
 
