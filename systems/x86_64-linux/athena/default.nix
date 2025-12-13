@@ -66,7 +66,8 @@ in {
         nvidia.limitVramHeap = true;
       };
       displayManagers = {
-        tuigreet = enabled;
+        tuigreet = disabled;
+        dankGreeter = enabled;
       };
       addons = {
         dconf = enabled;

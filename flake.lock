@@ -181,7 +181,9 @@
     },
     "dank-material-shell": {
       "inputs": {
-        "dgop": "dgop",
+        "dgop": [
+          "dgop"
+        ],
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -225,16 +227,15 @@
     "dgop": {
       "inputs": {
         "nixpkgs": [
-          "dank-material-shell",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1762835999,
-        "narHash": "sha256-UykYGrGFOFTmDpKTLNxj1wvd1gbDG4TkqLNSbV0TYwk=",
+        "lastModified": 1765583951,
+        "narHash": "sha256-QDCrQorCAesnsOQJk+cTszazGitf9NDqIEMxzUEtotE=",
         "owner": "AvengeMedia",
         "repo": "dgop",
-        "rev": "799301991cd5dcea9b64245f9d500dcc76615653",
+        "rev": "57279532bc932b93df79d866b0663b1753cefda1",
         "type": "github"
       },
       "original": {
@@ -1765,6 +1766,7 @@
         "chaotic": "chaotic",
         "dank-material-shell": "dank-material-shell",
         "darwin": "darwin",
+        "dgop": "dgop",
         "dms-calculator": "dms-calculator",
         "dms-emoji-launcher": "dms-emoji-launcher",
         "dms-official-plugins": "dms-official-plugins",

@@ -148,9 +148,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    dgop = {
+      url = "github:AvengeMedia/dgop";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     dank-material-shell = {
       url = "github:AvengeMedia/DankMaterialShell";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.dgop.follows = "dgop";
     };
     dms-official-plugins = {
       url = "github:AvengeMedia/dms-plugins";
@@ -227,6 +232,7 @@
         nix-index-database.nixosModules.nix-index
         # Applications
         nvim-config.nixosModules.nvim-config
+        dank-material-shell.nixosModules.greeter
         # Common
         common-modules
         system-common-modules
