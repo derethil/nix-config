@@ -4,12 +4,15 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf mkForce;
-  inherit (lib.glace) mkBoolOpt;
+  inherit (lib) mkIf mkForce types;
+  inherit (lib.glace) mkBoolOpt mkOpt;
   cfg = config.glace.desktop.xdg;
 in {
   options.glace.desktop.xdg = {
     enable = mkBoolOpt true "Whether to enable XDG base directory support";
+    terminal = {
+      default = mkOpt (types.listOf types.str) [] "The default terminal emulator to use for XDG terminal-exec. If null, uses xdg-terminal-exec-mkhl from nixpkgs.";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -40,6 +43,13 @@ in {
         publicShare = config.glace.user.userdirs.publicShare;
         extraConfig = {
           XDG_SCREENSHOTS_DIR = "${config.glace.user.userdirs.pictures}/screenshots";
+        };
+      };
+      terminal-exec = mkIf (cfg.terminal.default != null) {
+        enable = true;
+        package = pkgs.xdg-terminal-exec-mkhl;
+        settings = {
+          default = cfg.terminal.default;
         };
       };
     };

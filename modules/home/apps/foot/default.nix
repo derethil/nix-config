@@ -3,7 +3,7 @@
   config,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkAfter;
   inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.apps.foot;
   monoFont = config.glace.system.fonts.default.monospace;
@@ -13,6 +13,8 @@ in {
   };
 
   config = mkIf cfg.enable {
+    glace.desktop.xdg.terminal.default = mkAfter ["foot.desktop"];
+
     programs.foot = {
       enable = true;
       server.enable = true;
