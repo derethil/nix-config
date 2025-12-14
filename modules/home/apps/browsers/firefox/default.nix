@@ -217,6 +217,13 @@ in {
           # NOTE: Not needed after NVIDIA drivers are 575.64.5+
           # Wayland screencasting fix
           "widget.dmabuf.force-enabled" = true;
+
+          # Use XDG Desktop Portal (1 = always, 2 = auto/flatpak only, 0 = never)
+          "widget.use-xdg-desktop-portal.file-picker" = 1;
+          "widget.use-xdg-desktop-portal.mime-handler" = 1;
+          "widget.use-xdg-desktop-portal.settings" = 1;
+          "widget.use-xdg-desktop-portal.location" = 1;
+          "widget.use-xdg-desktop-portal.open-uri" = 1;
         };
       };
     };
