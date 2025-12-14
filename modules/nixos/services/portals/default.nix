@@ -10,7 +10,7 @@ in {
   options.glace.services.portals = {
     enable = mkBoolOpt false "Whether to enable XDG portals";
     portals = mkOpt (types.listOf types.package) [] "Extra portals to install.";
-    config = mkOpt types.attrs {} "Portal configuration.";
+    config = mkOpt (types.attrsOf (types.attrsOf types.anything)) {} "Portal configuration.";
   };
 
   config = mkIf cfg.enable {
