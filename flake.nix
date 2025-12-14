@@ -96,6 +96,11 @@
       url = "github:fufexan/nix-gaming";
     };
 
+    yazi-gruvbox-dark = {
+      url = "github:bennyyip/gruvbox-dark.yazi";
+      flake = false;
+    };
+
     # CLI
 
     tmux-theme = {

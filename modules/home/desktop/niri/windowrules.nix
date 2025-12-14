@@ -97,8 +97,8 @@ in {
       }
       {
         open-floating = true;
-        default-window-height = {fixed = 720;};
-        default-column-width = {fixed = 800;};
+        default-window-height = {fixed = 800;};
+        default-column-width = {fixed = 1100;};
         matches = [
           {
             app-id = ".*qalculate.*";
@@ -110,6 +110,16 @@ in {
         matches = [
           {
             title = ".*Picture-in-Picture.*";
+          }
+        ];
+      }
+      {
+        open-floating = true;
+        default-window-height = {fixed = 720;};
+        default-column-width = {fixed = 800;};
+        matches = [
+          {
+            app-id = "yazi";
           }
         ];
       }

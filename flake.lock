@@ -1796,7 +1796,8 @@
         "snowfall-lib": "snowfall-lib",
         "sops-nix": "sops-nix",
         "tmux-power-zoom": "tmux-power-zoom",
-        "tmux-theme": "tmux-theme"
+        "tmux-theme": "tmux-theme",
+        "yazi-gruvbox-dark": "yazi-gruvbox-dark"
       }
     },
     "root-nvim": {
@@ -2279,6 +2280,22 @@
       "original": {
         "owner": "Supreeeme",
         "repo": "xwayland-satellite",
+        "type": "github"
+      }
+    },
+    "yazi-gruvbox-dark": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1765331460,
+        "narHash": "sha256-qNxauqv8tRPztO17PGKl3ue6cSWGqIuEzYViaRXDVcQ=",
+        "owner": "bennyyip",
+        "repo": "gruvbox-dark.yazi",
+        "rev": "2c61c90e8725136760e5d12b7ebc4c24d602241b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bennyyip",
+        "repo": "gruvbox-dark.yazi",
         "type": "github"
       }
     }

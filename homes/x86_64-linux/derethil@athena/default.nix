@@ -83,6 +83,7 @@ in {
       misc = enabled;
       wl-clipboard = enabled;
       chafa = enabled;
+      yazi = enabled;
     };
     system = {
       fonts = enabled;
