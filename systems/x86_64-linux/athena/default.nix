@@ -18,6 +18,7 @@ in {
     };
     cli = {
       fish = enabled;
+      yazi.portal = enabled;
     };
     tools = {
       nh = enabled;
