@@ -64,7 +64,7 @@ in {
       (defaultWorkspaceRule "^vesktop$" 2)
       (defaultWorkspaceRule "^Mattermost$" 2)
 
-      (defaultWorkspaceRule "^Insomnia$" 3)
+      (defaultWorkspaceRule "^bruno$" 3)
       (defaultWorkspaceRule "^obsidian$" 3)
 
       (defaultWorkspaceRule "^[Ss]team$" 4)
