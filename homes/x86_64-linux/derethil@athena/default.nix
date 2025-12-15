@@ -7,6 +7,7 @@ in {
     };
     apps = {
       foot = enabled;
+      kitty = enabled;
       gtk-icon-browser = enabled;
       stremio = enabled;
       obs = enabled;
