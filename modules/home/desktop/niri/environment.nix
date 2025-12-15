@@ -17,7 +17,6 @@ in {
       })
 
       {
-        # WLRoots
         QT_QPA_PLATFORM = "wayland;xcb";
         QT_QPA_PLATFORMTHEME = "gtk3";
         QT_QPA_PLATFORMTHEME_QT6 = "gtk3";
@@ -31,6 +30,7 @@ in {
 
         # Wayland
         ELECTRON_OZONE_PLATFORM_HINT = "auto";
+        NIXOS_OZONE_WL = "1"; # some applications don't respect ELECTRON_OZONE_PLATFORM_HINT
       }
     ];
   };
