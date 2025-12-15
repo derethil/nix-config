@@ -23,6 +23,25 @@ in {
         enable = true;
         package = pkgs.claude-code;
       };
+      sonarlint = {
+        enable = true;
+        connectedMode = {
+          enable = true;
+          connections.sonarqube = [
+            {
+              connectionId = "dragonarmy";
+              serverUrl = "https://sonarqube.dragonarmy.rocks";
+              disableNotifications = false;
+            }
+          ];
+          projects = {
+            "${config.glace.user.home or config.home.homeDirectory}/development/dragonarmy/vigil" = {
+              connectionId = "dragonarmy";
+              projectKey = "dragon-army_hatchlab-srt_5a7d51c9-c50c-44fa-bd66-3ce24e000515";
+            };
+          };
+        };
+      };
     };
   };
 }
