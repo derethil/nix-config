@@ -57,7 +57,7 @@ in {
       icon = "yazi";
       genericName = "File Manager";
       comment = "Blazing fast terminal file manager written in Rust, based on async I/O";
-      exec = "xdg-terminal-exec -a yazi yazi %u";
+      exec = "xdg-terminal-exec-wrapped --app-id yazi yazi %u";
       type = "Application";
       categories = ["System" "FileTools" "FileManager"];
       mimeType = ["inode/directory"];
@@ -71,7 +71,7 @@ in {
           env = "TERMCMD='${
             if cfg.portal.terminal != null
             then cfg.portal.terminal
-            else "${getExe config.xdg.terminal-exec.package} -a yazi"
+            else "xdg-terminal-exec-wrapped --app-id yazi"
           }'";
         };
       };
@@ -79,8 +79,8 @@ in {
 
     assertions = [
       {
-        assertion = cfg.portal.enable -> (config.glace.desktop.xdg.enable && (config.glace.desktop.xdg.terminal.default != null));
-        message = "Option `glace.cli.yazi.portal.enable` requires `glace.desktop.xdg.enable` and `glace.desktop.xdg.terminal.default` to be set.";
+        assertion = cfg.portal.enable -> (config.glace.desktop.xdg.enable && config.glace.desktop.xdg-terminal-exec.enable);
+        message = "Option `glace.cli.yazi.portal.enable` requires `glace.desktop.xdg.enable` and `glace.desktop.xdg-terminal-exec.enable` to be set.";
       }
     ];
   };

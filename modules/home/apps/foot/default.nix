@@ -13,7 +13,10 @@ in {
   };
 
   config = mkIf cfg.enable {
-    glace.desktop.xdg.terminal.default = mkAfter ["foot.desktop"];
+    glace.desktop.xdg-terminal-exec = {
+      enable = true;
+      default = mkAfter ["foot.desktop"];
+    };
 
     programs.foot = {
       enable = true;
