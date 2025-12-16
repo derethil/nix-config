@@ -18,9 +18,13 @@ in {
       preferXdgDirectories = true;
       sessionVariables = {
         CUDA_CACHE_PATH = "${config.xdg.cacheHome}/nv";
+
         # Override home-manager's default to use system portals, dunno why it's being set but it is
         # See: https://github.com/nix-community/home-manager/issues/7124
         NIX_XDG_DESKTOP_PORTAL_DIR = mkForce "/run/current-system/sw/share/xdg-desktop-portal/portals";
+        # Fix for Qt apps crashing due to missing GSettings schemas
+        # https://github.com/NixOS/nixpkgs/issues/149812
+        XDG_DATA_DIRS = "$XDG_DATA_DIRS:${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}";
       };
     };
     xdg = {
