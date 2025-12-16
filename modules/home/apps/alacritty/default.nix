@@ -16,7 +16,7 @@ in {
   config = mkIf cfg.enable {
     glace.desktop.xdg-terminal-exec = {
       enable = true;
-      default = mkAfter ["Alacritty.desktop"];
+      fallbacks = mkAfter ["Alacritty.desktop"];
     };
 
     programs.alacritty = {

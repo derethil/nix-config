@@ -4,13 +4,15 @@
   lib,
   ...
 }: let
-  inherit (lib) mkIf getExe types;
+  inherit (lib) mkIf getExe types optional remove;
   inherit (lib.glace) mkBoolOpt mkOpt;
   cfg = config.glace.desktop.xdg-terminal-exec;
+  terminals = (optional (cfg.default != null) cfg.default) ++ (remove cfg.default cfg.fallbacks);
 in {
   options.glace.desktop.xdg-terminal-exec = {
     enable = mkBoolOpt false "Whether to enable xdg-terminal-exec.";
-    default = mkOpt (types.listOf types.str) [] "The default terminal emulator to use for XDG terminal-exec.";
+    default = mkOpt (types.nullOr types.str) null "The default terminal emulator to use for XDG terminal-exec. If null, the first terminal in fallbacks is used.";
+    fallbacks = mkOpt (types.listOf types.str) [] "List of fallback terminal emulators. The first one is used if default is not set.";
   };
 
   config = mkIf cfg.enable {
@@ -18,7 +20,7 @@ in {
       enable = true;
       package = pkgs.xdg-terminal-exec-mkhl;
       settings = {
-        default = cfg.default;
+        default = terminals;
       };
     };
 

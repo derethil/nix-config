@@ -4,8 +4,8 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf mkForce types;
-  inherit (lib.glace) mkBoolOpt mkOpt;
+  inherit (lib) mkIf mkForce;
+  inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.desktop.xdg;
 in {
   options.glace.desktop.xdg = {

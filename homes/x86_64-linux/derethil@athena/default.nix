@@ -37,6 +37,10 @@ in {
       niri = enabled;
       dank-material-shell = enabled;
       xdg = enabled;
+      xdg-terminal-exec = {
+        enable = true;
+        default = "foot.desktop";
+      };
       addons = {
         wlsunset = enabled;
         cliphist = enabled;

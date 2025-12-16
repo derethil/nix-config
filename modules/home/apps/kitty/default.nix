@@ -15,7 +15,7 @@ in {
   config = mkIf cfg.enable {
     glace.desktop.xdg-terminal-exec = {
       enable = true;
-      default = mkAfter ["kitty.desktop"];
+      fallbacks = mkAfter ["kitty.desktop"];
     };
 
     programs.kitty = {
