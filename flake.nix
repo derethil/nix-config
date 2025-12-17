@@ -178,6 +178,10 @@
       url = "github:devnullvoid/dms-emoji-launcher";
       flake = false;
     };
+    dms-lucyfire-plugins = {
+      url = "github:lucyfire/dms-plugins";
+      flake = false;
+    };
 
     khal-notify = {
       url = "github:martiert/khal_notifications";
