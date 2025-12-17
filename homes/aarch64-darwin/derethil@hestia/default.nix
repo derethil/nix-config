@@ -18,6 +18,7 @@ in {
       obsidian = enabled;
       spotify = enabled;
       bruno = enabled;
+      gaming.prismlauncher = enabled;
     };
     desktop = {
       aerospace = enabled;

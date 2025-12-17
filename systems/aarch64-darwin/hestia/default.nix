@@ -42,7 +42,7 @@ in {
           {app = "/Users/${config.glace.user.name}/Applications/Home Manager Apps/Obsidian.app";}
           {app = "/Users/${config.glace.user.name}/Applications/Home Manager Apps/Spotify.app";}
           {app = "/Applications/Stremio.app";}
-          {app = "/Applications/GDLauncher.app";}
+          {app = "/Users/${config.glace.user.name}/Applications/Home Manager Apps/PrismLauncher.app";}
           {app = "/Applications/Steam.app";}
         ];
       };
