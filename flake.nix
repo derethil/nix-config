@@ -252,7 +252,7 @@
         nix-index-database.homeModules.nix-index
         # Applications
         nvim-config.homeManagerModules.nvim-config
-        dank-material-shell.homeModules.dankMaterialShell.default
+        dank-material-shell.homeModules.dank-material-shell
         niri.homeModules.niri
         # Common
         common-modules
