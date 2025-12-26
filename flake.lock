@@ -93,6 +93,22 @@
         "type": "github"
       }
     },
+    "calcium": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1766695232,
+        "narHash": "sha256-REybHIscXKTBm+36g9cRHEZL0Iu9agJtbtIMQsmNAQo=",
+        "owner": "Necrom4",
+        "repo": "calcium.nvim",
+        "rev": "e7c8e3757e2d6e44c7653d3b8891cbc0a916950a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Necrom4",
+        "repo": "calcium.nvim",
+        "type": "github"
+      }
+    },
     "chaotic": {
       "inputs": {
         "flake-schemas": "flake-schemas",
@@ -1673,6 +1689,7 @@
       "inputs": {
         "beam-nvim": "beam-nvim",
         "blink-cmp-yanky": "blink-cmp-yanky",
+        "calcium": "calcium",
         "claude-fzf-nvim": "claude-fzf-nvim",
         "claudecode-nvim": "claudecode-nvim",
         "close-buffers-nvim": "close-buffers-nvim",
@@ -1687,11 +1704,11 @@
         "sonarlint-nvim": "sonarlint-nvim"
       },
       "locked": {
-        "lastModified": 1765821840,
-        "narHash": "sha256-WKk2XmNqwUDyaoVXsmZLiWDTy99mD19PiT+6OjnTN0U=",
+        "lastModified": 1766730466,
+        "narHash": "sha256-aydfhGAoQMpLwJOLWUgMNLD+nFGXt4uLRyGQoGMN2mk=",
         "owner": "derethil",
         "repo": "nvim-config",
-        "rev": "63bba941a00da16b9e483ed67ba17048c02aeef9",
+        "rev": "73e52e469a578908c83df6b63f4a9e6d942cf176",
         "type": "github"
       },
       "original": {
