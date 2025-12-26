@@ -15,6 +15,11 @@
     run = commands;
     "if" = {window-title-regex-substring = title;};
   };
+
+  mkAppNameRule = appname: commands: {
+    run = commands;
+    "if" = {app-name = appname;};
+  };
 in {
   config = mkIf cfg.enable {
     programs.aerospace.userSettings = {
@@ -35,6 +40,8 @@ in {
         (mkAppRule "md.obsidian" "move-node-to-workspace 4")
         (mkAppRule "com.spotify.client" "move-node-to-workspace 4")
         (mkAppRule "org.gorilladevs.GDLauncher" "move-node-to-workspace 5")
+        (mkAppRule "org.prismlauncher.PrismLauncher" "move-node-to-workspace 5")
+        (mkAppNameRule "java" "move-node-to-workspace 5")
         (mkAppRule "com.smartcodeltd.stremio" "move-node-to-workspace 5")
         (mkAppRule "com.valvesoftware.steam" "move-node-to-workspace 5")
       ];
