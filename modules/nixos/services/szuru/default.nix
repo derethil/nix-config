@@ -57,7 +57,7 @@ in {
         enable = true;
         inherit user group dataDir;
         server = {
-          package = pkgs.unstable.szurubooru.server;
+          package = pkgs.szurubooru.server;
           settings = {
             domain = "http://athena.local:${toString cfg.port}";
             delete_source_files = "yes";
@@ -68,7 +68,7 @@ in {
           passwordFile = config.sops.secrets."${szuruSecretPath}/database_password".path;
         };
         client = {
-          package = pkgs.unstable.szurubooru.client;
+          package = pkgs.szurubooru.client;
         };
       };
 
@@ -97,7 +97,7 @@ in {
             };
             "/" = {
               tryFiles = "$uri /index.htm";
-              root = "${pkgs.unstable.szurubooru.client}";
+              root = "${pkgs.szurubooru.client}";
             };
           };
         };
