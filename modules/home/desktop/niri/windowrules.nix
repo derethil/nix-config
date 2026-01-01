@@ -76,7 +76,7 @@ in {
       (defaultWorkspaceRule ".*[mM]inecraft.*" 4)
       (defaultWorkspaceRule "^org.vinegarhq.Sober$" 4)
 
-      (defaultWorkspaceRule ".*Spotify.*" 5)
+      (defaultWorkspaceRule ".*[sS]potify.*" 5)
       (defaultWorkspaceRule ".*stremio.*" 5)
 
       # Floating Windows
