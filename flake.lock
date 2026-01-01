@@ -298,6 +298,22 @@
         "type": "github"
       }
     },
+    "dms-lucyfire-plugins": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1766773525,
+        "narHash": "sha256-NY/yGH0/iSa5ym+pwxs5A9nPw/nqIMmLsiLw/+UtXLc=",
+        "owner": "lucyfire",
+        "repo": "dms-plugins",
+        "rev": "b9b5b28ed868e06706d3f24c694bb79e6c8197c5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lucyfire",
+        "repo": "dms-plugins",
+        "type": "github"
+      }
+    },
     "dms-official-plugins": {
       "flake": false,
       "locked": {
@@ -1891,6 +1907,7 @@
         "dgop": "dgop",
         "dms-calculator": "dms-calculator",
         "dms-emoji-launcher": "dms-emoji-launcher",
+        "dms-lucyfire-plugins": "dms-lucyfire-plugins",
         "dms-official-plugins": "dms-official-plugins",
         "dms-power-usage": "dms-power-usage",
         "firefox-addons": "firefox-addons",

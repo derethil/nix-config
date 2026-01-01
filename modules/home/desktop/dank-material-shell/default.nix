@@ -22,7 +22,7 @@ in {
   ];
 
   config = mkIf cfg.enable {
-    programs.dankMaterialShell = {
+    programs.dank-material-shell = {
       enable = true;
       systemd = {
         enable = true;

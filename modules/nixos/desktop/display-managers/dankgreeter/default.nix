@@ -13,7 +13,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    programs.dankMaterialShell.greeter = {
+    programs.dank-material-shell.greeter = {
       enable = true;
       configHome = config.glace.user.home;
       quickshell.package = pkgs.inputs.quickshell.default;
