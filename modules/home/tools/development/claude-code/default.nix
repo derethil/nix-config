@@ -13,8 +13,10 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = builtins.attrValues {
-      inherit (pkgs) claude-code;
+    programs.claude-code = {
+      enable = true;
+      package = pkgs.claude-code;
+      commandsDir = ./commands;
     };
   };
 }
