@@ -60,6 +60,7 @@ in {
       };
       nix = {
         manix = enabled;
+        nix-inspect = enabled;
         nix-index = enabled;
         home-manager = enabled;
         cachix = enabled;
