@@ -2,14 +2,15 @@
   lib,
   config,
   pkgs,
+  namespace,
   ...
 }: let
   inherit (lib) mkIf;
   inherit (lib.glace) mkBoolOpt;
-  cfg = config.glace.services.usbmuxd;
+  cfg = config.glace.services.sideloading;
 in {
-  options.glace.services.usbmuxd = {
-    enable = mkBoolOpt false "Whether to enable usbmuxd.";
+  options.glace.services.sideloading = {
+    enable = mkBoolOpt false "Whether to enable iOS sideloading tools.";
   };
 
   config = mkIf cfg.enable {
@@ -20,6 +21,7 @@ in {
 
     environment.systemPackages = [
       pkgs.libimobiledevice
+      pkgs.${namespace}.iloader
     ];
   };
 }
