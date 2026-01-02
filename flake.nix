@@ -64,6 +64,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-your-shell = {
+      url = "github:MercuryTechnologies/nix-your-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Secrets
 
     sops-nix = {
@@ -212,6 +217,7 @@
     overlays = with inputs; [
       niri.overlays.niri
       firefox-addons.overlays.default
+      nix-your-shell.overlays.default
     ];
 
     systems.modules.darwin = with inputs;
