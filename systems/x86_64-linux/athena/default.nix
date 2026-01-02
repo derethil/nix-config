@@ -44,6 +44,7 @@ in {
       flatpak = enabled;
       locate = enabled;
       szuru = enabled;
+      usbmuxd = enabled;
     };
     system = {
       impermanence = enabled;
