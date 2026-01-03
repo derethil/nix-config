@@ -160,7 +160,6 @@
     dank-material-shell = {
       url = "github:AvengeMedia/DankMaterialShell";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.dgop.follows = "dgop";
     };
     dms-official-plugins = {
       url = "github:AvengeMedia/dms-plugins";
