@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  inherit (lib) mkIf mkMerge types;
+  inherit (lib) mkIf mkMerge types mkForce;
   inherit (lib.glace) mkBoolOpt mkOpt;
   cfg = config.glace.hardware.networking;
 in {
@@ -25,6 +25,9 @@ in {
         dhcp = "internal";
       };
     };
+
+    # we don't want to wait for network on boot, takes ~5s extra
+    systemd.services.NetworkManager-wait-online.enable = mkForce false;
 
     glace.user.extraGroups = ["networkmanager"];
 
