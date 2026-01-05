@@ -36,6 +36,11 @@ in {
       capSysNice = false; # See https://github.com/NixOS/nixpkgs/issues/351516
     };
 
+    environment.systemPackages = [
+      pkgs.dotnetCorePackages.sdk_8_0-bin
+      pkgs.fna3d
+    ];
+
     services.ananicy = {
       enable = true;
       package = pkgs.ananicy-cpp;
