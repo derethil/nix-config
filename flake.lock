@@ -263,83 +263,23 @@
         "type": "github"
       }
     },
-    "dms-calculator": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1761571803,
-        "narHash": "sha256-Vq+E2F2Ym5JdzjpCusRMDXd6uuAhhjAehyD/tO3omdY=",
-        "owner": "rochacbruno",
-        "repo": "DankCalculator",
-        "rev": "de6dbd59b7630e897a50e107f704c1cd4a131128",
-        "type": "github"
+    "dms-plugin-registry": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
-      "original": {
-        "owner": "rochacbruno",
-        "repo": "DankCalculator",
-        "type": "github"
-      }
-    },
-    "dms-emoji-launcher": {
-      "flake": false,
       "locked": {
-        "lastModified": 1762727274,
-        "narHash": "sha256-aub5pXRMlMs7dxiv5P+/Rz/dA4weojr+SGZAItmbOvo=",
-        "owner": "devnullvoid",
-        "repo": "dms-emoji-launcher",
-        "rev": "2951ec7f823c983c11b6b231403581a386a7c9f6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "devnullvoid",
-        "repo": "dms-emoji-launcher",
-        "type": "github"
-      }
-    },
-    "dms-lucyfire-plugins": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1767380942,
-        "narHash": "sha256-eChaEjlfdzA6LXN2n8BaP11Gm0CJ20I9KoVhCpQf/yo=",
-        "owner": "lucyfire",
-        "repo": "dms-plugins",
-        "rev": "09348b5caae704277898e73e91adfcd72ff1da4e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "lucyfire",
-        "repo": "dms-plugins",
-        "type": "github"
-      }
-    },
-    "dms-official-plugins": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1766092383,
-        "narHash": "sha256-0RXRgUXXoX+C0q+drsShjx2rCTdmqFzOCR/1rGB/W2E=",
+        "lastModified": 1767712051,
+        "narHash": "sha256-q9RHDaX1EPc2XYZf/IYfYsfLAOK9YGo4O/BuNw2Y4w0=",
         "owner": "AvengeMedia",
-        "repo": "dms-plugins",
-        "rev": "8fa7c5286171c66a209dd74e9a47d6e72ccfdad6",
+        "repo": "dms-plugin-registry",
+        "rev": "1e63e09b3242725e83418d07ca8157d169742b7c",
         "type": "github"
       },
       "original": {
         "owner": "AvengeMedia",
-        "repo": "dms-plugins",
-        "type": "github"
-      }
-    },
-    "dms-power-usage": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1766564307,
-        "narHash": "sha256-9lMWVCiAW+0fAZD4dXGhE+6f8d1/4DHejfUumfoHY2s=",
-        "owner": "Daniel-42-z",
-        "repo": "dms-power-usage",
-        "rev": "04b7da69b98be23d6f6bbc0430461680b43809e0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Daniel-42-z",
-        "repo": "dms-power-usage",
+        "repo": "dms-plugin-registry",
         "type": "github"
       }
     },
@@ -1902,11 +1842,7 @@
         "dank-material-shell": "dank-material-shell",
         "darwin": "darwin",
         "dgop": "dgop",
-        "dms-calculator": "dms-calculator",
-        "dms-emoji-launcher": "dms-emoji-launcher",
-        "dms-lucyfire-plugins": "dms-lucyfire-plugins",
-        "dms-official-plugins": "dms-official-plugins",
-        "dms-power-usage": "dms-power-usage",
+        "dms-plugin-registry": "dms-plugin-registry",
         "firefox-addons": "firefox-addons",
         "home-manager": "home-manager_2",
         "home-manager-unstable": "home-manager-unstable",

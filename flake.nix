@@ -153,33 +153,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    dgop = {
-      url = "github:AvengeMedia/dgop";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     dank-material-shell = {
       url = "github:AvengeMedia/DankMaterialShell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    dms-official-plugins = {
-      url = "github:AvengeMedia/dms-plugins";
-      flake = false;
+    dgop = {
+      url = "github:AvengeMedia/dgop";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
-    dms-calculator = {
-      url = "github:rochacbruno/DankCalculator";
-      flake = false;
-    };
-    dms-power-usage = {
-      url = "github:Daniel-42-z/dms-power-usage";
-      flake = false;
-    };
-    dms-emoji-launcher = {
-      url = "github:devnullvoid/dms-emoji-launcher";
-      flake = false;
-    };
-    dms-lucyfire-plugins = {
-      url = "github:lucyfire/dms-plugins";
-      flake = false;
+    dms-plugin-registry = {
+      url = "github:AvengeMedia/dms-plugin-registry";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     khal-notify = {
@@ -256,6 +240,7 @@
         # Applications
         nvim-config.homeManagerModules.nvim-config
         dank-material-shell.homeModules.dank-material-shell
+        dms-plugin-registry.homeModules.default
         niri.homeModules.niri
         # Common
         common-modules

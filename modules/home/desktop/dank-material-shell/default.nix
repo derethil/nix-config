@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  inputs,
   pkgs,
   ...
 }: let
@@ -40,10 +39,12 @@ in {
 
       quickshell.package = pkgs.inputs.quickshell.default;
 
-      plugins = with inputs; {
-        DankPomodoroTimer.src = "${dms-official-plugins}/DankPomodoroTimer";
-        DankBatteryAlerts.src = "${dms-official-plugins}/DankBatteryAlerts";
-        AlarmClock.src = "${dms-lucyfire-plugins}/alarmClock";
+      plugins = {
+        alarmClock.enable = true;
+        powerUsagePlugin.enable = true;
+        dankPomodoroTimer.enable = true;
+        dankBatteryAlerts.enable = true;
+        webSearch.enable = true;
       };
     };
 
