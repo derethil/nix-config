@@ -10,7 +10,7 @@
   pluginCfg = config.glace.cli.yazi.plugins.bypass;
 in {
   options.glace.cli.yazi.plugins.bypass = {
-    enable = mkBoolOpt true "Whether to enable bypass plugin for yazi file manager.";
+    enable = mkBoolOpt false "Whether to enable bypass plugin for yazi file manager.";
   };
 
   config = mkIf (cfg.enable && pluginCfg.enable) {
