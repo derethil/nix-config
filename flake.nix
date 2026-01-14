@@ -236,7 +236,6 @@
         # Nix Utils
         sops-nix.homeManagerModules.sops
         mac-app-util.homeManagerModules.default
-        impermanence.homeManagerModules.impermanence
         nix-index-database.homeModules.nix-index
         # Applications
         nvim-config.homeManagerModules.nvim-config
