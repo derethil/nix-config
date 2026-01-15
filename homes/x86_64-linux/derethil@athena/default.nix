@@ -24,6 +24,7 @@ in {
         gdlauncher = disabled;
         prismlauncher = enabled;
         heroic = disabled;
+        melonloader = enabled;
         r2modman = enabled;
       };
       social = {

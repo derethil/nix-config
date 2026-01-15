@@ -1,0 +1,13 @@
+diff --git a/MelonLoader.Installer/Updater.cs b/MelonLoader.Installer/Updater.cs
+index abcdefg..1234567 100644
+--- a/MelonLoader.Installer/Updater.cs
++++ b/MelonLoader.Installer/Updater.cs
+@@ -15,6 +15,10 @@ public static partial class Updater
+     public static async Task<Task?> UpdateIfPossible()
+     {
++        // Disable auto-update for Nix package
++        State = UpdateState.AlreadyChecked;
++        return null;
++
+         if (State != UpdateState.None)
+             return null;
