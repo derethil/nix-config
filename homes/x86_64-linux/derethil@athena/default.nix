@@ -79,6 +79,7 @@ in {
     };
     services = {
       openssh = enabled;
+      easyeffects = enabled;
     };
     cli = {
       fish = enabled;
