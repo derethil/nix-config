@@ -45,6 +45,7 @@ in {
         dankPomodoroTimer.enable = true;
         dankBatteryAlerts.enable = true;
         webSearch.enable = true;
+        easyEffects.enable = config.glace.services.easyeffects.enable;
       };
     };
 
