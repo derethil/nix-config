@@ -16,6 +16,7 @@ in {
       bruno = enabled;
       vlc = enabled;
       qalculate = enabled;
+      pinta = enabled;
       browsers = {
         firefox = enabled;
         chromium = enabled;
