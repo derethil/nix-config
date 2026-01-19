@@ -1,11 +1,13 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: let
-  inherit (lib) mkIf mkAfter;
+  inherit (lib) mkIf mkAfter getExe getExe';
   inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.apps.terminals.foot;
+  terminalsCfg = config.glace.apps.terminals;
   monoFont = config.glace.system.fonts.default.monospace;
 in {
   options.glace.apps.terminals.foot = {
@@ -13,9 +15,16 @@ in {
   };
 
   config = mkIf cfg.enable {
-    glace.desktop.xdg-terminal-exec = {
-      enable = true;
-      fallbacks = mkAfter ["foot.desktop"];
+    glace = {
+      desktop.xdg-terminal-exec = {
+        enable = true;
+        fallbacks = mkAfter ["foot.desktop"];
+      };
+
+      apps.terminals.commands = mkIf (terminalsCfg.default == "foot") {
+        base = ["${getExe' pkgs.foot "footclient"}"];
+        withTmux = ["${getExe' pkgs.foot "footclient"}" "${getExe pkgs.tmux}" "new-session" "-As" "base"];
+      };
     };
 
     programs.foot = {

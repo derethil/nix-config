@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   lib,
   pkgs,
   ...
@@ -55,14 +54,9 @@ in {
           ])
 
           # Application Shortcuts
-          (optionals config.glace.apps.terminals.foot.enable [
-            "$mod, RETURN, exec, ${pkgs.foot}/bin/footclient tmux new-session -As base"
-            "$mod SHIFT, RETURN, exec, ${pkgs.foot}/bin/footclient"
-            "$mod SHIFT CONTROL, RETURN, exec, ${pkgs.foot}/bin/foot"
-          ])
-          (optionals (!config.glace.apps.terminals.foot.enable && config.glace.apps.terminals.alacritty.enable) [
-            "$mod, RETURN, exec, alacritty -e 'tmux new-session -As base'"
-            "$mod SHIFT, RETURN, exec, alacritty"
+          (optionals (config.glace.apps.terminals.default != null) [
+            "$mod, RETURN, exec, ${lib.concatStringsSep " " config.glace.apps.terminals.commands.withTmux}"
+            "$mod SHIFT, RETURN, exec, ${lib.concatStringsSep " " config.glace.apps.terminals.commands.base}"
           ])
 
           # Window Commands

@@ -7,6 +7,7 @@ in {
     };
     apps = {
       terminals = {
+        default = "foot";
         foot = enabled;
         kitty = enabled;
       };

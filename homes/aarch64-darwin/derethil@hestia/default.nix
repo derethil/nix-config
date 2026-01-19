@@ -8,6 +8,7 @@ in {
     };
     apps = {
       terminals = {
+        default = "alacritty";
         alacritty = enabled;
       };
       browsers = {

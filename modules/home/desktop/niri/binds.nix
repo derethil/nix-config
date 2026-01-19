@@ -1,10 +1,9 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }: let
-  inherit (lib) mkIf mkMerge getExe getExe' flatten;
+  inherit (lib) mkIf mkMerge;
   cfg = config.glace.desktop.niri;
 
   mkWorkspaceBinds' = mod: action: extraArgs:
@@ -168,33 +167,17 @@ in {
         })
 
         # Application Shortcuts
-        (mkIf config.glace.apps.terminals.foot.enable (with pkgs; {
+        (mkIf (config.glace.apps.terminals.default != null) {
           "Mod+Return" =
             mkAppKeybind
             "Open Terminal (tmux)"
-            (flatten ["${getExe' foot "footclient"}" (getExe tmux) "new-session" "-As" "base"]);
+            config.glace.apps.terminals.commands.withTmux;
 
           "Mod+Shift+Return" =
             mkAppKeybind
             "Open Terminal"
-            ["${getExe' foot "footclient"}"];
-
-          "Mod+Ctrl+Shift+Return" =
-            mkAppKeybind
-            "Open Terminal (standalone)"
-            ["${getExe foot}"];
-        }))
-        (mkIf (!config.glace.apps.terminals.foot.enable && config.glace.apps.terminals.alacritty.enable) (with pkgs; {
-          "Mod+Return" =
-            mkAppKeybind
-            "Open Terminal (tmux)"
-            (flatten ["${getExe alacritty}" "-e" (getExe tmux) "new-session" "-As" "base"]);
-
-          "Mod+Shift+Return" =
-            mkAppKeybind
-            "Open Terminal"
-            ["${getExe alacritty}"];
-        }))
+            config.glace.apps.terminals.commands.base;
+        })
       ];
 
     glace.cli.aliases = {
