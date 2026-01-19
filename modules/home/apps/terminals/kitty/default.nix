@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf mkAfter getExe;
+  inherit (lib) mkIf getExe;
   inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.apps.terminals.kitty;
   terminalsCfg = config.glace.apps.terminals;
@@ -15,13 +15,9 @@ in {
   };
 
   config = mkIf cfg.enable {
-    glace = {
-      desktop.xdg-terminal-exec = {
-        enable = true;
-        fallbacks = mkAfter ["kitty.desktop"];
-      };
-
-      apps.terminals.commands = mkIf (terminalsCfg.default == "kitty") {
+    glace.apps.terminals = {
+      desktopFiles.kitty = "kitty.desktop";
+      commands = mkIf (terminalsCfg.default == "kitty") {
         base = ["${getExe pkgs.kitty}"];
         withTmux = ["${getExe pkgs.kitty}" "-e" "${getExe pkgs.tmux}" "new-session" "-As" "base"];
       };
