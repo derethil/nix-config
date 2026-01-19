@@ -7,7 +7,9 @@ in {
       userdirs = enabled;
     };
     apps = {
-      alacritty = enabled;
+      terminals = {
+        alacritty = enabled;
+      };
       browsers = {
         firefox = enabled;
       };

@@ -6,9 +6,10 @@ in {
       userdirs = enabled;
     };
     apps = {
-      foot = enabled;
-      kitty = enabled;
-      gtk-icon-browser = enabled;
+      terminals = {
+        foot = enabled;
+        kitty = enabled;
+      };
       stremio = enabled;
       obs = enabled;
       obsidian = enabled;

@@ -5,10 +5,10 @@
 }: let
   inherit (lib) mkIf mkAfter;
   inherit (lib.glace) mkBoolOpt;
-  cfg = config.glace.apps.kitty;
+  cfg = config.glace.apps.terminals.kitty;
   monoFont = config.glace.system.fonts.default.monospace;
 in {
-  options.glace.apps.kitty = {
+  options.glace.apps.terminals.kitty = {
     enable = mkBoolOpt false "Whether to enable the Kitty terminal.";
   };
 

@@ -168,7 +168,7 @@ in {
         })
 
         # Application Shortcuts
-        (mkIf config.glace.apps.foot.enable (with pkgs; {
+        (mkIf config.glace.apps.terminals.foot.enable (with pkgs; {
           "Mod+Return" =
             mkAppKeybind
             "Open Terminal (tmux)"
@@ -184,7 +184,7 @@ in {
             "Open Terminal (standalone)"
             ["${getExe foot}"];
         }))
-        (mkIf (!config.glace.apps.foot.enable && config.glace.apps.alacritty.enable) (with pkgs; {
+        (mkIf (!config.glace.apps.terminals.foot.enable && config.glace.apps.terminals.alacritty.enable) (with pkgs; {
           "Mod+Return" =
             mkAppKeybind
             "Open Terminal (tmux)"

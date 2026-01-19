@@ -5,10 +5,10 @@
 }: let
   inherit (lib) mkIf mkAfter;
   inherit (lib.glace) mkBoolOpt;
-  cfg = config.glace.apps.foot;
+  cfg = config.glace.apps.terminals.foot;
   monoFont = config.glace.system.fonts.default.monospace;
 in {
-  options.glace.apps.foot = {
+  options.glace.apps.terminals.foot = {
     enable = mkBoolOpt false "Whether to enable the Foot terminal.";
   };
 
