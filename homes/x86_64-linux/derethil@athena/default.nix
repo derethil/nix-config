@@ -43,7 +43,6 @@ in {
       xdg = enabled;
       addons = {
         wlsunset = enabled;
-        cliphist = enabled;
         gtk = enabled;
         wallpapers = enabled;
       };
