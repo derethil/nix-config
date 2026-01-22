@@ -31,11 +31,13 @@ in {
         # TODO:: dgop is only on unstable branch, this is unnecessary once it is on stable
         package = pkgs.inputs.dgop.default;
       };
-      enableSystemMonitoring = true;
       enableVPN = false;
+
+      enableSystemMonitoring = true;
       enableDynamicTheming = true;
       enableAudioWavelength = true;
       enableCalendarEvents = true;
+      enableClipboardPaste = true;
 
       quickshell.package = pkgs.inputs.quickshell.default;
 
