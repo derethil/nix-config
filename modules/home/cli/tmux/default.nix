@@ -4,7 +4,7 @@
   lib,
   ...
 }: let
-  inherit (lib) mkIf types getExe;
+  inherit (lib) mkIf types getExe getExe';
   inherit (lib.glace) mkBoolOpt mkOpt;
   cfg = config.glace.cli.tmux;
 
@@ -60,6 +60,24 @@ in {
   };
 
   config = mkIf cfg.enable {
+    systemd.user.services.tmux = mkIf (!pkgs.stdenv.isDarwin) {
+      Unit = {
+        Description = "tmux server";
+        Documentation = "man:tmux(1)";
+        After = ["graphical-session.target"];
+        PartOf = ["graphical-session.target"];
+      };
+      Service = {
+        Type = "forking";
+        Restart = "on-failure";
+        ExecStart = "${getExe' config.programs.tmux.package "tmux"} start-server";
+        ExecStop = "${getExe' config.programs.tmux.package "tmux"} kill-server";
+      };
+      Install = {
+        WantedBy = ["graphical-session.target"];
+      };
+    };
+
     programs.tmux = {
       package = pkgs.glace.tmux-wrapper.override {inherit config lib;};
       enable = true;
