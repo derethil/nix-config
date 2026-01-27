@@ -182,7 +182,7 @@ in {
             set -g @theme_custom_theme_dir "${themes}"
             set -g @theme_custom_plugin_dir "${modules}"
             set -g @theme_flavour "gruvbox-material"
-            set -s status-interval 1
+            set -g status-interval 1
 
             set -g @theme_window_right_separator "█ "
             set -g @theme_window_number_position "right"
