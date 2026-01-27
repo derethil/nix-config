@@ -45,6 +45,7 @@ in {
       locate = enabled;
       szuru = enabled;
       sideloading = enabled;
+      gnome-keyring = enabled;
     };
     system = {
       impermanence = enabled;

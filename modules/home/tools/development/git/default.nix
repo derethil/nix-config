@@ -4,8 +4,8 @@
   config,
   ...
 }: let
-  inherit (lib) mkIf;
-  inherit (lib.glace) mkBoolOpt;
+  inherit (lib) mkIf types;
+  inherit (lib.glace) mkBoolOpt mkOpt;
   cfg = config.glace.tools.development.git;
 
   # git commit --amend, but for older commits
@@ -100,6 +100,7 @@
 in {
   options.glace.tools.development.git = {
     enable = mkBoolOpt true "Whether to enable Git tool.";
+    package = mkOpt types.package (pkgs.git.override {withLibsecret = true;}) "Git package to use.";
   };
 
   config = mkIf cfg.enable {
@@ -112,21 +113,33 @@ in {
     ];
     programs.git = {
       enable = true;
-      package = pkgs.git;
+      package = cfg.package;
       lfs.enable = true;
       settings = {
-        user.name = "Jaren Glenn";
-        user.email = lib.mkDefault "jarenglenn@gmail.com";
         alias = aliases;
-        init.defaultBranch = "main";
-        core.editor = "nvim";
-        core.hooksPath = ".githooks";
-        credential.helper =
-          if pkgs.stdenv.isDarwin
-          then "osxkeychain"
-          else "cache --timeout=3600";
-        push.autoSetupremote = true;
-        pull.ff = "only";
+        user = {
+          name = "Jaren Glenn";
+          email = lib.mkDefault "jarenglenn@gmail.com";
+        };
+        init = {
+          defaultBranch = "main";
+        };
+        core = {
+          editor = "nvim";
+          hooksPath = ".githooks";
+        };
+        credential = {
+          helper =
+            if pkgs.stdenv.isDarwin
+            then "osxkeychain"
+            else "libsecret";
+        };
+        push = {
+          autoSetupremote = true;
+        };
+        pull = {
+          ff = "only";
+        };
       };
       includes = [
         {
