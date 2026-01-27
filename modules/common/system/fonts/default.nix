@@ -50,6 +50,7 @@ in {
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
+      nerd-fonts.gohufont
     ];
   };
 }
