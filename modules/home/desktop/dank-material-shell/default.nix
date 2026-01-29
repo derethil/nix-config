@@ -7,7 +7,7 @@
   inherit (lib) mkIf;
   inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.desktop.dank-material-shell;
-  settingsPath = "${config.home.homeDirectory}/.config/nix-config/modules/home/desktop/dank-material-shell/settings";
+  settingsPath = "${config.glace.flakeRoot}/modules/home/desktop/dank-material-shell/settings";
 in {
   options.glace.desktop.dank-material-shell = {
     enable = mkBoolOpt false "Whether to enable Dank Material Shell.";
