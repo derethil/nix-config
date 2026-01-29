@@ -7,6 +7,7 @@
   inherit (lib) mkIf;
   inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.desktop.dank-material-shell;
+  settingsPath = "${config.home.homeDirectory}/.config/nix-config/modules/home/desktop/dank-material-shell/settings";
 in {
   options.glace.desktop.dank-material-shell = {
     enable = mkBoolOpt false "Whether to enable Dank Material Shell.";
@@ -50,6 +51,11 @@ in {
         easyEffects.enable = config.glace.services.easyeffects.enable;
       };
     };
+
+    xdg.configFile."DankMaterialShell/settings.json".source = config.lib.file.mkOutOfStoreSymlink "${settingsPath}/settings.json";
+    xdg.configFile."DankMaterialShell/clsettings.json".source = config.lib.file.mkOutOfStoreSymlink "${settingsPath}/clsettings.json";
+    xdg.configFile."DankMaterialShell/plugin_settings.json".source = config.lib.file.mkOutOfStoreSymlink "${settingsPath}/plugin_settings.json";
+    xdg.stateFile."DankMaterialShell/session.json".source = config.lib.file.mkOutOfStoreSymlink "${settingsPath}/session.json";
 
     glace.services.calendars = mkIf cfg.calendar.enable {
       enable = true;
