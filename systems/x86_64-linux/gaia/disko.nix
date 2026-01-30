@@ -1,5 +1,5 @@
 let
-  device = "/dev/sda";
+  device = "/dev/nvme0n1";
   bootSize = "2G";
   swapSize = "32G";
   isSSD = true;
