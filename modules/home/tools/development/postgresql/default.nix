@@ -39,24 +39,24 @@ in {
     glace.tools.development.postgresql.servers = mkDefault [
       {
         name = "Vigil [Test] [jarenglenn]";
-        hostSecret = "postgresql/dragonfire/test/host";
+        hostSecret = "services/postgresql/dragonfire/test/host";
         database = "vigil";
         username = "jarenglenn";
-        passwordSecret = "postgresql/dragonfire/test/personal_password";
+        passwordSecret = "services/postgresql/dragonfire/test/personal_password";
       }
       {
         name = "DragonFire [Test] [lambdauser]";
-        hostSecret = "postgresql/dragonfire/test/host";
+        hostSecret = "services/postgresql/dragonfire/test/host";
         database = "dragon_fire";
         username = "lambdauser";
-        passwordSecret = "postgresql/dragonfire/test/system_password";
+        passwordSecret = "services/postgresql/dragonfire/test/system_password";
       }
       {
         name = "Vigil [Test] [lambdauser]";
-        hostSecret = "postgresql/dragonfire/test/host";
+        hostSecret = "services/postgresql/dragonfire/test/host";
         database = "vigil";
         username = "lambdauser";
-        passwordSecret = "postgresql/dragonfire/test/system_password";
+        passwordSecret = "services/postgresql/dragonfire/test/system_password";
       }
     ];
 

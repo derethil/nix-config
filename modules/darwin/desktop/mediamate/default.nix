@@ -14,11 +14,11 @@ in {
   config = mkIf cfg.enable {
     glace.tools.homebrew.casks = ["mediamate"];
 
-    secrets."darwin/mediamate/license_key" = {};
+    secrets."applications/mediamate/license_key" = {};
 
     glace.system.keychain.entries = [
       {
-        secretFile = config.sops.secrets."darwin/mediamate/license_key".path;
+        secretFile = config.sops.secrets."applications/mediamate/license_key".path;
         service = "com.tweety.MediaMate";
         account = "license";
         comment = "MediaMate license key";

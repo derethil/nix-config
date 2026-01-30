@@ -17,8 +17,8 @@ in {
       jira-cli-go
     ];
 
-    secrets."home/tools/jira_cli/api_token" = {};
+    secrets."applications/jira_cli/api_token" = {};
 
-    home.sessionVariables.JIRA_API_TOKEN = "$(${getExe' pkgs.coreutils "cat"} ${config.sops.secrets."home/tools/jira_cli/api_token".path})";
+    home.sessionVariables.JIRA_API_TOKEN = "$(${getExe' pkgs.coreutils "cat"} ${config.sops.secrets."applications/jira_cli/api_token".path})";
   };
 }

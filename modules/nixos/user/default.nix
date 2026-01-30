@@ -18,7 +18,7 @@ in {
   };
 
   config = let
-    passwordPath = "nixos/users/${cfg.name}/hashedPassword";
+    passwordPath = "users/${cfg.name}/hashedPassword";
   in {
     secrets.${passwordPath} = {
       neededForUsers = true;

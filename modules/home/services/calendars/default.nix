@@ -13,7 +13,7 @@ in {
   };
 
   config = let
-    outlookPasswordPath = "home/calendars/outlook/password";
+    outlookPasswordPath = "accounts/calendars/outlook/password";
   in
     mkIf cfg.enable {
       glace.services.davmail.enable = true;

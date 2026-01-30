@@ -15,7 +15,7 @@ in {
   };
 
   config = let
-    szuruSecretPath = "nixos/services/szurubooru";
+    szuruSecretPath = "services/szurubooru";
 
     dataDir = "/var/lib/szurubooru";
 
