@@ -33,6 +33,11 @@
       url = "github:nix-community/impermanence";
     };
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     chaotic = {
       url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     };
@@ -217,6 +222,7 @@
         nix-flatpak.nixosModules.nix-flatpak
         sops-nix.nixosModules.sops
         impermanence.nixosModules.impermanence
+        disko.nixosModules.disko
         nix-gaming.nixosModules.pipewireLowLatency
         nix-gaming.nixosModules.platformOptimizations
         chaotic.nixosModules.nyx-cache
