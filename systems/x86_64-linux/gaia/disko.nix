@@ -4,7 +4,6 @@ let
   swapSize = "32G";
   isSSD = true;
 in {
-  # Override fileSystems to add neededForBoot for impermanence
   fileSystems."/persist".neededForBoot = true;
   fileSystems."/var/log".neededForBoot = true;
   fileSystems."/home".neededForBoot = true; # so sops can retrieve ~/.config/sops/age/keys.txt

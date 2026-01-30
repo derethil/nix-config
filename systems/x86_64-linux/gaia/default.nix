@@ -59,6 +59,7 @@ in {
         kernelParams = {
           fix-xhci-controllers = enabled;
         };
+        ssh = enabled;
       };
     };
     nix = {
