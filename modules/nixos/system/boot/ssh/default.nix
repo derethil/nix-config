@@ -12,12 +12,12 @@ in {
   };
 
   config = mkIf cfg.enable {
-    secrets."users/${config.glace.user.name}/ssh/public_key" = {};
+    secrets."systems/${config.networking.hostName}/ssh/public_key" = {};
 
     boot.initrd.network.ssh = {
       enable = true;
       authorizedKeyFiles = [
-        config.sops.secrets."users/${config.glace.user.name}/ssh/public_key".path
+        config.sops.secrets."systems/${config.networking.hostName}/ssh/public_key".path
       ];
     };
   };

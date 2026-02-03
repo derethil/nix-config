@@ -1,31 +1,31 @@
 {
   config,
   lib,
+  host,
   ...
 }: let
   inherit (lib) mkIf;
   inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.services.openssh;
-  userName = config.home.username;
 in {
   options.glace.services.openssh = {
     enable = mkBoolOpt false "Whether to enable OpenSSH client configuration.";
   };
 
   config = mkIf cfg.enable {
-    secrets."users/${userName}/ssh/private_key" = {};
-    secrets."users/${userName}/ssh/public_key" = {};
+    secrets."systems/${host}/ssh/private_key" = {};
+    secrets."systems/${host}/ssh/public_key" = {};
 
     sops.templates."ssh-private-key" = {
       name = "id_ed25519";
-      content = config.sops.placeholder."users/${userName}/ssh/private_key";
+      content = config.sops.placeholder."systems/${host}/ssh/private_key";
       path = "${config.home.homeDirectory}/.ssh/id_ed25519";
       mode = "0600";
     };
 
     sops.templates."ssh-public-key" = {
       name = "id_ed25519.pub";
-      content = config.sops.placeholder."users/${userName}/ssh/public_key";
+      content = config.sops.placeholder."systems/${host}/ssh/public_key";
       path = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
       mode = "0644";
     };

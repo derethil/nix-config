@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  host,
   ...
 }: let
   inherit (lib) mkIf mkMerge types mkForce;
@@ -24,6 +25,8 @@ in {
         enable = true;
         dhcp = "internal";
       };
+
+      hostName = host;
     };
 
     # we don't want to wait for network on boot, takes ~5s extra
