@@ -1,7 +1,7 @@
 keys:
   - &hestia age1a5qhde7fv4uxp4408yy708xk0ec7gthu2t7p0dmperaghcj7lffq7l0sl4
   - &athena age10hsnvtcqralufks4kxujncn3aqvx0dveddx66vhgv6ksgrwspe2s6eecre
-  - &gaia age1yjzaut8ndg23c0q04m926vc8s02t9mu4ftkmvj5pspppfamaapfsvxnhxa
+  - &gaia age1ea2mmf65wntvkaxmh9nr0acawrw93nqdluthyu9n769ccsc3m99suwjjvr
 
 creation_rules:
   - path_regex: .*secrets\.yaml$

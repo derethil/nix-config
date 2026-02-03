@@ -16,7 +16,7 @@ in {
     sops = {
       age.generateKey = true;
       defaultSopsFile = "${inputs.secrets}/secrets.yaml";
-      validateSopsFiles = false;
+      validateSopsFiles = true;
       secrets = config.secrets;
     };
   };
