@@ -22,30 +22,6 @@
 
 My Nix configurations for NixOS, Nix Darwin, and Home Manager.
 
-## Usage
-
-### Clone this repository to your local machine
-
-```bash
-git clone https://github.com/derethil/nix-config.git ~/.config/nix-config
-cd ~/.config/nix-config
-```
-
-TODO: Installation instructions with disko and nixos-anywhere
-
-### Development Templates
-
-```plaintext
-# Node.js environment
-github:derethil/nix-config#npm
-
-# Node.js + Go environment
-github:derethil/nix-config#dragonarmy-npm-golang
-
-# Uv-managed Python environment
-github:derethil/nix-config#python
-```
-
 ## Features
 
 Here's an overview of what my Nix configuration offers:
@@ -72,6 +48,37 @@ Here's an overview of what my Nix configuration offers:
 
 - **Privacy-Hardened Browsing**: Firefox comes preconfigured with the addons I
   use as well as a host of privacy and security-focused configurations.
+
+## Usage
+
+```bash
+git clone https://github.com/derethil/nix-config.git ~/.config/nix-config
+cd ~/.config/nix-config
+```
+
+### Development Templates
+
+```plaintext
+# Node.js environment
+github:derethil/nix-config#npm
+
+# Node.js + Go environment
+github:derethil/nix-config#dragonarmy-npm-golang
+
+# Uv-managed Python environment
+github:derethil/nix-config#python
+```
+
+## New Machine Installation
+
+1. Create new system flake output with blank `hardware.nix` and modify
+   `disko.nix` if necessary
+1. Boot new machine with official NixOS ISO
+1. Set password for nixos user using `passwd`
+1. Connect the machine to the local network
+1. Modify `disko` device path if necessary
+1. Run the nixos-anywhere-install script with `nix run .#nixos-anywhere-install`
+   and follow instructions
 
 ## System Architecture
 
