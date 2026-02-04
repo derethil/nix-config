@@ -42,7 +42,7 @@
   "nixRun": {
     "enabled": true,
     "cacheTimestamps": {
-      "nixpkgs": 1769655785841
+      "nixpkgs": 1770236937029
     }
   },
   "easyEffects": {
