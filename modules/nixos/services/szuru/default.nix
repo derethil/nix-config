@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  host,
   ...
 }: let
   inherit (lib) mkIf types concatMapStringsSep;
@@ -59,7 +60,7 @@ in {
         server = {
           package = pkgs.szurubooru.server;
           settings = {
-            domain = "http://athena.local:${toString cfg.port}";
+            domain = "http://${host}.local:${toString cfg.port}";
             delete_source_files = "yes";
             secretFile = config.sops.secrets."${szuruSecretPath}/secret".path;
           };
