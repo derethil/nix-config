@@ -30,15 +30,12 @@ in {
       directories = flatten [
         "/var/lib/nixos"
         "/var/lib/systemd/coredump"
+        "/etc/ssh"
         (cfg.extraDirectories)
       ];
 
       files = flatten [
         "/etc/machine-id"
-        "/etc/ssh/ssh_host_ed25519_key"
-        "/etc/ssh/ssh_host_ed25519_key.pub"
-        "/etc/ssh/ssh_host_rsa_key"
-        "/etc/ssh/ssh_host_rsa_key.pub"
         (cfg.extraFiles)
       ];
     };
