@@ -18,7 +18,7 @@
 
   mkAppNameRule = appname: commands: {
     run = commands;
-    "if" = {app-name = appname;};
+    "if" = {app-name-regex-substring = appname;};
   };
 in {
   config = mkIf cfg.enable {
