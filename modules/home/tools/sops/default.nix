@@ -1,10 +1,9 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   config = {
     home.packages = with pkgs; [sops age];
-    sops.age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+    sops.age = {
+      keyFile = "/persist/etc/sops/age/keys.txt";
+      sshKeyPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"];
+    };
   };
 }

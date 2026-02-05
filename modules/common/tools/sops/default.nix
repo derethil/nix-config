@@ -9,12 +9,11 @@
 in {
   options = {
     secrets = mkOpt types.attrs {} "Secrets to manage with SOPS.";
-    keyFile = mkOpt types.str "" "Path to the SOPS age key file.";
   };
 
   config = {
     sops = {
-      age.generateKey = true;
+      age.generateKey = false;
       defaultSopsFile = "${inputs.secrets}/secrets.yaml";
       validateSopsFiles = true;
       secrets = config.secrets;
