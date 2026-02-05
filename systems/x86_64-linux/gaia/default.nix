@@ -30,10 +30,6 @@ in {
       };
     };
     hardware = {
-      nvidia = enabled' {
-        channel = "beta";
-        useUnstable = true;
-      };
       audio = enabled;
       bluetooth = enabled;
       networking = enabled' {
