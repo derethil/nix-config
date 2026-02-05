@@ -25,6 +25,12 @@ jobs:
             system: "x86_64-linux"
             attribute: "config.system.build.toplevel"
 
+          - type: "nixosConfigurations"
+            config: "gaia"
+            system: "x86_64-linux"
+            attribute: "config.system.build.toplevel"
+
+
           # Home Configurations
           - type: "homeConfigurations"
             config: "derethil@hestia"
@@ -33,6 +39,11 @@ jobs:
 
           - type: "homeConfigurations"
             config: "derethil@athena"
+            system: "x86_64-linux"
+            attribute: "activationPackage"
+
+          - type: "homeConfigurations"
+            config: "derethil@gaia"
             system: "x86_64-linux"
             attribute: "activationPackage"
 
