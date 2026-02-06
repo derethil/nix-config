@@ -30,7 +30,6 @@ in {
       directories = flatten [
         "/var/lib/nixos"
         "/var/lib/systemd/coredump"
-        "/etc/ssh"
         (cfg.extraDirectories)
       ];
 

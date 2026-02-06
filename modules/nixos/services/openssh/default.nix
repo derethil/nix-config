@@ -9,13 +9,14 @@ in {
   config = mkIf cfg.enable {
     services.openssh = {
       enable = true;
+      authorizedKeysFiles = cfg.authorizedKeyFiles;
       settings = {
         PasswordAuthentication = false;
         PermitRootLogin = "no";
         KbdInteractiveAuthentication = false;
       };
-      authorizedKeysFiles = cfg.authorizedKeyFiles;
     };
     networking.firewall.allowedTCPPorts = [22];
+    glace.system.impermanence.extraDirectories = ["/etc/ssh"];
   };
 }
