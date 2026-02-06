@@ -37,7 +37,7 @@ in {
       };
     };
     services = {
-      openssh-server = enabled;
+      openssh = enabled;
       flatpak = enabled;
       locate = enabled;
       szuru = enabled;

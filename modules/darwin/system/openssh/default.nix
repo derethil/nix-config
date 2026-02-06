@@ -4,17 +4,17 @@
   ...
 }: let
   inherit (lib) mkIf mkAfter;
-  inherit (lib.glace) mkBoolOpt;
-  cfg = config.glace.system.ssh;
+  cfg = config.glace.services.openssh;
 in {
-  options.glace.system.ssh = {
-    enable = mkBoolOpt false "Whether or not to enable SSH.";
-    remote-login.enable = mkBoolOpt false "Whether to enable Remote Login";
-  };
-
   config = mkIf cfg.enable {
     services.openssh = {
       enable = true;
+      extraConfig = ''
+        PasswordAuthentication no
+        PermitRootLogin no
+        KbdInteractiveAuthentication no
+        AuthorizedKeysFile ${lib.concatStringsSep " " config.glace.services.openssh.authorizedKeyFiles}
+      '';
     };
 
     system.activationScripts.ssh.text = mkAfter ''

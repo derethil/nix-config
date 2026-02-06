@@ -25,12 +25,12 @@ in {
       comma = enabled;
       reset-launch-services = enabled;
     };
+    services = {
+      openssh = enabled;
+    };
     system = {
       fonts = enabled;
       locate = enabled;
-      ssh = enabled' {
-        remote-login = enabled;
-      };
       settings = enabled' {
         dock-apps = [
           {app = "/Users/${config.glace.user.name}/Applications/Home Manager Apps/Alacritty.app";}

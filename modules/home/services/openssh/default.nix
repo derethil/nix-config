@@ -4,14 +4,9 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.services.openssh;
   user = config.glace.user.name;
 in {
-  options.glace.services.openssh = {
-    enable = mkBoolOpt false "Whether to enable OpenSSH client configuration.";
-  };
-
   config = mkIf cfg.enable {
     secrets."users/${user}/ssh/private_key" = {};
     secrets."users/${user}/ssh/public_key" = {};

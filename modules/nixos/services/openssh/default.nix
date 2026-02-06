@@ -4,13 +4,8 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (lib.glace) mkBoolOpt;
-  cfg = config.glace.services.openssh-server;
+  cfg = config.glace.services.openssh;
 in {
-  options.glace.services.openssh-server = {
-    enable = mkBoolOpt false "Whether to enable OpenSSH server.";
-  };
-
   config = mkIf cfg.enable {
     services.openssh = {
       enable = true;
@@ -19,8 +14,8 @@ in {
         PermitRootLogin = "no";
         KbdInteractiveAuthentication = false;
       };
+      authorizedKeysFiles = cfg.authorizedKeyFiles;
     };
-
     networking.firewall.allowedTCPPorts = [22];
   };
 }
