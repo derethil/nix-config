@@ -37,12 +37,13 @@ in {
       };
     };
     services = {
-      openssh = enabled;
-      flatpak = enabled;
+      gnome-keyring = enabled;
       locate = enabled;
+      openssh = enabled;
+      openrgb = enabled;
+      flatpak = enabled;
       szuru = enabled;
       sideloading = enabled;
-      gnome-keyring = enabled;
     };
     system = {
       impermanence = enabled;
