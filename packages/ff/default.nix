@@ -19,15 +19,36 @@ pkgs.writeShellApplication {
   text = ''
     set -euo pipefail
 
+    # Parse options
+    db_path=""
+    while [[ $# -gt 0 ]]; do
+      case $1 in
+        --db|-d)
+          db_path="$2"
+          shift 2
+          ;;
+        *)
+          break
+          ;;
+      esac
+    done
+
     # Check if we have any arguments
     if [ $# -eq 0 ]; then
-      echo "usage: ff <search_pattern>" >&2
+      echo "usage: ff [--db <database_path>] <search_pattern>" >&2
       echo "example: ff '*.conf'" >&2
+      echo "example: ff --db /path/to/db '*.conf'" >&2
       exit 1
     fi
 
+    # Build locate command with optional database path
+    locate_cmd="locate"
+    if [ -n "$db_path" ]; then
+      locate_cmd="locate --database $db_path"
+    fi
+
     # Use locate to find files and pipe to fzf for selection
-    selected_file=$(locate "$@" 2>/dev/null | fzf --prompt="Select file: " --height=50% --border)
+    selected_file=$($locate_cmd "$@" 2>/dev/null | fzf --prompt="Select file: " --height=50% --border)
 
     # Check if user selected a file
     if [ -n "$selected_file" ]; then
