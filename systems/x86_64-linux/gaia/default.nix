@@ -41,6 +41,14 @@ in {
       locate = enabled;
       openssh = enabled;
       openrgb = enabled;
+      coolercontrol = enabled' {
+        it87 = enabled' {
+          mmio = true;
+        };
+        amdgpu = enabled' {
+          ppfeaturemask = "0xfff7ffff";
+        };
+      };
       flatpak = enabled;
       szuru = enabled;
       sideloading = enabled;
@@ -55,7 +63,7 @@ in {
         kernelPackages = pkgs.linuxPackages_cachyos-lto;
         kernelParams = {
           fix-xhci-controllers = enabled;
-          # seems fixes intermittent WiFi card detection issues
+          # seems to fix intermittent WiFi card detection issues
           disable-pcie-aspm = enabled;
         };
         ssh = enabled;
