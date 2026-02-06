@@ -13,7 +13,7 @@
 
   boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "thunderbolt" "usb_storage" "sd_mod" "usbhid"];
   boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-amd"];
+  boot.kernelModules = ["kvm-amd" "ath12k"];
   boot.extraModulePackages = [];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

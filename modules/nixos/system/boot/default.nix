@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf types;
+  inherit (lib) mkIf types flatten;
   inherit (lib.glace) mkBoolOpt mkOpt;
   cfg = config.glace.system.boot;
 in {
@@ -14,6 +14,7 @@ in {
     plymouth.enable = mkBoolOpt false "Whether to enable Plymouth splash screens.";
     kernelParams = {
       fix-xhci-controllers.enable = mkBoolOpt false "Whether to add kernel parameters to fix Intel xHCI USB controller issues on some hardware.";
+      disable-pcie-aspm.enable = mkBoolOpt false "Whether to disable PCIe ASPM.";
     };
   };
 
@@ -34,8 +35,13 @@ in {
 
       kernelPackages = cfg.kernelPackages;
 
-      kernelParams = lib.optionals cfg.kernelParams.fix-xhci-controllers.enable [
-        "xhci_hcd.quirks=64"
+      kernelParams = flatten [
+        (lib.optionals cfg.kernelParams.fix-xhci-controllers.enable [
+          "xhci_hcd.quirks=64"
+        ])
+        (lib.optionals cfg.kernelParams.disable-pcie-aspm.enable [
+          "pcie_aspm=off"
+        ])
       ];
     };
   };

@@ -54,6 +54,8 @@ in {
         kernelPackages = pkgs.linuxPackages_cachyos-lto;
         kernelParams = {
           fix-xhci-controllers = enabled;
+          # seems fixes intermittent WiFi card detection issues
+          disable-pcie-aspm = enabled;
         };
         ssh = enabled;
       };
