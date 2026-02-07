@@ -15,8 +15,9 @@ in {
     programs.starship = {
       enable = true;
       settings = {
+        format = "[╭─](bold blue)$all";
         add_newline = false;
-        aws.disabled = true;
+        aws.disabled = false;
         character = {
           format = "[╰─](bold blue)$symbol ";
           success_symbol = "[λ](bold blue)";
@@ -28,7 +29,7 @@ in {
         };
         cmd_duration.min_time = 1000;
         directory = {
-          format = "[╭─$path]($style) [$read_only]($read_only_style)";
+          format = "[$path]($style) [$read_only]($read_only_style)";
           style = "bold blue";
           read_only = " ";
           read_only_style = "blue";
