@@ -21,5 +21,9 @@ in {
     environment.systemPackages = with pkgs; [
       lm_sensors
     ];
+
+    glace.system.impermanence.extraDirectories = [
+      "/etc/coolercontrol"
+    ];
   };
 }

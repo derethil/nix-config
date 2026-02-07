@@ -21,5 +21,9 @@ in {
     # Enable i2c devices for RAM detection
     boot.kernelModules = ["i2c-dev"];
     boot.kernelParams = ["acpi_enforce_resources=lax"];
+
+    glace.system.impermanence.extraDirectories = [
+      "/var/lib/OpenRGB"
+    ];
   };
 }
