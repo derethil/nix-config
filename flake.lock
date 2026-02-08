@@ -243,26 +243,6 @@
         "type": "github"
       }
     },
-    "dgop": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1770344304,
-        "narHash": "sha256-UHwmWeemiB7menysf0DcTEbh/LAfCmYeznYWI1zKNxY=",
-        "owner": "AvengeMedia",
-        "repo": "dgop",
-        "rev": "e76b8aa90f2dc1e3c36ec36d4a0ed06f4b4fdce6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "AvengeMedia",
-        "repo": "dgop",
-        "type": "github"
-      }
-    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -1902,7 +1882,6 @@
         "chaotic": "chaotic",
         "dank-material-shell": "dank-material-shell",
         "darwin": "darwin",
-        "dgop": "dgop",
         "disko": "disko",
         "dms-plugin-registry": "dms-plugin-registry",
         "firefox-addons": "firefox-addons",
