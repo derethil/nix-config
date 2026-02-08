@@ -29,8 +29,7 @@ in {
         restartIfChanged = true;
       };
       dgop = {
-        # TODO:: dgop is only on unstable branch, this is unnecessary once it is on stable
-        package = pkgs.inputs.dgop.default;
+        package = pkgs.unstable.dgop;
       };
       enableVPN = false;
 
