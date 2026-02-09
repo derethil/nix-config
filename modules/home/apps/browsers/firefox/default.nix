@@ -224,6 +224,9 @@ in {
           "widget.use-xdg-desktop-portal.settings" = 1;
           "widget.use-xdg-desktop-portal.location" = 1;
           "widget.use-xdg-desktop-portal.open-uri" = 1;
+
+          # Make scrollbar bigger (I'm blind lol)
+          "widget.non-native-theme.scrollbar.size.override" = 24;
         };
       };
     };
