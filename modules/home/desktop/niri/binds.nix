@@ -1,9 +1,11 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
-  inherit (lib) mkIf mkMerge;
+  inherit (lib) mkIf mkMerge getExe;
+  inherit (lib.strings) join;
   cfg = config.glace.desktop.niri;
 
   mkWorkspaceBinds' = mod: action: extraArgs:
@@ -34,6 +36,26 @@
       else args;
   in
     action' description (config.lib.niri.actions.spawn command);
+
+  mkMenu = menu: let
+    font = config.glace.system.fonts.default.monospace;
+
+    configFile =
+      builtins.toFile "config.yaml"
+      (lib.generators.toYAML {} {
+        inherit menu;
+        font = "${font.name} ${builtins.toString font.size}";
+        anchor = "center";
+        background = "#282828";
+        color = "#D4BE98";
+        corner_r = 6;
+        border_width = 2;
+        inhibit_compositor_keyboard_shortcuts = true;
+      });
+  in
+    pkgs.writeShellScriptBin "wlr-which-key-menu" ''
+      exec ${lib.getExe pkgs.wlr-which-key} ${configFile}
+    '';
 in {
   config = mkIf cfg.enable {
     programs.niri.settings.binds = with config.lib.niri.actions;
@@ -54,8 +76,41 @@ in {
           # Window Commands
           "Mod+Q".action = close-window;
           "Mod+F".action = fullscreen-window;
-          "Mod+Ctrl+F".action = expand-column-to-available-width;
           "Mod+Shift+F".action = toggle-windowed-fullscreen;
+
+          # Quick Launcher
+          "Mod+D".action = spawn-sh (getExe (mkMenu [
+            {
+              key = "t";
+              desc = "Terminal";
+              cmd = join " " config.glace.apps.terminals.commands.withTmux;
+            }
+            {
+              key = "f";
+              desc = "Firefox";
+              cmd = "firefox";
+            }
+            {
+              key = "m";
+              desc = "Music";
+              cmd = "spotify";
+            }
+            {
+              key = "d";
+              desc = "Discord";
+              cmd = "vesktop";
+            }
+            {
+              key = "c";
+              desc = "Mattermost";
+              cmd = "mattermost-desktop";
+            }
+            {
+              key = "o";
+              desc = "Obsidian";
+              cmd = "obsidian";
+            }
+          ]));
 
           # Floating Windows
           "Mod+Space".action = switch-focus-between-floating-and-tiling;
@@ -82,9 +137,29 @@ in {
           "Mod+Ctrl+L".action = consume-or-expel-window-right;
 
           # Resize Columns
-          "Mod+R".action = switch-preset-column-width;
-          "Mod+Shift+R".action = switch-preset-window-width-back;
           "Mod+S".action = toggle-column-tabbed-display;
+          "Mod+R".action = spawn-sh (getExe (mkMenu [
+            {
+              key = "h";
+              desc = "1/3 width";
+              cmd = "niri msg action set-column-width 33%";
+            }
+            {
+              key = "j";
+              desc = "1/2 width";
+              cmd = "niri msg action set-column-width 50%";
+            }
+            {
+              key = "k";
+              desc = "2/3 width";
+              cmd = "niri msg action set-column-width 67%";
+            }
+            {
+              key = "l";
+              desc = "Full width";
+              cmd = "niri msg action set-column-width 100%";
+            }
+          ]));
 
           # Switch Workspaces
           "Mod+Backspace".action = focus-workspace-previous;

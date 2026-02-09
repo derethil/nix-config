@@ -1,10 +1,9 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }: let
-  inherit (lib) mkIf getExe;
+  inherit (lib) mkIf;
   inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.apps.terminals.kitty;
   terminalsCfg = config.glace.apps.terminals;
@@ -18,8 +17,8 @@ in {
     glace.apps.terminals = {
       desktopFiles.kitty = "kitty.desktop";
       commands = mkIf (terminalsCfg.default == "kitty") {
-        base = ["${getExe pkgs.kitty}"];
-        withTmux = ["${getExe pkgs.kitty}" "-e" "${getExe pkgs.tmux}" "new-session" "-As" "base"];
+        base = ["kitty"];
+        withTmux = ["kitty" "-e" "tmux" "new-session" "-As" "base"];
       };
     };
 

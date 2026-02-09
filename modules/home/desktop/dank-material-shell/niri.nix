@@ -37,7 +37,7 @@ in {
         "Mod+P" = action' "Open Notepad" (spawn-sh "dms ipc call notepad toggle");
         "Mod+X" = action' "Open Power Menu" (spawn-sh "dms ipc call powermenu toggle");
         "Mod+C" = action' "Open Control Center" (spawn-sh "dms ipc call control-center toggle");
-        "Mod+D" = action' "Open Dashboard" (spawn-sh "dms ipc call dash toggle overview");
+        "Mod+E" = action' "Open Dashboard" (spawn-sh "dms ipc call dash toggle overview");
 
         "Mod+Alt+L" = action' "Lock Screen" (spawn-sh "dms ipc call lock lock");
 
