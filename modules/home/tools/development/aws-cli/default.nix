@@ -18,10 +18,6 @@ in {
       package = pkgs.awscli2;
       settings = {
         default = {
-          region = "us-gov-west-1";
-          output = "json";
-        };
-        "profile DragonArmy" = {
           sso_session = "DragonArmy";
           sso_account_id = "284740501404";
           sso_role_name = "DRAGONArmy";
