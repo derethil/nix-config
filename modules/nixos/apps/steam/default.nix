@@ -19,7 +19,7 @@ in {
       extest.enable = false;
       remotePlay.openFirewall = true;
       localNetworkGameTransfers.openFirewall = true;
-      gamescopeSession.enable = true;
+      gamescopeSession.enable = false;
       extraCompatPackages = with pkgs; [
         mangohud
       ];
