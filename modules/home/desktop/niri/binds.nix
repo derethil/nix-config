@@ -140,22 +140,22 @@ in {
           "Mod+S".action = toggle-column-tabbed-display;
           "Mod+R".action = spawn-sh (getExe (mkMenu [
             {
-              key = "h";
+              key = "s";
               desc = "1/3 width";
               cmd = "niri msg action set-column-width 33%";
             }
             {
-              key = "j";
+              key = "d";
               desc = "1/2 width";
               cmd = "niri msg action set-column-width 50%";
             }
             {
-              key = "k";
+              key = "f";
               desc = "2/3 width";
               cmd = "niri msg action set-column-width 67%";
             }
             {
-              key = "l";
+              key = "g";
               desc = "Full width";
               cmd = "niri msg action set-column-width 100%";
             }
