@@ -11,9 +11,14 @@
 in {
   options.glace.apps.browsers.firefox = {
     enable = mkBoolOpt false "Whether to enable Firefox.";
+    defaultBrowser = mkBoolOpt true "Whether to set Firefox as the default browser.";
   };
 
   config = mkIf cfg.enable {
+    home.sessionVariables = mkIf cfg.defaultBrowser {
+      BROWSER = "firefox";
+    };
+
     programs.firefox = {
       enable = true;
       package =
@@ -231,31 +236,24 @@ in {
       };
     };
 
-    xdg.mimeApps.defaultApplications = let
-      formats = [
-        "x-scheme-handler/http"
-        "x-scheme-handler/https"
-        # Documents
-        "text/html"
-        "application/xhtml+xml"
-        "text/xml"
-        "application/xml"
-        "application/pdf"
-        # Images
-        "image/jpeg"
-        "image/jpg"
-        "image/webp"
-        "image/png"
-        "image/gif"
-        "image/svg+xml"
-        "image/bmp"
-        "image/avif"
-      ];
-    in
-      builtins.listToAttrs (map (format: {
-          name = format;
-          value = ["firefox.desktop"];
-        })
-        formats);
+    glace.desktop.xdg.mimeapps.default = lib.glace.mkMimeApps "firefox.desktop" [
+      "x-scheme-handler/http"
+      "x-scheme-handler/https"
+      # Documents
+      "text/html"
+      "application/xhtml+xml"
+      "text/xml"
+      "application/xml"
+      "application/pdf"
+      # Images
+      "image/jpeg"
+      "image/jpg"
+      "image/webp"
+      "image/png"
+      "image/gif"
+      "image/svg+xml"
+      "image/bmp"
+      "image/avif"
+    ];
   };
 }

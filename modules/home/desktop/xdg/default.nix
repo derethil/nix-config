@@ -8,6 +8,10 @@
   inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.desktop.xdg;
 in {
+  imports = [
+    ./mimeapps.nix
+  ];
+
   options.glace.desktop.xdg = {
     enable = mkBoolOpt true "Whether to enable XDG base directory support";
   };
