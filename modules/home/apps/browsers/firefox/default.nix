@@ -231,11 +231,31 @@ in {
       };
     };
 
-    xdg.mimeApps.defaultApplications = {
-      "text/html" = ["firefox.desktop"];
-      "text/xml" = ["firefox.desktop"];
-      "x-scheme-handler/http" = ["firefox.desktop"];
-      "x-scheme-handler/https" = ["firefox.desktop"];
-    };
+    xdg.mimeApps.defaultApplications = let
+      formats = [
+        "x-scheme-handler/http"
+        "x-scheme-handler/https"
+        # Documents
+        "text/html"
+        "application/xhtml+xml"
+        "text/xml"
+        "application/xml"
+        "application/pdf"
+        # Images
+        "image/jpeg"
+        "image/jpg"
+        "image/webp"
+        "image/png"
+        "image/gif"
+        "image/svg+xml"
+        "image/bmp"
+        "image/avif"
+      ];
+    in
+      builtins.listToAttrs (map (format: {
+          name = format;
+          value = ["firefox.desktop"];
+        })
+        formats);
   };
 }
