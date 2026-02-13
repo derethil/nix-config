@@ -24,11 +24,7 @@ in {
         chromium = enabled;
       };
       gaming = {
-        gdlauncher = disabled;
         prismlauncher = enabled;
-        heroic = disabled;
-        melonloader = enabled;
-        r2modman = enabled;
       };
       social = {
         discord = disabled;
