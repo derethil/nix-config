@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: let
   inherit (lib) mkIf types;
@@ -8,7 +9,7 @@
   cfg = config.glace.desktop.xdg.mimeapps;
 in {
   options.glace.desktop.xdg.mimeapps = {
-    enable = mkBoolOpt true "Whether to enable XDG MIME applications support";
+    enable = mkBoolOpt pkgs.stdenv.isLinux "Whether to enable XDG MIME applications support";
 
     default = mkOpt (types.attrsOf (types.listOf types.str)) {} ''
       Default MIME type associations. Format: "mime/type" = ["application.desktop"]
