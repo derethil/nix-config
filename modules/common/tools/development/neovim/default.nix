@@ -43,13 +43,5 @@ in {
         };
       };
     };
-
-    glace.desktop.xdg.mimeapps.default = lib.glace.mkMimeApps "nvim.desktop" [
-      "text/plain"
-      "text/markdown"
-      "application/json"
-      "application/yaml"
-      "application/toml"
-    ];
   };
 }
