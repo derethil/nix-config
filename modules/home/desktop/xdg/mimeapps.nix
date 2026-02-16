@@ -1,11 +1,13 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: let
   inherit (lib) mkIf types;
   inherit (lib.glace) mkBoolOpt mkOpt;
   cfg = config.glace.desktop.xdg.mimeapps;
+  enable = cfg.enable && pkgs.stdenv.isLinux;
 in {
   options.glace.desktop.xdg.mimeapps = {
     enable = mkBoolOpt true "Whether to enable XDG MIME applications support";
@@ -21,7 +23,7 @@ in {
     '';
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf enable {
     assertions = let
       duplicates = lib.filter (
         mime:
