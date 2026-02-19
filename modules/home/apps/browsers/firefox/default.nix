@@ -59,7 +59,7 @@ in {
           extraConfig = default.extraConfig;
           userChrome = default.userChrome;
 
-          extensions.packages = with pkgs.firefox-addons; [
+          extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
             tridactyl
             bitwarden
             darkreader
@@ -151,7 +151,7 @@ in {
 
           bookmarks = {};
 
-          extensions.packages = with pkgs.firefox-addons; [
+          extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
             # Tools
             tridactyl
             bitwarden
