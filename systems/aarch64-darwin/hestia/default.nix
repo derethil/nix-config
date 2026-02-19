@@ -13,7 +13,6 @@ in {
     apps = {
       mattermost = enabled;
       steam = enabled;
-      stremio = enabled;
     };
     desktop = {
       night-shift = enabled;
@@ -41,7 +40,7 @@ in {
           {app = "/Users/${config.glace.user.name}/Applications/Home Manager Apps/Bruno.app";}
           {app = "/Users/${config.glace.user.name}/Applications/Home Manager Apps/Obsidian.app";}
           {app = "/Users/${config.glace.user.name}/Applications/Home Manager Apps/Spotify.app";}
-          {app = "/Applications/Stremio.app";}
+          {app = "/Users/${config.glace.user.name}/Applications/Home Manager Trampolines/Stremio.app";}
           {app = "/Users/${config.glace.user.name}/Applications/Home Manager Apps/PrismLauncher.app";}
           {app = "/Applications/Steam.app";}
         ];

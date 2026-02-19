@@ -25,6 +25,7 @@ in {
       obsidian = enabled;
       spotify = enabled;
       bruno = enabled;
+      stremio = enabled;
       gaming.prismlauncher = enabled;
     };
     desktop = {
