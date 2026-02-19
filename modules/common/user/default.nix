@@ -1,11 +1,16 @@
 {
   lib,
+  pkgs,
   config,
   ...
 }: let
   inherit (lib) types;
   inherit (lib.glace) mkOpt mkBoolOpt;
   cfg = config.glace.user;
+  homePrefix =
+    if pkgs.stdenv.isDarwin
+    then "/Users"
+    else "/home";
 in {
   options.glace.user = with types; {
     name = mkOpt str "derethil" "The name to use for the user account.";
@@ -14,6 +19,6 @@ in {
     uid = mkOpt int 1000 "UID of the user.";
     extraGroups = mkOpt (listOf str) [] "Groups for the user to be assigned.";
     superuser = mkBoolOpt true "Whether the user is a superuser.";
-    home = mkOpt str "/home/${cfg.name}" "Home directory of the user";
+    home = mkOpt str "${homePrefix}/${cfg.name}" "Home directory of the user";
   };
 }
