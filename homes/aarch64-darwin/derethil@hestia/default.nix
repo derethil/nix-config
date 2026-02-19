@@ -1,5 +1,9 @@
-{lib, ...}: let
-  inherit (lib.glace) enabled disabled;
+{
+  lib,
+  pkgs,
+  ...
+}: let
+  inherit (lib.glace) enabled disabled enabled';
 in {
   glace = {
     distro = "darwin";
@@ -36,7 +40,9 @@ in {
       development = {
         devenv = enabled;
         aws-cli = enabled;
-        git = enabled;
+        git = enabled' {
+          package = pkgs.git;
+        };
         jira-cli = enabled;
         neovim = enabled;
         claude-code = enabled;
