@@ -83,8 +83,8 @@
 
     # Applications
 
-    firefox-addons = {
-      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+    nur = {
+      url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -196,7 +196,7 @@
 
     overlays = with inputs; [
       niri.overlays.niri
-      firefox-addons.overlays.default
+      nur.overlays.default
     ];
 
     systems.modules.darwin = with inputs;
