@@ -40,7 +40,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    system.activationScripts.extraActivation.text = mkAfter (
+    system.activationScripts.postActivation.text = mkAfter (
       lib.concatStringsSep "\n" (lib.map mkKeychainScript cfg.entries)
     );
   };
