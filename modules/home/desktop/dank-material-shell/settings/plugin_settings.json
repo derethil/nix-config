@@ -40,7 +40,7 @@
     "trigger": "="
   },
   "nixRun": {
-    "enabled": true,
+    "enabled": false,
     "cacheTimestamps": {
       "nixpkgs": 1770914312034
     }
