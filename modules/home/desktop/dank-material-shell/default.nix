@@ -49,6 +49,7 @@ in {
         webSearch.enable = true;
         easyEffects.enable = config.glace.services.easyeffects.enable;
         niriScreenshot.enable = true;
+        claudeCodeUsage.enable = true;
       };
     };
 

@@ -470,6 +470,10 @@
       ],
       "rightWidgets": [
         {
+          "id": "claudeCodeUsage",
+          "enabled": true
+        },
+        {
           "id": "cpuUsage",
           "enabled": true,
           "minimumWidth": true
@@ -477,12 +481,7 @@
         {
           "id": "memUsage",
           "enabled": true,
-          "minimumWidth": true,
-          "showSwap": false
-        },
-        {
-          "id": "network_speed_monitor",
-          "enabled": true
+          "minimumWidth": true
         },
         {
           "id": "easyEffects",
