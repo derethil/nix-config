@@ -50,5 +50,12 @@
     "enabled": true,
     "currentOutputIndex": 0,
     "currentInputIndex": -1
+  },
+  "niriScreenshot": {
+    "enabled": true
+  },
+  "dms-niri-screenshot": {
+    "mode": "window",
+    "saveToDisk": false
   }
 }

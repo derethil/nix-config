@@ -84,17 +84,7 @@
       "width": 50
     },
     {
-      "id": "brightnessSlider",
-      "enabled": true,
-      "width": 50
-    },
-    {
-      "id": "wifi",
-      "enabled": true,
-      "width": 50
-    },
-    {
-      "id": "bluetooth",
+      "id": "doNotDisturb",
       "enabled": true,
       "width": 50
     },
@@ -109,12 +99,22 @@
       "width": 50
     },
     {
-      "id": "doNotDisturb",
+      "id": "bluetooth",
       "enabled": true,
       "width": 50
     },
     {
-      "id": "idleInhibitor",
+      "id": "wifi",
+      "enabled": true,
+      "width": 50
+    },
+    {
+      "id": "plugin_niriScreenshot",
+      "enabled": true,
+      "width": 50
+    },
+    {
+      "id": "builtin_cups",
       "enabled": true,
       "width": 50
     }
