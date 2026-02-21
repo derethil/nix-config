@@ -9,6 +9,7 @@
   "wallpaperPathDark": "/home/derethil/Pictures/wallpapers/fuji-bird.jpeg",
   "monitorWallpapersLight": {},
   "monitorWallpapersDark": {},
+  "monitorWallpaperFillModes": {},
   "wallpaperTransition": "iris bloom",
   "includedTransitions": [
     "fade",
@@ -37,6 +38,13 @@
   "longitude": 0,
   "nightModeUseIPLocation": true,
   "nightModeLocationProvider": "",
+  "themeModeAutoEnabled": false,
+  "themeModeAutoMode": "time",
+  "themeModeStartHour": 18,
+  "themeModeStartMinute": 0,
+  "themeModeEndHour": 6,
+  "themeModeEndMinute": 0,
+  "themeModeShareGammaSettings": true,
   "weatherLocation": "Denver, Colorado",
   "weatherCoordinates": "39.7392364,-104.9848620",
   "pinnedApps": [
@@ -57,6 +65,7 @@
     "easyeffects",
     "spotify-client"
   ],
+  "trayItemOrder": [],
   "recentColors": [
     "#ff9800",
     "#2196f3",
@@ -79,5 +88,9 @@
   "hiddenApps": [],
   "appOverrides": {},
   "searchAppActions": true,
-  "configVersion": 2
+  "vpnLastConnected": "",
+  "deviceMaxVolumes": {},
+  "hiddenOutputDeviceNames": [],
+  "hiddenInputDeviceNames": [],
+  "configVersion": 3
 }

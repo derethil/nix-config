@@ -33,7 +33,8 @@
   "webSearch": {
     "enabled": true,
     "searchEngines": [],
-    "trigger": "?"
+    "trigger": "?",
+    "disabledEngines": []
   },
   "blankPlugin": {
     "enabled": true,
