@@ -59,6 +59,7 @@
     pt = "push --tags";
     P = "push";
     p = "pull";
+    pr = "pull --rebase";
     pf = "push --force-with-lease";
     rh = "reset --hard";
     b = "branch";
