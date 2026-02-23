@@ -21,8 +21,8 @@ in {
     }
 
     (mkIf hostPlatform.isDarwin {
-      home.activation.disableSpotifyUpdates = lib.hm.dag.entryAfter ["writeBoundary"] ''
-        SPOTIFY_UPDATE_DIR=~/Library/Application\ Support/Spotify/PersistentCache/Update
+      home.activation.disableSpotifyUpdates = config.lib.dag.entryAfter ["writeBoundary"] ''
+        SPOTIFY_UPDATE_DIR="${config.home.homeDirectory}/Library/Application Support/Spotify/PersistentCache/Update"
         if ! /usr/bin/stat -f "%Sf" "$SPOTIFY_UPDATE_DIR" 2> /dev/null | grep -q uchg; then
           rm -rf "$SPOTIFY_UPDATE_DIR"
           mkdir -p "$SPOTIFY_UPDATE_DIR"
