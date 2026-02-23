@@ -32,6 +32,10 @@ in {
     hardware = {
       audio = enabled;
       bluetooth = enabled;
+      radeon = enabled' {
+        mesa.useUnstable = true;
+        ppfeaturemask = "0xfff7ffff";
+      };
       networking = enabled' {
         avahi = enabled;
       };
@@ -44,9 +48,6 @@ in {
       coolercontrol = enabled' {
         it87 = enabled' {
           mmio = true;
-        };
-        amdgpu = enabled' {
-          ppfeaturemask = "0xfff7ffff";
         };
       };
       flatpak = enabled;
