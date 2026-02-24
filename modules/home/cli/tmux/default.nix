@@ -175,6 +175,15 @@ in {
         sensible
         yank
         {
+          plugin = fingers;
+          extraConfig = ''
+            set -g @fingers-key y
+            set -g @fingers-hint-style "fg=green,bold"
+            set -g @fingers-highlight-style "fg=yellow"
+            set -g @fingers-backdrop-style "dim"
+          '';
+        }
+        {
           plugin = pkgs.glace.tmux-power-zoom;
           extraConfig = "";
         }
