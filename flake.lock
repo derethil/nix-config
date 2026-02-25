@@ -526,22 +526,6 @@
         "type": "github"
       }
     },
-    "garbage-day-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1758029670,
-        "narHash": "sha256-qTyc90xCKrhHpqKQTKzhgJ3UlACMqJDWiP1U6L+AsOM=",
-        "owner": "Zeioth",
-        "repo": "garbage-day.nvim",
-        "rev": "9c6abdedc0407ca517745a5c8e34214fc7dafaf4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Zeioth",
-        "repo": "garbage-day.nvim",
-        "type": "github"
-      }
-    },
     "gitignore": {
       "inputs": {
         "nixpkgs": [
@@ -1765,7 +1749,6 @@
         "calcium": "calcium",
         "close-buffers-nvim": "close-buffers-nvim",
         "flake-parts": "flake-parts_4",
-        "garbage-day-nvim": "garbage-day-nvim",
         "gopher-nvim": "gopher-nvim",
         "import-nvim": "import-nvim",
         "json2go": "json2go",
@@ -1776,11 +1759,11 @@
         "nvim-tcss": "nvim-tcss"
       },
       "locked": {
-        "lastModified": 1771904446,
-        "narHash": "sha256-VQklVAmJ5I0z2spPOP8FcZPWiI3i9NHxarq5zpi5jTY=",
+        "lastModified": 1772058946,
+        "narHash": "sha256-JgZGVCTstlwzSjdMscpIw4DTT57xWs/3dOQadh0rGpk=",
         "owner": "derethil",
         "repo": "nvim-config",
-        "rev": "2f3de9c272b7b333fcd28d26b6f813637c42e24d",
+        "rev": "07927df0ee6e74be620c501979f46ff309515352",
         "type": "github"
       },
       "original": {
