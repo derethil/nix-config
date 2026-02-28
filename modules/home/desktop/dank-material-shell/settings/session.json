@@ -92,5 +92,9 @@
   "deviceMaxVolumes": {},
   "hiddenOutputDeviceNames": [],
   "hiddenInputDeviceNames": [],
+  "locale": "",
+  "launcherLastMode": "all",
+  "appDrawerLastMode": "apps",
+  "niriOverviewLastMode": "apps",
   "configVersion": 3
 }
