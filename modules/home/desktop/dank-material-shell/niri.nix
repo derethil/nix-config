@@ -33,7 +33,7 @@ in {
         "Mod+V" = action' "Open Clipboard" (spawn-sh "dms ipc call clipboard toggle");
         "Mod+M" = action' "Open Process List" (spawn-sh "dms ipc call processlist toggle");
         "Mod+N" = action' "Open Notifications" (spawn-sh "dms ipc call notifications toggle");
-        "Mod+Comma" = action' "Open Settings" (spawn-sh "dms ipc call settings toggle");
+        "Mod+Semicolon" = action' "Open Settings" (spawn-sh "dms ipc call settings toggle");
         "Mod+P" = action' "Open Notepad" (spawn-sh "dms ipc call notepad toggle");
         "Mod+X" = action' "Open Power Menu" (spawn-sh "dms ipc call powermenu toggle");
         "Mod+C" = action' "Open Control Center" (spawn-sh "dms ipc call control-center toggle");

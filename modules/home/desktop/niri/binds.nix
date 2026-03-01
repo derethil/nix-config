@@ -118,16 +118,16 @@ in {
           "Mod+MouseForward".action = toggle-window-floating;
 
           # Focus Windows / Columns
-          "Mod+Home".action = focus-column-first;
-          "Mod+End".action = focus-column-last;
+          "Mod+Comma".action = focus-column-first;
+          "Mod+Period".action = focus-column-last;
           "Mod+H".action = focus-column-left;
           "Mod+L".action = focus-column-right;
           "Mod+K".action = focus-window-up;
           "Mod+J".action = focus-window-down;
 
           # Move Windows / Columns within Workspace
-          "Mod+Shift+Home".action = move-column-to-first;
-          "Mod+Shift+End".action = move-column-to-last;
+          "Mod+Shift+Comma".action = move-column-to-first;
+          "Mod+Shift+Period".action = move-column-to-last;
           "Mod+Shift+H".action = move-column-left;
           "Mod+Shift+L".action = move-column-right;
           "Mod+Shift+K".action = move-window-up;
