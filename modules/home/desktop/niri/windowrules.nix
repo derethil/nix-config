@@ -134,7 +134,7 @@ in {
       # Default Column Widths
       (defaultWidthRule "^[Ss]team$" "^[Ss]team$" {proportion = 2. / 3.;})
       (defaultWidthRule' "^Ubisoft Connect" {proportion = 2. / 3.;})
-      (defaultWidthRule' ".*Spotify.*$" {proportion = 2. / 3.;})
+      (defaultWidthRule' ".*[s|S]potify.*$" {proportion = 2. / 3.;})
       (defaultWidthRule' "^org.prismlauncher.PrismLauncher$" {proportion = 2. / 3.;})
     ];
 
