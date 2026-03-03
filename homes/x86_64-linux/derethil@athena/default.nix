@@ -1,5 +1,5 @@
 {lib, ...}: let
-  inherit (lib.glace) enabled disabled;
+  inherit (lib.glace) enabled disabled enabled';
 in {
   glace = {
     user = {
@@ -39,7 +39,9 @@ in {
     desktop = {
       hyprland = disabled;
       niri = enabled;
-      dank-material-shell = enabled;
+      dank-material-shell = enabled' {
+        dsearch = enabled;
+      };
       xdg = enabled;
       addons = {
         wlsunset = enabled;

@@ -167,6 +167,10 @@
       url = "github:AvengeMedia/dms-plugin-registry";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    danksearch = {
+      url = "github:AvengeMedia/danksearch";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     khal-notify = {
       url = "github:martiert/khal_notifications";
@@ -241,9 +245,11 @@
         nix-index-database.homeModules.nix-index
         # Applications
         nvim-config.homeManagerModules.nvim-config
+        niri.homeModules.niri
+        # Dank Material Shell
+        danksearch.homeModules.dsearch
         dank-material-shell.homeModules.dank-material-shell
         dms-plugin-registry.homeModules.default
-        niri.homeModules.niri
         # Common
         common-modules
       ];
