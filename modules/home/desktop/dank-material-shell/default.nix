@@ -43,13 +43,11 @@ in {
 
       plugins = {
         alarmClock.enable = true;
-        powerUsagePlugin.enable = true;
-        dankPomodoroTimer.enable = true;
-        dankBatteryAlerts.enable = true;
         webSearch.enable = true;
         easyEffects.enable = config.glace.services.easyeffects.enable;
-        niriScreenshot.enable = true;
+        niriScreenshot.enable = config.glace.desktop.niri.enable;
         claudeCodeUsage.enable = true;
+        emojiLauncher.enable = true;
       };
     };
 
