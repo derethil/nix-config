@@ -19,7 +19,6 @@ in {
   imports = [
     ./hyprland.nix
     ./niri.nix
-    ./dsearch.nix
   ];
 
   config = mkIf cfg.enable {
