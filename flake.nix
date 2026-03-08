@@ -106,6 +106,11 @@
       flake = false;
     };
 
+    bongocat = {
+      url = "github:saatvik333/wayland-bongocat";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # CLI
 
     tmux-theme = {
@@ -228,6 +233,7 @@
         # Applications
         nvim-config.nixosModules.nvim-config
         dank-material-shell.nixosModules.greeter
+        bongocat.nixosModules.default
         # Common
         common-modules
         system-common-modules
