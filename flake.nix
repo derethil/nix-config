@@ -107,7 +107,7 @@
     };
 
     bongocat = {
-      url = "github:saatvik333/wayland-bongocat";
+      url = "github:derethil/wayland-bongocat/fix/nix-modules";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
