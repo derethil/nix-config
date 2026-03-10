@@ -16,6 +16,7 @@ in {
     binds = {
       defaultAudioBinds = mkBoolOpt true "Whether to enable the default audio control binds that use wpctl.";
       defaultBrightnessBinds = mkBoolOpt true "Whether to enable the default brightness control binds that use brightnessctl.";
+      useSmartWorkspaceBinds = mkBoolOpt true "Whether to use smart workspace navigation that skips empty workspaces.";
     };
     events = {
       defaultLidEvents = mkBoolOpt true "Whether to enable the default lid events.";
@@ -38,6 +39,10 @@ in {
     programs.niri = {
       enable = true;
       package = pkgs.niri-stable;
+    };
+
+    services.niri-smart-workspace = {
+      enable = cfg.binds.useSmartWorkspaceBinds;
     };
   };
 }

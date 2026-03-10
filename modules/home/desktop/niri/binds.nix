@@ -163,14 +163,29 @@ in {
 
           # Switch Workspaces
           "Mod+Backspace".action = focus-workspace-previous;
-          "Mod+BracketLeft".action = focus-workspace-up;
-          "Mod+BracketRight".action = focus-workspace-down;
-          "Mod+WheelScrollUp".action = focus-workspace-up;
-          "Mod+WheelScrollDown".action = focus-workspace-down;
 
           # Overview
           "Alt+Tab".action = toggle-overview;
         }
+
+        # Smart Workspace Navigation
+        (let
+          smart-workspace = getExe pkgs.inputs.niri-smart-workspace.default;
+        in
+          mkIf cfg.binds.useSmartWorkspaceBinds {
+            "Mod+BracketLeft".action = spawn-sh "${smart-workspace} up";
+            "Mod+BracketRight".action = spawn-sh "${smart-workspace} down";
+            "Mod+WheelScrollUp".action = spawn-sh "${smart-workspace} up";
+            "Mod+WheelScrollDown".action = spawn-sh "${smart-workspace} down";
+          })
+
+        # Default Workspace Navigation
+        (mkIf (!cfg.binds.useSmartWorkspaceBinds) {
+          "Mod+BracketLeft".action = focus-workspace-up;
+          "Mod+BracketRight".action = focus-workspace-down;
+          "Mod+WheelScrollUp".action = focus-workspace-up;
+          "Mod+WheelScrollDown".action = focus-workspace-down;
+        })
 
         # Workspace Management
         (mkWorkspaceBinds "Mod" "focus-workspace")

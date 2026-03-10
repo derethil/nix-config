@@ -151,6 +151,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    niri-smart-workspace = {
+      url = "github:derethil/niri-smart-workspace";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Desktop
 
     apple-fonts = {
@@ -250,6 +255,7 @@
         dank-material-shell.homeModules.dank-material-shell
         dms-plugin-registry.homeModules.default
         niri.homeModules.niri
+        niri-smart-workspace.homeManagerModules.default
         # Common
         common-modules
       ];
