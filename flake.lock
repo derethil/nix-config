@@ -1237,6 +1237,22 @@
         "type": "github"
       }
     },
+    "lualine-pretty-path": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1729823982,
+        "narHash": "sha256-Ieho+EruCPW4829+qQ3cdfc+wZQ2CFd16YtcTwUAnKg=",
+        "owner": "bwpge",
+        "repo": "lualine-pretty-path",
+        "rev": "852cb06f3562bced4776a924e56a9e44d0ce634f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bwpge",
+        "repo": "lualine-pretty-path",
+        "type": "github"
+      }
+    },
     "mac-app-util": {
       "inputs": {
         "cl-nix-lite": "cl-nix-lite",
@@ -1875,6 +1891,7 @@
         "gopher-nvim": "gopher-nvim",
         "import-nvim": "import-nvim",
         "json2go": "json2go",
+        "lualine-pretty-path": "lualine-pretty-path",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nixpkgs": "nixpkgs_10",
         "nixpkgs-stable": "nixpkgs-stable_2",
@@ -1882,11 +1899,11 @@
         "nvim-tcss": "nvim-tcss"
       },
       "locked": {
-        "lastModified": 1772577145,
-        "narHash": "sha256-JfwXOPrfEdwX0RpahM9kF8ac/YjUpz6/aySghaA4tPg=",
+        "lastModified": 1773194349,
+        "narHash": "sha256-tixgd/ve35ik9ZLDU33anUQm558R1WgNWR2doEoWZy4=",
         "owner": "derethil",
         "repo": "nvim-config",
-        "rev": "315cd0fb121a85f1caba00777a617b05d46a4686",
+        "rev": "1afc9651320dd79b1e939e03a771b9bbdcf5a760",
         "type": "github"
       },
       "original": {
