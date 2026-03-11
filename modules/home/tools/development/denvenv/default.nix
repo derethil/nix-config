@@ -13,6 +13,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = [pkgs.devenv];
+    home.packages = [pkgs.unstable.devenv];
   };
 }
