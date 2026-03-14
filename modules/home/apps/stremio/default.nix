@@ -13,8 +13,9 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = if pkgs.stdenv.isDarwin
+    home.packages =
+      if pkgs.stdenv.isDarwin
       then [pkgs.glace.stremio]
-      else [pkgs.inputs.nixpkgs-for-stremio.stremio];
+      else [pkgs.stremio-linux-shell];
   };
 }
