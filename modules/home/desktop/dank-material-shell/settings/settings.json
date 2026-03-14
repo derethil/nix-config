@@ -142,6 +142,7 @@
   "showOccupiedWorkspacesOnly": true,
   "reverseScrolling": false,
   "dwlShowAllTags": false,
+  "workspaceActiveAppHighlightEnabled": true,
   "workspaceColorMode": "default",
   "workspaceOccupiedColorMode": "none",
   "workspaceUnfocusedColorMode": "default",
@@ -297,7 +298,11 @@
   "wifiNetworkPins": {
     "preferredWifi": "HP-Print-50-Laserjet"
   },
-  "bluetoothDevicePins": {},
+  "bluetoothDevicePins": {
+    "preferredDevice": [
+      "70:AE:D5:C2:D1:B1"
+    ]
+  },
   "audioInputDevicePins": {},
   "audioOutputDevicePins": {
     "preferredOutput": "bluez_output.80_C3_BA_52_7A_F4.1"
@@ -328,10 +333,22 @@
   "matugenTemplateKcolorscheme": true,
   "matugenTemplateVscode": true,
   "matugenTemplateEmacs": true,
+  "matugenTemplateZed": true,
+  "matugenTemplateNeovimSettings": {
+    "dark": {
+      "baseTheme": "github_dark",
+      "harmony": 0.5
+    },
+    "light": {
+      "baseTheme": "github_light",
+      "harmony": 0.5
+    }
+  },
   "showDock": true,
   "dockAutoHide": true,
   "dockSmartAutoHide": false,
   "dockGroupByApp": true,
+  "dockRestoreSpecialWorkspaceOnClick": false,
   "dockOpenOnOverview": true,
   "dockPosition": 1,
   "dockSpacing": 4,
@@ -401,6 +418,7 @@
       "urgency": "default"
     }
   ],
+  "notificationFocusedMonitor": false,
   "osdAlwaysShowValue": true,
   "osdPosition": 5,
   "osdVolumeEnabled": true,
