@@ -85,16 +85,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1773018348,
+        "lastModified": 1773341573,
         "narHash": "sha256-EnlPUka7S5e5UQ+2QES2H0FZbnqAkMwp5kGg5R4GBMo=",
-        "owner": "derethil",
+        "owner": "saatvik333",
         "repo": "wayland-bongocat",
-        "rev": "e72ccf54b3db099f76269415e19d2bf648b1a8b0",
+        "rev": "a4a064193e3977daede85ebd48a1ed3dbb405322",
         "type": "github"
       },
       "original": {
-        "owner": "derethil",
-        "ref": "fix/nix-modules",
+        "owner": "saatvik333",
         "repo": "wayland-bongocat",
         "type": "github"
       }
