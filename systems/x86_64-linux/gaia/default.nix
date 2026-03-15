@@ -16,6 +16,7 @@ in {
       sober = enabled;
       lutris = disabled;
       faugus-launcher = enabled;
+      bongocat = enabled;
     };
     cli = {
       fish = enabled;
