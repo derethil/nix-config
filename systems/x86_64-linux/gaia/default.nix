@@ -46,6 +46,7 @@ in {
       locate = enabled;
       openssh = enabled;
       openrgb = enabled;
+      lact = enabled;
       coolercontrol = enabled' {
         it87 = enabled' {
           mmio = true;
