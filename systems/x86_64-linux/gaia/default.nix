@@ -45,7 +45,9 @@ in {
       gnome-keyring = enabled;
       locate = enabled;
       openssh = enabled;
-      openrgb = enabled;
+      openrgb = enabled' {
+        startupProfile = "Minimal";
+      };
       lact = enabled;
       coolercontrol = enabled' {
         it87 = enabled' {

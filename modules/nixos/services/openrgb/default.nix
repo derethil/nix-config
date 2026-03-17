@@ -4,18 +4,20 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf;
-  inherit (lib.glace) mkBoolOpt;
+  inherit (lib) mkIf types;
+  inherit (lib.glace) mkBoolOpt mkNullableOpt;
   cfg = config.glace.services.openrgb;
 in {
   options.glace.services.openrgb = {
     enable = mkBoolOpt false "Whether to enable OpenRGB service.";
+    startupProfile = mkNullableOpt types.str null "Startup Profile to load.";
   };
 
   config = mkIf cfg.enable {
     services.hardware.openrgb = {
       enable = true;
       package = pkgs.unstable.openrgb-with-all-plugins;
+      startupProfile = cfg.startupProfile;
     };
 
     # Enable i2c devices for RAM detection
