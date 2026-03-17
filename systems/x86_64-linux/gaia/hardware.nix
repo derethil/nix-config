@@ -16,6 +16,11 @@
   boot.kernelModules = ["kvm-amd" "ath12k"];
   boot.extraModulePackages = [];
 
+  # Force ath12k to load early and with proper power management
+  boot.kernelParams = [
+    "ath12k_pci.mhi_timeout=50"  # Increase MHI timeout for more reliable init
+  ];
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
