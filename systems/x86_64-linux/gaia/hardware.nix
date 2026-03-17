@@ -19,7 +19,13 @@
   # Force ath12k to load early and with proper power management
   boot.kernelParams = [
     "ath12k_pci.mhi_timeout=50"  # Increase MHI timeout for more reliable init
+    "usbcore.autosuspend=-1"     # Disable USB autosuspend for ASMedia controller stability
   ];
+
+  # Keep ASMedia USB controllers powered on to prevent hot-swap failures
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x1b21", ATTR{device}=="0x2425", ATTR{power/control}="on"
+  '';
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
