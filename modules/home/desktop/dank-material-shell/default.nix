@@ -48,6 +48,7 @@ in {
         niriScreenshot.enable = config.glace.desktop.niri.enable;
         claudeCodeUsage.enable = true;
         emojiLauncher.enable = true;
+        hueManager.enable = true;
       };
     };
 
