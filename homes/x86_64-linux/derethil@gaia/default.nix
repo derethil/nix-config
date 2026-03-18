@@ -94,7 +94,7 @@ in {
         {
           name = "Ultrawide";
           primary = true;
-          port = "DP-3";
+          port = "DP-2";
           resolution = {
             width = 3440;
             height = 1440;
