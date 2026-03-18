@@ -55,7 +55,7 @@ in {
       ntsync = enabled;
       boot = enabled' {
         plymouth = enabled;
-        kernelPackages = pkgs.linuxPackages_cachyos-lto;
+        kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
         kernelParams = {
           fix-xhci-controllers = enabled;
         };

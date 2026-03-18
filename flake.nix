@@ -31,8 +31,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    chaotic = {
-      url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    cachyos-kernel = {
+      url = "github:xddxdd/nix-cachyos-kernel/release";
     };
 
     # Darwin
@@ -200,6 +200,7 @@
     overlays = with inputs; [
       niri.overlays.niri
       nur.overlays.default
+      cachyos-kernel.overlays.default
     ];
 
     systems.modules.darwin = with inputs;
@@ -224,9 +225,6 @@
         disko.nixosModules.disko
         nix-gaming.nixosModules.pipewireLowLatency
         nix-gaming.nixosModules.platformOptimizations
-        chaotic.nixosModules.nyx-cache
-        chaotic.nixosModules.nyx-overlay
-        chaotic.nixosModules.nyx-registry
         nix-index-database.nixosModules.nix-index
         # Applications
         nvim-config.nixosModules.nvim-config
@@ -260,7 +258,8 @@
       "https://derethil.cachix.org"
       "https://hyprland.cachix.org"
       "https://niri.cachix.org"
-      "https://chaotic-nyx.cachix.org/"
+      "https://attic.xuyh0120.win/lantian"
+      "https://cache.garnix.io"
     ];
 
     extra-trusted-public-keys = [
@@ -268,7 +267,8 @@
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
-      "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
+      "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
+      "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
     ];
   };
 }

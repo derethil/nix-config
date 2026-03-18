@@ -3,10 +3,9 @@
   fetchFromGitHub,
   kernel,
   kernelModuleMakeFlags ? [],
-  llvmPackages,
 }: let
-  version = "unstable-2025-12-04";
-  sha256 = "1kv7gf52ci4s6rfa9cn8s9bmxjyibv95znmy3zwf4zg42jshxrfd";
+  version = "unstable-2026-03-16";
+  sha256 = "7tZtod7uWIDsJIL74v9qlBRtmEri17AmGgf+zUHmHf4=";
 in
   kernel.stdenv.mkDerivation rec {
     pname = "it87-${version}-${kernel.version}";
@@ -21,13 +20,7 @@ in
 
     hardeningDisable = ["pic"];
 
-    nativeBuildInputs = with llvmPackages;
-      kernel.moduleBuildDependencies
-      ++ [
-        bintools-unwrapped
-        clang-unwrapped
-        lld
-      ];
+    nativeBuildInputs = kernel.moduleBuildDependencies;
 
     preConfigure = ''
       sed -i 's|depmod|#depmod|' Makefile
@@ -39,8 +32,6 @@ in
         "TARGET=${kernel.modDirVersion}"
         "KERNEL_MODULES=${kernel.dev}/lib/modules/${kernel.modDirVersion}"
         "MODDESTDIR=$(out)/lib/modules/${kernel.modDirVersion}/kernel/drivers/hwmon"
-        "LLVM=1"
-        "LLVM_IAS=1"
       ];
 
     meta = with lib; {
