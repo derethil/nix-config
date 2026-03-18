@@ -10,8 +10,8 @@
 in {
   options.glace.system.boot = {
     enable = mkBoolOpt false "Whether to enable systemd-boot configuration.";
-    kernelPackages = mkOpt types.raw pkgs.unstable.linuxPackages_latest "Kernel packages to use.";
     plymouth.enable = mkBoolOpt false "Whether to enable Plymouth splash screens.";
+    kernelPackages = mkOpt types.raw pkgs.unstable.linuxPackages_latest "Kernel packages to use.";
     kernelParams = {
       fix-xhci-controllers.enable = mkBoolOpt false "Whether to add kernel parameters to fix Intel xHCI USB controller issues on some hardware.";
       disable-pcie-aspm.enable = mkBoolOpt false "Whether to disable PCIe ASPM.";

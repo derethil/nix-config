@@ -63,7 +63,8 @@
   "dockLauncherPosition": 0,
   "hiddenTrayIds": [
     "easyeffects",
-    "spotify-client"
+    "spotify-client",
+    ".openrgb-wrapped::OpenRGB"
   ],
   "trayItemOrder": [],
   "recentColors": [
