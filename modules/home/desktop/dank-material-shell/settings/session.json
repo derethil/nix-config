@@ -64,7 +64,8 @@
   "hiddenTrayIds": [
     "easyeffects",
     "spotify-client",
-    ".openrgb-wrapped::OpenRGB"
+    ".openrgb-wrapped::OpenRGB",
+    "easyeffects::Easy Effects"
   ],
   "trayItemOrder": [],
   "recentColors": [
