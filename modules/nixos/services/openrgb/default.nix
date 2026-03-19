@@ -20,12 +20,23 @@ in {
       startupProfile = cfg.startupProfile;
     };
 
-    # Enable i2c devices for RAM detection
+    # Enable i2c devices for RAM / Motherboard detection
     boot.kernelModules = ["i2c-dev"];
     boot.kernelParams = ["acpi_enforce_resources=lax"];
 
     glace.system.impermanence.extraDirectories = [
       "/var/lib/OpenRGB"
     ];
+
+    systemd.services.openrgb-resume = mkIf (cfg.startupProfile != null) {
+      description = "Restore OpenRGB profile after suspend";
+      after = ["suspend.target" "hibernate.target" "hybrid-sleep.target"];
+      wantedBy = ["suspend.target" "hibernate.target" "hybrid-sleep.target"];
+      serviceConfig = {
+        Type = "oneshot";
+        WorkingDirectory = "/var/lib/OpenRGB";
+        ExecStart = "${pkgs.unstable.openrgb-with-all-plugins}/bin/openrgb --profile ${cfg.startupProfile}";
+      };
+    };
   };
 }
