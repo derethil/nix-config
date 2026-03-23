@@ -8,6 +8,7 @@
     "petrichor": "green"
   },
   "matugenScheme": "scheme-rainbow",
+  "matugenContrast": 0,
   "runUserMatugenTemplates": true,
   "matugenTargetMonitor": "",
   "popupTransparency": 1,
@@ -27,6 +28,7 @@
   "mangoLayoutRadiusOverride": -1,
   "mangoLayoutBorderSize": -1,
   "firstDayOfWeek": 0,
+  "showWeekNumber": false,
   "use24HourClock": false,
   "showSeconds": false,
   "padHours12Hour": true,
@@ -311,6 +313,10 @@
   "qtThemingEnabled": false,
   "syncModeWithPortal": true,
   "terminalsAlwaysDark": false,
+  "muxType": "tmux",
+  "muxUseCustomCommand": false,
+  "muxCustomCommand": "",
+  "muxSessionFilter": "",
   "runDmsMatugenTemplates": true,
   "matugenTemplateGtk": true,
   "matugenTemplateNiri": true,
@@ -654,5 +660,5 @@
     }
   },
   "launcherPluginOrder": [],
-  "configVersion": 6
+  "configVersion": 5
 }
