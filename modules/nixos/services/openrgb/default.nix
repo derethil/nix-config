@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf types;
+  inherit (lib) mkIf types getExe;
   inherit (lib.glace) mkBoolOpt mkNullableOpt;
   cfg = config.glace.services.openrgb;
 in {
@@ -28,6 +28,16 @@ in {
       "/var/lib/OpenRGB"
     ];
 
+    systemd.services.openrgb-suspend-prep = {
+      description = "Turn off OpenRGB devices before sleep";
+      before = ["systemd-suspend.service" "systemd-hibernate.service"];
+      wantedBy = ["suspend.target" "hibernate.target"];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${getExe pkgs.unstable.openrgb-with-all-plugins} --color 000000";
+      };
+    };
+
     systemd.services.openrgb-resume = mkIf (cfg.startupProfile != null) {
       description = "Restore OpenRGB profile after suspend";
       after = ["suspend.target" "hibernate.target" "hybrid-sleep.target"];
@@ -35,7 +45,7 @@ in {
       serviceConfig = {
         Type = "oneshot";
         WorkingDirectory = "/var/lib/OpenRGB";
-        ExecStart = "${pkgs.unstable.openrgb-with-all-plugins}/bin/openrgb --profile ${cfg.startupProfile}";
+        ExecStart = "${getExe pkgs.unstable.openrgb-with-all-plugins} --profile ${cfg.startupProfile}";
       };
     };
   };

@@ -55,7 +55,7 @@
     "enabled": true
   },
   "dms-niri-screenshot": {
-    "mode": "window",
+    "mode": "interactive",
     "saveToDisk": false
   },
   "claudeCodeUsage": {
