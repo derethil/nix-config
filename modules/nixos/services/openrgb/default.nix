@@ -45,7 +45,11 @@ in {
       serviceConfig = {
         Type = "oneshot";
         WorkingDirectory = "/var/lib/OpenRGB";
-        ExecStart = "${getExe pkgs.unstable.openrgb-with-all-plugins} --profile ${cfg.startupProfile}";
+        ExecStart = pkgs.writeShellScript "openrgb-resume" ''
+          systemctl restart openrgb.service
+          sleep 1
+          ${getExe pkgs.unstable.openrgb-with-all-plugins} --profile ${cfg.startupProfile}
+        '';
       };
     };
   };
