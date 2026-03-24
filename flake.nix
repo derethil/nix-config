@@ -157,8 +157,7 @@
     # Desktop
 
     apple-fonts = {
-      # See https://github.com/Lyndeno/apple-fonts.nix/pull/26, revert once merged
-      url = "github:nmarks413/apple-fonts.nix";
+      url = "github:Lyndeno/apple-fonts.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

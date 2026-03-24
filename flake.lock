@@ -15,15 +15,15 @@
         "sf-pro": "sf-pro"
       },
       "locked": {
-        "lastModified": 1770758542,
-        "narHash": "sha256-MhtCW601b9tAMP20FBToytRSUMoThtefJ3/7kCThwsE=",
-        "owner": "nmarks413",
+        "lastModified": 1772251183,
+        "narHash": "sha256-Zfr9trB8LaesfpupugDgXPqC4F25MO18kyMyb9b2PkM=",
+        "owner": "Lyndeno",
         "repo": "apple-fonts.nix",
-        "rev": "96173002252e90bac2a1f863d709508220cb5db7",
+        "rev": "f8dad87c2cb956695d18c1f36360322d8a0b7d63",
         "type": "github"
       },
       "original": {
-        "owner": "nmarks413",
+        "owner": "Lyndeno",
         "repo": "apple-fonts.nix",
         "type": "github"
       }
