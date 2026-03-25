@@ -18,7 +18,7 @@ in {
       inherit (cfg) packages;
       update.auto = {
         enable = true;
-        onCalendar = "weekly";
+        onCalendar = "Sun *-*-* 02:00:00";
       };
     };
 
