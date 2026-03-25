@@ -31,6 +31,7 @@ in {
         discord = disabled;
         vesktop = enabled;
         mattermost = enabled;
+        zoom = enabled;
       };
     };
     desktop = {
