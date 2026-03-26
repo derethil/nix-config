@@ -1,10 +1,20 @@
 {
-  lib,
   config,
+  lib,
   ...
 }: let
   inherit (lib) mkIf;
   cfg = config.glace.desktop.niri;
+
+  hideWindowRule = appId: title: {
+    matches = [
+      {
+        app-id = appId;
+        title = title;
+      }
+    ];
+    block-out-from = "screen-capture";
+  };
 
   defaultWorkspaceRule = appId: workspace: {
     matches = [{app-id = appId;}];
@@ -137,6 +147,10 @@ in {
       (defaultWidthRule' "^Ubisoft Connect" {proportion = 2. / 3.;})
       (defaultWidthRule' ".*[s|S]potify.*$" {proportion = 2. / 3.;})
       (defaultWidthRule' "^org.prismlauncher.PrismLauncher$" {proportion = 2. / 3.;})
+
+      # Screen Capture Exclusions
+      (hideWindowRule "^obsidian$" ".*")
+      (hideWindowRule "^firefox$" "Extension:.*Bitwarden.*")
     ];
 
     # Force float state for windows that set their title after launch (only known case is Bitwarden)
