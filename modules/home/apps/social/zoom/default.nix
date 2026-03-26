@@ -44,14 +44,19 @@ in {
 
             tmpfs = ["/tmp"];
 
-            bind.rw = [
-              (sloth.env "XDG_DOWNLOAD_DIR")
-              (sloth.env "XDG_DOCUMENTS_DIR")
-              [
-                (sloth.concat' (sloth.env "XDG_CONFIG_HOME") "/zoomus.conf")
-                (sloth.concat' (sloth.env "XDG_CONFIG_HOME") "/zoom.conf")
-              ]
-            ];
+            bind = {
+              rw = [
+                (sloth.env "XDG_CONFIG_HOME")
+                (sloth.concat' (sloth.env "XDG_CACHE_HOME") "/zoom")
+                (sloth.concat' (sloth.env "HOME") "/.zoom")
+              ];
+
+              # allow webcam access
+              dev = [
+                "/dev/video0"
+                "/dev/video1"
+              ];
+            };
           };
         };
       }).config.env

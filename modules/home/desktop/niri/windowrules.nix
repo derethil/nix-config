@@ -63,6 +63,7 @@ in {
       (defaultWorkspaceRule "^discord$" 2)
       (defaultWorkspaceRule "^vesktop$" 2)
       (defaultWorkspaceRule "^Mattermost$" 2)
+      (defaultWorkspaceRule "^zoom$" 2)
 
       (defaultWorkspaceRule "^bruno$" 3)
       (defaultWorkspaceRule "^obsidian$" 3)
