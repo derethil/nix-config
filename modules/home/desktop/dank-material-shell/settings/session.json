@@ -100,5 +100,7 @@
   "launcherLastMode": "all",
   "appDrawerLastMode": "apps",
   "niriOverviewLastMode": "apps",
+  "settingsSidebarExpandedIds": ",",
+  "settingsSidebarCollapsedIds": ",",
   "configVersion": 3
 }

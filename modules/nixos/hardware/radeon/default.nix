@@ -77,5 +77,9 @@ in {
     boot.kernelParams = mkIf (cfg.ppfeaturemask != null) [
       "amdgpu.ppfeaturemask=${cfg.ppfeaturemask}"
     ];
+
+    glace.apps.steam.extraEnv = {
+      PROTON_FSR4_UPGRADE = "1";
+    };
   };
 }
