@@ -350,6 +350,7 @@
       "harmony": 0.5
     }
   },
+  "matugenTemplateNeovimSetBackground": true,
   "showDock": true,
   "dockAutoHide": true,
   "dockSmartAutoHide": false,
