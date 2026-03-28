@@ -40,8 +40,7 @@ in {
       # Find input devices with bongocat-find-devices
 
       inputDevices = [
-        "/dev/input/event8"
-        "/dev/input/event9"
+        "/dev/input/event4"
       ];
     };
   };
