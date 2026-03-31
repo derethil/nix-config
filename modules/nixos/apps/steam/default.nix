@@ -25,6 +25,7 @@ in {
             PROTON_LOCAL_SHADER_CACHE = "1";
             MESA_SHADER_CACHE_MAX_SIZE = "16G";
             DXVK_ASYNC = "1";
+            PROTON_VKD3D_HEAP = "1";
 
             # TODO: ideally these would be set from the mangohud config but can't when separated between home manager and nixos
             MANGOHUD = "1";
