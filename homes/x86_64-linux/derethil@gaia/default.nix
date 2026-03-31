@@ -66,6 +66,7 @@ in {
         git = enabled;
         jira-cli = enabled;
         claude-code = enabled;
+        mcp = enabled;
         postgresql = enabled;
         aws-cli = enabled;
         neovim = enabled;
