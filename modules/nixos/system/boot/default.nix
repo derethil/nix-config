@@ -4,17 +4,17 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf types flatten;
+  inherit (lib) mkIf types;
   inherit (lib.glace) mkBoolOpt mkOpt;
   cfg = config.glace.system.boot;
 in {
   options.glace.system.boot = {
     enable = mkBoolOpt false "Whether to enable systemd-boot configuration.";
     plymouth.enable = mkBoolOpt false "Whether to enable Plymouth splash screens.";
-    kernelPackages = mkOpt types.raw pkgs.unstable.linuxPackages_latest "Kernel packages to use.";
-    kernelParams = {
-      fix-xhci-controllers.enable = mkBoolOpt false "Whether to add kernel parameters to fix Intel xHCI USB controller issues on some hardware.";
-      disable-pcie-aspm.enable = mkBoolOpt false "Whether to disable PCIe ASPM.";
+    kernel = {
+      cachyos.enable = mkBoolOpt false "Whether to enable the CachyOS kernel.";
+      packages = mkOpt types.raw pkgs.unstable.linuxPackages_latest "Kernel packages to use.";
+      params = mkOpt (types.listOf types.str) [] "Kernel parameters to add.";
     };
   };
 
@@ -33,16 +33,12 @@ in {
         enable = cfg.plymouth.enable;
       };
 
-      kernelPackages = cfg.kernelPackages;
+      kernelPackages =
+        if cfg.kernel.cachyos.enable
+        then pkgs.cachyosKernels.linuxPackages-cachyos-latest
+        else cfg.kernel.packages;
 
-      kernelParams = flatten [
-        (lib.optionals cfg.kernelParams.fix-xhci-controllers.enable [
-          "xhci_hcd.quirks=64"
-        ])
-        (lib.optionals cfg.kernelParams.disable-pcie-aspm.enable [
-          "pcie_aspm=off"
-        ])
-      ];
+      kernelParams = cfg.kernel.params;
     };
   };
 }

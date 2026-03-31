@@ -1,8 +1,4 @@
-{
-  lib,
-  pkgs,
-  ...
-}: let
+{lib, ...}: let
   inherit (lib.glace) enabled disabled enabled';
 in {
   imports = [
@@ -65,11 +61,12 @@ in {
       ntsync = enabled;
       boot = enabled' {
         plymouth = enabled;
-        kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
-        kernelParams = {
-          fix-xhci-controllers = enabled;
-          # seems to fix intermittent WiFi card detection issues
-          disable-pcie-aspm = enabled;
+        kernel = {
+          cachyos = enabled;
+          params = [
+            "xhci_hcd.quirks=64" # fix some Intel xHCI USB controller issues
+            "pcie_aspm=off" # seems to fix intermittent WiFi card detection issues
+          ];
         };
         ssh = enabled;
       };
