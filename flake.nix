@@ -32,7 +32,7 @@
     };
 
     cachyos-kernel = {
-      url = "github:xddxdd/nix-cachyos-kernel/release";
+      url = "github:xddxdd/nix-cachyos-kernel/010e14e"; # pin to kernel 6.19.8 to potentially avoid mesa crashes
     };
 
     # Darwin
