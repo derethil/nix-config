@@ -75,7 +75,7 @@ in {
 
       services.nginx = {
         enable = true;
-        virtualHosts."athena.local" = {
+        virtualHosts."${host}.local" = {
           listen = [
             {
               addr = "0.0.0.0";

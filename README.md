@@ -84,7 +84,7 @@ github:derethil/nix-config#python
 
 ### Hosts
 
-- **Athena** (x86_64-linux): NixOS main desktop for day-to-day development and
+- **Gaia** (x86_64-linux): NixOS main desktop for day-to-day development and
   gaming
 - **Hestia** (aarch64-darwin): Nix-Darwin managed macOS laptop
 

@@ -21,11 +21,6 @@ jobs:
 
           # NixOS Systems
           - type: "nixosConfigurations"
-            config: "athena"
-            system: "x86_64-linux"
-            attribute: "config.system.build.toplevel"
-
-          - type: "nixosConfigurations"
             config: "gaia"
             system: "x86_64-linux"
             attribute: "config.system.build.toplevel"
@@ -35,11 +30,6 @@ jobs:
           - type: "homeConfigurations"
             config: "derethil@hestia"
             system: "aarch64-darwin"
-            attribute: "activationPackage"
-
-          - type: "homeConfigurations"
-            config: "derethil@athena"
-            system: "x86_64-linux"
             attribute: "activationPackage"
 
           - type: "homeConfigurations"
