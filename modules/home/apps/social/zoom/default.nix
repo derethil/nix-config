@@ -51,10 +51,11 @@ in {
                 (sloth.concat' (sloth.env "HOME") "/.zoom")
               ];
 
-              # allow webcam access
+              # allow webcam and audio device access
               dev = [
                 "/dev/video0"
                 "/dev/video1"
+                "/dev/snd"
               ];
             };
           };
