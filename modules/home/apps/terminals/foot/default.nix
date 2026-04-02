@@ -54,7 +54,7 @@ in {
           bright6 = "89b482";
           bright7 = "d4be98";
         };
-        mouse.hide-when-typing = "yes";
+        mouse.hide-when-typing = "no";
         desktop-notifications.inhibit-when-focused = "no";
       };
     };
