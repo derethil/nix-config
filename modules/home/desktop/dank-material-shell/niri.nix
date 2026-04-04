@@ -30,6 +30,7 @@ in {
       binds = with config.lib.niri.actions; {
         "Mod+Shift+Slash" = action' "Show Hotkey Overlay" (spawn-sh "dms ipc call keybinds toggle niri");
         "Mod+Slash" = action' "Open Spotlight" (spawn-sh "dms ipc call spotlight toggle");
+        "Mod+I" = action' "Open Spotlight [Emoji]" (spawn-sh ''dms ipc call spotlight toggleQuery ":e"'');
         "Mod+V" = action' "Open Clipboard" (spawn-sh "dms ipc call clipboard toggle");
         "Mod+M" = action' "Open Process List" (spawn-sh "dms ipc call processlist toggle");
         "Mod+N" = action' "Open Notifications" (spawn-sh "dms ipc call notifications toggle");
