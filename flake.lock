@@ -1992,11 +1992,11 @@
         "sort-nvim": "sort-nvim"
       },
       "locked": {
-        "lastModified": 1774982639,
-        "narHash": "sha256-LtygJ3Zc7O0L+jar0JRgDaDOkpjGq1gOwGNL1eKT9CY=",
+        "lastModified": 1775327553,
+        "narHash": "sha256-fQ9aVjEUnjtbcsVTsqmwEYfXNfhHsanT/kYSR8auf8E=",
         "owner": "derethil",
         "repo": "nvim-config",
-        "rev": "b4444637760bbae9a00311604ed4f2dd4a9d3254",
+        "rev": "60b061beb4be6ab27e22fd0d524f1a88aadb56f1",
         "type": "github"
       },
       "original": {
