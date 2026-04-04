@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
-# Clean filter for session.json - removes dynamic runtime state before staging
+#!/usr/bin/env nix-shell
+#!nix-shell -i bash -p jq
 
 jq 'del(
   .launcherLastMode,
