@@ -17,9 +17,9 @@ in {
       enable = true;
       driSupport32Bit = true;
     };
-    
+
     programs.gamemode.enable = true;
-    
+
     environment.systemPackages = with pkgs; [
       lutris
       wine

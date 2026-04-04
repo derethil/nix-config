@@ -8,7 +8,6 @@
   inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.services.lact;
 in {
-
   options.glace.services.lact = {
     enable = mkBoolOpt false "Whether to enable LACT (Linux AMDGPU Control Tool).";
   };

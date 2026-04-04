@@ -10,4 +10,3 @@ in {
     fonts.fontconfig.enable = true;
   };
 }
-

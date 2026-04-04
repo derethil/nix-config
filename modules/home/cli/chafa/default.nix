@@ -16,4 +16,3 @@ in {
     home.packages = [pkgs.chafa];
   };
 }
-

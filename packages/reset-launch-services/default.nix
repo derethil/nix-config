@@ -9,7 +9,7 @@ pkgs.writeShellScriptBin "reset-launch-services" ''
   set -euo pipefail
 
   echo "Resetting macOS Launch Services database..."
-  
+
   # Reset the Launch Services database
   /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister \
     -kill -r -domain local -domain system -domain user

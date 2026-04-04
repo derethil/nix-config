@@ -15,4 +15,3 @@ in {
     glace.tools.homebrew.casks = ["steam"];
   };
 }
-

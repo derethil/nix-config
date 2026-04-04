@@ -18,4 +18,3 @@ in {
     time.timeZone = mkIf (!cfg.automatic) (mkDefault cfg.timeZone);
   };
 }
-

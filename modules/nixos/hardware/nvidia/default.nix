@@ -59,7 +59,7 @@ in {
 
       package =
         if cfg.channel == "custom"
-        then cfg.package.override { kernelPackages = config.boot.kernelPackages; }
+        then cfg.package.override {kernelPackages = config.boot.kernelPackages;}
         else if cfg.useUnstable
         then (pkgs.unstable.linuxKernel.packagesFor config.boot.kernelPackages.kernel).nvidiaPackages.${cfg.channel}
         else config.boot.kernelPackages.nvidiaPackages.${cfg.channel};
