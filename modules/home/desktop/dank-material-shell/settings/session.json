@@ -68,19 +68,10 @@
     ".openrgb-wrapped::OpenRGB",
     "easyeffects::Easy Effects"
   ],
-  "trayItemOrder": [],
-  "recentColors": [
-    "#70ddff",
-    "#00c2ff",
-    "#ffffff",
-    "#ff9800",
-    "#2196f3"
-  ],
   "showThirdPartyPlugins": true,
   "launchPrefix": "",
   "lastBrightnessDevice": "",
   "brightnessExponentialDevices": {},
-  "brightnessUserSetValues": {},
   "brightnessExponentValues": {},
   "selectedGpuIndex": 0,
   "nvidiaGpuTempEnabled": false,
@@ -91,16 +82,9 @@
   "hiddenApps": [],
   "appOverrides": {},
   "searchAppActions": true,
-  "vpnLastConnected": "",
-  "deviceMaxVolumes": {},
   "hiddenOutputDeviceNames": [],
   "hiddenInputDeviceNames": [],
   "locale": "",
   "timeLocale": "",
-  "launcherLastMode": "all",
-  "appDrawerLastMode": "apps",
-  "niriOverviewLastMode": "apps",
-  "settingsSidebarExpandedIds": ",",
-  "settingsSidebarCollapsedIds": ",",
   "configVersion": 3
 }
