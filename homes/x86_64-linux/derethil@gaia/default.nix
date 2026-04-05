@@ -76,7 +76,6 @@ in {
     services = {
       openssh = enabled;
       easyeffects = enabled;
-      safeeyes = enabled;
     };
     cli = {
       fish = enabled;
