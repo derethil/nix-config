@@ -130,7 +130,7 @@
       "width": 50
     },
     {
-      "id": "builtin_cups",
+      "id": "idleInhibitor",
       "enabled": true,
       "width": 50
     }
@@ -294,7 +294,7 @@
   "batterySuspendBehavior": 0,
   "batteryProfileName": "",
   "batteryChargeLimit": 100,
-  "lockBeforeSuspend": false,
+  "lockBeforeSuspend": true,
   "loginctlLockIntegration": true,
   "fadeToLockEnabled": false,
   "fadeToLockGracePeriod": 15,
