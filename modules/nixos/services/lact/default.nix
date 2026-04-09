@@ -17,6 +17,10 @@ in {
       lact
     ];
 
+    glace.system.impermanence.extraFiles = [
+      "/etc/lact/config.yaml"
+    ];
+
     systemd.services.lactd = {
       description = "AMDGPU Control Daemon";
       after = ["multi-user.target"];
