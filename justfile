@@ -1,10 +1,16 @@
 default:
     @just --list
 
-update input:
+update input amend='':
     nix flake update {{ input }}
     git add flake.lock
-    git diff --cached --quiet flake.lock || git commit -m "chore(flake): update {{ input }} input"
+    @if ! git diff --cached --quiet flake.lock; then \
+        if [ "{{ amend }}" = "-a" ]; then \
+            git commit --amend --no-edit; \
+        else \
+            git commit -m "chore(flake): update {{ input }} input"; \
+        fi; \
+    fi
 
 check:
     nix flake check --all-systems
