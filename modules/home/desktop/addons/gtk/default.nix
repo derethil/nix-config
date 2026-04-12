@@ -17,12 +17,6 @@ in {
       size = mkOpt types.int 24 "The cursor size.";
     };
 
-    font = {
-      name = mkOpt types.str "SFProDisplay Nerd Font Medium" "The font name to use.";
-      package = mkOpt types.package pkgs.inputs.apple-fonts.sf-pro-nerd "The font package to use.";
-      size = mkOpt types.int 9 "The font size.";
-    };
-
     icon-theme = {
       name = mkOpt types.str "Tela" "The icon theme name to use.";
       package = mkOpt types.package pkgs.tela-icon-theme "The icon theme package to use.";
@@ -34,7 +28,9 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf cfg.enable (let
+    font = config.glace.system.fonts.default.sansSerif;
+  in {
     home.sessionVariables = {
       CURSOR_THEME = cfg.cursor.name;
       GTK_THEME = cfg.theme.name;
@@ -59,7 +55,7 @@ in {
           cursor-size = cfg.cursor.size;
           cursor-theme = cfg.cursor.name;
           enable-hot-corners = false;
-          font-name = "${cfg.font.name} ${toString cfg.font.size}";
+          font-name = "${font.name} ${toString font.size}";
           gtk-theme = cfg.theme.name;
           icon-theme = cfg.icon-theme.name;
         };
@@ -72,9 +68,7 @@ in {
       gtk3.extraConfig = {"gtk-application-prefer-dark-theme" = 1;};
       gtk4.extraConfig = {"AdwStyleManager:color-scheme" = "prefer-dark";};
       font = {
-        inherit (cfg.font) name;
-        inherit (cfg.font) package;
-        inherit (cfg.font) size;
+        inherit (font) name package size;
       };
       iconTheme = {
         inherit (cfg.icon-theme) name;
@@ -93,5 +87,5 @@ in {
         "Net/IconThemeName" = cfg.icon-theme.name;
       };
     };
-  };
+  });
 }

@@ -10,7 +10,7 @@ in {
     fontOptions = type: {
       name = mkNullableOpt str null "Name of the default ${type} font.";
       package = mkNullableOpt package null "Package containing the default ${type} font";
-      size = mkOpt int 12 "Default size for ${type} font.";
+      size = mkOpt int 9 "Default size for ${type} font.";
       style = mkOpt str "Regular" "Default style for ${type} font.";
     };
   in {
@@ -27,18 +27,19 @@ in {
   config.glace.system.fonts = {
     default = {
       serif = {
-        name = "NewYork Nerd Font";
-        package = pkgs.inputs.apple-fonts.ny-nerd;
+        name = "IBM Plex Serif";
+        package = pkgs.ibm-plex.override {families = ["serif"];};
       };
       sansSerif = {
-        name = "SFProDisplay Nerd Font Medium";
-        package = pkgs.inputs.apple-fonts.sf-pro-nerd;
-        style = "Medium";
+        name = "Inter Variable Medium";
+        package = pkgs.inter;
+        style = "Regular";
       };
       monospace = {
         name = "GeistMono Nerd Font Mono";
         package = pkgs.nerd-fonts.geist-mono;
         style = "SemiBold";
+        size = 12;
       };
       emoji = {
         name = "Noto Color Emoji";
