@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  inputs,
   ...
 }: let
   inherit (lib) mkIf;
@@ -10,6 +11,7 @@
 
   it87-module = pkgs.callPackage ./package.nix {
     kernel = config.boot.kernelPackages.kernel;
+    src = inputs.it87;
   };
 in {
   options.glace.services.coolercontrol.it87 = {

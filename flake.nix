@@ -35,6 +35,11 @@
       url = "github:xddxdd/nix-cachyos-kernel/010e14e"; # pin to kernel 6.19.8 to potentially avoid mesa crashes
     };
 
+    it87 = {
+      url = "github:frankcrawford/it87/h2ram-mmio";
+      flake = false;
+    };
+
     # Darwin
 
     darwin = {

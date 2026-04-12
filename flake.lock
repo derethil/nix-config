@@ -1264,6 +1264,23 @@
         "type": "github"
       }
     },
+    "it87": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1775430732,
+        "narHash": "sha256-o2riPbm75Bez4/SrGV7hB3mlqdxxrwRPdre+3W5y/I0=",
+        "owner": "frankcrawford",
+        "repo": "it87",
+        "rev": "60f2ef5cb85101c8181b5ce42362d41cfcb36e45",
+        "type": "github"
+      },
+      "original": {
+        "owner": "frankcrawford",
+        "ref": "h2ram-mmio",
+        "repo": "it87",
+        "type": "github"
+      }
+    },
     "json2go": {
       "flake": false,
       "locked": {
@@ -2075,6 +2092,7 @@
         "hyprland-plugins": "hyprland-plugins",
         "icon-browser": "icon-browser",
         "impermanence": "impermanence",
+        "it87": "it87",
         "khal-notify": "khal-notify",
         "mac-app-util": "mac-app-util",
         "niri": "niri",

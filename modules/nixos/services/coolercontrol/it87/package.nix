@@ -1,22 +1,14 @@
 {
   lib,
-  fetchFromGitHub,
+  src,
   kernel,
   kernelModuleMakeFlags ? [],
-}: let
-  version = "unstable-2026-03-16";
-  sha256 = "7tZtod7uWIDsJIL74v9qlBRtmEri17AmGgf+zUHmHf4=";
-in
-  kernel.stdenv.mkDerivation rec {
-    pname = "it87-${version}-${kernel.version}";
-    inherit version;
+}:
+  kernel.stdenv.mkDerivation {
+    pname = "it87-${kernel.version}";
+    version = "h2ram-mmio";
 
-    src = fetchFromGitHub {
-      owner = "frankcrawford";
-      repo = "it87";
-      rev = "h2ram-mmio";
-      inherit sha256;
-    };
+    inherit src;
 
     hardeningDisable = ["pic"];
 
