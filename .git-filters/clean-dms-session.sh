@@ -13,5 +13,6 @@ jq 'del(
   .trayItemOrder,
   .brightnessUserSetValues,
   .deviceMaxVolumes,
-  .vpnLastConnected
+  .vpnLastConnected,
+  .lastPlayerIdentity
 )'
