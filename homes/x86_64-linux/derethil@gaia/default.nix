@@ -48,7 +48,10 @@ in {
       gaming = {
         protonup-qt = enabled;
         lossless-scaling = enabled;
-        mangohud = enabled;
+        mangohud = {
+          enable = true;
+          coolantSensor = "/sys/class/hwmon/hwmon6/temp2_input";
+        };
       };
       desktop = {
         hyprpicker = enabled;
