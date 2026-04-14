@@ -82,9 +82,9 @@ in {
       rulesProvider = pkgs.ananicy-rules-cachyos;
     };
 
-    # Enable support for steam hardware e.g. Steam Controller
     hardware = {
-      steam-hardware.enable = true;
+      steam-hardware.enable = true; # Steam Controller, Steam Deck, etc.
+      xpadneo.enable = true; # Xbox controllers
     };
   };
 }
