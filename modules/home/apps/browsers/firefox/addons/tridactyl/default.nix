@@ -5,8 +5,9 @@
 }: let
   inherit (lib) mkIf;
   cfg = config.glace.apps.browsers.firefox;
+  cfg-lw = config.glace.apps.browsers.librewolf;
 in {
-  config = mkIf cfg.enable {
+  config = mkIf (cfg.enable || cfg-lw.enable) {
     xdg.configFile."tridactyl/tridactylrc".text = ''
       set theme midnight
 

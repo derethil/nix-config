@@ -1,5 +1,5 @@
 {lib, ...}: let
-  inherit (lib.glace) enabled disabled;
+  inherit (lib.glace) enabled disabled enabled';
 in {
   glace = {
     user = {
@@ -21,7 +21,9 @@ in {
       qalculate = enabled;
       pinta = enabled;
       browsers = {
-        firefox = enabled;
+        librewolf = enabled' {
+          defaultBrowser = true;
+        };
         chromium = enabled;
       };
       gaming = {

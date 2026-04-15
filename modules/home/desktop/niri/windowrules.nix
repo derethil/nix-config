@@ -68,6 +68,7 @@ in {
 
       # Default Workspaces
       (defaultWorkspaceRule "^firefox$" 1)
+      (defaultWorkspaceRule "^librewolf$" 1)
       (defaultWorkspaceRule "^chromium$" 1)
 
       (defaultWorkspaceRule "^discord$" 2)
@@ -150,7 +151,7 @@ in {
 
       # Screen Capture Exclusions
       (hideWindowRule "^obsidian$" ".*")
-      (hideWindowRule "^firefox$" "Extension:.*Bitwarden.*")
+      (hideWindowRule "^(firefox|librewolf)$" "Extension:.*Bitwarden.*")
     ];
 
     # Force float state for windows that set their title after launch (only known case is Bitwarden)
@@ -159,7 +160,7 @@ in {
         match = [
           {
             title = ".*Bitwarden.*";
-            app_id = "firefox";
+            app_id = "(firefox|librewolf)";
           }
         ];
         width = 600;
