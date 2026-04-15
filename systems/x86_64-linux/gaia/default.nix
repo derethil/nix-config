@@ -62,7 +62,7 @@ in {
       boot = enabled' {
         plymouth = enabled;
         kernel = {
-          cachyos = enabled;
+          # cachyos = enabled; # disabled: kernel 7.0.0 aes_generic build failure
           params = [
             "xhci_hcd.quirks=64" # fix some Intel xHCI USB controller issues
             "pcie_aspm=off" # seems to fix intermittent WiFi card detection issues
