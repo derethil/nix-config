@@ -74,9 +74,12 @@ in {
 
     services.xserver.videoDrivers = ["amdgpu"];
 
-    boot.kernelParams = mkIf (cfg.ppfeaturemask != null) [
-      "amdgpu.ppfeaturemask=${cfg.ppfeaturemask}"
-    ];
+    boot.kernelParams =
+      (lib.optional (cfg.ppfeaturemask != null) "amdgpu.ppfeaturemask=${cfg.ppfeaturemask}")
+      # Workaround for SMU driver/firmware interface version mismatch (driver 0x2e vs firmware 0x33).
+      # GFXOFF relies on SMU for GFX engine power-gating transitions; the mismatch causes GPU hangs
+      # during those transitions. Remove once kernel amdgpu driver catches up to firmware interface.
+      ++ ["amdgpu.gfxoff=0"];
 
     glace.apps.steam.extraEnv = {
       PROTON_FSR4_UPGRADE = "1";
