@@ -1,13 +1,13 @@
 {
-  "currentThemeName": "custom",
-  "currentThemeCategory": "registry",
+  "currentThemeName": "dynamic",
+  "currentThemeCategory": "dynamic",
   "customThemeFile": "/home/derethil/.config/DankMaterialShell/themes/petrichor/theme.json",
   "registryThemeVariants": {
     "gruvboxMaterial": "hard",
     "flexoki": "green",
     "petrichor": "green"
   },
-  "matugenScheme": "scheme-rainbow",
+  "matugenScheme": "scheme-content",
   "matugenContrast": 0,
   "runUserMatugenTemplates": true,
   "matugenTargetMonitor": "",

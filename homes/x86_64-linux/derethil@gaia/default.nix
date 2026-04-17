@@ -21,6 +21,7 @@ in {
       qalculate = enabled;
       pinta = enabled;
       browsers = {
+        firefox = enabled;
         librewolf = enabled' {
           defaultBrowser = true;
         };

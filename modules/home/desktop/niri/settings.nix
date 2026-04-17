@@ -79,9 +79,9 @@ in {
         border = {
           enable = true;
           width = 2;
-          active.color = "#FFB59B";
-          inactive.color = "#322824";
-          urgent.color = "#FFD59B";
+          active.color = "#BEC8CD";
+          inactive.color = "#131314";
+          urgent.color = "#92B2D3";
         };
 
         focus-ring = {
