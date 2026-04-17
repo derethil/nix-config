@@ -4,7 +4,7 @@
   lib,
   ...
 }: let
-  inherit (lib) mkIf types getExe getExe';
+  inherit (lib) mkIf types getExe;
   inherit (lib.glace) mkBoolOpt mkOpt;
   cfg = config.glace.cli.tmux;
 
@@ -203,6 +203,22 @@ in {
             set -g @sessionx-bind-kill-session 'alt-x'
           '';
         }
+        # {
+        #   plugin = pkgs.glace.tmux-dotbar;
+        #   extraConfig = ''
+        #     set -g @tmux-dotbar-right true
+        #
+        #     set -g @tmux-dotbar-bg "#282828"
+        #     set -g @tmux-dotbar-fg "#928374"
+        #     set -g @tmux-dotbar-fg-current "#e2cca9"
+        #     set -g @tmux-dotbar-fg-session "#928374"
+        #     set -g @tmux-dotbar-fg-prefix "#89b482"
+        #
+        #     set -g @tmux-dotbar-bold-current-window true
+        #
+        #     set -g @tmux-dotbar-status-right-text '#( echo #{pane_current_path} | sed "s|$HOME|~|" | rev | cut -d"/" -f-3 | rev )'
+        #   '';
+        # }
         {
           plugin = pkgs.glace.tmux-theme;
           extraConfig = ''

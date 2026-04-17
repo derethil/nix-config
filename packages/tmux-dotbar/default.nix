@@ -4,7 +4,7 @@
   ...
 }:
 pkgs.tmuxPlugins.mkTmuxPlugin {
-  pluginName = "power-zoom";
+  pluginName = "dotbar";
   version = "flake-input";
-  src = inputs.tmux-power-zoom;
+  src = inputs.tmux-dotbar;
 }

@@ -129,6 +129,10 @@
       url = "github:jaclu/tmux-power-zoom";
       flake = false;
     };
+    tmux-dotbar = {
+      url = "github:vaaleyard/tmux-dotbar";
+      flake = false;
+    };
 
     rust-system-scripts = {
       url = "github:derethil/rust-system-scripts";

@@ -2110,6 +2110,7 @@
         "secrets": "secrets",
         "snowfall-lib": "snowfall-lib",
         "sops-nix": "sops-nix",
+        "tmux-dotbar": "tmux-dotbar",
         "tmux-power-zoom": "tmux-power-zoom",
         "tmux-theme": "tmux-theme",
         "yazi-gruvbox-dark": "yazi-gruvbox-dark"
@@ -2392,6 +2393,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tmux-dotbar": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1771805838,
+        "narHash": "sha256-WaRKepmPqiE+W8Tm0dBc6hGiqqZP122eXjrG0rJnt0w=",
+        "owner": "vaaleyard",
+        "repo": "tmux-dotbar",
+        "rev": "24a2e967e93ed7fd3688163436a2c0e4b2facc9a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vaaleyard",
+        "repo": "tmux-dotbar",
         "type": "github"
       }
     },
