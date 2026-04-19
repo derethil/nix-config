@@ -5,9 +5,8 @@
 }: let
   inherit (lib) mkIf;
   cfg = config.glace.apps.browsers.firefox;
-  cfg-lw = config.glace.apps.browsers.librewolf;
 in {
-  config = mkIf (cfg.enable || cfg-lw.enable) {
+  config = mkIf cfg.enable {
     home.file.".mozilla/managed-storage/uBlock0@raymondhill.net.json".text = builtins.toJSON {
       name = "uBlock0@raymondhill.net";
       description = "_";

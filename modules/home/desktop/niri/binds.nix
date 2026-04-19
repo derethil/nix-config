@@ -5,6 +5,7 @@
   ...
 }: let
   inherit (lib) mkIf mkMerge getExe;
+  inherit (lib.strings) join;
   cfg = config.glace.desktop.niri;
 
   mkWorkspaceBinds' = mod: action: extraArgs:
@@ -76,6 +77,40 @@ in {
           "Mod+Q".action = close-window;
           "Mod+F".action = fullscreen-window;
           "Mod+Shift+F".action = toggle-windowed-fullscreen;
+
+          # Quick Launcher
+          "Mod+D".action = spawn-sh (getExe (mkMenu [
+            {
+              key = "t";
+              desc = "Terminal";
+              cmd = join " " config.glace.apps.terminals.commands.withTmux;
+            }
+            {
+              key = "f";
+              desc = "Firefox";
+              cmd = "firefox";
+            }
+            {
+              key = "m";
+              desc = "Music";
+              cmd = "spotify";
+            }
+            {
+              key = "d";
+              desc = "Discord";
+              cmd = "vesktop";
+            }
+            {
+              key = "c";
+              desc = "Mattermost";
+              cmd = "mattermost-desktop";
+            }
+            {
+              key = "o";
+              desc = "Obsidian";
+              cmd = "obsidian";
+            }
+          ]));
 
           # Floating Windows
           "Mod+Space".action = switch-focus-between-floating-and-tiling;

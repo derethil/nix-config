@@ -8,17 +8,11 @@
   inherit (lib) mkIf;
   inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.apps.social.zoom;
-  cfg-firefox = config.glace.apps.browsers.firefox;
-  cfg-librewolf = config.glace.apps.browsers.librewolf;
+  firefoxCfg = config.glace.apps.browsers.firefox;
 
   mkNixPak = inputs.nixpak.lib.nixpak {
     inherit (pkgs) lib;
     inherit pkgs;
-  };
-
-  protocol-handler-settings = {
-    "network.protocol-handler.expose.zoommtg" = false;
-    "network.protocol-handler.expose.zoomus" = false;
   };
 in {
   options.glace.apps.social.zoom = {
@@ -74,7 +68,9 @@ in {
       "x-scheme-handler/zoomus"
     ];
 
-    programs.firefox.profiles.default.settings = mkIf cfg-firefox.enable protocol-handler-settings;
-    programs.librewolf.profiles.default.settings = mkIf cfg-librewolf.enable protocol-handler-settings;
+    programs.firefox.profiles.default.settings = mkIf firefoxCfg.enable {
+      "network.protocol-handler.expose.zoommtg" = false;
+      "network.protocol-handler.expose.zoomus" = false;
+    };
   };
 }
