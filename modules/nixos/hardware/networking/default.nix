@@ -32,6 +32,9 @@ in {
     # we don't want to wait for network on boot, takes ~5s extra
     systemd.services.NetworkManager-wait-online.enable = mkForce false;
 
+    # restart NM on resume to work around slow NIC re-initialization after sleep
+    powerManagement.resumeCommands = "systemctl restart NetworkManager";
+
     glace.user.extraGroups = ["networkmanager"];
 
     glace.system.impermanence.extraDirectories = [
