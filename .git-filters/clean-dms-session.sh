@@ -14,5 +14,6 @@ jq 'del(
   .brightnessUserSetValues,
   .deviceMaxVolumes,
   .vpnLastConnected,
-  .lastPlayerIdentity
+  .lastPlayerIdentity,
+  .doNotDisturbUntil
 )'
