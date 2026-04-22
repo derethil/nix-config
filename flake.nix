@@ -213,7 +213,7 @@
     overlays = with inputs; [
       niri.overlays.niri
       nur.overlays.default
-      cachyos-kernel.overlays.default
+      cachyos-kernel.overlays.pinned
     ];
 
     systems.modules.darwin = with inputs;
