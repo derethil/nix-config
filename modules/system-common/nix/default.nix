@@ -36,7 +36,10 @@ in {
         http-connections = 50;
         warn-dirty = false;
         log-lines = 50;
-        sandbox = "relaxed";
+        sandbox =
+          if isDarwin
+          then false
+          else "relaxed";
         keep-outputs = true;
         keep-derivations = true;
         use-xdg-base-directories = true;
