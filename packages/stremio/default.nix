@@ -8,11 +8,11 @@
 }:
 stdenvNoCC.mkDerivation rec {
   pname = "stremio";
-  version = "5.1.14";
+  version = "5.1.22";
 
   src = fetchurl {
     url = "https://dl.strem.io/stremio-shell-macos/v${version}/Stremio_arm64.dmg";
-    hash = "sha256-fnyaekM7fTuUkezeEK/mTKCRKj5cORJvDQTabxRIS9k=";
+    hash = "sha256-Xn+BKvSQJFWlx4Cy6gjvA4e9qViJ+x86F3yhK+GiFuY=";
   };
 
   nativeBuildInputs = [undmg pkgs.darwin.sigtool cctools];

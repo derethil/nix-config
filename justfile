@@ -18,6 +18,9 @@ check:
 format:
     alejandra $(fd .nix)
 
+get-hash url:
+    nix store prefetch-file --hash-type sha256 {{ url }} 2>&1 | grep -oP "(?<=hash ')[^']+" | tr -d '[:space:]'
+
 secrets:
     #!/usr/bin/env bash
     SECRETS_DIR="${SECRETS_DIR:-$HOME/.config/nix-secrets}"
