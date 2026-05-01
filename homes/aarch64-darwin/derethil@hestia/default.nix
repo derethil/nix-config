@@ -10,6 +10,9 @@ in {
     user = {
       userdirs = enabled;
     };
+    services = {
+      openssh = enabled;
+    };
     apps = {
       terminals = {
         default = "alacritty";
