@@ -1,10 +1,12 @@
 {
   lib,
   config,
+  inputs,
   ...
 }: let
   inherit (lib) mkIf mkForce;
   cfg = config.glace.desktop.dank-material-shell;
+  dmsLogo = "${inputs.dank-material-shell}/assets/danklogo.svg";
 
   action' = description: action: {
     hotkey-overlay.title = description;
@@ -39,6 +41,7 @@ in {
         "Mod+X" = action' "Open Power Menu" (spawn-sh "dms ipc call powermenu toggle");
         "Mod+C" = action' "Open Control Center" (spawn-sh "dms ipc call control-center toggle");
         "Mod+E" = action' "Open Dashboard" (spawn-sh "dms ipc call dash toggle overview");
+        "Mod+Shift+I" = action' "Toggle Idle Inhibitor" (spawn-sh "dms notify --app 'Idle Inhibitor' --icon '${dmsLogo}' \"$(dms ipc call inhibit toggle)\"");
 
         "Mod+Alt+L" = action' "Lock Screen" (spawn-sh "dms ipc call lock lock");
 
