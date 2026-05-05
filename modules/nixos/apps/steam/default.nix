@@ -22,10 +22,12 @@ in {
         extraEnv =
           {
             GAMEMODERUN = "1";
-            PROTON_LOCAL_SHADER_CACHE = "1";
-            MESA_SHADER_CACHE_MAX_SIZE = "16G";
             DXVK_ASYNC = "1";
+            PROTON_LOCAL_SHADER_CACHE = "1";
             PROTON_VKD3D_HEAP = "1";
+            PROTON_FSR4_UPGRADE = "1";
+            MESA_SHADER_CACHE_MAX_SIZE = "16G";
+            ENABLE_LAYER_MESA_ANTI_LAG = "1";
 
             # TODO: ideally these would be set from the mangohud config but can't when separated between home manager and nixos
             MANGOHUD = "1";
