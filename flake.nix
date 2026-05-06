@@ -158,9 +158,8 @@
 
     # Niri
 
-    niri = {
-      url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
+    niri-nix = {
+      url = "git+https://codeberg.org/BANanaD3V/niri-nix";
     };
 
     niri-smart-workspace = {
@@ -211,7 +210,7 @@
     };
 
     overlays = with inputs; [
-      niri.overlays.niri
+      niri-nix.overlays.niri-nix
       nur.overlays.default
       cachyos-kernel.overlays.pinned
     ];
@@ -258,7 +257,7 @@
         nvim-config.homeManagerModules.nvim-config
         dank-material-shell.homeModules.dank-material-shell
         dms-plugin-registry.homeModules.default
-        niri.homeModules.niri
+        niri-nix.homeModules.default
         niri-smart-workspace.homeManagerModules.default
         # Common
         common-modules
@@ -270,7 +269,7 @@
       "https://nix-community.cachix.org"
       "https://derethil.cachix.org"
       "https://hyprland.cachix.org"
-      "https://niri.cachix.org"
+      "https://niri-nix.cachix.org"
       "https://attic.xuyh0120.win/lantian"
       "https://cache.garnix.io"
     ];
@@ -279,7 +278,7 @@
       "derethil.cachix.org-1:4v8v6Oo2UHdB3FKutgQ2z3O9L++ukejhGvQFg6Pjsfc="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-      "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
+
       "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
       "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
     ];

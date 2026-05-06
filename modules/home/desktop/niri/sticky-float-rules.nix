@@ -22,14 +22,8 @@ in {
   options.glace.desktop.niri.sticky-float-rules = mkSubmoduleListOpt "List of sticky float window rules." ruleType;
 
   config = mkIf (cfg.enable && builtins.length rules > 0) {
-    programs.niri.settings.spawn-at-startup = [
-      {
-        argv = [
-          (getExe pkgs.glace.niri-sticky-float-rules)
-          "-rules"
-          "${config.xdg.configHome}/niri/sticky-float-rules.json"
-        ];
-      }
+    wayland.windowManager.niri.settings.spawn-at-startup = [
+      {_args = ["${getExe pkgs.glace.niri-sticky-float-rules} -rules ${config.xdg.configHome}/niri/sticky-float-rules.json"];}
     ];
 
     xdg.configFile."niri/sticky-float-rules.json".source = pkgs.writeText "sticky-float-rules.json" (builtins.toJSON rules);

@@ -3,38 +3,48 @@
   lib,
   ...
 }: let
-  inherit (lib) mkIf filter listToAttrs;
+  inherit (lib) mkIf filter mkMerge;
   cfg = config.glace.desktop.niri;
   displays = config.glace.hardware.displays;
 
-  toNiriOutput = d: let
-    outputConfig = {
-      enable = true;
-      focus-at-startup = d.primary;
-      mode = {
-        width = d.resolution.width;
-        height = d.resolution.height;
-        refresh = d.framerate / 1.0;
-      };
-      position = {
-        x = d.position.x;
-        y = d.position.y;
-      };
-      scale = d.scale;
-      transform = {
-        rotation = d.rotation;
-        flipped = d.flipped;
-      };
-      variable-refresh-rate = d.vrr;
-    };
-  in {
-    name = d.port;
-    value = outputConfig;
-  };
+  toTransform = rotation: flipped:
+    if flipped
+    then
+      if rotation == 0
+      then "flipped"
+      else "flipped-${toString rotation}"
+    else if rotation == 0
+    then "normal"
+    else toString rotation;
+
+  toNiriOutput = d:
+    mkMerge [
+      {
+        _args = [d.port];
+        mode = "${toString d.resolution.width}x${toString d.resolution.height}@${toString (d.framerate / 1.0)}";
+        position._props = {
+          x = d.position.x;
+          y = d.position.y;
+        };
+        scale = d.scale;
+        transform = toTransform d.rotation d.flipped;
+      }
+
+      (mkIf d.primary {
+        focus-at-startup = [];
+      })
+
+      (mkIf (d.vrr != false) {
+        variable-refresh-rate =
+          if d.vrr == "on-demand"
+          then {_props = {"on-demand" = true;};}
+          else {};
+      })
+    ];
 in {
   config = mkIf cfg.enable {
-    programs.niri.settings = {
-      outputs = listToAttrs (map toNiriOutput (filter (d: d.enabled && d.port != null) displays));
+    wayland.windowManager.niri.settings = {
+      output = map toNiriOutput (filter (d: d.enabled && d.port != null) displays);
     };
   };
 }

@@ -36,9 +36,9 @@ in {
   ];
 
   config = mkIf cfg.enable {
-    programs.niri = {
+    wayland.windowManager.niri = {
       enable = true;
-      package = pkgs.niri-stable;
+      package = pkgs.niri-unstable;
     };
 
     services.niri-smart-workspace = {

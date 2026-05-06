@@ -3,23 +3,17 @@
   lib,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf range;
   cfg = config.glace.desktop.niri;
 
-  mkNumberedWorkspaces = count:
-    builtins.listToAttrs (map (i: {
-      name = toString i;
-      value = {
-        name = toString i;
-      };
-    }) (lib.range 1 count));
+  mkNumberedWorkspaces = count: (map (i: {_args = [(toString i)];}) (range 1 count));
 in {
   config = mkIf cfg.enable {
-    programs.niri.settings = {
-      workspaces = mkNumberedWorkspaces 5;
+    wayland.windowManager.niri.settings = {
+      workspace = mkNumberedWorkspaces 5;
 
       switch-events = mkIf (cfg.events.defaultLidEvents) {
-        lid-close.action.spawn = ["systemctl" "suspend"];
+        lid-close.spawn = ["systemctl" "suspend"];
       };
 
       screenshot-path = "${cfg.screenshots.path}/%Y-%m-%d_%H-%M-%S.png";
@@ -32,109 +26,109 @@ in {
       prefer-no-csd = true;
 
       input = {
-        focus-follows-mouse.enable = true;
+        focus-follows-mouse = [];
 
         mouse = {
           accel-speed = 0.3;
           accel-profile = "flat";
-          natural-scroll = false;
         };
 
         touchpad = {
-          middle-emulation = true;
+          middle-emulation = [];
           click-method = "clickfinger";
-          tap = true;
+          tap = [];
           tap-button-map = "left-right-middle";
 
           accel-profile = "adaptive";
 
-          disabled-on-external-mouse = true;
+          disabled-on-external-mouse = [];
           drag = true;
-          dwt = true;
+          dwt = [];
 
-          natural-scroll = true;
+          natural-scroll = [];
         };
 
-        power-key-handling.enable = false;
+        disable-power-key-handling = [];
 
-        warp-mouse-to-focus = {
-          enable = true;
+        warp-mouse-to-focus._props = {
           mode = "center-xy";
         };
 
-        workspace-auto-back-and-forth = true;
+        workspace-auto-back-and-forth = [];
       };
 
       clipboard = {
-        disable-primary = true;
+        disable-primary = [];
       };
 
       cursor = {
-        hide-when-typing = true;
-        size = config.glace.desktop.addons.gtk.cursor.size;
-        theme = config.glace.desktop.addons.gtk.cursor.name;
+        hide-when-typing = [];
+        xcursor-theme = config.glace.desktop.addons.gtk.cursor.name;
+        xcursor-size = config.glace.desktop.addons.gtk.cursor.size;
       };
 
       layout = {
+        gaps = 6;
+
         border = {
-          enable = true;
           width = 2;
-          active.color = "#BEC8CD";
-          inactive.color = "#131314";
-          urgent.color = "#92B2D3";
+          active-color = "#BEC8CD";
+          inactive-color = "#131314";
+          urgent-color = "#92B2D3";
+        };
+
+        background-color = "transparent";
+
+        struts = {
+          left = 4;
+          right = 4;
+          top = 4;
+          bottom = 4;
         };
 
         focus-ring = {
-          enable = false;
+          off = [];
         };
 
         insert-hint = {
-          enable = true;
-          display.color = "#A79087";
+          color = "#A79087";
         };
 
-        preset-column-widths = [
+        preset-column-widths._children = [
           {proportion = 1. / 3.;}
           {proportion = 1. / 2.;}
           {proportion = 2. / 3.;}
           {proportion = 1. / 1.;}
         ];
 
-        preset-window-heights = [
+        preset-window-heights._children = [
           {proportion = 1. / 3.;}
           {proportion = 1. / 2.;}
           {proportion = 2. / 3.;}
           {proportion = 1. / 1.;}
         ];
 
-        always-center-single-column = true;
+        always-center-single-column = [];
         center-focused-column = "never";
 
-        default-column-width = {
-          proportion = 1. / 2.;
-        };
-
         default-column-display = "tabbed";
+        default-column-width = {proportion = 1. / 2.;};
 
         tab-indicator = {
-          enable = true;
           gap = 2;
-          corner-radius = 4;
-          hide-when-single-tab = true;
-          place-within-column = true;
           width = 6;
-          active.color = "#CD532C";
-          inactive.color = "#6B5F5A";
-          urgent.color = "#D4A017";
-        };
+          corner-radius = 4;
 
-        gaps = 6;
+          position = "left";
+          length._props = {total-proportion = 0.5;};
+          gaps-between-tabs = 0;
 
-        struts = {
-          bottom = 4;
-          top = 4;
-          left = 4;
-          right = 4;
+          hide-when-single-tab = [];
+          place-within-column = [];
+
+          active-color = "#CD532C";
+          inactive-color = "#6B5F5A";
+          urgent-color = "#D4A017";
         };
       };
 
@@ -147,10 +141,6 @@ in {
         dnd-edge-workspace-switch = {
           delay-ms = 400;
           trigger-height = 24;
-        };
-
-        hot-corners = {
-          enable = true;
         };
       };
     };

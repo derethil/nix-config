@@ -7,60 +7,49 @@
   cfg = config.glace.desktop.niri;
 
   hideWindowRule = appId: title: {
-    matches = [
-      {
-        app-id = appId;
-        title = title;
-      }
-    ];
+    match._props = {
+      app-id._raw = ''r#"${appId}"#'';
+      title = title;
+    };
     block-out-from = "screen-capture";
   };
 
   defaultWorkspaceRule = appId: workspace: {
-    matches = [{app-id = appId;}];
+    match._props = {app-id._raw = ''r#"${appId}"#'';};
     open-on-workspace = toString workspace;
     open-focused = true;
   };
 
   fullscreenRule = appId: {
-    matches = [{app-id = appId;}];
+    match._props = {app-id._raw = ''r#"${appId}"#'';};
     open-fullscreen = true;
     open-focused = true;
   };
 
   defaultWidthRule = appId: title: widthConfig: {
-    matches = [
-      {
-        app-id = appId;
-        title = title;
-      }
-    ];
+    match._props = {
+      app-id._raw = ''r#"${appId}"#'';
+      title = title;
+    };
     default-column-width = widthConfig;
   };
 
   defaultWidthRule' = appId: widthConfig: defaultWidthRule appId ".*" widthConfig;
 in {
   config = mkIf cfg.enable {
-    programs.niri.settings.window-rules = [
+    wayland.windowManager.niri.settings.window-rule = [
       # Rounded Borders
       {
         clip-to-geometry = true;
-        geometry-corner-radius = {
-          bottom-left = 8.0;
-          bottom-right = 8.0;
-          top-left = 8.0;
-          top-right = 8.0;
-        };
+        geometry-corner-radius = [8 8 8 8];
       }
 
       # Fix Steam Flickering
       {
-        matches = [
-          {
-            app-id = "^steam$";
-            title = "^()$";
-          }
-        ];
+        match._props = {
+          app-id = "^steam$";
+          title = "^()$";
+        };
         open-focused = true;
         min-width = 1;
         min-height = 1;
@@ -92,47 +81,32 @@ in {
 
       # Floating Windows
       {
-        matches = [{app-id = "^[mM]inecraft.*$";}];
+        match._props = {app-id = "^[mM]inecraft.*$";};
         open-floating = false;
         tiled-state = true;
       }
-
       {
+        match._props = {
+          title = "^(Friends List)$";
+          app-id = "steam";
+        };
         open-floating = true;
-        matches = [
-          {
-            title = "^(Friends List)$";
-            app-id = "steam";
-          }
-        ];
       }
       {
+        match._props = {app-id = ".*qalculate.*";};
         open-floating = true;
         default-window-height = {fixed = 800;};
         default-column-width = {fixed = 1100;};
-        matches = [
-          {
-            app-id = ".*qalculate.*";
-          }
-        ];
       }
       {
+        match._props = {title = ".*Picture-in-Picture.*";};
         open-floating = true;
-        matches = [
-          {
-            title = ".*Picture-in-Picture.*";
-          }
-        ];
       }
       {
+        match._props = {app-id = "yazi";};
         open-floating = true;
         default-window-height = {fixed = 720;};
         default-column-width = {fixed = 800;};
-        matches = [
-          {
-            app-id = "yazi";
-          }
-        ];
       }
 
       # Fullscreen Windows

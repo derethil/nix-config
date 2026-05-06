@@ -5,37 +5,28 @@
   ...
 }: let
   inherit (lib) mkIf mkMerge getExe;
-  inherit (lib.strings) join;
   cfg = config.glace.desktop.niri;
 
-  mkWorkspaceBinds' = mod: action: extraArgs:
-    builtins.listToAttrs (map (i: let
-      key =
-        if i == 10
-        then "0"
-        else toString i;
-    in {
-      name = "${mod}+${key}";
-      value =
-        if extraArgs == null
-        then {action.${action} = i;}
-        else {action.${action} = i;} // extraArgs;
-    }) (lib.range 1 10));
+  withProps = props: options:
+    mkMerge [
+      {
+        _props = props;
+      }
+      options
+    ];
 
-  mkWorkspaceBinds = key: action: mkWorkspaceBinds' key action null;
-
-  action' = description: action: {
-    hotkey-overlay.title = description;
-    action = action;
-  };
-
-  mkAppKeybind = description: args: let
-    command =
-      if config.glace.desktop.uwsm.enable
-      then ["uwsm-app" "--"] ++ args
-      else args;
-  in
-    action' description (config.lib.niri.actions.spawn command);
+  mkWorkspaceBinds = modifier: action:
+    builtins.listToAttrs (builtins.map (
+      i: let
+        key =
+          if i == 10
+          then 0
+          else i;
+      in {
+        name = "${modifier}+${toString key}";
+        value = {"${action}" = i;};
+      }
+    ) (lib.range 1 10));
 
   mkMenu = menu: let
     font = config.glace.system.fonts.default.monospace;
@@ -58,217 +49,174 @@
     '';
 in {
   config = mkIf cfg.enable {
-    programs.niri.settings.binds = with config.lib.niri.actions;
-      mkMerge [
-        {
-          # Exit Session
-          "Mod+Shift+E" = action' "Exit Session" (
-            if config.glace.desktop.uwsm.enable
-            then spawn-sh "uwsm stop"
-            else {quit.skip-confirmation = true;}
-          );
+    wayland.windowManager.niri.settings.binds = mkMerge [
+      {
+        # Exit Session
+        "Mod+Shift+E" = withProps {hotkey-overlay-title = "Exit Session";} (
+          if config.glace.desktop.uwsm.enable
+          then {spawn-sh = ["uwsm" "stop"];}
+          else {quit = {_props = {skip-confirmation = true;};};}
+        );
 
-          # Hotkey Overlay
-          "Mod+Shift+Slash" = mkIf (!config.glace.desktop.dank-material-shell.enable) (
-            action' "Show Hotkey Overlay" (spawn-sh "niri msg action show-hotkey-overlay")
-          );
+        # Builtin Hotkey Overlay
+        "Mod+Shift+Slash" = mkIf (!config.glace.desktop.dank-material-shell.enable) (
+          withProps {hotkey-overlay-title = "Show Hotkey Overlay";} {
+            spawn-sh = ["niri" "msg" "action" "show-hotkey-overlay"];
+          }
+        );
 
-          # Window Commands
-          "Mod+Q".action = close-window;
-          "Mod+F".action = fullscreen-window;
-          "Mod+Shift+F".action = toggle-windowed-fullscreen;
+        # Window State Management
+        "Mod+Q" = {close-window = [];};
+        "Mod+F" = {fullscreen-window = [];};
+        "Mod+Shift+F" = {toggle-windowed-fullscreen = [];};
+        "Mod+Space" = {switch-focus-between-floating-and-tiling = [];};
+        "Mod+Shift+Space" = {toggle-window-floating = [];};
+        "Mod+MouseForward" = {toggle-window-floating = [];};
 
-          # Quick Launcher
-          "Mod+D".action = spawn-sh (getExe (mkMenu [
-            {
-              key = "t";
-              desc = "Terminal";
-              cmd = join " " config.glace.apps.terminals.commands.withTmux;
-            }
-            {
-              key = "f";
-              desc = "Firefox";
-              cmd = "firefox";
-            }
-            {
-              key = "m";
-              desc = "Music";
-              cmd = "spotify";
-            }
-            {
-              key = "d";
-              desc = "Discord";
-              cmd = "vesktop";
-            }
-            {
-              key = "c";
-              desc = "Mattermost";
-              cmd = "mattermost-desktop";
-            }
-            {
-              key = "o";
-              desc = "Obsidian";
-              cmd = "obsidian";
-            }
-          ]));
+        # Focus Windows
+        "Mod+Comma" = {focus-column-first = [];};
+        "Mod+Period" = {focus-column-last = [];};
+        "Mod+H" = {focus-column-left = [];};
+        "Mod+L" = {focus-column-right = [];};
+        "Mod+K" = {focus-window-up = [];};
+        "Mod+J" = {focus-window-down = [];};
 
-          # Floating Windows
-          "Mod+Space".action = switch-focus-between-floating-and-tiling;
-          "Mod+Shift+Space".action = toggle-window-floating;
-          "Mod+MouseForward".action = toggle-window-floating;
+        # Move within Workspace
+        "Mod+Shift+Comma" = {move-column-to-first = [];};
+        "Mod+Shift+Period" = {move-column-to-last = [];};
+        "Mod+Shift+H" = {move-column-left = [];};
+        "Mod+Shift+L" = {move-column-right = [];};
+        "Mod+Shift+K" = {move-window-up = [];};
+        "Mod+Shift+J" = {move-window-down = [];};
+        "Mod+Ctrl+H" = {consume-or-expel-window-left = [];};
+        "Mod+Ctrl+L" = {consume-or-expel-window-right = [];};
 
-          # Focus Windows / Columns
-          "Mod+Comma".action = focus-column-first;
-          "Mod+Period".action = focus-column-last;
-          "Mod+H".action = focus-column-left;
-          "Mod+L".action = focus-column-right;
-          "Mod+K".action = focus-window-up;
-          "Mod+J".action = focus-window-down;
+        # Resize
+        "Mod+S" = {toggle-column-tabbed-display = [];};
+        "Mod+R" = withProps {hotkey-overlay-title = "Resize Column";} {
+          spawn-sh = [
+            (getExe (mkMenu [
+              {
+                key = "s";
+                desc = "1/3 width";
+                cmd = "niri msg action set-column-width 33%";
+              }
+              {
+                key = "d";
+                desc = "1/2 width";
+                cmd = "niri msg action set-column-width 50%";
+              }
+              {
+                key = "f";
+                desc = "2/3 width";
+                cmd = "niri msg action set-column-width 67%";
+              }
+              {
+                key = "g";
+                desc = "Full width";
+                cmd = "niri msg action set-column-width 100%";
+              }
+            ]))
+          ];
+        };
 
-          # Move Windows / Columns within Workspace
-          "Mod+Shift+Comma".action = move-column-to-first;
-          "Mod+Shift+Period".action = move-column-to-last;
-          "Mod+Shift+H".action = move-column-left;
-          "Mod+Shift+L".action = move-column-right;
-          "Mod+Shift+K".action = move-window-up;
-          "Mod+Shift+J".action = move-window-down;
+        # Overview
+        "Alt+Tab" = {toggle-overview = [];};
+      }
 
-          "Mod+Ctrl+H".action = consume-or-expel-window-left;
-          "Mod+Ctrl+L".action = consume-or-expel-window-right;
-
-          # Resize Columns
-          "Mod+S".action = toggle-column-tabbed-display;
-          "Mod+R".action = spawn-sh (getExe (mkMenu [
-            {
-              key = "s";
-              desc = "1/3 width";
-              cmd = "niri msg action set-column-width 33%";
-            }
-            {
-              key = "d";
-              desc = "1/2 width";
-              cmd = "niri msg action set-column-width 50%";
-            }
-            {
-              key = "f";
-              desc = "2/3 width";
-              cmd = "niri msg action set-column-width 67%";
-            }
-            {
-              key = "g";
-              desc = "Full width";
-              cmd = "niri msg action set-column-width 100%";
-            }
-          ]));
-
-          # Switch Workspaces
-          "Mod+Backspace".action = focus-workspace-previous;
-
-          # Overview
-          "Alt+Tab".action = toggle-overview;
-        }
-
-        # Smart Workspace Navigation
-        (let
-          smart-workspace = getExe pkgs.inputs.niri-smart-workspace.default;
-        in
-          mkIf cfg.binds.useSmartWorkspaceBinds {
-            "Mod+BracketLeft".action = spawn-sh "${smart-workspace} up";
-            "Mod+BracketRight".action = spawn-sh "${smart-workspace} down";
-            "Mod+WheelScrollUp".action = spawn-sh "${smart-workspace} up";
-            "Mod+WheelScrollDown".action = spawn-sh "${smart-workspace} down";
-          })
-
-        # Default Workspace Navigation
-        (mkIf (!cfg.binds.useSmartWorkspaceBinds) {
-          "Mod+BracketLeft".action = focus-workspace-up;
-          "Mod+BracketRight".action = focus-workspace-down;
-          "Mod+WheelScrollUp".action = focus-workspace-up;
-          "Mod+WheelScrollDown".action = focus-workspace-down;
+      # Focus Workspace
+      (let
+        smart-workspace = getExe pkgs.inputs.niri-smart-workspace.default;
+      in
+        mkIf cfg.binds.useSmartWorkspaceBinds {
+          "Mod+BracketLeft" = {spawn-sh = "${smart-workspace} up";};
+          "Mod+BracketRight" = {spawn-sh = "${smart-workspace} down";};
+          "Mod+WheelScrollUp" = {spawn-sh = "${smart-workspace} up";};
+          "Mod+WheelScrollDown" = {spawn-sh = "${smart-workspace} down";};
+          "Mod+Backspace" = {focus-workspace-previous = [];};
         })
 
-        # Workspace Management
-        (mkWorkspaceBinds "Mod" "focus-workspace")
-        (mkWorkspaceBinds "Mod+Shift" "move-column-to-workspace")
-        # (mkWorkspaceBinds' "Mod+Ctrl+Shift" "move-column-to-workspace" {focus = false;})
+      (mkIf (!cfg.binds.useSmartWorkspaceBinds) {
+        "Mod+BracketLeft" = {focus-workspace-up = [];};
+        "Mod+BracketRight" = {focus-workspace-down = [];};
+        "Mod+WheelScrollUp" = {focus-workspace-up = [];};
+        "Mod+WheelScrollDown" = {focus-workspace-down = [];};
+        "Mod+Backspace" = {focus-workspace-previous = [];};
+      })
 
-        # Color Picker
-        (mkIf config.glace.tools.desktop.hyprpicker.enable {
-          "Mod+B" = action' "Pick Color" (spawn-sh "hyprpicker -a");
-        })
+      (mkWorkspaceBinds "Mod" "focus-workspace")
+      (mkWorkspaceBinds "Mod+Shift" "move-column-to-workspace")
 
-        # Audio Control
-        (mkIf cfg.binds.defaultAudioBinds {
-          "XF86AudioRaiseVolume" = {
-            hotkey-overlay.title = "Increase Volume";
-            action = spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+";
-            allow-when-locked = true;
-          };
-          "XF86AudioLowerVolume" = {
-            hotkey-overlay.title = "Decrease Volume";
-            action = spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-";
-            allow-when-locked = true;
-          };
-          "XF86AudioMute" = {
-            hotkey-overlay.title = "Toggle Mute";
-            action = spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-            allow-when-locked = true;
-          };
+      (mkIf config.glace.tools.desktop.hyprpicker.enable {
+        "Mod+B" = withProps {hotkey-overlay-title = "Pick Color";} {
+          spawn-sh = ["hyprpicker -a"];
+        };
+      })
 
-          "Ctrl+XF86AudioRaiseVolume" = {
-            hotkey-overlay.title = "Increase Mic Volume";
-            action = spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 0.1+";
-            allow-when-locked = true;
-          };
-          "Ctrl+XF86AudioLowerVolume" = {
-            hotkey-overlay.title = "Decrease Mic Volume";
-            action = spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 0.1-";
-            allow-when-locked = true;
-          };
-          "Ctrl+XF86AudioMute" = {
-            hotkey-overlay.title = "Toggle Mic Mute";
-            action = spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
-            allow-when-locked = true;
-          };
-        })
+      (mkIf cfg.binds.defaultAudioBinds {
+        "XF86AudioRaiseVolume" = withProps {
+          hotkey-overlay-title = "Increase Volume";
+          allow-when-locked = true;
+        } {spawn-sh = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"];};
+        "XF86AudioLowerVolume" = withProps {
+          hotkey-overlay-title = "Decrease Volume";
+          allow-when-locked = true;
+        } {spawn-sh = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"];};
+        "XF86AudioMute" = withProps {
+          hotkey-overlay-title = "Toggle Mute";
+          allow-when-locked = true;
+        } {spawn-sh = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"];};
 
-        # Screen Backlight Control
-        (mkIf cfg.binds.defaultBrightnessBinds {
-          "XF86MonBrightnessUp" = {
-            hotkey-overlay.title = "Increase Brightness";
-            action = spawn-sh "brightnessctl set 10%+";
-            allow-when-locked = true;
-          };
-          "XF86MonBrightnessDown" = {
-            hotkey-overlay.title = "Decrease Brightness";
-            action = spawn-sh "brightnessctl set 10%-";
-            allow-when-locked = true;
-          };
-        })
+        "Ctrl+XF86AudioRaiseVolume" = withProps {
+          hotkey-overlay-title = "Increase Mic Volume";
+          allow-when-locked = true;
+        } {spawn-sh = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SOURCE@" "0.1+"];};
+        "Ctrl+XF86AudioLowerVolume" = withProps {
+          hotkey-overlay-title = "Decrease Mic Volume";
+          allow-when-locked = true;
+        } {spawn-sh = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SOURCE@" "0.1-"];};
+        "Ctrl+XF86AudioMute" = withProps {
+          hotkey-overlay-title = "Toggle Mic Mute";
+          allow-when-locked = true;
+        } {spawn-sh = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"];};
+      })
 
-        # Night Light Toggle
-        (mkIf config.glace.desktop.addons.wlsunset.enable {
-          "Mod+Shift+N" = action' "Toggle Night Light" (spawn-sh "systemctl --user is-active wlsunset.service && systemctl --user stop wlsunset.service || systemctl --user start wlsunset.service");
-        })
+      (mkIf cfg.binds.defaultBrightnessBinds {
+        "XF86MonBrightnessUp" = withProps {
+          hotkey-overlay-title = "Increase Brightness";
+          allow-when-locked = true;
+        } {spawn-sh = ["brightnessctl" "set" "10%+"];};
+        "XF86MonBrightnessDown" = withProps {
+          hotkey-overlay-title = "Decrease Brightness";
+          allow-when-locked = true;
+        } {spawn-sh = ["brightnessctl" "set" "10%-"];};
+      })
 
-        # Screenshots
-        (mkIf (!config.glace.desktop.dank-material-shell.enable) {
-          "Print".action.screenshot = [];
-        })
+      # Night Light Toggle
+      (mkIf config.glace.desktop.addons.wlsunset.enable {
+        "Mod+Shift+N" = withProps {hotkey-overlay-title = "Toggle Night Light";} {
+          spawn-sh = ["systemctl --user is-active wlsunset.service && systemctl --user stop wlsunset.service || systemctl --user start wlsunset.service"];
+        };
+      })
 
-        # Application Shortcuts
-        (mkIf (config.glace.apps.terminals.default != null) {
-          "Mod+Return" =
-            mkAppKeybind
-            "Open Terminal (tmux)"
-            config.glace.apps.terminals.commands.withTmux;
+      # Screenshots
+      (mkIf (!config.glace.desktop.dank-material-shell.enable) {
+        "Print" = withProps {hotkey-overlay-title = "Take Screenshot";} {
+          spawn-sh = ["niri" "msg" "action" "screenshot"];
+        };
+      })
 
-          "Mod+Shift+Return" =
-            mkAppKeybind
-            "Open Terminal"
-            config.glace.apps.terminals.commands.base;
-        })
-      ];
+      # Application Shortcuts
+      (mkIf (config.glace.apps.terminals.default != null) {
+        "Mod+Return" = withProps {hotkey-overlay-title = "Open Terminal (tmux)";} {
+          spawn = config.glace.apps.terminals.commands.withTmux;
+        };
+
+        "Mod+Shift+Return" = withProps {hotkey-overlay-title = "Open Terminal";} {
+          spawn = config.glace.apps.terminals.commands.base;
+        };
+      })
+    ];
 
     glace.cli.aliases = {
       kill-window = "kill -9 $(niri msg -j pick-window | jq -r '.pid')";

@@ -24,8 +24,8 @@ in {
   options.glace.desktop.niri.dynamic-float-rules = mkSubmoduleListOpt "List of dynamic float window rules." ruleType;
 
   config = mkIf (cfg.enable && builtins.length rules > 0) {
-    programs.niri.settings.spawn-at-startup = [
-      {argv = [(getExe pkgs.glace.niri-dynamic-float-rules)];}
+    wayland.windowManager.niri.settings.spawn-at-startup = [
+      {_args = [(getExe pkgs.glace.niri-dynamic-float-rules)];}
     ];
 
     xdg.configFile."niri/dynamic-float-rules.json".source = pkgs.writeText "dynamic-float-rules.json" (builtins.toJSON {
