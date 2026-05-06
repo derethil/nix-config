@@ -1,7 +1,8 @@
 {
   "isLightMode": false,
   "doNotDisturb": false,
-  "wallpaperPath": "/home/derethil/Pictures/wallpapers/crescent-earth-21x9.jpg",
+  "terminalOverride": "",
+  "wallpaperPath": "/home/derethil/Pictures/wallpapers/fuji-bird.jpeg",
   "perMonitorWallpaper": false,
   "monitorWallpapers": {},
   "perModeWallpaper": false,

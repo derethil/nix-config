@@ -10,6 +10,9 @@
 in {
   options.glace.desktop.niri = {
     enable = mkBoolOpt false "Whether to enable niri desktop environment.";
+    layout = {
+      defaultColors = mkBoolOpt true "Whether to set Niri color options.";
+    };
     screenshots = {
       path = mkOpt types.str "~/Pictures/screenshots" "The path where screenshots will be saved to disk.";
     };

@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  inherit (lib) mkIf range;
+  inherit (lib) mkIf range mkMerge;
   cfg = config.glace.desktop.niri;
 
   mkNumberedWorkspaces = count: (map (i: {_args = [(toString i)];}) (range 1 count));
@@ -70,12 +70,17 @@ in {
       layout = {
         gaps = 6;
 
-        border = {
-          width = 2;
-          active-color = "#BEC8CD";
-          inactive-color = "#131314";
-          urgent-color = "#92B2D3";
-        };
+        border = mkMerge [
+          {
+            width = 2;
+          }
+
+          (mkIf cfg.layout.defaultColors {
+            active-color = "#BEC8CD";
+            inactive-color = "#131314";
+            urgent-color = "#92B2D3";
+          })
+        ];
 
         background-color = "transparent";
 
@@ -90,7 +95,7 @@ in {
           off = [];
         };
 
-        insert-hint = {
+        insert-hint = mkIf cfg.layout.defaultColors {
           color = "#A79087";
         };
 
@@ -114,22 +119,26 @@ in {
         default-column-display = "tabbed";
         default-column-width = {proportion = 1. / 2.;};
 
-        tab-indicator = {
-          gap = 2;
-          width = 6;
-          corner-radius = 4;
+        tab-indicator = mkMerge [
+          {
+            gap = 2;
+            width = 6;
+            corner-radius = 4;
 
-          position = "left";
-          length._props = {total-proportion = 0.5;};
-          gaps-between-tabs = 0;
+            position = "left";
+            length._props = {total-proportion = 0.5;};
+            gaps-between-tabs = 0;
 
-          hide-when-single-tab = [];
-          place-within-column = [];
+            hide-when-single-tab = [];
+            place-within-column = [];
+          }
 
-          active-color = "#CD532C";
-          inactive-color = "#6B5F5A";
-          urgent-color = "#D4A017";
-        };
+          (mkIf cfg.layout.defaultColors {
+            active-color = "#CD532C";
+            inactive-color = "#6B5F5A";
+            urgent-color = "#D4A017";
+          })
+        ];
       };
 
       gestures = {

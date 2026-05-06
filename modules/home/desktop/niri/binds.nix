@@ -69,6 +69,7 @@ in {
         "Mod+Q" = {close-window = [];};
         "Mod+F" = {fullscreen-window = [];};
         "Mod+Shift+F" = {toggle-windowed-fullscreen = [];};
+        "Mod+M" = {maximize-window-to-edges = [];};
         "Mod+Space" = {switch-focus-between-floating-and-tiling = [];};
         "Mod+Shift+Space" = {toggle-window-floating = [];};
         "Mod+MouseForward" = {toggle-window-floating = [];};
