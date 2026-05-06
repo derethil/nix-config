@@ -51,6 +51,9 @@ in {
   config = mkIf cfg.enable {
     wayland.windowManager.niri.settings.binds = mkMerge [
       {
+        # Overview
+        "Mod+Tab" = {toggle-overview = [];};
+
         # Exit Session
         "Mod+Shift+E" = withProps {hotkey-overlay-title = "Exit Session";} (
           if config.glace.desktop.uwsm.enable
@@ -120,9 +123,6 @@ in {
             ]))
           ];
         };
-
-        # Overview
-        "Alt+Tab" = {toggle-overview = [];};
       }
 
       # Focus Workspace

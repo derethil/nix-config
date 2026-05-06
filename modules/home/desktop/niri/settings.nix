@@ -141,7 +141,36 @@ in {
         ];
       };
 
+      recent-windows = mkMerge [
+        {
+          debounce-ms = 750;
+          open-delay-ms = 150;
+
+          highlight = {
+            padding = 18;
+            corner-radius = 4;
+          };
+
+          previews = {
+            max-scale = 0.65;
+            max-height = 840;
+          };
+        }
+
+        (mkIf cfg.layout.defaultColors {
+          highlight = {
+            active = "#BEC8CD";
+            urgent = "#92B2D3";
+          };
+        })
+      ];
+
       gestures = {
+        hot-corners = {
+          top-right = [];
+          top-left = [];
+        };
+
         dnd-edge-view-scroll = {
           delay-ms = 400;
           trigger-width = 24;
