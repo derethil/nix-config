@@ -55,7 +55,7 @@ in {
         "Mod+Shift+I" = withProps {hotkey-overlay-title = "Toggle Idle Inhibitor";} {spawn-sh = "dms notify --app 'Idle Inhibitor' --icon '${dmsLogo}' \"$(dms ipc call inhibit toggle)\"";};
 
         # Lock Screen
-        "Mod+Alt+L" = withProps {hotkey-overlay-title = "Lock Screen";} {spawn-sh = "dms ipc call lock lock";};
+        "Ctrl+Alt+L" = withProps {hotkey-overlay-title = "Lock Screen";} {spawn-sh = "dms ipc call lock lock";};
 
         # Screenshots
         "Print" = withProps {hotkey-overlay-title = "Take Screenshot";} {spawn-sh = "dms screenshot --no-file";};

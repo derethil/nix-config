@@ -25,7 +25,7 @@ in {
 
     services.displayManager = {
       enable = true;
-      sessionPackages = [pkgs.niri-stable];
+      sessionPackages = [pkgs.niri-unstable];
     };
   };
 }
