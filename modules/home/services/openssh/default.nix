@@ -33,6 +33,7 @@ in {
         forwardAgent = false;
         serverAliveInterval = 60;
         serverAliveCountMax = 3;
+        proxyCommand = "none";
       };
     };
 
