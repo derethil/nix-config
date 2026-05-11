@@ -79,6 +79,18 @@ in {
     services = {
       openssh = enabled;
       easyeffects = enabled;
+      remote-pull = {
+        enable = true;
+        targets = [
+          {
+            name = "monifactory";
+            source = "ubuntu@129.146.48.13:/home/ubuntu/monifactory/backups/*";
+            destination = "~/backups/monifactory";
+            schedule = "daily";
+            delete = true;
+          }
+        ];
+      };
     };
     cli = {
       fish = enabled;
