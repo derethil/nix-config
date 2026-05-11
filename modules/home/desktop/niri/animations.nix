@@ -7,17 +7,17 @@
   cfg = config.glace.desktop.niri;
 
   materialDesignDecelerate = {
-    duration-ms = 200;
+    duration-ms = 100;
     curve = ["cubic-bezier" 0.05 0.7 0.1 1.0];
   };
 
   materialDesignAccelerate = {
-    duration-ms = 150;
+    duration-ms = 75;
     curve = ["cubic-bezier" 0.3 0.0 0.8 0.15];
   };
 
   menuDecelerate = {
-    duration-ms = 200;
+    duration-ms = 100;
     curve = ["cubic-bezier" 0.1 1.0 0.0 1.0];
   };
 
@@ -41,7 +41,7 @@ in {
       window-close = materialDesignAccelerate;
       window-movement = materialDesignDecelerate;
       window-resize = materialDesignDecelerate;
-      workspace-switch = menuDecelerate // {duration-ms = 600;};
+      workspace-switch = menuDecelerate // {duration-ms = 300;};
     };
   };
 }
