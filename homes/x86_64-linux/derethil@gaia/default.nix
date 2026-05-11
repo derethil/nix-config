@@ -91,6 +91,7 @@ in {
       wl-clipboard = enabled;
       chafa = enabled;
       yazi = enabled;
+      atuin = enabled;
     };
     system = {
       fonts = enabled;
