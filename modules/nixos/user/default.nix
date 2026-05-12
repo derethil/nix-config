@@ -12,6 +12,12 @@ in {
       neededForUsers = true;
     };
 
+    services = {
+      accounts-daemon = {
+        enable = true;
+      };
+    };
+
     users = {
       mutableUsers = false;
       users.${cfg.name} = {
