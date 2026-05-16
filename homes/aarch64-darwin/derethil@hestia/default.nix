@@ -50,7 +50,7 @@ in {
         jira-cli = enabled;
         neovim = enabled;
         claude-code = enabled;
-        postgresql = enabled;
+        # postgresql = enabled; failing to build right now
       };
       nix = {
         manix = enabled;
