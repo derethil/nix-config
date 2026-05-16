@@ -106,12 +106,16 @@ in {
 
   config = mkIf cfg.enable {
     glace.cli.abbreviations = abbreviations;
+
     home.packages = with pkgs; [
       git-fixup
       git-root
       git-prune-merged
       git-open
+
+      gh
     ];
+
     programs.git = {
       enable = true;
       package = cfg.package;
