@@ -8,7 +8,8 @@
     "noTrigger": false
   },
   "emojiLauncher": {
-    "enabled": true
+    "enabled": true,
+    "recentEmojis": "♐,📅,✨,😡,💎,☹️,🫡"
   },
   "powerUsagePlugin": {
     "enabled": false
@@ -25,7 +26,14 @@
   "hueManager": {
     "openHuePath": "openhue",
     "enabled": true,
-    "useDeviceIcons": true
+    "useDeviceIcons": true,
+    "syncRoomIds": [
+      "ee53b611-782f-435a-bec0-a3135cae771a",
+      "bbc69f6f-f959-4efd-a46d-a9996de111f0",
+      "96fee890-6752-4ff3-a6a6-e3a8781db180",
+      "ce9dc0c6-a60e-447d-bde4-ce09b035893c"
+    ],
+    "autoSyncAccent": false
   },
   "alarmClock": {
     "enabled": true
@@ -55,7 +63,7 @@
     "enabled": true
   },
   "dms-niri-screenshot": {
-    "mode": "interactive",
+    "mode": "window",
     "saveToDisk": false
   },
   "claudeCodeUsage": {
