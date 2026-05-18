@@ -7,22 +7,22 @@
   ...
 }: let
   pname = "iloader";
-  version = "2.2.5";
+  version = "2.2.6";
 
   sources = rec {
     x86_64-linux = {
       url = "https://github.com/nab138/iloader/releases/download/v${version}/iloader-linux-amd64.AppImage";
-      hash = "sha256-19PzDGn/Sq10xzY1HDwyo02yFrfGRD+0w56OWL1vArg=";
+      hash = "sha256-rLsDVXct9hFu3cyDv5i7NQX820WDxMfFEMfiUPGrOjU=";
     };
 
     aarch64-linux = {
       url = "https://github.com/nab138/iloader/releases/download/v${version}/iloader-linux-aarch64.AppImage";
-      hash = "sha256-4xQ/h/C2dK8FpCrnMeAkl7uc46xeNISJ2Ked5gFWUqI=";
+      hash = "sha256-WBQbaGgws/RUgCeFSafn2GXJXpxtITXEW3ypbtAKH4I=";
     };
 
     x86_64-darwin = {
       url = "https://github.com/nab138/iloader/releases/download/v${version}/iloader-darwin-universal.app.tar.gz";
-      hash = "sha256-MCtNJwjMnFYt1Qazp0Ir7Bejsjneo/6LsTd2IFzsoqI=";
+      hash = "sha256-Xo0rmVvMeUbtecvxqORd3O5eBnLYQs0LwyxOOghnHb4=";
     };
 
     aarch64-darwin = x86_64-darwin;
