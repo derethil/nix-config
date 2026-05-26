@@ -9,11 +9,16 @@
   inherit (lib.glace) mkBoolOpt mkOpt;
   cfg = config.glace.cli.yazi;
 in {
+  imports = [./trash.nix];
+
   options.glace.cli.yazi = {
     enable = mkBoolOpt false "Whether to enable yazi file manager.";
     portal = {
       enable = mkBoolOpt true "Whether to use  yazi as the default file picker portal.";
       terminal = mkOpt (types.nullOr types.str) null "The terminal emulator command to use for the portal. If null, uses xdg-terminal-exec from glace.desktop.xdg.";
+    };
+    trash = {
+      enable = mkBoolOpt true "Whether to enable the trash desktop entry for Yazi.";
     };
   };
 

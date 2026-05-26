@@ -412,7 +412,7 @@
   "dockMaxVisibleRunningApps": 0,
   "dockShowOverflowBadge": true,
   "dockShowTrash": true,
-  "dockTrashFileManager": "custom",
+  "dockTrashFileManager": "default",
   "dockTrashCustomCommand": "xdg-terminal-exec-wrapped --app-id yazi yazi ~/.local/share/Trash/files",
   "notificationOverlayEnabled": true,
   "notificationPopupShadowEnabled": true,
