@@ -12,6 +12,11 @@ update input amend='':
         fi; \
     fi
 
+diff:
+    #!/usr/bin/env bash
+    profiles=($(ls -dv /nix/var/nix/profiles/system-*-link | tail -2))
+    dix "${profiles[0]}" "${profiles[1]}"
+
 check:
     nix flake check --all-systems
 
