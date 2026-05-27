@@ -13,6 +13,7 @@ in {
       lutris = disabled;
       faugus-launcher = enabled;
       bongocat = enabled;
+      starcitizen = enabled;
     };
     cli = {
       fish = enabled;
@@ -56,6 +57,7 @@ in {
     };
     system = {
       impermanence = enabled;
+      swap.zram = enabled;
       time = enabled;
       fonts = enabled;
       ntsync = enabled;

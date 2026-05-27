@@ -104,6 +104,11 @@
       url = "github:fufexan/nix-gaming";
     };
 
+    nix-citizen = {
+      url = "github:LovingMelody/nix-citizen";
+      inputs.nix-gaming.follows = "nix-gaming";
+    };
+
     yazi-gruvbox-dark = {
       url = "github:bennyyip/gruvbox-dark.yazi";
       flake = false;
@@ -213,6 +218,7 @@
       niri-nix.overlays.niri-nix
       nur.overlays.default
       cachyos-kernel.overlays.pinned
+      (final: _prev: {unixodbc = final.unixODBC;})
     ];
 
     systems.modules.darwin = with inputs;
@@ -237,6 +243,7 @@
         disko.nixosModules.disko
         nix-gaming.nixosModules.pipewireLowLatency
         nix-gaming.nixosModules.platformOptimizations
+        nix-citizen.nixosModules.default
         nix-index-database.nixosModules.nix-index
         # Applications
         nvim-config.nixosModules.nvim-config
@@ -267,6 +274,7 @@
   nixConfig = {
     extra-substituters = [
       "https://nix-community.cachix.org"
+      "https://nix-citizen.cachix.org"
       "https://derethil.cachix.org"
       "https://hyprland.cachix.org"
       "https://niri-nix.cachix.org"
@@ -277,6 +285,7 @@
     extra-trusted-public-keys = [
       "derethil.cachix.org-1:4v8v6Oo2UHdB3FKutgQ2z3O9L++ukejhGvQFg6Pjsfc="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "nix-citizen.cachix.org-1:lPMkWc2X8XD4/7YPEEwXKKBg+SVbYTVrAaLA2wQTKCo="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
 
       "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
