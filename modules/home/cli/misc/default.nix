@@ -29,7 +29,7 @@ in {
           bottom # System monitor
           diff-so-fancy # Better diff
           duf # Disk Usage
-          ncdu
+          gdu
           eza # Better ls
           fd # Better find
           fzf # Fuzzy finder
