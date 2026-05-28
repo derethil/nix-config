@@ -18,7 +18,7 @@ in {
     programs.steam = {
       enable = true;
 
-      package = pkgs.steam.override {
+      package = pkgs.unstable.steam.override {
         extraEnv =
           {
             GAMEMODERUN = "1";
