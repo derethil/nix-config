@@ -12,6 +12,8 @@ permissions:
 jobs:
   flake_lock:
     runs-on: ubuntu-latest
+    outputs:
+      pull-request-number: ${{ steps.update.outputs.pull-request-number }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -54,3 +56,20 @@ jobs:
             echo "[#$num]($url) was $operation."
             echo
           ) >> $GITHUB_STEP_SUMMARY
+
+  auto_merge:
+    needs: flake_lock
+    if: needs.flake_lock.outputs.pull-request-number != ''
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for checks to pass, then merge
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN_FOR_FLAKE_UPDATE }}
+        run: |
+          gh pr checks ${{ needs.flake_lock.outputs.pull-request-number }} \
+            --repo ${{ github.repository }} \
+            --watch --interval 30 \
+            --fail-on-no-checks
+          gh pr merge ${{ needs.flake_lock.outputs.pull-request-number }} \
+            --repo ${{ github.repository }} \
+            --merge
