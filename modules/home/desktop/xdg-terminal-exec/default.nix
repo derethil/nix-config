@@ -24,7 +24,7 @@ in {
   config = mkIf cfg.enable {
     xdg.terminal-exec = {
       enable = true;
-      package = pkgs.xdg-terminal-exec-mkhl;
+      package = pkgs.xdg-terminal-exec;
       settings = {
         default = desktopFiles;
       };

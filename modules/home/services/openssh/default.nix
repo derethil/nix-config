@@ -28,12 +28,12 @@ in {
     programs.ssh = {
       enable = true;
       enableDefaultConfig = false;
-      matchBlocks."*" = {
-        addKeysToAgent = "yes";
-        forwardAgent = false;
-        serverAliveInterval = 60;
-        serverAliveCountMax = 3;
-        proxyCommand = "none";
+      settings."*" = {
+        AddKeysToAgent = "yes";
+        ForwardAgent = false;
+        ServerAliveInterval = 60;
+        ServerAliveCountMax = 3;
+        ProxyCommand = "none";
       };
     };
 

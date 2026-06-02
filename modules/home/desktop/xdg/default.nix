@@ -38,6 +38,7 @@ in {
       userDirs = mkIf (pkgs.stdenv.hostPlatform.isLinux && config.glace.user.userdirs.enable) {
         enable = true;
         createDirectories = true;
+        setSessionVariables = true;
         desktop = config.glace.user.userdirs.desktop;
         documents = config.glace.user.userdirs.documents;
         download = config.glace.user.userdirs.download;
@@ -47,7 +48,7 @@ in {
         templates = config.glace.user.userdirs.templates;
         publicShare = config.glace.user.userdirs.publicShare;
         extraConfig = {
-          XDG_SCREENSHOTS_DIR = "${config.glace.user.userdirs.pictures}/screenshots";
+          SCREENSHOTS = "${config.glace.user.userdirs.pictures}/screenshots";
         };
       };
     };

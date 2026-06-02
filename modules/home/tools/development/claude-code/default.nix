@@ -17,7 +17,7 @@ in {
       enable = true;
       package = pkgs.claude-code;
       commandsDir = ./commands;
-      memory.text = ''
+      context = ''
         Do not over-plan. For simple tasks, just make the change directly.
         Do not explore project context, ask clarifying questions, propose
         multiple approaches, or write design docs unless explicitly asked.

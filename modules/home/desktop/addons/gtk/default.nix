@@ -66,7 +66,13 @@ in {
       enable = true;
       gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
       gtk3.extraConfig = {"gtk-application-prefer-dark-theme" = 1;};
-      gtk4.extraConfig = {"AdwStyleManager:color-scheme" = "prefer-dark";};
+      gtk4 = {
+        extraConfig = {"AdwStyleManager:color-scheme" = "prefer-dark";};
+        theme = {
+          inherit (cfg.theme) name;
+          inherit (cfg.theme) package;
+        };
+      };
       font = {
         inherit (font) name package size;
       };

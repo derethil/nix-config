@@ -9,7 +9,7 @@
   pname = "iloader";
   version = "2.2.6";
 
-  sources = rec {
+  sources = {
     x86_64-linux = {
       url = "https://github.com/nab138/iloader/releases/download/v${version}/iloader-linux-amd64.AppImage";
       hash = "sha256-rLsDVXct9hFu3cyDv5i7NQX820WDxMfFEMfiUPGrOjU=";
@@ -20,12 +20,10 @@
       hash = "sha256-WBQbaGgws/RUgCeFSafn2GXJXpxtITXEW3ypbtAKH4I=";
     };
 
-    x86_64-darwin = {
+    aarch64-darwin = {
       url = "https://github.com/nab138/iloader/releases/download/v${version}/iloader-darwin-universal.app.tar.gz";
       hash = "sha256-Xo0rmVvMeUbtecvxqORd3O5eBnLYQs0LwyxOOghnHb4=";
     };
-
-    aarch64-darwin = x86_64-darwin;
   };
 
   src = fetchurl (sources.${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}"));
@@ -34,7 +32,7 @@
     description = "A user-friendly desktop application for sideloading apps onto iOS devices";
     homepage = "https://github.com/nab138/iloader";
     license = licenses.mit;
-    platforms = ["x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"];
+    platforms = ["x86_64-linux" "aarch64-linux" "aarch64-darwin"];
     maintainers = [];
   };
 in

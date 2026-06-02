@@ -45,7 +45,7 @@ in {
 
           # Nix Tools
           alejandra # Formatter
-          nixfmt-rfc-style
+          nixfmt
           nvd # Differ
           nix-diff # More detailed differ
           nh # Nix command wrapper

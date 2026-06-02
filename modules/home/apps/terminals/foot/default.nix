@@ -31,7 +31,7 @@ in {
           pad = "6x6";
           selection-target = "both";
         };
-        colors = {
+        colors-dark = {
           alpha = 1.0;
           foreground = "d4be98";
           background = "282828";

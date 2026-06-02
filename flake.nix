@@ -2,7 +2,7 @@
   description = "My Home Manager Configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # Nix
@@ -13,7 +13,7 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -43,7 +43,7 @@
     # Darwin
 
     darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-25.11";
+      url = "github:LnL7/nix-darwin/nix-darwin-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -116,11 +116,6 @@
 
     bongocat = {
       url = "github:saatvik333/wayland-bongocat";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    claude-desktop = {
-      url = "github:k3d3/claude-desktop-linux-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -206,6 +201,7 @@
     channels-config = {
       allowUnfree = true;
       allowUnfreePredicate = _: true;
+      allowDeprecatedx86_64Darwin = true;
     };
 
     templates = {
@@ -218,7 +214,6 @@
       niri-nix.overlays.niri-nix
       nur.overlays.default
       cachyos-kernel.overlays.pinned
-      (final: _prev: {unixodbc = final.unixODBC;})
     ];
 
     systems.modules.darwin = with inputs;

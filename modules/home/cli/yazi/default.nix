@@ -26,6 +26,7 @@ in {
     programs.yazi = {
       enable = true;
       enableFishIntegration = true;
+      shellWrapperName = "yy";
 
       flavors = {
         gruvbox-dark = inputs.yazi-gruvbox-dark;

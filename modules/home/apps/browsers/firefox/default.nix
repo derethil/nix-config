@@ -21,6 +21,7 @@ in {
 
     programs.firefox = {
       enable = true;
+      configPath = "${config.xdg.configHome}/mozilla/firefox";
       package =
         if config.glace.tools.nix.nixgl.enable or false
         then config.lib.nixGL.wrap firefoxPkg

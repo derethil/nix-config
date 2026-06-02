@@ -12,7 +12,6 @@ in {
         kitty = enabled;
       };
       stremio = enabled;
-      claude-desktop = enabled;
       obs = enabled;
       obsidian = enabled;
       spotify = enabled;
