@@ -4,9 +4,11 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf mkMerge mkForce;
+  inherit (lib) mkIf mkMerge mkForce findFirst;
   inherit (lib.glace) mkBoolOpt;
   cfg = config.glace.apps.browsers.firefox;
+  displays = config.glace.hardware.displays;
+  primaryDisplay = findFirst (d: d.primary) (builtins.head displays) displays;
   firefoxPkg = pkgs.firefox.override {nativeMessagingHosts = with pkgs; [tridactyl-native];};
 in {
   options.glace.apps.browsers.firefox = {
@@ -258,6 +260,9 @@ in {
 
             # Make scrollbar bigger (I'm blind lol)
             "widget.non-native-theme.scrollbar.size.override" = 24;
+
+            # Match primary display refresh rate
+            "layout.frame_rate" = primaryDisplay.framerate;
           };
         };
       };
