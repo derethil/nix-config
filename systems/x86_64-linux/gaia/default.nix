@@ -1,4 +1,8 @@
-{lib, ...}: let
+{
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib.glace) enabled disabled enabled';
 in {
   imports = [
@@ -91,6 +95,19 @@ in {
       };
     };
   };
+
+  # ath12k (WiFi 7 chip) initializes with 1 dBm TX power on some channels (notably ch36),
+  # causing association timeouts. Re-apply 19 dBm whenever the interface comes up.
+  networking.networkmanager.dispatcherScripts = [
+    {
+      source = pkgs.writeShellScript "fix-ath12k-txpower" ''
+        if [ "$1" = "wlp15s0" ] && [ "$2" = "up" ]; then
+          ${pkgs.iw}/bin/iw dev wlp15s0 set txpower fixed 1900
+        fi
+      '';
+      type = "basic";
+    }
+  ];
 
   system.stateVersion = "25.11";
 }
