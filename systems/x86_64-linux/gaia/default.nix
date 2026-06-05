@@ -54,6 +54,7 @@ in {
       flatpak = enabled;
       szuru = enabled;
       sideloading = enabled;
+      sunshine = enabled;
     };
     system = {
       impermanence = enabled;
