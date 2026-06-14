@@ -1,290 +1,115 @@
+# DO-NOT-EDIT. This file was auto-generated using github:vic/flake-file.
+# Use `nix run .#write-flake` to regenerate it.
 {
-  description = "My Home Manager Configuration";
+  description = "Personal NixOS, Nix Darwin, and Home Manager configurations";
+
+  outputs =
+    inputs@{ flake-parts, import-tree, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } (import-tree [
+      ./modules
+      ./hosts
+      ./overlays
+      ./templates
+    ]);
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-
-    # Nix
-
-    snowfall-lib = {
-      url = "github:snowfallorg/lib";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    home-manager = {
-      url = "github:nix-community/home-manager/release-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    home-manager-unstable = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
-    impermanence = {
-      url = "github:nix-community/impermanence";
-    };
-
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    cachyos-kernel = {
-      url = "github:xddxdd/nix-cachyos-kernel/release";
-    };
-
-    it87 = {
-      url = "github:frankcrawford/it87/h2ram-mmio";
-      flake = false;
-    };
-
-    # Darwin
-
-    darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    mac-app-util = {
-      url = "github:hraban/mac-app-util";
-    };
-
-    # Nix Utils
-
-    nixgl = {
-      url = "github:nix-community/nixGL";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nix-flatpak = {
-      url = "github:gmodena/nix-flatpak/?ref=latest";
-    };
-
-    nix-index-database = {
-      url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nixpak = {
-      url = "github:nixpak/nixpak";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Secrets
-
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    secrets = {
-      url = "git+ssh://git@github.com/derethil/nix-secrets?ref=main";
-      flake = false;
-    };
-
-    # Applications
-
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    icon-browser = {
-      url = "github:aylur/icon-browser";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nvim-config = {
-      url = "github:derethil/nvim-config";
-    };
-
-    nix-gaming = {
-      url = "github:fufexan/nix-gaming";
-    };
-
-    nix-citizen = {
-      url = "github:LovingMelody/nix-citizen";
-      inputs.nix-gaming.follows = "nix-gaming";
-    };
-
-    yazi-gruvbox-dark = {
-      url = "github:bennyyip/gruvbox-dark.yazi";
-      flake = false;
-    };
-
     bongocat = {
       url = "github:saatvik333/wayland-bongocat";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # CLI
-
-    tmux-theme = {
-      url = "github:derethil/tmux-theme";
-      flake = false;
-    };
-    tmux-power-zoom = {
-      url = "github:jaclu/tmux-power-zoom";
-      flake = false;
-    };
-    tmux-dotbar = {
-      url = "github:vaaleyard/tmux-dotbar";
-      flake = false;
-    };
-
-    rust-system-scripts = {
-      url = "github:derethil/rust-system-scripts";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Hyprland
-
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
-      inputs.hyprland.follows = "hyprland";
-      inputs.nixpkgs.follows = "hyprland/nixpkgs";
-    };
-    hyprXPrimary = {
-      url = "github:zakk4223/hyprXPrimary";
-      inputs.hyprland.follows = "hyprland";
-      inputs.nixpkgs.follows = "hyprland/nixpkgs";
-    };
-
-    # Niri
-
-    niri-nix = {
-      url = "git+https://codeberg.org/BANanaD3V/niri-nix";
-    };
-
-    niri-smart-workspace = {
-      url = "github:derethil/niri-smart-workspace";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Desktop
-
-    quickshell = {
-      url = "git+https://github.com/quickshell-mirror/quickshell?ref=master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
+    cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
     dank-material-shell = {
       url = "github:AvengeMedia/DankMaterialShell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    disko = {
+      url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     dms-plugin-registry = {
       url = "github:AvengeMedia/dms-plugin-registry";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
+    flake-file.url = "github:vic/flake-file";
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    impermanence = {
+      url = "github:nix-community/impermanence";
+      inputs = {
+        home-manager.follows = "";
+        nixpkgs.follows = "";
+      };
+    };
+    import-tree.url = "github:vic/import-tree";
+    it87 = {
+      url = "github:frankcrawford/it87/h2ram-mmio";
+      flake = false;
+    };
     khal-notify = {
       url = "github:martiert/khal_notifications";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-  };
-
-  outputs = {snowfall-lib, ...} @ inputs: let
-    common-modules = snowfall-lib.snowfall.internal-lib.fs.get-default-nix-files-recursive ./modules/common;
-    system-common-modules = snowfall-lib.snowfall.internal-lib.fs.get-default-nix-files-recursive ./modules/system-common;
-  in (snowfall-lib.mkFlake {
-    inherit inputs;
-    src = ./.;
-
-    snowfall.namespace = "glace";
-
-    channels-config = {
-      allowUnfree = true;
-      allowUnfreePredicate = _: true;
-      allowDeprecatedx86_64Darwin = true;
+    mac-app-util.url = "github:hraban/mac-app-util";
+    niri-nix.url = "git+https://codeberg.org/BANanaD3V/niri-nix";
+    niri-smart-workspace = {
+      url = "github:derethil/niri-smart-workspace";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    templates = {
-      dragonarmy-npm-golang.description = "A template for Node.js and Go development using devenv";
-      npm.description = "A template for Node.js development using devenv";
-      python.description = "A template for Python development using devenv and uv";
+    nix-citizen = {
+      url = "github:LovingMelody/nix-citizen";
+      inputs.nix-gaming.follows = "nix-gaming";
     };
-
-    overlays = with inputs; [
-      niri-nix.overlays.niri-nix
-      nur.overlays.default
-      cachyos-kernel.overlays.pinned
-    ];
-
-    systems.modules.darwin = with inputs;
-      nixpkgs.lib.flatten [
-        # Nix Utils
-        sops-nix.darwinModules.sops
-        mac-app-util.darwinModules.default
-        nix-index-database.darwinModules.nix-index
-        # Applications
-        nvim-config.darwinModules.nvim-config
-        # Common
-        common-modules
-        system-common-modules
-      ];
-
-    systems.modules.nixos = with inputs;
-      nixpkgs.lib.flatten [
-        # Nix Utils
-        nix-flatpak.nixosModules.nix-flatpak
-        sops-nix.nixosModules.sops
-        impermanence.nixosModules.impermanence
-        disko.nixosModules.disko
-        nix-gaming.nixosModules.pipewireLowLatency
-        nix-gaming.nixosModules.platformOptimizations
-        nix-citizen.nixosModules.default
-        nix-index-database.nixosModules.nix-index
-        # Applications
-        nvim-config.nixosModules.nvim-config
-        dank-material-shell.nixosModules.greeter
-        bongocat.nixosModules.default
-        # Common
-        common-modules
-        system-common-modules
-      ];
-
-    homes.modules = with inputs;
-      nixpkgs.lib.flatten [
-        # Nix Utils
-        sops-nix.homeManagerModules.sops
-        mac-app-util.homeManagerModules.default
-        nix-index-database.homeModules.nix-index
-        # Applications
-        nvim-config.homeManagerModules.nvim-config
-        dank-material-shell.homeModules.dank-material-shell
-        dms-plugin-registry.homeModules.default
-        niri-nix.homeModules.default
-        niri-smart-workspace.homeManagerModules.default
-        # Common
-        common-modules
-      ];
-  });
-
-  nixConfig = {
-    extra-substituters = [
-      "https://nix-community.cachix.org"
-      "https://nix-citizen.cachix.org"
-      "https://derethil.cachix.org"
-      "https://hyprland.cachix.org"
-      "https://niri-nix.cachix.org"
-      "https://attic.xuyh0120.win/lantian"
-      "https://cache.garnix.io"
-    ];
-
-    extra-trusted-public-keys = [
-      "derethil.cachix.org-1:4v8v6Oo2UHdB3FKutgQ2z3O9L++ukejhGvQFg6Pjsfc="
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "nix-citizen.cachix.org-1:lPMkWc2X8XD4/7YPEEwXKKBg+SVbYTVrAaLA2wQTKCo="
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-
-      "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
-      "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
-    ];
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin/nix-darwin-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
+    nix-gaming.url = "github:fufexan/nix-gaming";
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixpak = {
+      url = "github:nixpak/nixpak";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nvim-config.url = "github:derethil/nvim-config";
+    quickshell = {
+      url = "git+https://github.com/quickshell-mirror/quickshell?ref=master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    secrets = {
+      url = "git+ssh://git@github.com/derethil/nix-secrets?ref=main";
+      flake = false;
+    };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    systems.url = "github:nix-systems/default";
+    tmux-power-zoom = {
+      url = "github:jaclu/tmux-power-zoom";
+      flake = false;
+    };
+    tmux-theme = {
+      url = "github:derethil/tmux-theme";
+      flake = false;
+    };
+    yazi-gruvbox-dark = {
+      url = "github:bennyyip/gruvbox-dark.yazi";
+      flake = false;
+    };
   };
 }

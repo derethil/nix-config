@@ -1,97 +1,54 @@
 <div align="center">
 
 <h3>
-  ❄️<br/>
-  NixOS Config for <a href="https://github.com/derethil">Derethil</a>
+  ❄️
+   derethil/nix-config
   <img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/misc/transparent.png" height="30" width="0px"/>
 </h3>
 
 <p>
-    <a href="https://github.com/derethil/nix-config">
-      <img src="https://img.shields.io/github/last-commit/derethil/nix-config?style=for-the-badge&color=rgb(54%2C%2058%2C%2079)">
-    </a>
-    <a href="https://nixos.wiki/wiki/Flakes" target="_blank">
-      <img alt="Nix Flakes Ready" src="https://img.shields.io/static/v1?logo=nixos&logoColor=d8dee9&label=Nix%20Flakes&labelColor=5e81ac&message=Ready&color=d8dee9&style=for-the-badge">
-    </a>
-    <a href="https://github.com/snowfallorg/lib" target="_blank">
-      <img alt="Built With Snowfall" src="https://img.shields.io/static/v1?logoColor=d8dee9&label=Built%20With&labelColor=5e81ac&message=Snowfall&color=d8dee9&style=for-the-badge">
-    </a>
+    <a href="https://github.com/mightyiam/dendrix" target="_blank"><img alt="Design Dendritic" src="https://img.shields.io/static/v1?label=Design&message=Dendritic&color=5e81ac&style=for-the-badge"></a>&nbsp;<a href="https://github.com/derethil/nix-config"><img src="https://img.shields.io/github/last-commit/derethil/nix-config?style=for-the-badge&color=rgb(54%2C%2058%2C%2079)"></a>&nbsp;<a href="https://github.com/derethil/nix-config/actions/workflows/check-flake.yml" target="_blank"><img alt="Flake Check" src="https://img.shields.io/github/actions/workflow/status/derethil/nix-config/check-flake.yml?style=for-the-badge&label=flake%20check&color=a3be8c"></a>
   </p>
 
 </div>
 
-My Nix configurations for NixOS, Nix Darwin, and Home Manager.
+# About
 
-## Features
+My configs for NixOS, nix-darwin, and Home Manager. Uses flakes, flake-parts,
+and the
+[dendritic pattern](https://github.com/Doc-Steve/dendritic-design-with-flake-parts).
 
-Here's an overview of what my Nix configuration offers:
+## Layout
 
-- **Multiple Compositors**: Heavily configured and opinionated Hyprland,
-  Aerospace, and Niri configurations with unified options where possible
+- `hosts/` - per-machine entrypoints
+- [`modules/`](./modules) - everything else, organized by topic
+- `overlays/` - package overrides
+- `templates/` - devenv templates (see below)
 
-- **Desktop Shells**: A Dank Material Shell installation including various
-  plugins to add QoL features and functionality like Outlook calendar
-  integration,
-  [Philips Hue management](https://github.com/derethil/dms-hue-manager/tree/main),
-  and more
+## Stuff I use
 
-- **Gaming**: CachyOS kernel optimizations, low-latency audio configuration,
-  modding tools, and a comprehensive launchers list including Steam,
-  PrismLauncher, and Sober
+- **Compositors**: Niri
+- **Shell**: Dank Material Shell with my
+  [Hue manager plugin](https://github.com/derethil/dms-hue-manager/tree/main),
+  Outlook calendar integration)
+- **Development**: My [neovim](https://github.com/derethil/nvim-config) flake,
+  Claude Code w/ MCPs, AWS and Jira CLIs, and Bruno
+- **Gaming**: CachyOS kernel, low-latency audio, Steam, PrismLauncher, Sober,
+  modding tools
+- **Storage**: BTRFS impermanence with root rollback, LUKS, SOPS for secrets
 
-- **Advanced Security and Impermanence**: BTRFS impermanence with root rollback,
-  SOPS encrypted secret management, and LUKS full-disk encryption
+# Templates
 
-- **Development**: My Neovim configuration is provided via a
-  [custom flake](https://github.com/derethil/nvim-config) as well as my common
-  DevEnv templates and a suite of useful developmental tools and utilities
+`nix flake init -t github:derethil/nix-config#<name>`
 
-- **Privacy-Hardened Browsing**: Firefox comes preconfigured with the addons I
-  use as well as a host of privacy and security-focused configurations.
+- `npm` - pnpm + node, `dev` process pre-wired
+- `python` - python 3.13 with `uv` and a venv
+- `dragonarmy-npm-golang` - work template; go backend + node frontend with
+  playwright, golangci-lint, and an AWS SSO pre-task
 
-## Usage
+# New machine
 
-```bash
-git clone https://github.com/derethil/nix-config.git ~/.config/nix-config
-cd ~/.config/nix-config
-```
-
-### Development Templates
-
-```plaintext
-# Node.js environment
-github:derethil/nix-config#npm
-
-# Node.js + Go environment
-github:derethil/nix-config#dragonarmy-npm-golang
-
-# Uv-managed Python environment
-github:derethil/nix-config#python
-```
-
-## New Machine Installation
-
-1. Create new system flake output with blank `hardware.nix` and modify
-   `disko.nix` if necessary
-1. Boot new machine with official NixOS ISO
-1. Set password for nixos user using `passwd`
-1. Connect the machine to the local network
-1. Modify `disko` device path if necessary
-1. Run the nixos-anywhere-install script with `nix run .#nixos-anywhere-install`
-   and follow instructions
-
-## System Architecture
-
-### Hosts
-
-- **Gaia** (x86_64-linux): NixOS main desktop for day-to-day development and
-  gaming
-- **Hestia** (aarch64-darwin): Nix-Darwin managed macOS laptop
-
-### Core Technologies
-
-- **Snowfall Lib**: Modular configuration management with automatic imports
-- **Home Manager**: Declarative user environment management
-- **Nix Darwin**: Declarative MacOS settings and program management
-- **SOPS**: Encrypted secrets with private repository integration
-- **Cachix**: Binary caching for faster rebuilds
+1. Add a host entry with a blank `hardware.nix`; tweak `disko.nix` if needed
+2. Boot the NixOS ISO and `passwd` the `nixos` user
+3. Get on the network
+4. `nix run .#nixos-anywhere-install` and follow the prompts
