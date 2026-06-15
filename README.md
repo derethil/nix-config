@@ -1,14 +1,12 @@
 <div align="center">
 
 <h3>
-  ❄️
-   derethil/nix-config
-  <img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/misc/transparent.png" height="30" width="0px"/>
+  ❄️ derethil/nix-config
 </h3>
 
 <p>
-    <a href="https://github.com/mightyiam/dendrix" target="_blank"><img alt="Design Dendritic" src="https://img.shields.io/static/v1?label=Design&message=Dendritic&color=5e81ac&style=for-the-badge"></a>&nbsp;<a href="https://github.com/derethil/nix-config"><img src="https://img.shields.io/github/last-commit/derethil/nix-config?style=for-the-badge&color=rgb(54%2C%2058%2C%2079)"></a>&nbsp;<a href="https://github.com/derethil/nix-config/actions/workflows/check-flake.yml" target="_blank"><img alt="Flake Check" src="https://img.shields.io/github/actions/workflow/status/derethil/nix-config/check-flake.yml?style=for-the-badge&label=flake%20check&color=a3be8c"></a>
-  </p>
+    <a href="https://github.com/Doc-Steve/dendritic-design-with-flake-parts" target="_blank"><img alt="Design Dendritic" src="https://img.shields.io/static/v1?label=Design&message=Dendritic&color=5e81ac&style=for-the-badge"></a>&nbsp;<a href="https://github.com/derethil/nix-config"><img src="https://img.shields.io/github/last-commit/derethil/nix-config?style=for-the-badge&color=rgb(54%2C%2058%2C%2079)"></a>&nbsp;<a href="https://github.com/derethil/nix-config/actions/workflows/check-flake.yml" target="_blank"><img alt="Flake Check" src="https://img.shields.io/github/actions/workflow/status/derethil/nix-config/check-flake.yml?style=for-the-badge&label=flake%20check&color=a3be8c"></a>
+</p>
 
 </div>
 
