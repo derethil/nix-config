@@ -6,7 +6,7 @@
 }: let
   inherit (self.lib) mergeModules;
 
-  flakeRoot = "/Users/derethil/.config/nix-config-dendritic"; # TODO: update once migration lands
+  flakeRoot = "/Users/derethil/.config/nix-config";
 
   displays = [
     {
