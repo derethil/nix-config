@@ -8,14 +8,17 @@ flake-parts module merging into `flake.modules.*`.
 - `foundation/`: baseline module that every host imports, like nix settings,
   shell config, openssh, neovim, sudo
 - `machine/`: hardware-adjacent stuff like boot/kernel config, drivers,
-  bluetooth, networking, system daemons
+  bluetooth, networking, and the daemons that drive specific hardware like lact,
+  openrgb, coolercontrol
 - `surfaces/`: desktop and UI layer, including niri, macOS settings, desktop
   utilities and themes
 - `pursuits/`: user-facing apps grouped by purpose, like browsers, comms,
   development, gaming, media, utilities
 - `bridges/`: platform integrations e.g. flatpak on NixOS and homebrew,
   mac-app-util, keychain on darwin
-- `hosting/`: self-hosted services
+- `hosting/`: self-hosted services and daemons
+- `services/`: software-level internal system daemons like docker, postgres,
+  gnome-keyring
 - `flake/`: internal flake plumbing, including the formatter, factory,
   flake-file, and flake-root
 
