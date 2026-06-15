@@ -28,14 +28,15 @@ and the
 ## Stuff I use
 
 - **Compositors**: Niri
-- **Shell**: Dank Material Shell with my
-  [Hue manager plugin](https://github.com/derethil/dms-hue-manager/tree/main),
-  Outlook calendar integration)
-- **Development**: My [neovim](https://github.com/derethil/nvim-config) flake,
-  Claude Code w/ MCPs, AWS and Jira CLIs, and Bruno
+- **Shell**: Dank Material Shell with my own
+  [Hue manager plugin](https://github.com/derethil/dms-hue-manager/tree/main)
+  and Outlook calendar integration
+- **Development**: My [neovim flake](https://github.com/derethil/nvim-config),
+  Claude Code w/ MCPs, AWS and Jira CLIs, Bruno
 - **Gaming**: CachyOS kernel, low-latency audio, Steam, PrismLauncher, Sober,
   modding tools
-- **Storage**: BTRFS impermanence with root rollback, LUKS, SOPS for secrets
+- **Storage**: BTRFS impermanence with root rollback, LUKS, encrypted secrets
+  pulled from my private repo
 
 # Templates
 
