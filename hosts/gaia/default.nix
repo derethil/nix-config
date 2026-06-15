@@ -30,7 +30,7 @@ in {
       # Host
       ./_hardware.nix
       ./_disko.nix
-      ./_ath12k.nix
+      gaia-ath12k-fixes
 
       # Framework
       user-derethil
