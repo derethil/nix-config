@@ -13,15 +13,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Set up SSH for nix-secrets repository access
-        uses: webfactory/ssh-agent@v0.9.0
+        uses: webfactory/ssh-agent@v0.10.0
         with:
           ssh-private-key: ${{ secrets.NIX_SECRETS_SSH_KEY }}
 
       - name: Install Nix
-        uses: cachix/install-nix-action@v26
+        uses: cachix/install-nix-action@v31
         with:
           install_url: https://nixos.org/nix/install
           extra_nix_config: |
@@ -33,7 +33,7 @@ jobs:
         run: nix flake check --all-systems
 
       - name: "Check Flake Health"
-        uses: DeterminateSystems/flake-checker-action@v2
+        uses: DeterminateSystems/flake-checker-action@v12
         with:
           ignore-missing-flake-lock: false
           fail-mode: true

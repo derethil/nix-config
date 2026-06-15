@@ -39,14 +39,14 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Free up disk space
         if: ${{ !contains(matrix.system, 'darwin') }}
-        uses: wimpysworld/nothing-but-nix@main
+        uses: wimpysworld/nothing-but-nix@v10
 
       - name: Set up SSH for nix-secrets repository access
-        uses: webfactory/ssh-agent@v0.9.0
+        uses: webfactory/ssh-agent@v0.10.0
         with:
           ssh-private-key: ${{ secrets.NIX_SECRETS_SSH_KEY }}
 
@@ -60,7 +60,7 @@ jobs:
             trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= derethil.cachix.org-1:4v8v6Oo2UHdB3FKutgQ2z3O9L++ukejhGvQFg6Pjsfc= hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc= niri-nix.cachix.org-1:SvFtqpDcf7Sm1SMJdby1/+Y+6f3Yt3/3PMcSTKPJNJ0= lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc= cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g=
 
       - name: Setup cachix
-        uses: cachix/cachix-action@v16
+        uses: cachix/cachix-action@v17
         with:
           name: derethil
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
@@ -70,4 +70,5 @@ jobs:
           nix build .#${{ matrix.type }}.${{ matrix.config }}.${{ matrix.attribute }} \
             ${{ matrix.impure && '--impure' || '' }} \
             --print-build-logs \
+            --fallback \
             --system ${{ matrix.system }}

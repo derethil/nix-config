@@ -16,20 +16,20 @@ jobs:
       pull-request-number: ${{ steps.update.outputs.pull-request-number }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up SSH for nix-secrets repository access
-        uses: webfactory/ssh-agent@v0.9.0
+        uses: webfactory/ssh-agent@v0.10.0
         with:
           ssh-private-key: ${{ secrets.NIX_SECRETS_SSH_KEY }}
 
       - name: Install nix
-        uses: cachix/install-nix-action@v30
+        uses: cachix/install-nix-action@v31
         with:
           github_access_token: ${{ github.token }}
       - name: Update flake lockfile
         id: update
-        uses: DeterminateSystems/update-flake-lock@main
+        uses: DeterminateSystems/update-flake-lock@v28
         with:
           token: ${{ secrets.GH_TOKEN_FOR_FLAKE_UPDATE }}
           branch: update-flake/${{ github.ref_name }}
