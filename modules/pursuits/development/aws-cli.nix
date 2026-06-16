@@ -4,6 +4,10 @@
     lib,
     ...
   }: {
+    home.packages = [
+      pkgs.awsebcli
+    ];
+
     programs.awscli = {
       enable = true;
       package = pkgs.awscli2;
