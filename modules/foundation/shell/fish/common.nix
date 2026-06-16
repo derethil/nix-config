@@ -25,7 +25,7 @@ in {
           set fish_cursor_replace_one underscore blink
           set fish_cursor_visual      block
 
-          ${builtins.readFile ./_theme.fish}
+          ${builtins.readFile ./theme.fish}
 
           ${getExe pkgs.any-nix-shell} fish --info-right | source
         '';

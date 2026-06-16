@@ -1,14 +1,25 @@
-{self, ...}: {
-  flake.modules.homeManager.fish = {pkgs, ...}: {
+{
+  self,
+  lib,
+  ...
+}: let
+  inherit (lib) hasSuffix filterAttrs mapAttrs' nameValuePair removeSuffix mkMerge;
+in {
+  flake.modules.homeManager.fish = {pkgs, ...}: let
+    fishFiles = filterAttrs (n: _: hasSuffix ".fish" n) (builtins.readDir ./functions);
+    fishFunctions = mapAttrs' (name: _: nameValuePair (removeSuffix ".fish" name) (builtins.readFile (./functions + "/${name}"))) fishFiles;
+  in {
     imports = [
       self.modules.homeManager.shell-consumer
       self.modules.generic.fish-common
     ];
 
-    programs.fish.functions = {
-      activate = "source ./.venv/bin/activate.fish";
-      go-coverage = builtins.readFile ./_functions/go-coverage.fish;
-    };
+    programs.fish.functions = mkMerge [
+      fishFunctions
+      {
+        activate = "source ./.venv/bin/activate.fish";
+      }
+    ];
 
     home.packages = with pkgs.fishPlugins; [
       fzf
