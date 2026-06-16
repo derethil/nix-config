@@ -15,5 +15,9 @@
     users.users = self.lib.forEachNormalUser config (_: {
       extraGroups = ["docker"];
     });
+
+    internal.boot.impermanence.extraDirectories = [
+      "/var/lib/docker"
+    ];
   };
 }
