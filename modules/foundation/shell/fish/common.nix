@@ -1,13 +1,21 @@
-{lib, ...}: {
+{lib, ...}: let
+  inherit (lib) mkMerge optionalAttrs getExe;
+  inherit (lib.attrsets) mapAttrs;
+in {
   flake.modules.generic.fish-common = {
     config,
     pkgs,
     ...
   }: {
-    programs.fish = lib.mkMerge [
+    programs.fish = mkMerge [
       {
         enable = true;
-        shellAbbrs = config.shell.abbreviations;
+        shellAbbrs =
+          mapAttrs (_: value: {
+            expansion = value;
+            position = "anywhere";
+          })
+          config.shell.abbreviations;
 
         interactiveShellInit = ''
           set fish_greeting
@@ -19,10 +27,10 @@
 
           ${builtins.readFile ./_theme.fish}
 
-          ${lib.getExe pkgs.any-nix-shell} fish --info-right | source
+          ${getExe pkgs.any-nix-shell} fish --info-right | source
         '';
       }
-      (lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+      (optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
         generateCompletions = true;
       })
     ];
