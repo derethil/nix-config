@@ -573,6 +573,8 @@
               id = "memUsage";
               enabled = true;
               minimumWidth = true;
+              showSwap = false;
+              showInGb = true;
             }
             {
               id = "easyEffects";
