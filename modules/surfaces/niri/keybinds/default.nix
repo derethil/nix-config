@@ -33,6 +33,33 @@
         }
       ) (lib.range 1 10));
 
+    equalizeColumns = pkgs.writeShellApplication {
+      name = "niri-equalize-columns";
+      runtimeInputs = [pkgs.jq];
+      text = ''
+        workspace_id=$(niri msg --json workspaces | jq '[.[] | select(.is_active==true)] | .[0].id')
+
+        col_count=$(niri msg --json windows | jq --argjson ws "$workspace_id" '
+          [.[] | select(.workspace_id==$ws and .is_floating==false) | .layout.pos_in_scrolling_layout[0]]
+          | unique | length
+        ')
+
+        if [[ -z "$col_count" || "$col_count" -le 0 ]]; then
+          exit 1
+        fi
+
+        width=$((100 / col_count))
+
+        for i in $(seq 1 "$col_count"); do
+          niri msg action focus-column "$i"
+          niri msg action set-column-width "''${width}%"
+        done
+
+        niri msg action focus-column 1
+        niri msg action center-visible-columns
+      '';
+    };
+
     mkMenu = menu: let
       font = config.font.monospace;
       configFile =
@@ -99,6 +126,9 @@
         "Mod+Ctrl+L" = {consume-or-expel-window-right = [];};
 
         # Resize
+        "Mod+W" = mkKeybinds {hotkey-overlay-title = "Equalize Columns";} {
+          spawn-sh = [(getExe equalizeColumns)];
+        };
         "Mod+S" = {toggle-column-tabbed-display = [];};
         "Mod+R" = mkKeybinds {hotkey-overlay-title = "Resize Column";} {
           spawn-sh = [
