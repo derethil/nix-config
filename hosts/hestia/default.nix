@@ -83,7 +83,6 @@ in {
       # Surfaces
       wallpaper
       mac-app-util
-      reset-launch-services
 
       # Pursuits
       browsers
