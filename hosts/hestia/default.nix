@@ -24,7 +24,7 @@
 in {
   # HOST CONFIGURATION
 
-  flake.modules.darwin.hestia = {
+  flake.modules.darwin.hestia = {pkgs, ...}: {
     imports = with (mergeModules self.modules.generic self.modules.darwin); [
       # Framework
       user-derethil
@@ -46,19 +46,17 @@ in {
     internal = {
       inherit flakeRoot;
 
-      dock.apps = let
-        hm = name: "/Users/derethil/Applications/Home Manager Trampolines/${name}.app";
-      in [
-        {app = hm "Alacritty";}
-        {app = hm "Firefox";}
+      dock.apps = [
+        {app = "${pkgs.alacritty}/Applications/Alacritty.app";}
+        {app = "${pkgs.firefox}/Applications/Firefox.app";}
         {app = "/System/Applications/Messages.app";}
         {app = "/Applications/Mattermost.app";}
-        {app = hm "Discord";}
-        {app = hm "Bruno";}
-        {app = hm "Obsidian";}
-        {app = hm "Spotify";}
-        {app = hm "Stremio";}
-        {app = hm "PrismLauncher";}
+        {app = "${pkgs.discord}/Applications/Discord.app";}
+        {app = "${pkgs.bruno}/Applications/Bruno.app";}
+        {app = "${pkgs.obsidian}/Applications/Obsidian.app";}
+        {app = "${pkgs.spotify}/Applications/Spotify.app";}
+        {app = "${pkgs.internal.stremio}/Applications/Stremio.app";}
+        {app = "${pkgs.prismlauncher}/Applications/PrismLauncher.app";}
         {app = "/Applications/Steam.app";}
       ];
     };
