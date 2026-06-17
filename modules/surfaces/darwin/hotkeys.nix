@@ -1,5 +1,10 @@
-{lib, ...}: {
-  flake.modules.darwin.hotkeys = {
+{self, lib, ...}: {
+  flake.modules.darwin.hotkeys = {pkgs, ...}: {
+    imports = [self.modules.darwin.skhd];
+
+    # TODO: derive from terminal.commands.withTmux (HM option) instead of hardcoding
+    services.skhd.skhdConfig = "cmd - return : open -na ${pkgs.alacritty}/Applications/Alacritty.app --args -e ${pkgs.tmux}/bin/tmux new-session -As base";
+
     system.keyboard = {
       enableKeyMapping = true;
       remapCapsLockToEscape = true;
