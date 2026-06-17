@@ -4,7 +4,8 @@
   ...
 }: {
   flake-file.inputs = {
-    mac-app-util.url = "github:hraban/mac-app-util";
+    # TODO: revert to hraban/mac-app-util once PR #44 (fix/missing-icons) merges
+    mac-app-util.url = "github:mcflis/mac-app-util/fix/missing-icons";
   };
 
   flake.modules.darwin.mac-app-util = {

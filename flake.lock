@@ -808,15 +808,16 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1766810876,
-        "narHash": "sha256-VPElWFQIiP31lXQXEom+L4sl85alZpZn33O4hewsP9k=",
-        "owner": "hraban",
+        "lastModified": 1771595819,
+        "narHash": "sha256-ONor/IgXZrBL/NRqnaQTEZrXqiqfrCU4o1MZ4QxCuMY=",
+        "owner": "mcflis",
         "repo": "mac-app-util",
-        "rev": "4747968574ea58512c5385466400b2364c85d2d0",
+        "rev": "d90c36aaa2b35a4fe01edb77160574d0979f74a1",
         "type": "github"
       },
       "original": {
-        "owner": "hraban",
+        "owner": "mcflis",
+        "ref": "fix/missing-icons",
         "repo": "mac-app-util",
         "type": "github"
       }

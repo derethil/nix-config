@@ -55,7 +55,7 @@
       url = "github:martiert/khal_notifications";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    mac-app-util.url = "github:hraban/mac-app-util";
+    mac-app-util.url = "github:mcflis/mac-app-util/fix/missing-icons";
     niri-nix.url = "git+https://codeberg.org/BANanaD3V/niri-nix";
     niri-smart-workspace = {
       url = "github:derethil/niri-smart-workspace";
