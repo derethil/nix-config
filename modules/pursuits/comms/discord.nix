@@ -1,15 +1,16 @@
-{
+{self, ...}: {
+  flake.modules.darwin.discord = {
+    imports = [self.modules.darwin.homebrew];
+    config.homebrew.casks = ["discord"];
+  };
+
   flake.modules.homeManager.discord = {
     pkgs,
     lib,
     ...
   }: {
-    home.packages = [
-      (
-        if pkgs.stdenv.hostPlatform.isLinux
-        then pkgs.unstable.vesktop
-        else pkgs.discord
-      )
+    home.packages = lib.mkIf pkgs.stdenv.hostPlatform.isLinux [
+      pkgs.unstable.vesktop
     ];
 
     # Standalone arRPC is required because Vencord's WebRichPresence plugin connects

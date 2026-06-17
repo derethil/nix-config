@@ -51,7 +51,7 @@ in {
         {app = "${pkgs.firefox}/Applications/Firefox.app";}
         {app = "/System/Applications/Messages.app";}
         {app = "/Applications/Mattermost.app";}
-        {app = "${pkgs.discord}/Applications/Discord.app";}
+        {app = "/Applications/Discord.app";}
         {app = "${pkgs.bruno}/Applications/Bruno.app";}
         {app = "${pkgs.obsidian}/Applications/Obsidian.app";}
         {app = "${pkgs.spotify}/Applications/Spotify.app";}

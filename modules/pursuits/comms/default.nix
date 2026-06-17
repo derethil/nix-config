@@ -15,6 +15,7 @@
 
   flake.modules.darwin.comms-work = {
     imports = [
+      self.modules.darwin.discord
       self.modules.darwin.mattermost
     ];
   };
