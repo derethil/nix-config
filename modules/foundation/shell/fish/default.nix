@@ -36,12 +36,18 @@ in {
     users.defaultUserShell = pkgs.fish;
   };
 
-  flake.modules.darwin.fish = {pkgs, ...}: {
+  flake.modules.darwin.fish = {
+    pkgs,
+    config,
+    ...
+  }: {
     imports = [
       self.modules.darwin.shell-consumer
       self.modules.generic.fish-common
     ];
 
-    # TODO: find a way to set default user shell on darwin
+    users.users = self.lib.forEachNormalUser config (_: {
+      shell = pkgs.fish;
+    });
   };
 }
