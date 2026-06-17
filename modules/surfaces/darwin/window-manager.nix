@@ -18,6 +18,16 @@
         NSAutomaticWindowAnimationsEnabled = true;
         NSWindowShouldDragOnGesture = true;
       };
+
+      CustomUserPreferences = {
+        NSGlobalDomain = {
+          NSQuitAlwaysKeepsWindows = false;
+          NSUserKeyEquivalents = {
+            "Enter Full Screen" = "@f";
+            "Exit Full Screen" = "@f";
+          };
+        };
+      };
     };
   };
 }

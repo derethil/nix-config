@@ -34,8 +34,7 @@ in {
       bridges
 
       # Desktop
-      darwin-surfaces
-      mediamate
+      paneru
 
       # Pursuits
       development
@@ -72,15 +71,12 @@ in {
       # Baseline
       foundation
 
-      # Compositor
-      paneru
-
       # Terminals
       alacritty
 
       # Surfaces
-      wallpaper
       mac-app-util
+      paneru
 
       # Pursuits
       browsers

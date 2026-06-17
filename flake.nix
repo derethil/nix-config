@@ -87,6 +87,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nvim-config.url = "github:derethil/nvim-config";
+    paneru = {
+      url = "github:karinushka/paneru";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     quickshell = {
       url = "git+https://github.com/quickshell-mirror/quickshell?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";

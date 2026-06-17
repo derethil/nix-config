@@ -1,5 +1,5 @@
 {self, lib, ...}: {
-  flake.modules.darwin.hotkeys = {pkgs, ...}: {
+  flake.modules.darwin.hotkeys = {pkgs, config, ...}: {
     imports = [self.modules.darwin.skhd];
 
     # TODO: derive from terminal.commands.withTmux (HM option) instead of hardcoding
@@ -33,8 +33,7 @@
         };
       }
 
-      # TODO: disable these if a compositor is used
-      (lib.mkIf true {
+      (lib.mkIf config.services.paneru.enable {
         # General
         "233".enabled = false;
         "235".enabled = false;
