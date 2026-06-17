@@ -75,7 +75,7 @@ in {
       internal.users.normalUsers = [name];
 
       users.users.${name} = {
-        inherit name uid;
+        inherit name;
         home = "/Users/${name}";
       };
 
