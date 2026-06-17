@@ -37,6 +37,7 @@
 
     flake.modules.darwin.home-manager = {
       imports = [self.modules.generic.home-manager-options];
+      home-manager.useUserPackages = lib.mkForce false;
       home-manager.sharedModules = [self.modules.homeManager.home-manager];
     };
   };
