@@ -45,6 +45,22 @@ in {
 
     internal = {
       inherit flakeRoot;
+
+      dock.apps = let
+        hm = name: "/Users/derethil/Applications/Home Manager Trampolines/${name}.app";
+      in [
+        {app = hm "Alacritty";}
+        {app = hm "Firefox";}
+        {app = "/System/Applications/Messages.app";}
+        {app = "/Applications/Mattermost.app";}
+        {app = hm "Discord";}
+        {app = hm "Bruno";}
+        {app = hm "Obsidian";}
+        {app = hm "Spotify";}
+        {app = hm "Stremio";}
+        {app = hm "PrismLauncher";}
+        {app = "/Applications/Steam.app";}
+      ];
     };
 
     networking.hostName = "hestia";
@@ -67,6 +83,7 @@ in {
       # Surfaces
       wallpaper
       mac-app-util
+      reset-launch-services
 
       # Pursuits
       browsers
