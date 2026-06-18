@@ -1431,11 +1431,11 @@
         "systems": "systems_7"
       },
       "locked": {
-        "lastModified": 1781550783,
-        "narHash": "sha256-eE5GUnv4D7hBa+fbSl6UJUmcSO62mwCtu9K7zl2yr0o=",
+        "lastModified": 1781809438,
+        "narHash": "sha256-PFzo9z6TfW55dFbJ7kqgbhyNhuRZyiIXDLXZGvN1r3U=",
         "owner": "derethil",
         "repo": "nvim-config",
-        "rev": "103a2ec3a0c87e486c9c980d76cf86050f5bf6c5",
+        "rev": "5720c2a294badd47b9d017b6c52d1146254bf668",
         "type": "github"
       },
       "original": {
