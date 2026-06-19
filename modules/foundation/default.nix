@@ -33,6 +33,7 @@
       nix-settings
       nix-inputs
       cachix
+      trash
       shell
       openssh
       git

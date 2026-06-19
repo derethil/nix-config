@@ -64,7 +64,6 @@ in {
     shell.aliases = mkMerge [
       common-aliases
       {
-        del = "gtrash put";
         wcl = "wl-copy";
       }
     ];
@@ -84,7 +83,6 @@ in {
         (common-pkgs pkgs)
         [
           chafa
-          gtrash
         ]
         (optionals pkgs.stdenv.isLinux [
           hwinfo
