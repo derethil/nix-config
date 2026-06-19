@@ -80,6 +80,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    nixpkgs-szurubooru-pr.url = "github:RatCornu/nixpkgs/szurubooru";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nur = {
       url = "github:nix-community/NUR";
