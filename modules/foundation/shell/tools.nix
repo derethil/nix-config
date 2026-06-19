@@ -13,33 +13,35 @@
 
   common-pkgs = pkgs:
     with pkgs; [
-      bat
-      bottom
-      diff-so-fancy
+      # file management
       duf
       eza
       fd
-      fzf
       gdu
-      glow
-      httpie
-      jq
       libarchive
       ripgrep
       rsync
+      unar
+
+      # terminal utilities
+      bat
+      bottom
+      diff-so-fancy
+      fzf
+      glow
+      httpie
+      jq
       scc
       tldr
-      unar
       watchexec
       just
 
+      # nix tools
       alejandra
-      nh
-      nix-diff
       dix
-      nixfmt
-      nvd
+      nh
       nix-inspect
+      nix-tree
     ];
 in {
   flake.modules.nixos.tools = {pkgs, ...}: {
