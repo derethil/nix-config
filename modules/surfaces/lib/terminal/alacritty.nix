@@ -82,6 +82,20 @@
           };
           mouse.hide_when_typing = true;
           selection.save_to_clipboard = true;
+          keyboard = {
+            bindings = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin [
+              {
+                key = "H";
+                mods = "Command|Shift";
+                chars = builtins.fromJSON ("\"\\u001b[300~\"");
+              }
+              {
+                key = "L";
+                mods = "Command|Shift";
+                chars = builtins.fromJSON ("\"\\u001b[301~\"");
+              }
+            ];
+          };
         };
       };
     };

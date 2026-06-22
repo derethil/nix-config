@@ -71,10 +71,23 @@
         bind -T prefix_w m resize-pane -Z
 
         # Moving/Swapping Between Windows
-        bind -n M-H previous-window
-        bind -n M-L next-window
-        bind -n C-M-H swap-window -t -1\; select-window -t -1
-        bind -n C-M-L swap-window -t +1\; select-window -t +1
+        ${lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
+          # User0/User1 are custom sequences sent by Alacritty for cmd+shift+h/l
+          # see modules/surfaces/lib/terminal/alacritty.nix keyboard.bindings
+          set -s user-keys[0] "\e[300~"
+          set -s user-keys[1] "\e[301~"
+          bind -n 'User0' previous-window
+          bind -n 'User1' next-window
+          bind H swap-window -t -1\; select-window -t -1
+          bind L swap-window -t +1\; select-window -t +1
+        ''}
+
+        ${lib.optionalString (!pkgs.stdenv.hostPlatform.isDarwin) ''
+          bind -n M-H previous-window
+          bind -n M-L next-window
+          bind -n C-M-H swap-window -t -1\; select-window -t -1
+          bind -n C-M-L swap-window -t +1\; select-window -t +1
+        ''}
 
         # Fix Borders for Two Panes
         set -g pane-border-style bg=black,fg=blue
