@@ -16,7 +16,10 @@
       self.modules.homeManager.firefox-ublock-origin
     ];
 
-    home.sessionVariables.BROWSER = "firefox";
+    home.sessionVariables.BROWSER =
+      if pkgs.stdenv.hostPlatform.isDarwin
+      then "open"
+      else "firefox";
 
     programs.firefox = {
       enable = true;
