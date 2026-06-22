@@ -1,9 +1,15 @@
 {self, ...}: {
-  flake.modules.darwin.mediamate = {config, ...}: {
+  flake.modules.darwin.mediamate = {
+    config,
+    pkgs,
+    ...
+  }: {
     imports = [
       self.modules.darwin.secrets
       self.modules.darwin.keychain
     ];
+
+    environment.systemPackages = [pkgs.internal.mediamate];
 
     system.defaults.controlcenter.NowPlaying = false;
 
