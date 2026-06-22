@@ -7,7 +7,7 @@
     inherit (lib) mkAfter optionalString;
 
     preamble = ''
-      CURRENT_USER="$(stat -f "%Su" /dev/console)"
+      CURRENT_USER="$(/usr/bin/stat -f "%Su" /dev/console)"
       KEYCHAIN_PATH="/Users/$CURRENT_USER/Library/Keychains/login.keychain-db"
 
       if ! dscl . -read /Groups/admin GroupMembership 2>/dev/null | grep -qw "$CURRENT_USER"; then
