@@ -46,11 +46,7 @@
     ];
   };
 
-  flake.modules.homeManager.neovim = {
-    config,
-    lib,
-    ...
-  }: {
+  flake.modules.homeManager.neovim = {config, ...}: {
     imports = [
       inputs.nvim-config.homeManagerModules.nvim-config
       self.modules.generic.neovim-config

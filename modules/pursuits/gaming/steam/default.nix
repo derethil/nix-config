@@ -78,7 +78,7 @@
     };
   };
 
-  flake.modules.darwin.steam = {config, ...}: {
+  flake.modules.darwin.steam = {...}: {
     imports = [self.modules.darwin.homebrew];
     config.homebrew.casks = ["steam"];
   };

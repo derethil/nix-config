@@ -1,9 +1,5 @@
 {lib, ...}: {
-  flake.modules.homeManager.easyeffects = {
-    config,
-    pkgs,
-    ...
-  }: let
+  flake.modules.homeManager.easyeffects = {config, ...}: let
     cfg = config.services.easyeffects;
   in {
     services.easyeffects = {

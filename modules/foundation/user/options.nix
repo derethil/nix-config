@@ -10,7 +10,7 @@
     };
   };
 in {
-  flake.modules.generic.user-options = {lib, ...}: {
+  flake.modules.generic.user-options = {...}: {
     key = "user-options";
     options.internal.user = {
       name = mkOption {

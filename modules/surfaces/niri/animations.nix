@@ -14,11 +14,11 @@
       duration-ms = 100;
       curve = ["cubic-bezier" 0.1 1.0 0.0 1.0];
     };
-
-    menuAccelerate = {
-      duration-ms = 100;
-      curve = ["cubic-bezier" 0.38 0.04 1.0 0.07];
-    };
+    #
+    # menuAccelerate = {
+    #   duration-ms = 100;
+    #   curve = ["cubic-bezier" 0.38 0.04 1.0 0.07];
+    # };
   in {
     wayland.windowManager.niri.settings.animations = {
       exit-confirmation-open-close = menuDecelerate;

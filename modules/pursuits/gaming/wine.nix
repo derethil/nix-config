@@ -1,9 +1,5 @@
 {
-  flake.modules.nixos.wine = {
-    pkgs,
-    lib,
-    ...
-  }: {
+  flake.modules.nixos.wine = {pkgs, ...}: {
     environment.systemPackages = [
       pkgs.wineWow64Packages.staging
       pkgs.winetricks

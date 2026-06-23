@@ -9,11 +9,7 @@
     flake = false;
   };
 
-  flake.modules.nixos.coolercontrol-it87 = {
-    pkgs,
-    config,
-    ...
-  }: let
+  flake.modules.nixos.coolercontrol-it87 = {config, ...}: let
     inherit (lib) mkOption mkIf optional flatten concatStringsSep types;
     cfg = config.internal.services.coolercontrol.it87;
     kernel = config.boot.kernelPackages.kernel;

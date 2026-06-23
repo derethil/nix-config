@@ -10,11 +10,7 @@
     };
   };
 
-  flake.modules.nixos.starcitizen = {
-    lib,
-    pkgs,
-    ...
-  }: {
+  flake.modules.nixos.starcitizen = {pkgs, ...}: {
     imports = [
       inputs.nix-citizen.nixosModules.default
       self.modules.nixos.zram

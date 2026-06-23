@@ -1,9 +1,5 @@
 {
-  flake.modules.darwin.keychain = {
-    lib,
-    config,
-    ...
-  }: let
+  flake.modules.darwin.keychain = {lib, ...}: let
     inherit (lib) types mkOption;
   in {
     options.internal.system.keychain = {
