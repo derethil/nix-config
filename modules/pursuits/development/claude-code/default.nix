@@ -22,8 +22,16 @@
       '';
       settings = {
         model = "sonnet";
+
+        showThinkingSummaries = true;
         includeCoAuthoredBy = false;
-        permissions.deny = ["Bash(git commit*)"];
+        skipAutoPermissionsPrompt = true;
+
+        permissions = {
+          deny = ["Bash(git commit*)"];
+          defaultMode = "auto";
+        };
+
         enabledPlugins = {
           "superpowers@claude-plugins-official" = true;
           "serena@claude-plugins-official" = true;
