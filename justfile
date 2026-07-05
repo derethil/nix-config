@@ -46,3 +46,18 @@ secrets:
 
 uflake:
     nix run .#write-flake && nix flake lock
+
+dms-settings:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    OLD_REV=$(git show HEAD~1:flake.lock | jq -r '.nodes["dank-material-shell"].locked.rev')
+    NEW_REV=$(jq -r '.nodes["dank-material-shell"].locked.rev' flake.lock)
+    if [ "$OLD_REV" = "$NEW_REV" ]; then
+        echo "No change in dank-material-shell"
+        exit 0
+    fi
+    BASE="https://raw.githubusercontent.com/AvengeMedia/DankMaterialShell"
+    diff -u \
+        <(curl -sf "$BASE/$OLD_REV/quickshell/Common/settings/SettingsSpec.js") \
+        <(curl -sf "$BASE/$NEW_REV/quickshell/Common/settings/SettingsSpec.js") \
+        | diff-so-fancy || true
