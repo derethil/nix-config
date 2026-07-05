@@ -63,6 +63,8 @@
         xpadneo.enable = true;
       };
 
+      environment.systemPackages = [pkgs.internal.freeze-game-version];
+
       # work around for issue with capSysNice not working in gamescope. even though it still
       # complains that it doesn't have cap nice ability to set it its own nice value.  ananicy
       # is setting it -20 (highest priority).
