@@ -62,17 +62,20 @@
 
     mkMenu = menu: let
       font = config.font.monospace;
+      niriCfg = config.wayland.windowManager.niri.settings;
       configFile =
         builtins.toFile "config.yaml"
         (lib.generators.toYAML {} {
           inherit menu;
           font = "${font.name} ${builtins.toString font.size}";
-          anchor = "center";
+          anchor = "bottom-right";
           background = "#282828";
           color = "#D4BE98";
-          corner_r = 6;
-          border_width = 2;
           inhibit_compositor_keyboard_shortcuts = true;
+          corner_r = 8; # can't pull from niri settings because it's a rule not a setting
+          border_width = niriCfg.layout.border.width;
+          margin_right = niriCfg.layout.gaps + niriCfg.layout.struts.right;
+          margin_bottom = niriCfg.layout.gaps + niriCfg.layout.struts.bottom;
         });
     in
       pkgs.writeShellScriptBin "wlr-which-key-menu" ''

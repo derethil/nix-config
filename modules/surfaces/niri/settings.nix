@@ -106,7 +106,7 @@
         always-center-single-column = [];
         center-focused-column = "never";
 
-        default-column-display = "tabbed";
+        default-column-display = "normal";
         default-column-width.proportion = 1.0 / 2.0;
 
         tab-indicator = mkMerge [
