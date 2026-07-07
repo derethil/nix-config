@@ -44,6 +44,7 @@ and the
 - `python` - python 3.13 with `uv` and a venv
 - `dragonarmy-npm-golang` - work template; go backend + node frontend with
   playwright, golangci-lint, and an AWS SSO pre-task
+- `rust` - hello_world cargo project managed by `devenv`
 
 # New machine
 

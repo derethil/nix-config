@@ -1,5 +1,9 @@
 {
   flake.templates = {
+    rust = {
+      path = ./_rust;
+      description = "A template for Rust development using devenv";
+    };
     python = {
       path = ./_python;
       description = "A template for Python development using devenv and uv";
