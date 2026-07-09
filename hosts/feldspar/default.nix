@@ -25,12 +25,12 @@
 in {
   # HOST CONFIGURATION
 
-  flake.modules.nixos.gaia = {
+  flake.modules.nixos.feldspar = {
     imports = with (mergeModules self.modules.generic self.modules.nixos); [
       # Host
       ./_hardware.nix
       ./_disko.nix
-      gaia-ath12k-fixes
+      feldspar-ath12k-fixes
 
       # Framework
       user-derethil
@@ -101,13 +101,13 @@ in {
       inputDevices = ["/dev/input/event4"];
     };
 
-    networking.hostName = "gaia";
+    networking.hostName = "feldspar";
     system.stateVersion = "25.11";
   };
 
   # HOME MANAGER CONFIGURATION
 
-  flake.modules.homeManager.gaia-derethil = {
+  flake.modules.homeManager.feldspar-derethil = {
     imports = with self.modules.homeManager; [
       # Baseline
       foundation
@@ -167,27 +167,27 @@ in {
 
   # HOST DEFINITION
 
-  flake.nixosConfigurations.gaia = inputs.nixpkgs.lib.nixosSystem rec {
+  flake.nixosConfigurations.feldspar = inputs.nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
     pkgs = withSystem system ({pkgs, ...}: pkgs);
     modules = [
-      self.modules.nixos.gaia
+      self.modules.nixos.feldspar
       self.modules.nixos.home-manager
       inputs.disko.nixosModules.disko
       inputs.home-manager.nixosModules.home-manager
-      {home-manager.users.derethil = self.modules.homeManager.gaia-derethil;}
+      {home-manager.users.derethil = self.modules.homeManager.feldspar-derethil;}
     ];
   };
 
   # HOME MANAGER DEFINITION
 
-  flake.homeConfigurations."derethil@gaia" = withSystem "x86_64-linux" ({pkgs, ...}:
+  flake.homeConfigurations."derethil@feldspar" = withSystem "x86_64-linux" ({pkgs, ...}:
     inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       extraSpecialArgs = {inherit self inputs;};
       modules = [
         self.modules.homeManager.home-manager
-        self.modules.homeManager.gaia-derethil
+        self.modules.homeManager.feldspar-derethil
         self.modules.homeManager.user-derethil
       ];
     });

@@ -1,5 +1,5 @@
 {...}: {
-  flake.modules.nixos.gaia-ath12k-fixes = {pkgs, ...}: {
+  flake.modules.nixos.feldspar-ath12k-fixes = {pkgs, ...}: {
     # Card takes a very long time to scan, this limits the channels to the US ones to speed it up.
     hardware.wirelessRegulatoryDatabase = true;
     boot.extraModprobeConfig = "options cfg80211 ieee80211_regdom=US";

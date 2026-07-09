@@ -1,12 +1,10 @@
 keys:
-  - &hestia age1a5qhde7fv4uxp4408yy708xk0ec7gthu2t7p0dmperaghcj7lffq7l0sl4
-  - &athena age10hsnvtcqralufks4kxujncn3aqvx0dveddx66vhgv6ksgrwspe2s6eecre
-  - &gaia age1m9lrvkaehev2udvxuy05dahnjwgf2y87cl2ufkqmhlvsz8cd2cxs2qpwn0
+  - &gabbro age1a5qhde7fv4uxp4408yy708xk0ec7gthu2t7p0dmperaghcj7lffq7l0sl4
+  - &feldspar age1m9lrvkaehev2udvxuy05dahnjwgf2y87cl2ufkqmhlvsz8cd2cxs2qpwn0
 
 creation_rules:
   - path_regex: .*secrets\.yaml$
     key_groups:
       - age:
-          - *hestia
-          - *athena
-          - *gaia
+          - *gabbro
+          - *feldspar

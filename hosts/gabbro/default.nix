@@ -24,7 +24,7 @@
 in {
   # HOST CONFIGURATION
 
-  flake.modules.darwin.hestia = {pkgs, ...}: {
+  flake.modules.darwin.gabbro = {pkgs, ...}: {
     imports = with (mergeModules self.modules.generic self.modules.darwin); [
       # Framework
       user-derethil
@@ -60,13 +60,13 @@ in {
       ];
     };
 
-    networking.hostName = "hestia";
+    networking.hostName = "gabbro";
     system.stateVersion = 5;
   };
 
   # HOME MANAGER CONFIGURATION
 
-  flake.modules.homeManager.hestia-derethil = {
+  flake.modules.homeManager.gabbro-derethil = {
     imports = with self.modules.homeManager; [
       # Baseline
       foundation
@@ -96,26 +96,26 @@ in {
 
   # HOST DEFINITION
 
-  flake.darwinConfigurations.hestia = inputs.nix-darwin.lib.darwinSystem {
+  flake.darwinConfigurations.gabbro = inputs.nix-darwin.lib.darwinSystem {
     system = "aarch64-darwin";
     pkgs = withSystem "aarch64-darwin" ({pkgs, ...}: pkgs);
     modules = [
-      self.modules.darwin.hestia
+      self.modules.darwin.gabbro
       self.modules.darwin.home-manager
       inputs.home-manager.darwinModules.home-manager
-      {home-manager.users.derethil = self.modules.homeManager.hestia-derethil;}
+      {home-manager.users.derethil = self.modules.homeManager.gabbro-derethil;}
     ];
   };
 
   # HOME MANAGER DEFINITION
 
-  flake.homeConfigurations."derethil@hestia" = withSystem "aarch64-darwin" ({pkgs, ...}:
+  flake.homeConfigurations."derethil@gabbro" = withSystem "aarch64-darwin" ({pkgs, ...}:
     inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       extraSpecialArgs = {inherit self inputs;};
       modules = [
         self.modules.homeManager.home-manager
-        self.modules.homeManager.hestia-derethil
+        self.modules.homeManager.gabbro-derethil
         self.modules.homeManager.user-derethil
       ];
     });
