@@ -27,6 +27,7 @@ jobs:
         uses: cachix/install-nix-action@v31
         with:
           github_access_token: ${{ github.token }}
+
       - name: Update flake lockfile
         id: update
         uses: DeterminateSystems/update-flake-lock@v28
@@ -42,6 +43,15 @@ jobs:
           pr-labels: |
             dependencies
             automation
+
+      - name: Enable auto-merge
+        if: steps.update.outputs.pull-request-number != ''
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN_FOR_FLAKE_UPDATE }}
+          PR: ${{ steps.update.outputs.pull-request-number }}
+          REPO: ${{ github.repository }}
+        run: gh pr merge "$PR" --repo "$REPO" --auto --merge
+
       - name: Print summary
         env:
           num: ${{ steps.update.outputs.pull-request-number }}
@@ -56,25 +66,3 @@ jobs:
             echo "[#$num]($url) was $operation."
             echo
           ) >> $GITHUB_STEP_SUMMARY
-
-  auto_merge:
-    needs: flake_lock
-    if: needs.flake_lock.outputs.pull-request-number != ''
-    runs-on: ubuntu-latest
-    steps:
-      - name: Wait for checks to pass, then merge
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN_FOR_FLAKE_UPDATE }}
-          PR: ${{ needs.flake_lock.outputs.pull-request-number }}
-          REPO: ${{ github.repository }}
-        run: |
-          # Give triggered workflows a moment to register on the PR
-          sleep 15
-          checks=$(gh pr checks "$PR" --repo "$REPO" --json name | jq 'length')
-          if [ "$checks" -eq 0 ]; then
-            echo "No checks registered on PR #$PR — refusing to auto-merge"
-            exit 1
-          fi
-          echo "Found $checks check(s); watching until they finish"
-          gh pr checks "$PR" --repo "$REPO" --watch --interval 30 --fail-fast
-          gh pr merge "$PR" --repo "$REPO" --merge
