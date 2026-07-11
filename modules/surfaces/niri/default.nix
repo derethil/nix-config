@@ -21,6 +21,7 @@
       self.modules.nixos.bongocat
       self.modules.nixos.gtk
       self.modules.nixos.fonts
+      self.modules.nixos.geoclue
     ];
 
     xdg.portal = {

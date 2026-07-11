@@ -293,7 +293,7 @@
       launcherUseOverlayLayer = false;
       launcherStyle = "full";
       spotlightBarShowModeChips = false;
-      useAutoLocation = false;
+      useAutoLocation = true;
       weatherEnabled = true;
       dashTabs = [
         {

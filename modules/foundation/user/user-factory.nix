@@ -58,6 +58,8 @@ in {
       services = {
         accounts-daemon.enable = true;
       };
+
+      internal.boot.impermanence.extraDirectories = ["/var/lib/AccountsService"];
     };
 
     # DARWIN

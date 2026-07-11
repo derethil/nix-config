@@ -53,8 +53,8 @@
       themeModeEndHour = 6;
       themeModeEndMinute = 0;
       themeModeShareGammaSettings = true;
-      weatherLocation = "Denver, Colorado";
-      weatherCoordinates = "39.7392364,-104.9848620";
+      weatherLocation = "";
+      weatherCoordinates = "";
       pinnedApps = [
         "footclient"
         "firefox"
@@ -104,11 +104,12 @@
       launcherLastMode = "all";
       launcherLastFileSearchType = "all";
       launcherLastQuery = "";
-      launcherQueryHistory = [];
+      launcherQueryHistory = [""];
       appDrawerLastMode = "apps";
       niriOverviewLastMode = "apps";
-      settingsSidebarExpandedIds = ",dock_launcher,";
-      settingsSidebarCollapsedIds = ",";
+      notepadLastMode = "";
+      settingsSidebarExpandedIds = "";
+      settingsSidebarCollapsedIds = "";
       configVersion = 3;
     };
   };

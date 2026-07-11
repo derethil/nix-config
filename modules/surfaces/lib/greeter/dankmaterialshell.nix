@@ -33,6 +33,8 @@
       inputs.dank-material-shell.nixosModules.greeter
     ];
 
+    internal.boot.impermanence.extraDirectories = ["/var/lib/dms-greeter"];
+
     programs.dank-material-shell.greeter = {
       enable = true;
       quickshell.package = pkgs.inputs.quickshell.default;

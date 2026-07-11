@@ -41,6 +41,7 @@
 
       internal.boot.impermanence.extraDirectories = [
         "/etc/NetworkManager/system-connections"
+        "/var/lib/NetworkManager"
       ];
 
       services.avahi = mkIf cfg.avahi.enable {
