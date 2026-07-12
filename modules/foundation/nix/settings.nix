@@ -18,7 +18,7 @@ in {
         keep-outputs = true;
         keep-derivations = true;
         use-xdg-base-directories = true;
-        abort-on-warn = true;
+        abort-on-warn = false;
         substituters = [
           "https://cache.nixos.org"
           "https://nix-community.cachix.org"

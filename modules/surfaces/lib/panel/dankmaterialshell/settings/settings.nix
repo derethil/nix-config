@@ -607,10 +607,6 @@
               id = "weather";
               enabled = true;
             }
-            {
-              id = "alarmClock";
-              enabled = true;
-            }
           ];
           rightWidgets = [
             {
@@ -618,16 +614,8 @@
               enabled = true;
             }
             {
-              id = "cpuUsage";
+              id = "systemMonitorPlus";
               enabled = true;
-              minimumWidth = true;
-            }
-            {
-              id = "memUsage";
-              enabled = true;
-              minimumWidth = true;
-              showSwap = false;
-              showInGb = true;
             }
             {
               id = "easyEffects";
@@ -668,7 +656,7 @@
           popupGapsAuto = true;
           popupGapsManual = 50;
           shadowIntensity = 0;
-          hoverPopouts = true;
+          hoverPopouts = false;
           hoverPopoutDelay = 150;
         }
       ];
@@ -761,7 +749,7 @@
       barInsetPaddingShared = -1;
       barInsetPaddingSyncAll = false;
       frameBarInsetPadding = -1;
-      configVersion = 11;
+      configVersion = 12;
     };
   };
 }
