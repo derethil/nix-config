@@ -9,7 +9,6 @@
     imports = [
       self.modules.homeManager.comms
       self.modules.homeManager.mattermost
-      self.modules.homeManager.zoom
     ];
   };
 
