@@ -18,7 +18,12 @@
         This system runs NixOS. You can run any command not installed on
         the system using comma (,) which uses nix-index to find and run
         packages from nixpkgs ephemerally. For example: ", fastfetch"
-        will run fastfetch without it being installed.
+        will run fastfetch without it being installed. Alternatively, you can run any
+        command in a Nix shell using "nix-shell -p <package>".
+
+        When you list your sources after using online search, you must output the
+        source as raw URLs rather than markdown links. This is to ensure
+        I can open the links directly in my browser without having to copy and paste them.
       '';
       settings = {
         model = "sonnet";
