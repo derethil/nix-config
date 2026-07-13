@@ -19,6 +19,7 @@ My configs for NixOS, MacOS, and Home Manager dotfiles. Uses flake-parts and the
 
 - `hosts/` - per-machine entrypoints
 - [`modules/`](./modules) - everything else, organized by topic
+- `flake/` - internal flake plumbing
 - `overlays/` - package overrides
 - `templates/` - devenv templates (see below)
 

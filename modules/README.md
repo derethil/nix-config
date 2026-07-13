@@ -1,30 +1,14 @@
-# Modules
+# `modules`
 
-Everything that isn't a host or a template. Each subdirectory is a top-level
-flake-parts module merging into `flake.modules.*`.
+Contains all my configuration outputs. Hosts, templates, overlays, and flake
+plumbing live at the root.
 
 ## Layout
 
-- `foundation/`: baseline module that every host imports, like nix settings,
-  shell config, openssh, neovim, sudo
-- `machine/`: hardware-adjacent stuff like boot/kernel config, drivers,
-  bluetooth, networking, and the daemons that drive specific hardware like lact,
-  openrgb, coolercontrol
-- `surfaces/`: desktop and UI layer, including niri, macOS settings, desktop
-  utilities and themes
-- `pursuits/`: user-facing apps grouped by purpose, like browsers, comms,
-  development, gaming, media, utilities
-- `bridges/`: platform integrations e.g. flatpak on NixOS and homebrew,
-  mac-app-util, keychain on darwin
-- `hosting/`: self-hosted services and daemons
-- `services/`: software-level internal system daemons like docker, postgres,
-  gnome-keyring
-- `flake/`: internal flake plumbing, including the formatter, factory,
-  flake-file, and flake-root
-
-## Top-level files
-
-- `lib.nix`: small Nix helpers like `mergeStrict` and `hasPackage`
-- `systems.nix`: supported systems for flake outputs
-- `nixpkgs.nix`, `home-manager.nix`, `nix-darwin.nix`: input wiring and
-  `follows`
+- `foundation/`: baseline module that every host imports
+- `machine/`: hardware-adjacent services and boot/kernel stuff
+- `surfaces/`: desktop and UI layers
+- `pursuits/`: user-facing applications
+- `bridges/`: platform specific integrations
+- `hosting/`: self-hosted external services
+- `services/`: system daemons and background services
