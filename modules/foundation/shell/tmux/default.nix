@@ -1,4 +1,4 @@
-{...}: {
+{self, ...}: {
   flake.modules.homeManager.tmux = {
     config,
     pkgs,
@@ -7,7 +7,6 @@
   }: let
     inherit (lib) getExe;
 
-    is-vim = pkgs.callPackage ./_scripts/is-vim.nix {};
     refresh-env-pkg = pkgs.callPackage ./_scripts/refresh-env.nix {inherit config lib;};
     refresh-env = getExe refresh-env-pkg;
     tmux-pkg = pkgs.callPackage ./_scripts/tmux-wrapper.nix {inherit lib refresh-env;};
@@ -16,13 +15,16 @@
     themesDir = ./_themes;
     themeModulesDir = ./_modules;
   in {
+    imports = [
+      self.modules.homeManager.shell-consumer
+    ];
+
     home.packages = [continuum-status];
 
     programs.tmux = {
       package = tmux-pkg;
       enable = true;
-      # TODO: this needs to be shell-agnostic
-      shell = "${getExe pkgs.fish}";
+      shell = "${getExe config.shell.defaultShell}";
       terminal = "tmux-256color";
       prefix = "C-Space";
       keyMode = "vi";
@@ -106,12 +108,6 @@
         bind -T copy-mode-vi C-v send-keys -X rectangle-toggle
         bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel
 
-        # Vim navigation keybindings
-        bind-key -n 'C-h' if-shell '${getExe is-vim}' 'send-keys C-h' 'select-pane -L'
-        bind-key -n 'C-j' if-shell '${getExe is-vim}' 'send-keys C-j' 'select-pane -D'
-        bind-key -n 'C-k' if-shell '${getExe is-vim}' 'send-keys C-k' 'select-pane -U'
-        bind-key -n 'C-l' if-shell '${getExe is-vim}' 'send-keys C-l' 'select-pane -R'
-
         bind-key -T copy-mode-vi 'C-h' select-pane -L
         bind-key -T copy-mode-vi 'C-j' select-pane -D
         bind-key -T copy-mode-vi 'C-k' select-pane -U
@@ -121,6 +117,21 @@
       plugins = with pkgs.tmuxPlugins; [
         sensible
         yank
+        {
+          plugin = vim-tmux-navigator;
+          extraConfig = ''
+            set -g @vim_navigator_mapping_prev ""
+
+            # Speed up pane switching in most usecases by skipping the `ps` check if the current pane is running vim or a shell
+            is_vim="\
+            echo '#{pane_current_command}' | grep -iqE '^@vim_navigator_pattern$' && exit 0
+            echo '#{pane_current_command}' | grep -iqE '^(bash|zsh|fish)$' && exit 1
+            ps -o state= -o comm= -t '#{pane_tty}' \
+                | grep -iqE '^[^TXZ ]+ +@vim_navigator_pattern$'"
+
+            set -g @vim_navigator_check "''${is_vim}"
+          '';
+        }
         {
           plugin = fingers;
           extraConfig = ''

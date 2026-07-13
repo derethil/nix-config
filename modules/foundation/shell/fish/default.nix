@@ -14,6 +14,8 @@ in {
       self.modules.generic.fish-common
     ];
 
+    shell.defaultShell = pkgs.fish;
+
     programs.fish.functions = mkMerge [
       fishFunctions
       {
