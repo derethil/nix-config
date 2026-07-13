@@ -4,19 +4,18 @@
     lib,
     ...
   }: let
-    mattermost-desktop-x11 = pkgs.mattermost-desktop.overrideAttrs (oldAttrs: {
-      postFixup =
-        (oldAttrs.postFixup or "")
-        + ''
-          wrapProgram $out/bin/mattermost-desktop \
-            --add-flags "--ozone-platform=x11" \
-            --set ELECTRON_PLATFORM_OZONE_HINT x11 \
-            --set QT_QPA_PLATFORM xcb
-        '';
-    });
+    mattermost-desktop = pkgs.symlinkJoin {
+      name = "mattermost-desktop";
+      paths = [pkgs.mattermost-desktop];
+      postBuild = ''
+        # desktop file has no StartupWMClass, so the filename must match the wayland app_id to resolve icon
+        mv $out/share/applications/Mattermost.desktop \
+          $out/share/applications/Mattermost.Desktop.desktop
+      '';
+    };
   in {
     home.packages = lib.mkIf pkgs.stdenv.hostPlatform.isLinux [
-      mattermost-desktop-x11
+      mattermost-desktop
     ];
   };
 
