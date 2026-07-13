@@ -12,8 +12,7 @@
 
 # About
 
-My configs for NixOS, nix-darwin, and Home Manager. Uses flakes, flake-parts,
-and the
+My configs for NixOS, MacOS, and Home Manager dotfiles. Uses flake-parts and the
 [dendritic pattern](https://github.com/Doc-Steve/dendritic-design-with-flake-parts).
 
 ## Layout
@@ -25,7 +24,7 @@ and the
 
 ## Stuff I use
 
-- **Compositors**: Niri
+- **Compositors**: Niri and Paneru
 - **Shell**: Dank Material Shell with my own
   [Hue manager plugin](https://github.com/derethil/dms-hue-manager/tree/main)
   and Outlook calendar integration
