@@ -42,7 +42,7 @@
 
       # Workspace assignments
       (workspaceRule 1 ["^firefox$" "^chromium$"])
-      (workspaceRule 2 ["^discord$" "^vesktop$" "^Mattermost$" "^zoom$"])
+      (workspaceRule 2 ["^discord$" "^vesktop$" ".*Mattermost.*" "^zoom$"])
       (workspaceRule 3 ["^bruno$" "^obsidian$"])
       (workspaceRule 4 [
         "^[Ss]team$"
