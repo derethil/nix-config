@@ -25,8 +25,8 @@
   ];
 in {
   flake = {
-    # HOST CONFIGURATION
     modules = {
+      # HOST CONFIGURATION
       darwin.gabbro = {pkgs, ...}: {
         imports = with (mergeModules self.modules.generic self.modules.darwin); [
           bridges
@@ -35,6 +35,7 @@ in {
           foundation
           lightweight-gaming
           paneru
+          hammerspoon
           user-derethil
         ];
 
@@ -61,7 +62,6 @@ in {
       };
 
       # HOME MANAGER CONFIGURATION
-
       homeManager.gabbro-derethil = {
         imports = with self.modules.homeManager; [
           alacritty
