@@ -64,6 +64,16 @@
           projectKey = "dragon-army_hatchlab-srt_5a7d51c9-c50c-44fa-bd66-3ce24e000515";
         };
       };
+
+      extraSettings = {
+        vim.lsp.servers.nixd.settings.nixd = {
+          nixpkgs.expr = "import (builtins.getFlake \"${config.internal.flakeRoot}\").inputs.nixpkgs {}";
+          options = {
+            nixos.expr = "(builtins.getFlake \"${config.internal.flakeRoot}\").nixosConfigurations.feldspar.options";
+            "home-manager".expr = "(builtins.getFlake \"${config.internal.flakeRoot}\").homeConfigurations.\"${config.home.username}@feldspar\".options";
+          };
+        };
+      };
     };
 
     xdg.mimeApps.defaultApplications = self.lib.mkMimeApps "nvim.desktop" [

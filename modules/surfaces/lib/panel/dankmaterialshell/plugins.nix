@@ -15,6 +15,9 @@ in {
 
       claudeCodeUsage = {
         inherit (config.programs.claude-code) enable;
+        settings = {
+          showPacing = false;
+        };
       };
 
       niriScreenshot = {
