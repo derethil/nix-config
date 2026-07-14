@@ -31,6 +31,7 @@ in {
       environment.systemPackages = with pkgs; [
         sops
         age
+        ssh-to-age
       ];
 
       sops = {
@@ -52,6 +53,7 @@ in {
     environment.systemPackages = with pkgs; [
       sops
       age
+      ssh-to-age
     ];
 
     sops = {
@@ -79,6 +81,7 @@ in {
     home.packages = with pkgs; [
       sops
       age
+      ssh-to-age
     ];
 
     sops = {
