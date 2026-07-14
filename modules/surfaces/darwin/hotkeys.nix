@@ -1,5 +1,13 @@
-{self, lib, ...}: {
-  flake.modules.darwin.hotkeys = {pkgs, config, ...}: {
+{
+  self,
+  lib,
+  ...
+}: {
+  flake.modules.darwin.hotkeys = {
+    pkgs,
+    config,
+    ...
+  }: {
     imports = [self.modules.darwin.skhd];
 
     # TODO: derive from terminal.commands.withTmux (HM option) instead of hardcoding

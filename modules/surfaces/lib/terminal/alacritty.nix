@@ -87,12 +87,12 @@
               {
                 key = "H";
                 mods = "Command|Shift";
-                chars = builtins.fromJSON ("\"\\u001b[300~\"");
+                chars = builtins.fromJSON "\"\\u001b[300~\"";
               }
               {
                 key = "L";
                 mods = "Command|Shift";
-                chars = builtins.fromJSON ("\"\\u001b[301~\"");
+                chars = builtins.fromJSON "\"\\u001b[301~\"";
               }
             ];
           };
