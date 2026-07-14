@@ -1559,7 +1559,6 @@
         "nvim-config": "nvim-config",
         "paneru": "paneru",
         "quickshell": "quickshell",
-        "secrets": "secrets",
         "sops-nix": "sops-nix",
         "systems": "systems_7",
         "tmux-power-zoom": "tmux-power-zoom",
@@ -1582,23 +1581,6 @@
         "ref": "nightly",
         "repo": "rust-analyzer",
         "type": "github"
-      }
-    },
-    "secrets": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1778521091,
-        "narHash": "sha256-ezUHx5+gGToI9lVOx/QIkZWjeEaF/LaI6t8LGzOT59s=",
-        "ref": "main",
-        "rev": "bd898ae71731930ac0a579d3a92366910129c4bc",
-        "revCount": 22,
-        "type": "git",
-        "url": "ssh://git@github.com/derethil/nix-secrets"
-      },
-      "original": {
-        "ref": "main",
-        "type": "git",
-        "url": "ssh://git@github.com/derethil/nix-secrets"
       }
     },
     "sops-nix": {

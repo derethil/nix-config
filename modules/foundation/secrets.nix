@@ -3,7 +3,7 @@
   self,
   ...
 }: let
-  defaultSopsFile = "${inputs.secrets}/secrets.yaml";
+  defaultSopsFile = "${self}/secrets/secrets.yaml";
   validateSopsFiles = true;
 in {
   # INPUTS
@@ -12,11 +12,6 @@ in {
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    secrets = {
-      url = "git+ssh://git@github.com/derethil/nix-secrets?ref=main";
-      flake = false;
     };
   };
 

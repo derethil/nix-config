@@ -96,10 +96,7 @@
       url = "git+https://github.com/quickshell-mirror/quickshell?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    secrets = {
-      url = "git+ssh://git@github.com/derethil/nix-secrets?ref=main";
-      flake = false;
-    };
+    self.submodules = true;
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -15,6 +15,10 @@
         url = "github:nix-community/disko";
         inputs.nixpkgs.follows = "nixpkgs";
       };
+
+      self = {
+        submodules = true;
+      };
     };
 
     outputs = lib.mkForce ''
