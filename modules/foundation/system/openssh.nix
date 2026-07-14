@@ -66,7 +66,12 @@ in {
       openssh.authorizedKeys.keys = [publicKey];
     });
 
-    internal.boot.impermanence.extraDirectories = ["/etc/ssh"];
+    internal.boot.impermanence.extraFiles = [
+      "/etc/ssh/ssh_host_ed25519_key"
+      "/etc/ssh/ssh_host_ed25519_key.pub"
+      "/etc/ssh/ssh_host_rsa_key"
+      "/etc/ssh/ssh_host_rsa_key.pub"
+    ];
   };
 
   flake.modules.darwin.openssh = {...}: {

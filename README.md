@@ -46,9 +46,16 @@ My configs for NixOS, MacOS, and Home Manager dotfiles. Uses flake-parts and the
   playwright, golangci-lint, and an AWS SSO pre-task
 - `rust` - hello_world cargo project managed by `devenv`
 
-# New machine
+# Installation
 
-1. Add a host entry with a blank `hardware.nix`; tweak `disko.nix` if needed
-2. Boot the NixOS ISO and `passwd` the `nixos` user
-3. Get on the network
-4. `nix run .#nixos-anywhere-install` and follow the prompts
+1. **Boot**: Boot the target machine using the minimal NixOS ISO and give root a
+   password.
+2. **Configure**: If provisioning a new host, create in `hosts/`, import modules
+   as desired, and ensure it includes a `_disko.nix` configuration file.
+   `_hardware.nix` will be generated automatically. If using LUKS disk
+   encryption, set the new host's LUKS encryption key with `just secrets edit`.
+3. **Bootstrap**: Run the following:
+
+```bash
+just bootstrap <hostname> <target-ip>
+```

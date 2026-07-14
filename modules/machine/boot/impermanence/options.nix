@@ -10,6 +10,10 @@ in {
       };
 
       internal.boot.impermanence = {
+        enabled = mkOption {
+          type = types.bool;
+          default = false;
+        };
         luksDevice = mkOption {
           type = types.nullOr types.str;
           default = null;

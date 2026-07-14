@@ -37,6 +37,7 @@
       ];
 
       internal.persistRoot = "/persist";
+      internal.boot.impermanence.enabled = true;
 
       environment.persistence.${config.internal.persistRoot} = {
         directories = flatten [
