@@ -49,6 +49,7 @@ in {
       networking
       radeon
       self.modules.nixos.displays
+      virtualization
 
       # System services
       coolercontrol-it87
