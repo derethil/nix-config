@@ -18,8 +18,9 @@ edit:
 rekey:
     sops updatekeys {{ sops_file }}
 
-# Commit any changes to the secrets submodule and the sops config (-p to also push)
-update should_push="":
+# Commit any changes to the secrets submodule and the sops config
+[arg("should_push", long="push", short="p", value="true", help="Push commits after updating")]
+update should_push="false":
     #!/usr/bin/env bash
     set -euo pipefail
 
@@ -34,11 +35,13 @@ update should_push="":
         git commit -m "chore(secrets): update secrets config"
     fi
 
-    if [ "{{ should_push }}" = "-p" ]; then
+    if [ "{{ should_push }}" = "true" ]; then
         git push --recurse-submodules=on-demand
     fi
 
 # Register an already-running host by fetching its existing SSH key
+[arg("hostname", help="NixOS configuration name (must match a flake output)")]
+[arg("ip", pattern="^([0-9]{1,3}[.]){3}[0-9]{1,3}$", help="IP address of the running host")]
 add-host hostname ip:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -48,6 +51,8 @@ add-host hostname ip:
     just secrets update
 
 # Copy personal age identity onto a machine so home-manager can decrypt secrets
+[arg("user", help="SSH user on the target machine")]
+[arg("ip", pattern="^([0-9]{1,3}[.]){3}[0-9]{1,3}$", help="IP address of the target machine")]
 provision-identity user ip:
     #!/usr/bin/env bash
     set -euo pipefail

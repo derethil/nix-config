@@ -54,7 +54,7 @@ switch hostname ip:
     ssh -t "$user@{{ ip }}" "sudo nixos-rebuild switch --flake '$root#{{ hostname }}'"
 
 [private]
-install hostname ip target_user="root":
+install hostname ip target_user="root" build_on="local":
     #!/usr/bin/env bash
     set -euo pipefail
 
@@ -63,7 +63,7 @@ install hostname ip target_user="root":
     if ! (command -v ssh-to-age &>/dev/null && command -v nixos-anywhere &>/dev/null); then
         just print "{{ YELLOW }}" "==> Required tools missing. Re-running inside a nix shell..."
         exec nix shell nixpkgs#ssh-to-age nixpkgs#nixos-anywhere nixpkgs#sops nixpkgs#age \
-            --command bash -c 'just install "$1" "$2" "$3"' -- "{{ hostname }}" "{{ ip }}" "{{ target_user }}"
+            --command bash -c 'just install "$1" "$2" "$3" "$4"' -- "{{ hostname }}" "{{ ip }}" "{{ target_user }}" "{{ build_on }}"
         exit 0
     fi
 
@@ -73,6 +73,7 @@ install hostname ip target_user="root":
     trap 'rm -rf "$tmp"' EXIT
 
     just submodule-update
+    git add ./hosts
 
     # ─── LUKS ENCRYPTION ─────────────────────────────────────────────────────
 
@@ -148,7 +149,7 @@ install hostname ip target_user="root":
         "${disk_encryption_flag[@]}" \
         "${hw_flag[@]}" \
         --extra-files "$tmp/extra-files" \
-        --build-on local
+        --build-on {{ build_on }}
 
     if [[ ${#hw_flag[@]} -gt 0 ]]; then
         just print "{{ GREEN }}" "==> Committing generated hardware config..."
@@ -157,8 +158,12 @@ install hostname ip target_user="root":
     fi
 
 # Bootstrap a new host by installing NixOS, waiting for it to come online, and deploying the flake
-bootstrap hostname ip target_user="root":
-    just install {{ hostname }} {{ ip }} {{ target_user }}
+[arg("build_on", long="build-on", short="b", pattern="^(local|remote)$", help="'local' builds on this machine, 'remote' builds on the target")]
+[arg("ip", pattern="^([0-9]{1,3}[.]){3}[0-9]{1,3}$", help="IP address of the target machine")]
+[arg("hostname", help="NixOS configuration name (must match a flake output)")]
+[arg("target_user", long="target-user", short="u", help="SSH user on the installer ISO (default: root)")]
+bootstrap hostname ip target_user="root" build_on="local":
+    just install {{ hostname }} {{ ip }} {{ target_user }} {{ build_on }}
     just wait-for-host {{ hostname }} {{ ip }}
 
     just secrets provision-identity $(just eval {{ hostname }} config.internal.primaryUser) {{ ip }}

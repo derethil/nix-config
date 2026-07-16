@@ -26,11 +26,12 @@ write:
     nix run .#write-flake && nix flake lock
 
 # Update a flake input and commit the change to flake.lock (-a to amend the last commit)
-update input amend='':
+[arg("amend", long="amend", short="a", value="true", help="Amend the last commit instead of creating a new one")]
+update input amend="false":
     nix flake update {{ input }}
     git add flake.lock
     @if ! git diff --cached --quiet flake.lock; then \
-        if [ "{{ amend }}" = "-a" ]; then \
+        if [ "{{ amend }}" = "true" ]; then \
             git commit --amend --no-edit; \
         else \
             git commit -m "chore(flake): update {{ input }} input"; \
