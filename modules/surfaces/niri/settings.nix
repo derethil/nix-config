@@ -163,6 +163,10 @@
           trigger-height = 24;
         };
       };
+
+      debug = {
+        honor-xdg-activation-with-invalid-serial = {};
+      };
     };
   };
 }

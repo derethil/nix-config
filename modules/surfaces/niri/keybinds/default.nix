@@ -21,7 +21,7 @@
     dmsEnabled = config.programs.dank-material-shell.enable or false;
 
     mkWorkspaceBinds = modifier: action:
-      builtins.listToAttrs (builtins.map (
+      builtins.listToAttrs (map (
         i: let
           key =
             if i == 10
@@ -67,7 +67,7 @@
         builtins.toFile "config.yaml"
         (lib.generators.toYAML {} {
           inherit menu;
-          font = "${font.name} ${builtins.toString font.size}";
+          font = "${font.name} ${toString font.size}";
           anchor = "bottom-right";
           background = "#282828";
           color = "#D4BE98";
@@ -86,6 +86,7 @@
       niri-smart-workspace
       niri-hyprpicker
       niri-wlsunset
+      niri-window-picker-menu
       terminal-options
     ];
 
@@ -103,6 +104,12 @@
 
         # Window State Management
         "Mod+Q" = {close-window = [];};
+        "Mod+Shift+Q" = mkKeybinds {hotkey-overlay-title = "Close Window (Pick)";} {
+          spawn = ["niri-window-picker-menu" "niri msg action close-window --id {{id}}"];
+        };
+        "Mod+O" = mkKeybinds {hotkey-overlay-title = "Cast Window (Pick)";} {
+          spawn = ["bash" "-c" "niri msg action set-dynamic-cast-window --id $(niri msg --json pick-window | jq .id)"];
+        };
         "Mod+F" = {fullscreen-window = [];};
         "Mod+Shift+F" = {toggle-windowed-fullscreen = [];};
         "Mod+M" = {maximize-window-to-edges = [];};
