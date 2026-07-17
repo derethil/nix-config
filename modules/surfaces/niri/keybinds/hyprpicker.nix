@@ -1,5 +1,5 @@
 {self, ...}: {
-  flake.modules.homeManager.niri-hyprpicker = {...}: let
+  flake.modules.homeManager.niri-hyprpicker = let
     inherit (self.lib.niri) mkKeybinds;
   in {
     imports = [self.modules.homeManager.hyprpicker];

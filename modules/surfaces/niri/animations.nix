@@ -1,5 +1,5 @@
-{...}: {
-  flake.modules.homeManager.niri = {...}: let
+{
+  flake.modules.homeManager.niri = let
     materialDesignDecelerate = {
       duration-ms = 100;
       curve = ["cubic-bezier" 0.05 0.7 0.1 1.0];

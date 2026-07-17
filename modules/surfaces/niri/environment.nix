@@ -1,5 +1,5 @@
-{...}: {
-  flake.modules.homeManager.niri = {...}: {
+{
+  flake.modules.homeManager.niri = {
     home.sessionVariables = {
       QT_QPA_PLATFORM = "wayland;xcb";
       QT_QPA_PLATFORMTHEME = "gtk3";

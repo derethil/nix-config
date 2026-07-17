@@ -18,7 +18,7 @@
       services.hardware.openrgb = {
         enable = true;
         package = pkg;
-        startupProfile = cfg.startupProfile;
+        inherit (cfg) startupProfile;
       };
 
       # Required for RAM / motherboard detection

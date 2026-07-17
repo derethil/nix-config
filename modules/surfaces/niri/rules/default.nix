@@ -1,5 +1,5 @@
 {self, ...}: {
-  flake.modules.homeManager.niri = {...}: let
+  flake.modules.homeManager.niri = let
     inherit
       (self.lib.niri-rules)
       workspaceRule

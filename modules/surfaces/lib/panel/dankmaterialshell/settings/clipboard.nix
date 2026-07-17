@@ -1,5 +1,5 @@
-{...}: {
-  flake.modules.homeManager.dankmaterialshell-panel = {...}: {
+{
+  flake.modules.homeManager.dankmaterialshell-panel = {
     programs.dank-material-shell.clipboardSettings = {
       maxHistory = 10000;
       maxEntrySize = 5242880;

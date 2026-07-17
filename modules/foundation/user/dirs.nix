@@ -1,4 +1,4 @@
-{...}: {
+{
   flake.modules.homeManager.user-dirs = {
     config,
     lib,

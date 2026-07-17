@@ -1,4 +1,4 @@
-{...}: {
+{
   flake.modules.homeManager.dankmaterialshell-panel = {config, ...}: {
     programs.dank-material-shell.settings = {
       currentThemeName = "custom";

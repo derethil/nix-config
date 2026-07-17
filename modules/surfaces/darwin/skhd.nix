@@ -1,4 +1,4 @@
-{...}: {
+{
   flake.modules.darwin.skhd = {
     services.skhd.enable = true;
 

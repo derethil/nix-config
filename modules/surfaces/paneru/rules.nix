@@ -1,4 +1,4 @@
-{...}: {
+{
   flake.modules.darwin.paneru = {
     services.paneru.settings = {
       restore = {

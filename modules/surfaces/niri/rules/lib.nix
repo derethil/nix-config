@@ -1,4 +1,4 @@
-{...}: let
+let
   appIdMatch = appId: {_props.app-id._raw = ''r#"${appId}"#'';};
   appIdMatches = appIds:
     map appIdMatch (

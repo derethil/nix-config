@@ -9,6 +9,6 @@
       inherit (final.stdenv.hostPlatform) system;
     };
   in {
-    szurubooru = szuruPkgs.szurubooru;
+    inherit (szuruPkgs) szurubooru;
   };
 }

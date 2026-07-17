@@ -19,26 +19,28 @@
       };
     };
 
-    flake.modules.generic.home-manager-options = {
-      home-manager = {
-        useGlobalPkgs = true;
-        useUserPackages = true;
+    flake.modules = {
+      generic.home-manager-options = {
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+        };
       };
-    };
 
-    flake.modules.homeManager.home-manager = {pkgs, ...}: {
-      home.packages = [pkgs.unstable.home-manager];
-    };
+      homeManager.home-manager = {pkgs, ...}: {
+        home.packages = [pkgs.unstable.home-manager];
+      };
 
-    flake.modules.nixos.home-manager = {
-      imports = [self.modules.generic.home-manager-options];
-      home-manager.sharedModules = [self.modules.homeManager.home-manager];
-    };
+      nixos.home-manager = {
+        imports = [self.modules.generic.home-manager-options];
+        home-manager.sharedModules = [self.modules.homeManager.home-manager];
+      };
 
-    flake.modules.darwin.home-manager = {
-      imports = [self.modules.generic.home-manager-options];
-      home-manager.useUserPackages = lib.mkForce false;
-      home-manager.sharedModules = [self.modules.homeManager.home-manager];
+      darwin.home-manager = {
+        imports = [self.modules.generic.home-manager-options];
+        home-manager.useUserPackages = lib.mkForce false;
+        home-manager.sharedModules = [self.modules.homeManager.home-manager];
+      };
     };
   };
 }

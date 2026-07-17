@@ -25,7 +25,7 @@
             x = d.position.x;
             y = d.position.y;
           };
-          scale = d.scale;
+          inherit (d) scale;
           transform = toTransform d.rotation d.flipped;
         }
         (mkIf d.primary {focus-at-startup = [];})

@@ -26,39 +26,41 @@
     emoji = [config.font.emoji.name];
   };
 in {
-  flake.modules.homeManager.fonts = {
-    config,
-    pkgs,
-    ...
-  }: {
-    imports = mkImports pkgs;
-    home.packages = mkFontPackages config;
-    fonts.fontconfig = {
-      enable = true;
-      defaultFonts = mkDefaultFonts config;
+  flake.modules = {
+    homeManager.fonts = {
+      config,
+      pkgs,
+      ...
+    }: {
+      imports = mkImports pkgs;
+      home.packages = mkFontPackages config;
+      fonts.fontconfig = {
+        enable = true;
+        defaultFonts = mkDefaultFonts config;
+      };
     };
-  };
 
-  flake.modules.nixos.fonts = {
-    config,
-    pkgs,
-    ...
-  }: {
-    imports = mkImports pkgs;
-    fonts = {
-      enableGhostscriptFonts = true;
-      enableDefaultPackages = false;
-      packages = mkFontPackages config;
-      fontconfig.defaultFonts = mkDefaultFonts config;
+    nixos.fonts = {
+      config,
+      pkgs,
+      ...
+    }: {
+      imports = mkImports pkgs;
+      fonts = {
+        enableGhostscriptFonts = true;
+        enableDefaultPackages = false;
+        packages = mkFontPackages config;
+        fontconfig.defaultFonts = mkDefaultFonts config;
+      };
     };
-  };
 
-  flake.modules.darwin.fonts = {
-    config,
-    pkgs,
-    ...
-  }: {
-    imports = mkImports pkgs;
-    fonts.packages = mkFontPackages config;
+    darwin.fonts = {
+      config,
+      pkgs,
+      ...
+    }: {
+      imports = mkImports pkgs;
+      fonts.packages = mkFontPackages config;
+    };
   };
 }

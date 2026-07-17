@@ -1,4 +1,4 @@
-{...}: {
+{
   flake.modules.nixos.feldspar-ath12k-fixes = {pkgs, ...}: {
     # Card takes a very long time to scan, this limits the channels to the US ones to speed it up.
     hardware.wirelessRegulatoryDatabase = true;

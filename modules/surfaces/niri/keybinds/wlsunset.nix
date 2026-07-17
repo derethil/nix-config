@@ -1,5 +1,5 @@
 {self, ...}: {
-  flake.modules.homeManager.niri-wlsunset = {...}: let
+  flake.modules.homeManager.niri-wlsunset = let
     inherit (self.lib.niri) mkKeybinds;
   in {
     imports = [self.modules.homeManager.wlsunset];

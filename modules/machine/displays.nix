@@ -88,56 +88,58 @@
     };
   };
 in {
-  flake.modules.generic.displays-options = {config, ...}: {
-    key = "displays-options";
+  flake.modules = {
+    generic.displays-options = {config, ...}: {
+      key = "displays-options";
 
-    options.internal.displays = mkOption {
-      type = types.listOf displayType;
-      default = [];
-      description = ''
-        Monitors physically attached to this host. Set on the system module;
-        propagated to every home-manager user on the host via
-        home-manager.sharedModules so user-level consumers see the same list.
-      '';
+      options.internal.displays = mkOption {
+        type = types.listOf displayType;
+        default = [];
+        description = ''
+          Monitors physically attached to this host. Set on the system module;
+          propagated to every home-manager user on the host via
+          home-manager.sharedModules so user-level consumers see the same list.
+        '';
+      };
+
+      options.internal.primaryDisplay = mkOption {
+        type = displayType;
+        readOnly = true;
+        description = ''
+          The display marked `primary = true`. Throws at access time if no
+          display is marked primary, so consumers don't have to handle the
+          "no primary" case themselves.
+        '';
+      };
+
+      config.internal.primaryDisplay = let
+        found = lib.findFirst (d: d.primary) null config.internal.displays;
+      in
+        if found == null
+        then throw "displays: no display has `primary = true`"
+        else found;
     };
 
-    options.internal.primaryDisplay = mkOption {
-      type = displayType;
-      readOnly = true;
-      description = ''
-        The display marked `primary = true`. Throws at access time if no
-        display is marked primary, so consumers don't have to handle the
-        "no primary" case themselves.
-      '';
+    nixos.displays = {config, ...}: {
+      imports = [self.modules.generic.displays-options];
+
+      config.home-manager.sharedModules = [
+        self.modules.homeManager.displays
+        {internal.displays = lib.mkDefault config.internal.displays;}
+      ];
     };
 
-    config.internal.primaryDisplay = let
-      found = lib.findFirst (d: d.primary) null config.internal.displays;
-    in
-      if found == null
-      then throw "displays: no display has `primary = true`"
-      else found;
-  };
+    darwin.displays = {config, ...}: {
+      imports = [self.modules.generic.displays-options];
 
-  flake.modules.nixos.displays = {config, ...}: {
-    imports = [self.modules.generic.displays-options];
+      config.home-manager.sharedModules = [
+        self.modules.homeManager.displays
+        {internal.displays = lib.mkDefault config.internal.displays;}
+      ];
+    };
 
-    config.home-manager.sharedModules = [
-      self.modules.homeManager.displays
-      {internal.displays = lib.mkDefault config.internal.displays;}
-    ];
-  };
-
-  flake.modules.darwin.displays = {config, ...}: {
-    imports = [self.modules.generic.displays-options];
-
-    config.home-manager.sharedModules = [
-      self.modules.homeManager.displays
-      {internal.displays = lib.mkDefault config.internal.displays;}
-    ];
-  };
-
-  flake.modules.homeManager.displays = {
-    imports = [self.modules.generic.displays-options];
+    homeManager.displays = {
+      imports = [self.modules.generic.displays-options];
+    };
   };
 }

@@ -9,7 +9,7 @@
       doNotDisturb = false;
       doNotDisturbUntil = 0;
       terminalOverride = "";
-      wallpaperPath = wallpaperPath;
+      inherit wallpaperPath;
       perMonitorWallpaper = false;
       monitorWallpapers = {};
       perModeWallpaper = false;

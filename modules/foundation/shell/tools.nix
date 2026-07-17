@@ -44,50 +44,52 @@
       nix-tree
     ];
 in {
-  flake.modules.nixos.tools = {pkgs, ...}: {
-    imports = [self.modules.nixos.shell-consumer];
+  flake.modules = {
+    nixos.tools = {pkgs, ...}: {
+      imports = [self.modules.nixos.shell-consumer];
 
-    environment.systemPackages = common-pkgs pkgs;
-    shell.aliases = common-aliases;
-  };
-
-  flake.modules.darwin.tools = {pkgs, ...}: {
-    imports = [self.modules.darwin.shell-consumer];
-
-    environment.systemPackages = common-pkgs pkgs;
-    shell.aliases = common-aliases;
-  };
-
-  flake.modules.homeManager.tools = {pkgs, ...}: {
-    imports = [self.modules.homeManager.shell-consumer];
-
-    shell.aliases = mkMerge [
-      common-aliases
-      {
-        wcl = "wl-copy";
-      }
-    ];
-
-    programs = {
-      direnv = {
-        enable = true;
-        nix-direnv.enable = true;
-      };
-      zoxide = {
-        enable = true;
-      };
+      environment.systemPackages = common-pkgs pkgs;
+      shell.aliases = common-aliases;
     };
 
-    home.packages = with pkgs;
-      flatten [
-        (common-pkgs pkgs)
-        [
-          chafa
-        ]
-        (optionals pkgs.stdenv.isLinux [
-          hwinfo
-          wl-clipboard
-        ])
+    darwin.tools = {pkgs, ...}: {
+      imports = [self.modules.darwin.shell-consumer];
+
+      environment.systemPackages = common-pkgs pkgs;
+      shell.aliases = common-aliases;
+    };
+
+    homeManager.tools = {pkgs, ...}: {
+      imports = [self.modules.homeManager.shell-consumer];
+
+      shell.aliases = mkMerge [
+        common-aliases
+        {
+          wcl = "wl-copy";
+        }
       ];
+
+      programs = {
+        direnv = {
+          enable = true;
+          nix-direnv.enable = true;
+        };
+        zoxide = {
+          enable = true;
+        };
+      };
+
+      home.packages = with pkgs;
+        flatten [
+          (common-pkgs pkgs)
+          [
+            chafa
+          ]
+          (optionals pkgs.stdenv.isLinux [
+            hwinfo
+            wl-clipboard
+          ])
+        ];
+    };
   };
 }

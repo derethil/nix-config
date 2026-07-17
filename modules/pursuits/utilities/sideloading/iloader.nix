@@ -26,7 +26,7 @@
           };
         };
 
-        src = pkgs.fetchurl (sources.${pkgs.stdenv.hostPlatform.system});
+        src = pkgs.fetchurl sources.${pkgs.stdenv.hostPlatform.system};
 
         meta = {
           description = "A user-friendly desktop application for sideloading apps onto iOS devices";

@@ -57,19 +57,19 @@
       };
     };
 
-    config = {
-      boot.kernelModules = ["it87"];
+    config.boot = let
+      options = flatten [
+        (optional cfg.ignoreResourceConflict "ignore_resource_conflict=1")
+        (optional cfg.mmio "mmio=on")
+      ];
+    in {
+      kernelModules = ["it87"];
 
-      boot.extraModprobeConfig = let
-        options = flatten [
-          (optional cfg.ignoreResourceConflict "ignore_resource_conflict=1")
-          (optional cfg.mmio "mmio=on")
-        ];
-      in ''
+      extraModprobeConfig = ''
         options it87 ${concatStringsSep " " options}
       '';
 
-      boot.extraModulePackages = mkIf cfg.mmio [it87-module];
+      extraModulePackages = mkIf cfg.mmio [it87-module];
     };
   };
 }

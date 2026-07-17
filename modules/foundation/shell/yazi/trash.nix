@@ -12,7 +12,7 @@
     ];
 
     xdg = lib.mkIf pkgs.stdenv.hostPlatform.isLinux (lib.mkMerge [
-      ((self.lib.mkYaziApplication {
+      (self.lib.mkYaziApplication {
         inherit config pkgs flavor;
         icon = "trash";
         name = "Trash - Yazi";
@@ -28,7 +28,7 @@
           show_hidden = true
           show_symlink = true
         '';
-      }).xdg)
+      }).xdg
       {
         mimeApps.defaultApplications = self.lib.mkMimeApps "${flavor}.desktop" [
           "x-scheme-handler/trash"

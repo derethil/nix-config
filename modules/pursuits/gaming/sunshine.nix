@@ -1,4 +1,4 @@
-{...}: {
+{
   flake.modules.nixos.sunshine = {pkgs, ...}: let
     compositorEnv = ''
       NIRI_PID=$(pgrep -u "$(id -u)" -x niri | head -1)

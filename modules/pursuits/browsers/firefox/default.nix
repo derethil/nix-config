@@ -55,8 +55,8 @@
           id = 1;
           isDefault = false;
 
-          extraConfig = default.extraConfig;
-          userChrome = default.userChrome;
+          inherit (default) extraConfig;
+          inherit (default) userChrome;
 
           extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
             tridactyl

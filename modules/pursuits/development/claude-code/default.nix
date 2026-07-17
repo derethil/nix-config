@@ -1,5 +1,5 @@
 {self, ...}: {
-  flake.modules.homeManager.claude-code = {...}: {
+  flake.modules.homeManager.claude-code = {
     imports = [self.modules.homeManager.mcp];
 
     programs.claude-code = {

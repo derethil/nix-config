@@ -1,4 +1,4 @@
-{...}: {
+{
   config.flake.factory.fonts-defaults = {pkgs}: {
     font = {
       serif = {

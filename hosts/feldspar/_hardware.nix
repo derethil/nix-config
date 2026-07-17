@@ -11,15 +11,17 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "thunderbolt" "usb_storage" "sd_mod" "usbhid"];
-  boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-amd" "ath12k"];
-  boot.extraModulePackages = [];
+  boot = {
+    initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "thunderbolt" "usb_storage" "sd_mod" "usbhid"];
+    initrd.kernelModules = [];
+    kernelModules = ["kvm-amd" "ath12k"];
+    extraModulePackages = [];
 
-  # Force ath12k to load early and with proper power management
-  boot.kernelParams = [
-    "usbcore.autosuspend=-1" # Disable USB autosuspend for ASMedia controller stability
-  ];
+    # Force ath12k to load early and with proper power management
+    kernelParams = [
+      "usbcore.autosuspend=-1" # Disable USB autosuspend for ASMedia controller stability
+    ];
+  };
 
   # Keep ASMedia USB controllers powered on to prevent hot-swap failures
   services.udev.extraRules = ''

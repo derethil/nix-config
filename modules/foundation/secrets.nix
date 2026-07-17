@@ -6,8 +6,6 @@
   defaultSopsFile = "${self}/secrets/secrets.yaml";
   validateSopsFiles = true;
 in {
-  # INPUTS
-
   flake-file.inputs = {
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -15,19 +13,38 @@ in {
     };
   };
 
-  # NIXOS
+  flake.modules = {
+    nixos.secrets = {
+      pkgs,
+      config,
+      ...
+    }: {
+      imports = [
+        inputs.sops-nix.nixosModules.sops
+        self.modules.nixos.impermanence-options
+      ];
 
-  flake.modules.nixos.secrets = {
-    pkgs,
-    config,
-    ...
-  }: {
-    imports = [
-      inputs.sops-nix.nixosModules.sops
-      self.modules.nixos.impermanence-options
-    ];
+      config = {
+        environment.systemPackages = with pkgs; [
+          sops
+          age
+          ssh-to-age
+        ];
 
-    config = {
+        sops = {
+          inherit defaultSopsFile validateSopsFiles;
+          age = {
+            generateKey = false;
+            keyFile = "${config.internal.persistRoot}/etc/sops/age/keys.txt";
+            sshKeyPaths = ["${config.internal.persistRoot}/etc/ssh/ssh_host_ed25519_key"];
+          };
+        };
+      };
+    };
+
+    darwin.secrets = {pkgs, ...}: {
+      imports = [inputs.sops-nix.darwinModules.sops];
+
       environment.systemPackages = with pkgs; [
         sops
         age
@@ -38,57 +55,34 @@ in {
         inherit defaultSopsFile validateSopsFiles;
         age = {
           generateKey = false;
-          keyFile = "${config.internal.persistRoot}/etc/sops/age/keys.txt";
-          sshKeyPaths = ["${config.internal.persistRoot}/etc/ssh/ssh_host_ed25519_key"];
+          keyFile = "/var/lib/sops/age/keys.txt";
+          sshKeyPaths = [];
+        };
+        gnupg = {
+          sshKeyPaths = [];
         };
       };
     };
-  };
 
-  # DARWIN
+    homeManager.secrets = {
+      config,
+      pkgs,
+      ...
+    }: {
+      imports = [inputs.sops-nix.homeManagerModules.sops];
 
-  flake.modules.darwin.secrets = {pkgs, ...}: {
-    imports = [inputs.sops-nix.darwinModules.sops];
+      home.packages = with pkgs; [
+        sops
+        age
+        ssh-to-age
+      ];
 
-    environment.systemPackages = with pkgs; [
-      sops
-      age
-      ssh-to-age
-    ];
-
-    sops = {
-      inherit defaultSopsFile validateSopsFiles;
-      age = {
-        generateKey = false;
-        keyFile = "/var/lib/sops/age/keys.txt";
-        sshKeyPaths = [];
-      };
-      gnupg = {
-        sshKeyPaths = [];
-      };
-    };
-  };
-
-  # HOME MANAGER
-
-  flake.modules.homeManager.secrets = {
-    config,
-    pkgs,
-    ...
-  }: {
-    imports = [inputs.sops-nix.homeManagerModules.sops];
-
-    home.packages = with pkgs; [
-      sops
-      age
-      ssh-to-age
-    ];
-
-    sops = {
-      inherit defaultSopsFile validateSopsFiles;
-      age = {
-        generateKey = false;
-        keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+      sops = {
+        inherit defaultSopsFile validateSopsFiles;
+        age = {
+          generateKey = false;
+          keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+        };
       };
     };
   };

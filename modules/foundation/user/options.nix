@@ -10,32 +10,34 @@
     };
   };
 in {
-  flake.modules.generic.user-options = {...}: {
-    key = "user-options";
-    options.internal.user = {
-      name = mkOption {
-        type = types.str;
-        description = "Username of the primary user account.";
-      };
-      fullName = mkOption {
-        type = types.str;
-        default = "";
-        description = "Full name of the primary user.";
-      };
-      email = mkOption {
-        type = types.str;
-        default = "";
-        description = "Email address of the primary user.";
+  flake.modules = {
+    generic.user-options = {
+      key = "user-options";
+      options.internal.user = {
+        name = mkOption {
+          type = types.str;
+          description = "Username of the primary user account.";
+        };
+        fullName = mkOption {
+          type = types.str;
+          default = "";
+          description = "Full name of the primary user.";
+        };
+        email = mkOption {
+          type = types.str;
+          default = "";
+          description = "Email address of the primary user.";
+        };
       };
     };
-  };
 
-  flake.modules.nixos.normal-users = {
-    imports = [normalUsersModule];
-  };
+    nixos.normal-users = {
+      imports = [normalUsersModule];
+    };
 
-  flake.modules.darwin.normal-users = {
-    imports = [normalUsersModule];
+    darwin.normal-users = {
+      imports = [normalUsersModule];
+    };
   };
 
   flake.lib.forEachNormalUser = config: f:

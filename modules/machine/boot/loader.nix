@@ -1,4 +1,4 @@
-{...}: {
+{
   flake.modules.nixos.loader = {
     boot = {
       bootspec.enable = true;

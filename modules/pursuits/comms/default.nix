@@ -1,21 +1,23 @@
 {self, ...}: {
-  flake.modules.homeManager.comms = {
-    imports = [
-      self.modules.homeManager.discord
-    ];
-  };
+  flake.modules = {
+    homeManager.comms = {
+      imports = [
+        self.modules.homeManager.discord
+      ];
+    };
 
-  flake.modules.homeManager.comms-work = {
-    imports = [
-      self.modules.homeManager.comms
-      self.modules.homeManager.mattermost
-    ];
-  };
+    homeManager.comms-work = {
+      imports = [
+        self.modules.homeManager.comms
+        self.modules.homeManager.mattermost
+      ];
+    };
 
-  flake.modules.darwin.comms-work = {
-    imports = [
-      self.modules.darwin.discord
-      self.modules.darwin.mattermost
-    ];
+    darwin.comms-work = {
+      imports = [
+        self.modules.darwin.discord
+        self.modules.darwin.mattermost
+      ];
+    };
   };
 }

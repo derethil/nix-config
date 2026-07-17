@@ -1,4 +1,4 @@
-{...}: {
+{
   perSystem = {pkgs, ...}: {
     packages.freeze-game-version = pkgs.writeShellScriptBin "freeze-game-version" ''
       export CHATTR="${pkgs.e2fsprogs}/bin/chattr"

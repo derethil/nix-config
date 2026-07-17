@@ -14,30 +14,32 @@
     config.internal.flakeRoot = lib.mkDefault flakeRoot;
   };
 in {
-  flake.modules.nixos.flake-root = {config, ...}: {
-    options.internal = {
-      flakeRoot = flakeRootOption;
+  flake.modules = {
+    nixos.flake-root = {config, ...}: {
+      options.internal = {
+        flakeRoot = flakeRootOption;
+      };
+
+      config.home-manager.sharedModules = [
+        self.modules.homeManager.flake-root
+        (mkHomeManagerModule config.internal.flakeRoot)
+      ];
     };
 
-    config.home-manager.sharedModules = [
-      self.modules.homeManager.flake-root
-      (mkHomeManagerModule config.internal.flakeRoot)
-    ];
-  };
+    darwin.flake-root = {config, ...}: {
+      options.internal = {
+        flakeRoot = flakeRootOption;
+      };
 
-  flake.modules.darwin.flake-root = {config, ...}: {
-    options.internal = {
-      flakeRoot = flakeRootOption;
+      config.home-manager.sharedModules = [
+        self.modules.homeManager.flake-root
+        (mkHomeManagerModule config.internal.flakeRoot)
+      ];
     };
 
-    config.home-manager.sharedModules = [
-      self.modules.homeManager.flake-root
-      (mkHomeManagerModule config.internal.flakeRoot)
-    ];
-  };
-
-  flake.modules.homeManager.flake-root = {
-    key = "flake-root-options";
-    options.internal.flakeRoot = flakeRootOption;
+    homeManager.flake-root = {
+      key = "flake-root-options";
+      options.internal.flakeRoot = flakeRootOption;
+    };
   };
 }

@@ -23,173 +23,177 @@
     }
   ];
 in {
-  # HOST CONFIGURATION
+  flake = {
+    # HOST CONFIGURATION
 
-  flake.modules.nixos.feldspar = {
-    imports = with (mergeModules self.modules.generic self.modules.nixos); [
-      # Host
-      ./_hardware.nix
-      ./_disko.nix
-      feldspar-ath12k-fixes
+    modules = {
+      nixos.feldspar = {
+        imports = with (mergeModules self.modules.generic self.modules.nixos); [
+          # Host
+          ./_hardware.nix
+          ./_disko.nix
+          feldspar-ath12k-fixes
 
-      # Framework
-      user-derethil
+          # Framework
+          user-derethil
 
-      # Baseline
-      foundation
+          # Baseline
+          foundation
 
-      # Boot & persistence
-      boot
-      plymouth
-      impermanence
+          # Boot & persistence
+          boot
+          plymouth
+          impermanence
 
-      # Hardware
-      audio
-      bluetooth
-      networking
-      radeon
-      self.modules.nixos.displays
-      virtualization
+          # Hardware
+          audio
+          bluetooth
+          networking
+          radeon
+          self.modules.nixos.displays
+          virtualization
 
-      # System services
-      coolercontrol-it87
-      openrgb
-      gnome-keyring
-      docker
+          # System services
+          coolercontrol-it87
+          openrgb
+          gnome-keyring
+          docker
 
-      # Desktop
-      dankmaterialshell-greeter
-      niri
+          # Desktop
+          dankmaterialshell-greeter
+          niri
 
-      # Pursuits
-      development
-      gaming
-      sunshine
-      utilities
+          # Pursuits
+          development
+          gaming
+          sunshine
+          utilities
 
-      # Hosted
-      szuru
-    ];
+          # Hosted
+          szuru
+        ];
 
-    internal = {
-      inherit flakeRoot displays;
+        internal = {
+          inherit flakeRoot displays;
 
-      boot = {
-        kernel = {
-          cachyos = {
-            enable = true;
+          boot = {
+            kernel = {
+              cachyos = {
+                enable = true;
+              };
+            };
+
+            impermanence = {
+              luksDevice = "enc";
+              blankSnapshot = "root-blank";
+            };
+          };
+
+          services = {
+            coolercontrol.it87.mmio = true;
+            openrgb.startupProfile = "Minimal";
+          };
+
+          hardware = {
+            networking.avahi.enable = true;
+            radeon.ppfeaturemask = "0xfff7ffff";
           };
         };
 
-        impermanence = {
-          luksDevice = "enc";
-          blankSnapshot = "root-blank";
+        programs.wayland-bongocat = {
+          inputDevices = ["/dev/input/event4"];
         };
+
+        networking.hostName = "feldspar";
+        system.stateVersion = "25.11";
       };
 
-      services = {
-        coolercontrol.it87.mmio = true;
-        openrgb.startupProfile = "Minimal";
-      };
+      # HOME MANAGER CONFIGURATION
 
-      hardware = {
-        networking.avahi.enable = true;
-        radeon.ppfeaturemask = "0xfff7ffff";
-      };
-    };
+      homeManager.feldspar-derethil = {
+        imports = with self.modules.homeManager; [
+          # Baseline
+          foundation
 
-    programs.wayland-bongocat = {
-      inputDevices = ["/dev/input/event4"];
-    };
+          # Compositor
+          niri
 
-    networking.hostName = "feldspar";
-    system.stateVersion = "25.11";
-  };
+          # Terminals
+          foot
+          kitty
 
-  # HOME MANAGER CONFIGURATION
+          # Surfaces
+          easyeffects
 
-  flake.modules.homeManager.feldspar-derethil = {
-    imports = with self.modules.homeManager; [
-      # Baseline
-      foundation
+          # Pursuits
+          browsers
+          comms-work
+          development
+          gaming
+          media
+          melonloader
+          utilities
 
-      # Compositor
-      niri
+          # Services
+          remote-pull
+        ];
 
-      # Terminals
-      foot
-      kitty
+        internal = {
+          inherit flakeRoot displays;
 
-      # Surfaces
-      easyeffects
+          services.remote-pull.targets = [
+            {
+              name = "monifactory";
+              source = "ubuntu@129.146.48.13:/home/ubuntu/monifactory/backups/*";
+              destination = "/home/derethil/backups/monifactory";
+              schedule = "daily";
+              delete = true;
+            }
+          ];
 
-      # Pursuits
-      browsers
-      comms-work
-      development
-      gaming
-      media
-      melonloader
-      utilities
+          gaming.mangohud = {
+            coolantSensor = "/sys/class/hwmon/hwmon6/temp2_input";
+            pciDevice = "0000:03:00.0";
+          };
+        };
 
-      # Services
-      remote-pull
-    ];
+        services.easyeffects = {
+          preset = "EdEQ";
+          extraPresets = {
+            EdEQ = builtins.fromJSON (builtins.readFile ./easyeffects-presets/Edifier-Speakers.json);
+            Pass = builtins.fromJSON (builtins.readFile ./easyeffects-presets/Passthrough.json);
+          };
+        };
 
-    internal = {
-      inherit flakeRoot displays;
-
-      services.remote-pull.targets = [
-        {
-          name = "monifactory";
-          source = "ubuntu@129.146.48.13:/home/ubuntu/monifactory/backups/*";
-          destination = "/home/derethil/backups/monifactory";
-          schedule = "daily";
-          delete = true;
-        }
-      ];
-
-      gaming.mangohud = {
-        coolantSensor = "/sys/class/hwmon/hwmon6/temp2_input";
-        pciDevice = "0000:03:00.0";
+        home.stateVersion = "25.05";
       };
     };
 
-    services.easyeffects = {
-      preset = "EdEQ";
-      extraPresets = {
-        EdEQ = builtins.fromJSON (builtins.readFile ./easyeffects-presets/Edifier-Speakers.json);
-        Pass = builtins.fromJSON (builtins.readFile ./easyeffects-presets/Passthrough.json);
-      };
-    };
+    # HOST DEFINITION
 
-    home.stateVersion = "25.05";
-  };
-
-  # HOST DEFINITION
-
-  flake.nixosConfigurations.feldspar = inputs.nixpkgs.lib.nixosSystem rec {
-    system = "x86_64-linux";
-    pkgs = withSystem system ({pkgs, ...}: pkgs);
-    modules = [
-      self.modules.nixos.feldspar
-      self.modules.nixos.home-manager
-      inputs.disko.nixosModules.disko
-      inputs.home-manager.nixosModules.home-manager
-      {home-manager.users.derethil = self.modules.homeManager.feldspar-derethil;}
-    ];
-  };
-
-  # HOME MANAGER DEFINITION
-
-  flake.homeConfigurations."derethil@feldspar" = withSystem "x86_64-linux" ({pkgs, ...}:
-    inputs.home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      extraSpecialArgs = {inherit self inputs;};
+    nixosConfigurations.feldspar = inputs.nixpkgs.lib.nixosSystem rec {
+      system = "x86_64-linux";
+      pkgs = withSystem system ({pkgs, ...}: pkgs);
       modules = [
-        self.modules.homeManager.home-manager
-        self.modules.homeManager.feldspar-derethil
-        self.modules.homeManager.user-derethil
+        self.modules.nixos.feldspar
+        self.modules.nixos.home-manager
+        inputs.disko.nixosModules.disko
+        inputs.home-manager.nixosModules.home-manager
+        {home-manager.users.derethil = self.modules.homeManager.feldspar-derethil;}
       ];
-    });
+    };
+
+    # HOME MANAGER DEFINITION
+
+    homeConfigurations."derethil@feldspar" = withSystem "x86_64-linux" ({pkgs, ...}:
+      inputs.home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = {inherit self inputs;};
+        modules = [
+          self.modules.homeManager.home-manager
+          self.modules.homeManager.feldspar-derethil
+          self.modules.homeManager.user-derethil
+        ];
+      });
+  };
 }

@@ -7,7 +7,7 @@
     else throw "${collisionType} collision: ${toString (builtins.attrNames overlap)}";
 in {
   flake.lib = {
-    mergeStrict' = mergeStrict';
+    inherit mergeStrict';
     mergeStrict = a: b: mergeStrict' a b "attribute";
     mergeModules = a: b: mergeStrict' a b "module name";
 
