@@ -3,16 +3,16 @@
   lib,
   ...
 }: let
-  inherit (lib) concatStrings;
+  inherit (lib) concatStrings getExe;
 in {
-  flake.modules.homeManager.dankmaterialshell-panel = {config, ...}: {
+  flake.modules.homeManager.dankmaterialshell-panel = {
+    config,
+    pkgs,
+    ...
+  }: {
     imports = [self.modules.homeManager.openhue];
 
     programs.dank-material-shell.plugins = {
-      alarmClock = {
-        enable = true;
-      };
-
       claudeCodeUsage = {
         inherit (config.programs.claude-code) enable;
         settings = {
@@ -22,6 +22,23 @@ in {
 
       niriScreenshot = {
         inherit (config.wayland.windowManager.niri) enable;
+      };
+
+      dankActions = {
+        inherit (config.wayland.windowManager.niri) enable;
+        settings = {
+          variants = [
+            {
+              id = "variant_cast_window";
+              name = "Cast Window";
+              icon = "cast";
+              showText = false;
+              clickCommand = "niri msg action set-dynamic-cast-window --id $(niri msg --json pick-window | ${getExe pkgs.jq} -r .id)";
+              visibilityCommand = "niri msg --json casts | ${getExe pkgs.jq} -e 'any(.is_dynamic_target == true)'";
+              visibilityInterval = 1;
+            }
+          ];
+        };
       };
 
       easyEffects = {

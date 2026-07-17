@@ -593,6 +593,10 @@
               id = "privacyIndicator";
               enabled = true;
             }
+            {
+              id = "dankActions:variant_cast_window";
+              enabled = true;
+            }
           ];
           centerWidgets = [
             {
