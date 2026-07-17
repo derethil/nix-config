@@ -1,6 +1,10 @@
 {self, ...}: {
-  flake.modules.homeManager.claude-code = {
+  flake.modules.homeManager.claude-code = {pkgs, ...}: {
     imports = [self.modules.homeManager.mcp];
+
+    home.packages = [
+      pkgs.python3
+    ];
 
     programs.claude-code = {
       enable = true;
