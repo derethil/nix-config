@@ -37,7 +37,7 @@
 
         # Spotlight
         "Mod+Slash" = mkKeybinds {hotkey-overlay-title = "Open Spotlight";} {spawn-sh = "dms ipc call spotlight toggle";};
-        "Mod+I" = mkKeybinds {hotkey-overlay-title = "Open Spotlight [Emoji]";} {spawn-sh = "dms ipc call spotlight toggleQuery ':e'";};
+        "Mod+I" = mkKeybinds {hotkey-overlay-title = "Open Spotlight [Emoji]";} {spawn-sh = "dms ipc call spotlight toggleQuery 'e'";};
 
         # Modal Toggles
         "Mod+V" = mkKeybinds {hotkey-overlay-title = "Open Clipboard";} {spawn-sh = "dms ipc call clipboard toggle";};

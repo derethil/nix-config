@@ -34,7 +34,6 @@
       scc
       tldr
       watchexec
-      just
 
       # nix tools
       alejandra
@@ -60,7 +59,10 @@ in {
     };
 
     homeManager.tools = {pkgs, ...}: {
-      imports = [self.modules.homeManager.shell-consumer];
+      imports = [
+        self.modules.homeManager.shell-consumer
+        self.modules.homeManager.just
+      ];
 
       shell.aliases = mkMerge [
         common-aliases
