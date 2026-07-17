@@ -102,32 +102,18 @@
                 definedAliases = ["@np"];
               };
               "NixOS Options" = {
-                urls = [
-                  {
-                    template = "https://search.nixos.org/options?query={searchTerms}";
-                    params = [
-                      {
-                        name = "query";
-                        value = "{searchTerms}";
-                      }
-                    ];
-                  }
-                ];
+                urls = [{template = "https://search.nixos.org/options?query={searchTerms}";}];
                 icon = "https://nixos.wiki/favicon.png";
                 definedAliases = ["@no"];
               };
               "NixOS Wiki" = {
-                urls = [
-                  {template = "https://nixos.wiki/index.php?search={searchTerms}";}
-                ];
+                urls = [{template = "https://nixos.wiki/index.php?search={searchTerms}";}];
                 icon = "https://nixos.wiki/favicon.png";
                 updateInterval = 24 * 60 * 60 * 1000;
                 definedAliases = ["@nw"];
               };
               "ProtonDB" = {
-                urls = [
-                  {template = "https://www.protondb.com/search?q={searchTerms}";}
-                ];
+                urls = [{template = "https://www.protondb.com/search?q={searchTerms}";}];
                 icon = "https://www.protondb.com/sites/protondb/images/favicon.ico";
                 definedAliases = ["@pd"];
               };
