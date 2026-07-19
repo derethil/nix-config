@@ -12,6 +12,12 @@
     mimeType ? [],
   }: let
     mkYaziSymlink = p: config.lib.file.mkOutOfStoreSymlink "${config.xdg.configHome}/yazi/${p}";
+
+    yaziConfigPath = "${config.xdg.configHome}/${flavor}";
+
+    launchScript = pkgs.writeShellScript "${flavor}-launch" ''
+      exec ${lib.getExe pkgs.xdg-terminal-exec} --app-id=yazi env YAZI_CONFIG_HOME=${yaziConfigPath} yazi${lib.optionalString (openToPath != "") " ${lib.escapeShellArg openToPath}"}
+    '';
   in {
     xdg = {
       configFile = {
@@ -24,14 +30,12 @@
       };
 
       desktopEntries = {
-        "${flavor}" = let
-          yaziConfigPath = "${config.xdg.configHome}/${flavor}";
-        in
+        "${flavor}" =
           {
             inherit icon name genericName comment;
             type = "Application";
             categories = ["System" "FileTools" "FileManager"];
-            exec = "${lib.getExe pkgs.xdg-terminal-exec} --app-id=yazi env YAZI_CONFIG_HOME=${yaziConfigPath} yazi ${openToPath}";
+            exec = "${launchScript}";
           }
           // lib.optionalAttrs (mimeType != []) {inherit mimeType;};
       };
