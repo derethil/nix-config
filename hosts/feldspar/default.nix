@@ -71,6 +71,7 @@ in {
 
           # Hosted
           szuru
+          tandoor-recipes
         ];
 
         internal = {

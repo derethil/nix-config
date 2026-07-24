@@ -10,6 +10,7 @@ in {
     duplicates = lib.unique (lib.filter (port: lib.count (other: other == port) ports > 1) ports);
   in {
     options.internal.homelab.ports = {
+      tandoor = mkPortOption 20010;
     };
 
     config.assertions = [

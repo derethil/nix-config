@@ -11,7 +11,7 @@
     key = "quadlet";
 
     imports = [
-      inputs.quadlet-nix.nixosModules.guadlet
+      inputs.quadlet-nix.nixosModules.quadlet
       self.modules.nixos.podman
     ];
 
