@@ -36,7 +36,13 @@
 
     virtualisation.quadlet = {
       pods.tandoor-recipes = {
-        podConfig.publishPorts = ["127.0.0.1:${port}:${internalPort}"];
+        podConfig = {
+          publishPorts = ["127.0.0.1:${port}:${internalPort}"];
+
+          # let each container handle its own restart policy
+          # so that the pod doesn't restart if one container fails
+          exitPolicy = "continue";
+        };
         autoStart = true;
       };
 
