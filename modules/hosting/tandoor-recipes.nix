@@ -53,7 +53,7 @@
               POSTGRES_HOST = "localhost";
               POSTGRES_PORT = "5432";
               ALLOWED_HOSTS = "*";
-              CSRF_TRUSTED_ORIGINS = "http://${host}";
+              CSRF_TRUSTED_ORIGINS = "https://${host}";
               SECURE_PROXY_SSL_HEADER = "HTTP_X_FORWARDED_PROTO,https";
             };
             volumes = [

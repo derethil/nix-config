@@ -46,7 +46,7 @@
       publishService = service: let
         host = fqdn service;
       in {
-        caddy.virtualHosts."http://${host}".extraConfig = ''
+        caddy.virtualHosts.${host}.extraConfig = ''
           reverse_proxy 127.0.0.1:${toString service.port}
           ${service.extraConfig}
         '';
