@@ -62,7 +62,6 @@
               SECURE_PROXY_SSL_HEADER = "HTTP_X_FORWARDED_PROTO,https";
             };
             volumes = [
-              "/etc/localtime:/etc/localtime:ro"
               "tandoor-media:/opt/recipes/mediafiles"
               "tandoor-static:/opt/recipes/staticfiles"
             ];
