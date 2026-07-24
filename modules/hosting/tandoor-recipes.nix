@@ -1,17 +1,21 @@
 {self, ...}: {
   flake.modules.nixos.tandoor-recipes = {config, ...}: let
     version = "2.6.13";
-    host = "recipes.local";
-    servicePort = toString config.internal.homelab.ports.tandoor;
+    subdomain = "recipes";
+    port = "20010";
     internalPort = "8080";
+    host = "${subdomain}.${config.internal.homelab.domain}";
     inherit (config.virtualisation.quadlet) pods;
   in {
     imports = [
-      self.modules.nixos.ports
+      self.modules.nixos.homelab
       self.modules.nixos.quadlet
-      self.modules.nixos.caddy
       self.modules.nixos.secrets
     ];
+
+    internal.homelab.services.tandoor = {
+      inherit subdomain port;
+    };
 
     sops = {
       secrets = {
@@ -30,18 +34,9 @@
       };
     };
 
-    # TODO: Replace with a proper DNS module
-    networking.hosts."127.0.0.1" = [host];
-
-    services.caddy.virtualHosts."http://${host}" = {
-      extraConfig = ''
-        reverse_proxy 127.0.0.1:${servicePort}
-      '';
-    };
-
     virtualisation.quadlet = {
       pods.tandoor-recipes = {
-        podConfig.publishPorts = ["127.0.0.1:${servicePort}:${internalPort}"];
+        podConfig.publishPorts = ["127.0.0.1:${port}:${internalPort}"];
         autoStart = true;
       };
 
