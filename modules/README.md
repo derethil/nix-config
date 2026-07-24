@@ -10,5 +10,5 @@ plumbing live at the root.
 - `surfaces/`: desktop and UI layers
 - `pursuits/`: user-facing applications
 - `bridges/`: platform specific integrations
-- `hosting/`: self-hosted external services
+- `serve/`: self-hosted external services
 - `services/`: system daemons and background services
