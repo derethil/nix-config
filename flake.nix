@@ -92,6 +92,7 @@
       url = "github:karinushka/paneru";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
     quickshell = {
       url = "git+https://github.com/quickshell-mirror/quickshell?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
