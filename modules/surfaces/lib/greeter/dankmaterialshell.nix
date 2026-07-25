@@ -3,6 +3,13 @@
   self,
   ...
 }: {
+  flake-file.inputs = {
+    dank-greeter = {
+      url = "github:AvengeMedia/dank-greeter";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
   flake.modules.nixos.dankmaterialshell-greeter = {
     config,
     lib,
@@ -30,12 +37,12 @@
     imports = [
       self.modules.nixos.greeter
       self.modules.nixos.primary-user
-      inputs.dank-material-shell.nixosModules.greeter
+      inputs.dank-greeter.nixosModules.default
     ];
 
     internal.boot.impermanence.extraDirectories = ["/var/lib/dms-greeter"];
 
-    programs.dank-material-shell.greeter = {
+    programs.dms-greeter = {
       enable = true;
       quickshell.package = pkgs.inputs.quickshell.default;
 
