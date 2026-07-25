@@ -5,14 +5,6 @@
     ...
   }: {
     programs.yazi = {
-      plugins.relative-motions = pkgs.yaziPlugins.relative-motions;
-
-      keymap.mgr.prepend_keymap = map (n: {
-        on = ["${toString n}"];
-        run = ["plugin relative-motions ${toString n}"];
-        desc = "Move in relative steps";
-      }) (lib.range 1 9);
-
       initLua = lib.mkAfter ''
         require("relative-motions"):setup({
           show_numbers = "relative",
@@ -20,6 +12,14 @@
           only_motions = false,
         })
       '';
+
+      keymap.mgr.prepend_keymap = map (n: {
+        desc = "Move in relative steps";
+        on = ["${toString n}"];
+        run = ["plugin relative-motions ${toString n}"];
+      }) (lib.range 1 9);
+
+      plugins.relative-motions = pkgs.yaziPlugins.relative-motions;
     };
   };
 }

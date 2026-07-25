@@ -1,23 +1,11 @@
 {
-  stdenvNoCC,
-  fetchurl,
-  undmg,
-  darwin,
   cctools,
+  darwin,
+  fetchurl,
+  stdenvNoCC,
+  undmg,
 }:
 stdenvNoCC.mkDerivation rec {
-  pname = "stremio";
-  version = "5.1.22";
-
-  src = fetchurl {
-    url = "https://dl.strem.io/stremio-shell-macos/v${version}/Stremio_arm64.dmg";
-    hash = "sha256-Xn+BKvSQJFWlx4Cy6gjvA4e9qViJ+x86F3yhK+GiFuY=";
-  };
-
-  nativeBuildInputs = [undmg darwin.sigtool cctools];
-
-  sourceRoot = ".";
-
   installPhase = ''
     mkdir -p $out/Applications
     cp -r Stremio.app $out/Applications/
@@ -28,5 +16,15 @@ stdenvNoCC.mkDerivation rec {
     done
   '';
 
+  nativeBuildInputs = [cctools darwin.sigtool undmg];
+  pname = "stremio";
+  sourceRoot = ".";
+
+  src = fetchurl {
+    hash = "sha256-Xn+BKvSQJFWlx4Cy6gjvA4e9qViJ+x86F3yhK+GiFuY=";
+    url = "https://dl.strem.io/stremio-shell-macos/v${version}/Stremio_arm64.dmg";
+  };
+
+  version = "5.1.22";
   meta.platforms = ["aarch64-darwin"];
 }

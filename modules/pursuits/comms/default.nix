@@ -1,22 +1,18 @@
 {self, ...}: {
   flake.modules = {
-    homeManager.comms = {
-      imports = [
+    darwin.comms-work.imports = [
+      self.modules.darwin.discord
+      self.modules.darwin.mattermost
+    ];
+
+    homeManager = {
+      comms.imports = [
         self.modules.homeManager.discord
       ];
-    };
 
-    homeManager.comms-work = {
-      imports = [
+      comms-work.imports = [
         self.modules.homeManager.comms
         self.modules.homeManager.mattermost
-      ];
-    };
-
-    darwin.comms-work = {
-      imports = [
-        self.modules.darwin.discord
-        self.modules.darwin.mattermost
       ];
     };
   };

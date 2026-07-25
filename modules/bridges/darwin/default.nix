@@ -1,8 +1,8 @@
 {self, ...}: {
   flake.modules.darwin.bridges = {
     imports = with self.modules.darwin; [
-      mac-app-util
       homebrew
+      mac-app-util
       reset-launch-services
       settings
     ];

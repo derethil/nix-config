@@ -4,49 +4,43 @@
   ...
 }: {
   flake-file.inputs.bongocat = {
-    url = "github:saatvik333/wayland-bongocat";
     inputs.nixpkgs.follows = "nixpkgs";
+    url = "github:saatvik333/wayland-bongocat";
   };
 
   flake.modules.nixos.bongocat = {
-    lib,
     config,
+    lib,
     ...
   }: {
     imports = [
       inputs.bongocat.nixosModules.default
     ];
 
-    users.users = self.lib.forEachNormalUser config (_: {
-      extraGroups = ["input"];
-    });
-
     programs.wayland-bongocat = {
       enable = true;
       autostart = true;
-
+      catAlign = "center";
+      catHeight = 48;
       catXOffset = 24;
       catYOffset = 12;
-
-      catHeight = 48;
-      catAlign = "center";
-
+      enableScheduledSleep = true;
+      fps = 60;
+      idleFrame = 0;
+      idleSleepTimeout = 30;
+      # Find input devices with bongocat-find-devices
+      inputDevices = [];
+      keypressDuration = 150;
       overlayHeight = 48;
       overlayOpacity = 0;
       overlayPosition = "bottom";
-
-      fps = 60;
-      idleFrame = 0;
-      keypressDuration = 150;
-
-      idleSleepTimeout = 30;
-      enableScheduledSleep = true;
       sleepBegin = "23:00";
       sleepEnd = "07:00";
-
-      # Find input devices with bongocat-find-devices
-      inputDevices = [];
     };
+
+    users.users = self.lib.forEachNormalUser config (_: {
+      extraGroups = ["input"];
+    });
 
     assertions = [
       {

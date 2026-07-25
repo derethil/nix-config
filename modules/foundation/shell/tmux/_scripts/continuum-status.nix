@@ -1,6 +1,6 @@
 {
-  pkgs,
   lib,
+  pkgs,
   ...
 }:
 pkgs.writeShellScriptBin "tmux-continuum-status" ''

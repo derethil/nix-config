@@ -6,7 +6,7 @@
   }:
     lib.mkIf pkgs.stdenv.isLinux {
       programs.yazi = {
-        plugins.recycle-bin = pkgs.yaziPlugins.recycle-bin;
+        extraPackages = [pkgs.trash-cli];
 
         initLua = lib.mkAfter ''
           require("recycle-bin"):setup()
@@ -14,13 +14,13 @@
 
         keymap.mgr.prepend_keymap = [
           {
+            desc = "Open Trash menu";
             on = ["T"];
             run = ["plugin recycle-bin"];
-            desc = "Open Trash menu";
           }
         ];
 
-        extraPackages = [pkgs.trash-cli];
+        plugins.recycle-bin = pkgs.yaziPlugins.recycle-bin;
       };
     };
 }

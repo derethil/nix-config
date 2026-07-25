@@ -1,36 +1,36 @@
 {self, ...}: {
   flake.modules.homeManager.postgresql-client = {
     config,
-    pkgs,
     lib,
+    pkgs,
     ...
   }: let
-    inherit (lib) concatMapStringsSep unique flatten listToAttrs;
+    inherit (lib) concatMapStringsSep flatten listToAttrs unique;
 
     servers = [
       {
-        name = "Vigil [Test] [jarenglenn]";
-        hostSecret = "services/postgresql/dragonfire/test/host";
-        port = 5432;
-        database = "vigil";
-        username = "jarenglenn";
-        passwordSecret = "services/postgresql/dragonfire/test/personal_password";
-      }
-      {
-        name = "DragonFire [Test] [lambdauser]";
-        hostSecret = "services/postgresql/dragonfire/test/host";
-        port = 5432;
         database = "dragon_fire";
-        username = "lambdauser";
+        hostSecret = "services/postgresql/dragonfire/test/host";
+        name = "DragonFire [Test] [lambdauser]";
         passwordSecret = "services/postgresql/dragonfire/test/system_password";
+        port = 5432;
+        username = "lambdauser";
       }
       {
-        name = "Vigil [Test] [lambdauser]";
-        hostSecret = "services/postgresql/dragonfire/test/host";
-        port = 5432;
         database = "vigil";
-        username = "lambdauser";
+        hostSecret = "services/postgresql/dragonfire/test/host";
+        name = "Vigil [Test] [jarenglenn]";
+        passwordSecret = "services/postgresql/dragonfire/test/personal_password";
+        port = 5432;
+        username = "jarenglenn";
+      }
+      {
+        database = "vigil";
+        hostSecret = "services/postgresql/dragonfire/test/host";
+        name = "Vigil [Test] [lambdauser]";
         passwordSecret = "services/postgresql/dragonfire/test/system_password";
+        port = 5432;
+        username = "lambdauser";
       }
     ];
 
@@ -40,29 +40,31 @@
   in {
     imports = [self.modules.homeManager.secrets];
 
-    sops.secrets = listToAttrs (map (s: {
-        name = s;
-        value = {};
-      })
-      secrets);
+    home = {
+      packages = with pkgs; [
+        postgresql18Packages.postgis
+        postgresql_18
+      ];
 
-    sops.templates."pgpass" = {
-      content =
-        concatMapStringsSep "\n" (
-          s: "${config.sops.placeholder.${s.hostSecret}}:${toString s.port}:${s.database}:${s.username}:${config.sops.placeholder.${s.passwordSecret}}"
-        )
-        servers;
-      path = passFilePath;
-      mode = "0600";
+      sessionVariables.PGPASSFILE = passFilePath;
     };
 
-    home.sessionVariables = {
-      PGPASSFILE = passFilePath;
-    };
+    sops = {
+      secrets = listToAttrs (map (s: {
+          name = s;
+          value = {};
+        })
+        secrets);
 
-    home.packages = with pkgs; [
-      postgresql_18
-      postgresql18Packages.postgis
-    ];
+      templates."pgpass" = {
+        mode = "0600";
+        content =
+          concatMapStringsSep "\n" (
+            s: "${config.sops.placeholder.${s.hostSecret}}:${toString s.port}:${s.database}:${s.username}:${config.sops.placeholder.${s.passwordSecret}}"
+          )
+          servers;
+        path = passFilePath;
+      };
+    };
   };
 }

@@ -1,25 +1,21 @@
 {lib, ...}: {
   perSystem = {
-    system,
     pkgs,
+    system,
     ...
   }:
     lib.optionalAttrs (lib.elem system lib.platforms.linux) {
       packages.prismlauncher = let
         prismlauncher-fhs = pkgs.buildFHSEnv {
           name = "prismlauncher-fhs";
+          runScript = "prismlauncher";
 
           targetPkgs = p:
             with p; [
-              prismlauncher
-
-              # For watermedia (embedded VLC)
-              libvlc
-
               # For MCEF (embedded Chromium)
               alsa-lib
-              atk
               at-spi2-atk
+              atk
               cairo
               cups
               dbus
@@ -28,32 +24,34 @@
               gtk3
               libdrm
               libgbm
-              libxkbcommon
-              mesa
-              nspr
-              nss
-              pango
+              # For watermedia (embedded VLC)
+              libvlc
               libx11
+              libxcb
               libxcomposite
               libxdamage
               libxext
               libxfixes
               libxi
+              libxkbcommon
               libxrandr
               libxrender
               libxscrnsaver
-              libxtst
-              libxcb
               libxshmfence
+              libxtst
+              mesa
+              nspr
+              nss
+              pango
+              prismlauncher
             ];
-
-          runScript = "prismlauncher";
         };
       in
         pkgs.symlinkJoin {
           name = "prismlauncher";
-          paths = [pkgs.prismlauncher prismlauncher-fhs];
           nativeBuildInputs = [pkgs.makeWrapper];
+          paths = [pkgs.prismlauncher prismlauncher-fhs];
+
           postBuild = ''
             wrapProgram $out/bin/prismlauncher --run 'exec ${lib.getExe prismlauncher-fhs}'
           '';

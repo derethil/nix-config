@@ -12,10 +12,14 @@
   ];
 
   boot = {
-    initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "thunderbolt" "usb_storage" "sd_mod" "usbhid"];
-    initrd.kernelModules = [];
-    kernelModules = ["kvm-amd" "ath12k"];
     extraModulePackages = [];
+
+    initrd = {
+      availableKernelModules = ["ahci" "nvme" "sd_mod" "thunderbolt" "usb_storage" "usbhid" "xhci_pci"];
+      kernelModules = [];
+    };
+
+    kernelModules = ["ath12k" "kvm-amd"];
 
     # Force ath12k to load early and with proper power management
     kernelParams = [
@@ -23,11 +27,11 @@
     ];
   };
 
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+
   # Keep ASMedia USB controllers powered on to prevent hot-swap failures
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x1b21", ATTR{device}=="0x2425", ATTR{power/control}="on"
   '';
-
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

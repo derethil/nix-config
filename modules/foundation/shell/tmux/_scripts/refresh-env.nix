@@ -1,7 +1,7 @@
 {
-  pkgs,
-  lib,
   config,
+  lib,
+  pkgs,
   ...
 }:
 pkgs.writeShellScriptBin "tmux-refresh-hm-env" ''

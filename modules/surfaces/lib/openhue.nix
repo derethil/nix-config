@@ -1,7 +1,7 @@
 {
   flake.modules.homeManager.openhue = {
-    pkgs,
     lib,
+    pkgs,
     ...
   }: {
     home.packages = [pkgs.openhue-cli];

@@ -1,12 +1,12 @@
 {inputs, ...}: {
   flake-file.inputs.niri-smart-workspace = {
-    url = "github:derethil/niri-smart-workspace";
     inputs.nixpkgs.follows = "nixpkgs";
+    url = "github:derethil/niri-smart-workspace";
   };
 
   flake.modules.homeManager.niri-smart-workspace = {
-    pkgs,
     lib,
+    pkgs,
     ...
   }: let
     inherit (lib) getExe mkOverride;
@@ -23,8 +23,8 @@
     wayland.windowManager.niri.settings.binds = {
       "Mod+BracketLeft" = mkOverride priority {spawn-sh = "${smart-workspace} up";};
       "Mod+BracketRight" = mkOverride priority {spawn-sh = "${smart-workspace} down";};
-      "Mod+WheelScrollUp" = mkOverride priority {spawn-sh = "${smart-workspace} up";};
       "Mod+WheelScrollDown" = mkOverride priority {spawn-sh = "${smart-workspace} down";};
+      "Mod+WheelScrollUp" = mkOverride priority {spawn-sh = "${smart-workspace} up";};
     };
   };
 }

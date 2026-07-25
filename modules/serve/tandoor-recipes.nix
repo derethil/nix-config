@@ -14,7 +14,7 @@
     ];
 
     internal.homelab.services.tandoor = {
-      inherit subdomain port;
+      inherit port subdomain;
     };
 
     sops = {
@@ -35,62 +35,9 @@
     };
 
     virtualisation.quadlet = {
-      pods.tandoor = {
-        podConfig = {
-          publishPorts = ["127.0.0.1:${port}:${internalPort}"];
-          exitPolicy = "continue";
-        };
-        autoStart = true;
-      };
-
       containers = {
-        tandoor-web = {
-          containerConfig = {
-            pod = pods.tandoor.ref;
-            image = "docker.io/vabene1111/recipes:${version}";
-            pull = "newer";
-            environmentFiles = [config.sops.templates."tandoor-recipes-env".path];
-            environments = {
-              TANDOOR_PORT = internalPort;
-              DB_ENGINE = "django.db.backends.postgresql";
-              POSTGRES_HOST = "localhost";
-              POSTGRES_PORT = "5432";
-              ALLOWED_HOSTS = "*";
-              CSRF_TRUSTED_ORIGINS = "https://${host}";
-              SECURE_PROXY_SSL_HEADER = "HTTP_X_FORWARDED_PROTO,https";
-            };
-            volumes = [
-              "tandoor-media:/opt/recipes/mediafiles"
-              "tandoor-static:/opt/recipes/staticfiles"
-            ];
-            dropCapabilities = ["ALL"];
-            addCapabilities = [
-              "CHOWN"
-              "SETGID"
-              "SETUID"
-            ];
-            noNewPrivileges = true;
-          };
-          unitConfig = {
-            Description = "Tandoor Recipes Manager";
-            After = ["tandoor-db.service"];
-            Requires = ["tandoor-db.service"];
-          };
-          serviceConfig = {
-            Restart = "always";
-          };
-        };
-
         tandoor-db = {
           containerConfig = {
-            pod = pods.tandoor.ref;
-            image = "docker.io/library/postgres:17-alpine";
-            pull = "newer";
-            environmentFiles = [config.sops.templates."tandoor-recipes-env".path];
-            volumes = [
-              "tandoor-db:/var/lib/postgresql/data"
-            ];
-            dropCapabilities = ["ALL"];
             addCapabilities = [
               "CHOWN"
               "DAC_READ_SEARCH"
@@ -98,21 +45,78 @@
               "SETGID"
               "SETUID"
             ];
+
+            dropCapabilities = ["ALL"];
+            environmentFiles = [config.sops.templates."tandoor-recipes-env".path];
+            image = "docker.io/library/postgres:17-alpine";
             noNewPrivileges = true;
+            pod = pods.tandoor.ref;
+            pull = "newer";
+
+            volumes = [
+              "tandoor-db:/var/lib/postgresql/data"
+            ];
           };
+
+          serviceConfig.Restart = "always";
+          unitConfig.Description = "Tandoor Recipes PostgreSQL Database";
+        };
+
+        tandoor-web = {
+          containerConfig = {
+            addCapabilities = [
+              "CHOWN"
+              "SETGID"
+              "SETUID"
+            ];
+
+            dropCapabilities = ["ALL"];
+            environmentFiles = [config.sops.templates."tandoor-recipes-env".path];
+
+            environments = {
+              ALLOWED_HOSTS = "*";
+              CSRF_TRUSTED_ORIGINS = "https://${host}";
+              DB_ENGINE = "django.db.backends.postgresql";
+              POSTGRES_HOST = "localhost";
+              POSTGRES_PORT = "5432";
+              SECURE_PROXY_SSL_HEADER = "HTTP_X_FORWARDED_PROTO,https";
+              TANDOOR_PORT = internalPort;
+            };
+
+            image = "docker.io/vabene1111/recipes:${version}";
+            noNewPrivileges = true;
+            pod = pods.tandoor.ref;
+            pull = "newer";
+
+            volumes = [
+              "tandoor-media:/opt/recipes/mediafiles"
+              "tandoor-static:/opt/recipes/staticfiles"
+            ];
+          };
+
+          serviceConfig.Restart = "always";
+
           unitConfig = {
-            Description = "Tandoor Recipes PostgreSQL Database";
-          };
-          serviceConfig = {
-            Restart = "always";
+            After = ["tandoor-db.service"];
+            Description = "Tandoor Recipes Manager";
+            Requires = ["tandoor-db.service"];
           };
         };
       };
 
+      pods.tandoor = {
+        autoStart = true;
+
+        podConfig = {
+          exitPolicy = "continue";
+          publishPorts = ["127.0.0.1:${port}:${internalPort}"];
+        };
+      };
+
       volumes = {
+        tandoor-db = {};
         tandoor-media = {};
         tandoor-static = {};
-        tandoor-db = {};
       };
     };
   };

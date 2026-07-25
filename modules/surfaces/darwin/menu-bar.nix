@@ -11,13 +11,8 @@
         Sound = true;
       };
 
-      menuExtraClock = {
-        ShowAMPM = true;
-      };
-
-      hitoolbox = {
-        AppleFnUsageType = "Show Emoji & Symbols";
-      };
+      hitoolbox.AppleFnUsageType = "Show Emoji & Symbols";
+      menuExtraClock.ShowAMPM = true;
     };
   };
 }

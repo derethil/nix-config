@@ -5,32 +5,25 @@
     ...
   }: {
     key = "podman";
-
     imports = [self.modules.nixos.impermanence-options];
 
-    internal.boot.impermanence = {
-      extraDirectories = ["/var/lib/containers"];
-    };
+    environment.systemPackages = [
+      pkgs.podman
+    ];
 
-    virtualisation = {
-      containers = {
-        enable = true;
-      };
-
-      podman = {
-        enable = true;
-        defaultNetwork = {
-          settings.dns_enabled = true;
-        };
-      };
-    };
+    internal.boot.impermanence.extraDirectories = ["/var/lib/containers"];
 
     users.users = self.lib.forEachNormalUser config (_: {
       extraGroups = ["podman"];
     });
 
-    environment.systemPackages = [
-      pkgs.podman
-    ];
+    virtualisation = {
+      containers.enable = true;
+
+      podman = {
+        enable = true;
+        defaultNetwork.settings.dns_enabled = true;
+      };
+    };
   };
 }

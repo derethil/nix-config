@@ -1,43 +1,41 @@
 {
   flake.modules.darwin.keychain = {lib, ...}: let
-    inherit (lib) types mkOption;
+    inherit (lib) mkOption types;
   in {
-    options.internal.system.keychain = {
-      entries = mkOption {
-        type = types.listOf (types.submodule {
-          options = {
-            secretFile = mkOption {
-              type = types.nullOr types.str;
-              default = null;
-              description = "Path to file containing the secret.";
-            };
-
-            service = mkOption {
-              type = types.nullOr types.str;
-              default = null;
-              description = "Keychain service identifier";
-            };
-
-            account = mkOption {
-              type = types.str;
-              default = "default";
-              description = "Keychain account name.";
-            };
-
-            comment = mkOption {
-              type = types.str;
-              default = "";
-              description = "Optional comment for the keychain entry.";
-            };
-
-            trustedApp = mkOption {
-              type = types.nullOr types.str;
-              default = null;
-              description = "Path to application that should be trusted to access this keychain item.";
-            };
+    options.internal.system.keychain.entries = mkOption {
+      type = types.listOf (types.submodule {
+        options = {
+          account = mkOption {
+            default = "default";
+            description = "Keychain account name.";
+            type = types.str;
           };
-        });
-      };
+
+          comment = mkOption {
+            default = "";
+            description = "Optional comment for the keychain entry.";
+            type = types.str;
+          };
+
+          secretFile = mkOption {
+            default = null;
+            description = "Path to file containing the secret.";
+            type = types.nullOr types.str;
+          };
+
+          service = mkOption {
+            default = null;
+            description = "Keychain service identifier";
+            type = types.nullOr types.str;
+          };
+
+          trustedApp = mkOption {
+            default = null;
+            description = "Path to application that should be trusted to access this keychain item.";
+            type = types.nullOr types.str;
+          };
+        };
+      });
     };
   };
 }

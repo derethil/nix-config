@@ -8,82 +8,96 @@
   positionType = types.submodule {
     options = {
       x = mkOption {
-        type = types.int;
         default = 0;
+        type = types.int;
       };
+
       y = mkOption {
-        type = types.int;
         default = 0;
+        type = types.int;
       };
     };
   };
 
   resolutionType = types.submodule {
     options = {
-      width = mkOption {type = types.int;};
       height = mkOption {type = types.int;};
+      width = mkOption {type = types.int;};
     };
   };
 
   displayType = types.submodule {
     options = {
-      name = mkOption {
-        type = types.str;
-        description = "Human-readable name for the monitor.";
-      };
-      port = mkOption {
-        type = types.str;
-        description = "Monitor port/connector name (e.g. DP-1).";
-      };
-      resolution = mkOption {
-        type = resolutionType;
-        description = "Monitor resolution.";
-      };
-      framerate = mkOption {
-        type = types.int;
-        description = "Monitor refresh rate in Hz.";
-      };
-      position = mkOption {
-        type = positionType;
-        default = {};
-        description = "Monitor position coordinates.";
-      };
-      scale = mkOption {
-        type = types.float;
-        default = 1.0;
-        description = "Scaling factor for the monitor.";
-      };
       enabled = mkOption {
-        type = types.bool;
         default = true;
         description = "Whether the monitor is enabled.";
-      };
-      rotation = mkOption {
-        type = types.enum [0 90 180 270];
-        default = 0;
-        description = "Monitor rotation in degrees.";
-      };
-      flipped = mkOption {
         type = types.bool;
+      };
+
+      flipped = mkOption {
         default = false;
         description = "Whether the monitor is flipped vertically.";
-      };
-      primary = mkOption {
         type = types.bool;
+      };
+
+      framerate = mkOption {
+        description = "Monitor refresh rate in Hz.";
+        type = types.int;
+      };
+
+      name = mkOption {
+        description = "Human-readable name for the monitor.";
+        type = types.str;
+      };
+
+      port = mkOption {
+        description = "Monitor port/connector name (e.g. DP-1).";
+        type = types.str;
+      };
+
+      position = mkOption {
+        default = {};
+        description = "Monitor position coordinates.";
+        type = positionType;
+      };
+
+      primary = mkOption {
         default = false;
         description = "Whether this is the primary monitor.";
+        type = types.bool;
       };
+
+      resolution = mkOption {
+        description = "Monitor resolution.";
+        type = resolutionType;
+      };
+
+      rotation = mkOption {
+        default = 0;
+        description = "Monitor rotation in degrees.";
+        type = types.enum [0 180 270 90];
+      };
+
+      scale = mkOption {
+        default = 1.0;
+        description = "Scaling factor for the monitor.";
+        type = types.float;
+      };
+
       vrr = mkOption {
-        type = types.either types.bool (types.enum ["on-demand"]);
         default = false;
+
         description = ''
           Variable refresh rate setting: `false` (off), `"on-demand"`, or `true` (always on).
         '';
+
+        type = types.either types.bool (types.enum ["on-demand"]);
       };
+
       wallpaper = mkOption {
-        type = types.nullOr types.str;
         default = null;
         description = "Path to the wallpaper for this monitor.";
+        type = types.nullOr types.str;
       };
     };
   };
@@ -92,24 +106,29 @@ in {
     generic.displays-options = {config, ...}: {
       key = "displays-options";
 
-      options.internal.displays = mkOption {
-        type = types.listOf displayType;
-        default = [];
-        description = ''
-          Monitors physically attached to this host. Set on the system module;
-          propagated to every home-manager user on the host via
-          home-manager.sharedModules so user-level consumers see the same list.
-        '';
-      };
+      options.internal = {
+        displays = mkOption {
+          default = [];
 
-      options.internal.primaryDisplay = mkOption {
-        type = displayType;
-        readOnly = true;
-        description = ''
-          The display marked `primary = true`. Throws at access time if no
-          display is marked primary, so consumers don't have to handle the
-          "no primary" case themselves.
-        '';
+          description = ''
+            Monitors physically attached to this host. Set on the system module;
+            propagated to every home-manager user on the host via
+            home-manager.sharedModules so user-level consumers see the same list.
+          '';
+
+          type = types.listOf displayType;
+        };
+
+        primaryDisplay = mkOption {
+          description = ''
+            The display marked `primary = true`. Throws at access time if no
+            display is marked primary, so consumers don't have to handle the
+            "no primary" case themselves.
+          '';
+
+          readOnly = true;
+          type = displayType;
+        };
       };
 
       config.internal.primaryDisplay = let
@@ -138,8 +157,6 @@ in {
       ];
     };
 
-    homeManager.displays = {
-      imports = [self.modules.generic.displays-options];
-    };
+    homeManager.displays.imports = [self.modules.generic.displays-options];
   };
 }

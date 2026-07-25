@@ -3,41 +3,48 @@
   inputs,
   ...
 }: {
-  flake.modules.nixos.pipewire-low-latency = {
-    key = "pipewire-low-latency";
-    imports = [inputs.nix-gaming.nixosModules.pipewireLowLatency];
-  };
+  flake.modules.nixos = {
+    audio = {
+      config,
+      lib,
+      pkgs,
+      ...
+    }: {
+      imports = [self.modules.nixos.pipewire-low-latency];
+      environment.systemPackages = [pkgs.pulsemixer];
+      security.rtkit.enable = true;
 
-  flake.modules.nixos.audio = {
-    pkgs,
-    config,
-    lib,
-    ...
-  }: {
-    imports = [self.modules.nixos.pipewire-low-latency];
+      services = {
+        pipewire = {
+          enable = true;
 
-    security.rtkit.enable = true;
-    services.pulseaudio.enable = lib.mkForce false;
+          alsa = {
+            enable = true;
+            support32Bit = true;
+          };
 
-    services.pipewire = {
-      enable = true;
-      audio.enable = true;
+          audio.enable = true;
 
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
+          lowLatency = {
+            enable = true;
+            quantum = 1024;
+            rate = 24000;
+          };
 
-      lowLatency = {
-        enable = true;
-        quantum = 1024;
-        rate = 24000;
+          pulse.enable = true;
+        };
+
+        pulseaudio.enable = lib.mkForce false;
       };
+
+      users.users = self.lib.forEachNormalUser config (_: {
+        extraGroups = ["audio"];
+      });
     };
 
-    environment.systemPackages = [pkgs.pulsemixer];
-
-    users.users = self.lib.forEachNormalUser config (_: {
-      extraGroups = ["audio"];
-    });
+    pipewire-low-latency = {
+      key = "pipewire-low-latency";
+      imports = [inputs.nix-gaming.nixosModules.pipewireLowLatency];
+    };
   };
 }

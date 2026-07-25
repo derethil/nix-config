@@ -5,112 +5,117 @@
     imports = [self.modules.homeManager.wallpaper];
 
     programs.dank-material-shell.session = {
-      isLightMode = false;
+      inherit wallpaperPath;
+      appDrawerLastMode = "apps";
+      appOverrides = {};
+      barPinnedApps = [];
+      brightnessExponentValues = {};
+      brightnessExponentialDevices = {};
+      brightnessUserSetValues = {};
+      configVersion = 3;
+      deviceMaxVolumes = {};
       doNotDisturb = false;
       doNotDisturbUntil = 0;
-      terminalOverride = "";
-      inherit wallpaperPath;
-      perMonitorWallpaper = false;
-      monitorWallpapers = {};
-      perModeWallpaper = false;
-      wallpaperPathLight = wallpaperPath;
-      wallpaperPathDark = wallpaperPath;
-      monitorWallpapersLight = {};
-      monitorWallpapersDark = {};
-      monitorWallpaperFillModes = {};
-      wallpaperTransition = "iris bloom";
+      dockLauncherPosition = 0;
+      enabledGpuPciIds = [];
+      hiddenApps = [];
+      hiddenInputDeviceNames = [];
+      hiddenOutputDeviceNames = [];
+
+      hiddenTrayIds = [
+        ".openrgb-wrapped::OpenRGB"
+        "easyeffects"
+        "easyeffects::Easy Effects"
+        "spotify-client"
+      ];
+
       includedTransitions = [
-        "fade"
         "disc"
-        "stripes"
+        "fade"
         "iris bloom"
         "pixelate"
         "portal"
+        "stripes"
         "wipe"
       ];
-      wallpaperCyclingEnabled = false;
-      wallpaperCyclingMode = "interval";
-      wallpaperCyclingInterval = 300;
-      wallpaperCyclingTime = "06:00";
+
+      isLightMode = false;
+      lastBrightnessDevice = "";
+      lastPlayerIdentity = "Spotify";
+      latitude = 0;
+      launchPrefix = "";
+      launcherLastFileSearchType = "all";
+      launcherLastMode = "all";
+      launcherLastQuery = "";
+      launcherQueryHistory = [""];
+      locale = "";
+      longitude = 0;
       monitorCyclingSettings = {};
-      nightModeEnabled = false;
-      nightModeTemperature = 3000;
-      nightModeHighTemperature = 6500;
+      monitorWallpaperFillModes = {};
+      monitorWallpapers = {};
+      monitorWallpapersDark = {};
+      monitorWallpapersLight = {};
       nightModeAutoEnabled = true;
       nightModeAutoMode = "location";
-      nightModeStartHour = 18;
-      nightModeStartMinute = 0;
+      nightModeEnabled = false;
       nightModeEndHour = 6;
       nightModeEndMinute = 0;
-      latitude = 0;
-      longitude = 0;
-      nightModeUseIPLocation = true;
+      nightModeHighTemperature = 6500;
       nightModeLocationProvider = "";
+      nightModeStartHour = 18;
+      nightModeStartMinute = 0;
+      nightModeTemperature = 3000;
+      nightModeUseIPLocation = true;
+      niriOverviewLastMode = "apps";
+      nonNvidiaGpuTempEnabled = false;
+      notepadLastMode = "";
+      nvidiaGpuTempEnabled = false;
+      perModeWallpaper = false;
+      perMonitorWallpaper = false;
+
+      pinnedApps = [
+        "Mattermost"
+        "Spotify"
+        "bruno"
+        "firefox"
+        "footclient"
+        "obsidian"
+        "prismlauncher"
+        "steam"
+        "stremio"
+        "vesktop"
+      ];
+
+      pluginBrowserInstalledFirst = false;
+      pluginBrowserSortMode = "default";
+      recentColors = ["#d0bcff"];
+      searchAppActions = true;
+      selectedGpuIndex = 0;
+      settingsSidebarCollapsedIds = "";
+      settingsSidebarExpandedIds = "";
+      showThirdPartyPlugins = true;
+      terminalOverride = "";
       themeModeAutoEnabled = false;
       themeModeAutoMode = "time";
-      themeModeStartHour = 18;
-      themeModeStartMinute = 0;
       themeModeEndHour = 6;
       themeModeEndMinute = 0;
       themeModeShareGammaSettings = true;
-      weatherLocation = "";
-      weatherCoordinates = "";
-      pinnedApps = [
-        "footclient"
-        "firefox"
-        "vesktop"
-        "Mattermost"
-        "bruno"
-        "obsidian"
-        "steam"
-        "prismlauncher"
-        "Spotify"
-        "stremio"
-      ];
-      barPinnedApps = [];
-      dockLauncherPosition = 0;
-      hiddenTrayIds = [
-        "easyeffects"
-        "spotify-client"
-        ".openrgb-wrapped::OpenRGB"
-        "easyeffects::Easy Effects"
-      ];
-      trayItemOrder = [];
-      recentColors = ["#d0bcff"];
-      showThirdPartyPlugins = true;
-      pluginBrowserInstalledFirst = false;
-      pluginBrowserSortMode = "default";
-      launchPrefix = "";
-      lastBrightnessDevice = "";
-      brightnessExponentialDevices = {};
-      brightnessUserSetValues = {};
-      brightnessExponentValues = {};
-      selectedGpuIndex = 0;
-      nvidiaGpuTempEnabled = false;
-      nonNvidiaGpuTempEnabled = false;
-      enabledGpuPciIds = [];
-      wifiDeviceOverride = "";
-      weatherHourlyDetailed = true;
-      hiddenApps = [];
-      appOverrides = {};
-      searchAppActions = true;
-      vpnLastConnected = "";
-      lastPlayerIdentity = "Spotify";
-      deviceMaxVolumes = {};
-      hiddenOutputDeviceNames = [];
-      hiddenInputDeviceNames = [];
-      locale = "";
+      themeModeStartHour = 18;
+      themeModeStartMinute = 0;
       timeLocale = "";
-      launcherLastMode = "all";
-      launcherLastFileSearchType = "all";
-      launcherLastQuery = "";
-      launcherQueryHistory = [""];
-      appDrawerLastMode = "apps";
-      niriOverviewLastMode = "apps";
-      notepadLastMode = "";
-      settingsSidebarExpandedIds = "";
-      settingsSidebarCollapsedIds = "";
-      configVersion = 3;
+      trayItemOrder = [];
+      vpnLastConnected = "";
+      wallpaperCyclingEnabled = false;
+      wallpaperCyclingInterval = 300;
+      wallpaperCyclingMode = "interval";
+      wallpaperCyclingTime = "06:00";
+      wallpaperPathDark = wallpaperPath;
+      wallpaperPathLight = wallpaperPath;
+      wallpaperTransition = "iris bloom";
+      weatherCoordinates = "";
+      weatherHourlyDetailed = true;
+      weatherLocation = "";
+      wifiDeviceOverride = "";
     };
   };
 }

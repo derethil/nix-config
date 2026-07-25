@@ -1,20 +1,22 @@
 {
-  inputs,
   self,
+  inputs,
   ...
 }: {
   flake-file.inputs = {
     dank-material-shell = {
+      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:AvengeMedia/DankMaterialShell";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
+
     dms-plugin-registry = {
+      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:AvengeMedia/dms-plugin-registry";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
+
     quickshell = {
-      url = "git+https://github.com/quickshell-mirror/quickshell?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
+      url = "git+https://github.com/quickshell-mirror/quickshell?ref=master";
     };
   };
 
@@ -27,21 +29,19 @@
 
     programs.dank-material-shell = {
       enable = true;
+      dgop.package = pkgs.unstable.dgop;
+      enableAudioWavelength = true;
+      enableCalendarEvents = true;
+      enableClipboardPaste = true;
+      enableDynamicTheming = true;
+      enableSystemMonitoring = true;
+      enableVPN = false;
+      quickshell.package = pkgs.inputs.quickshell.default;
 
       systemd = {
         enable = true;
         restartIfChanged = true;
       };
-
-      dgop.package = pkgs.unstable.dgop;
-      quickshell.package = pkgs.inputs.quickshell.default;
-
-      enableVPN = false;
-      enableSystemMonitoring = true;
-      enableDynamicTheming = true;
-      enableAudioWavelength = true;
-      enableCalendarEvents = true;
-      enableClipboardPaste = true;
     };
   };
 }

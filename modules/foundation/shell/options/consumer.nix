@@ -1,16 +1,10 @@
 {self, ...}: let
   common = [
-    self.modules.generic.shell-options
     self.modules.generic.shell-defaults
+    self.modules.generic.shell-options
   ];
 in {
   flake.modules = {
-    homeManager.shell-consumer = {config, ...}: {
-      key = "shell-consumer";
-      imports = common;
-      home.shellAliases = config.shell.aliases;
-    };
-
     nixos.shell-consumer = {config, ...}: {
       key = "shell-consumer";
       imports = common;
@@ -21,6 +15,12 @@ in {
       key = "shell-consumer";
       imports = common;
       environment.shellAliases = config.shell.aliases;
+    };
+
+    homeManager.shell-consumer = {config, ...}: {
+      key = "shell-consumer";
+      imports = common;
+      home.shellAliases = config.shell.aliases;
     };
   };
 }

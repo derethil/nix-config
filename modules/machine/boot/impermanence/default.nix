@@ -1,12 +1,15 @@
 {
-  inputs,
   self,
+  inputs,
   ...
 }: {
   flake-file.inputs.impermanence = {
+    inputs = {
+      home-manager.follows = "";
+      nixpkgs.follows = "";
+    };
+
     url = "github:nix-community/impermanence";
-    inputs.nixpkgs.follows = "";
-    inputs.home-manager.follows = "";
   };
 
   flake.modules.nixos.impermanence = {
@@ -29,37 +32,14 @@
     ];
 
     config = {
-      assertions = [
-        {
-          assertion = isLuks || cfg.device != "";
-          message = "boot.impermanence: either luksDevice or device must be set.";
-        }
-      ];
-
-      internal.persistRoot = "/persist";
-      internal.boot.impermanence.enabled = true;
-
-      environment.persistence.${config.internal.persistRoot} = {
-        directories = flatten [
-          "/var/lib/nixos"
-          "/var/lib/systemd/coredump"
-          cfg.extraDirectories
-        ];
-        files = flatten [
-          "/etc/machine-id"
-          cfg.extraFiles
-        ];
-      };
-
       boot.initrd.systemd = {
         enable = true;
+
         services.rollback = {
-          description = "Rollback BTRFS root subvolume to a pristine state";
-          wantedBy = ["initrd.target"];
           after = optional isLuks "systemd-cryptsetup@${cfg.luksDevice}.service";
           before = ["sysroot.mount"];
-          unitConfig.DefaultDependencies = "no";
-          serviceConfig.Type = "oneshot";
+          description = "Rollback BTRFS root subvolume to a pristine state";
+
           script = ''
             mkdir -p /mnt
             mount -o subvol=/ ${device} /mnt
@@ -78,8 +58,37 @@
 
             umount /mnt
           '';
+
+          serviceConfig.Type = "oneshot";
+          unitConfig.DefaultDependencies = "no";
+          wantedBy = ["initrd.target"];
         };
       };
+
+      environment.persistence.${config.internal.persistRoot} = {
+        directories = flatten [
+          "/var/lib/nixos"
+          "/var/lib/systemd/coredump"
+          cfg.extraDirectories
+        ];
+
+        files = flatten [
+          "/etc/machine-id"
+          cfg.extraFiles
+        ];
+      };
+
+      internal = {
+        boot.impermanence.enabled = true;
+        persistRoot = "/persist";
+      };
+
+      assertions = [
+        {
+          assertion = isLuks || cfg.device != "";
+          message = "boot.impermanence: either luksDevice or device must be set.";
+        }
+      ];
     };
   };
 }

@@ -5,23 +5,6 @@
     ...
   }: {
     programs.yazi = {
-      plugins.git = pkgs.yaziPlugins.git;
-
-      settings.plugin.prepend_fetchers = [
-        {
-          id = "git";
-          url = "*";
-          run = "git";
-          group = "git";
-        }
-        {
-          id = "git";
-          url = "*/";
-          run = "git";
-          group = "git";
-        }
-      ];
-
       initLua = lib.mkAfter ''
         th.git = th.git or {}
         th.git.updated_sign = ""
@@ -32,6 +15,23 @@
         th.git.untracked_sign = ""
         require("git"):setup()
       '';
+
+      plugins.git = pkgs.yaziPlugins.git;
+
+      settings.plugin.prepend_fetchers = [
+        {
+          group = "git";
+          id = "git";
+          run = "git";
+          url = "*";
+        }
+        {
+          group = "git";
+          id = "git";
+          run = "git";
+          url = "*/";
+        }
+      ];
     };
   };
 }

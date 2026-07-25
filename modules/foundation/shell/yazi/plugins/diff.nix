@@ -1,15 +1,15 @@
 {
   flake.modules.homeManager.yazi = {pkgs, ...}: {
     programs.yazi = {
-      plugins.diff = pkgs.yaziPlugins.diff;
-
       keymap.mgr.prepend_keymap = [
         {
+          desc = "Diff the selected with the hovered file";
           on = ["<Ctrl+h>"];
           run = ["plugin diff"];
-          desc = "Diff the selected with the hovered file";
         }
       ];
+
+      plugins.diff = pkgs.yaziPlugins.diff;
     };
   };
 }

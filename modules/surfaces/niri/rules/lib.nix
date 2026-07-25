@@ -8,28 +8,35 @@ let
     );
 in {
   flake.lib.niri-rules = {
-    workspaceRule = workspace: appIds: {
-      match = appIdMatches appIds;
-      open-on-workspace = toString workspace;
-      open-focused = true;
-    };
-
-    fullscreenRule = appIds: {
-      match = appIdMatches appIds;
-      open-fullscreen = true;
-      open-focused = true;
-    };
-
     floatRule = appIds: {
       match = appIdMatches appIds;
       open-floating = true;
     };
 
-    sizedFloatRule = appIds: w: h: {
+    fullscreenRule = appIds: {
       match = appIdMatches appIds;
-      open-floating = true;
+      open-focused = true;
+      open-fullscreen = true;
+    };
+
+    hideRule = pairs: {
+      block-out-from = "screen-capture";
+
+      match =
+        map (p: {
+          _props = {
+            inherit (p) title;
+            app-id._raw = ''r#"${p.appId}"#'';
+          };
+        })
+        pairs;
+    };
+
+    sizedFloatRule = appIds: w: h: {
       default-column-width.fixed = w;
       default-window-height.fixed = h;
+      match = appIdMatches appIds;
+      open-floating = true;
     };
 
     tileRule = appIds: {
@@ -39,20 +46,14 @@ in {
     };
 
     widthRule = appIds: widthConfig: {
-      match = appIdMatches appIds;
       default-column-width = widthConfig;
+      match = appIdMatches appIds;
     };
 
-    hideRule = pairs: {
-      match =
-        map (p: {
-          _props = {
-            app-id._raw = ''r#"${p.appId}"#'';
-            inherit (p) title;
-          };
-        })
-        pairs;
-      block-out-from = "screen-capture";
+    workspaceRule = workspace: appIds: {
+      match = appIdMatches appIds;
+      open-focused = true;
+      open-on-workspace = toString workspace;
     };
   };
 }

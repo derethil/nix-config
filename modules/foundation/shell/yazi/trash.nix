@@ -13,13 +13,14 @@
 
     xdg = lib.mkIf pkgs.stdenv.hostPlatform.isLinux (lib.mkMerge [
       (self.lib.mkYaziApplication {
-        inherit config pkgs flavor;
-        icon = "trash";
-        name = "Trash - Yazi";
-        genericName = "Trash";
+        inherit config flavor pkgs;
         comment = "Open the trash in Yazi file manager";
+        genericName = "Trash";
+        icon = "trash";
         mimeType = ["x-scheme-handler/trash"];
+        name = "Trash - Yazi";
         openToPath = "${config.xdg.dataHome}/Trash/files";
+
         yaziConfig = ''
           [mgr]
           ratio = [0, 1, 0]

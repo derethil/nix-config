@@ -2,9 +2,7 @@
   flake.modules.homeManager.easyeffects = {config, ...}: let
     cfg = config.services.easyeffects;
   in {
-    services.easyeffects = {
-      enable = true;
-    };
+    services.easyeffects.enable = true;
 
     assertions = [
       {

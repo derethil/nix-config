@@ -1,8 +1,8 @@
 {self, ...}: {
   flake.modules.homeManager.tmux = {
     config,
-    pkgs,
     lib,
+    pkgs,
     ...
   }: let
     inherit (lib) getExe;
@@ -22,12 +22,8 @@
     home.packages = [continuum-status];
 
     programs.tmux = {
-      package = tmux-pkg;
       enable = true;
-      shell = "${getExe config.shell.defaultShell}";
-      terminal = "tmux-256color";
-      prefix = "C-Space";
-      keyMode = "vi";
+      package = tmux-pkg;
       customPaneNavigationAndResize = true;
 
       extraConfig = ''
@@ -114,45 +110,51 @@
         bind-key -T copy-mode-vi 'C-l' select-pane -R
       '';
 
+      keyMode = "vi";
+
       plugins = with pkgs.tmuxPlugins; [
         sensible
         yank
         {
-          plugin = vim-tmux-navigator;
-          extraConfig = ''
-            set -g @vim_navigator_mapping_prev ""
-
-            # Speed up pane switching in most usecases by skipping the `ps` check if the current pane is running vim or a shell
-            is_vim="\
-            echo '#{pane_current_command}' | grep -iqE '^@vim_navigator_pattern$' && exit 0
-            echo '#{pane_current_command}' | grep -iqE '^(bash|zsh|fish)$' && exit 1
-            ps -o state= -o comm= -t '#{pane_tty}' \
-                | grep -iqE '^[^TXZ ]+ +@vim_navigator_pattern$'"
-
-            set -g @vim_navigator_check "''${is_vim}"
-          '';
+          extraConfig = "";
+          plugin = pkgs.internal.tmux-power-zoom;
         }
         {
-          plugin = fingers;
+          extraConfig = ''
+            set -g @continuum-restore 'on'
+            set -g @continuum-save-interval '5'
+          '';
+
+          plugin = continuum;
+        }
+        {
           extraConfig = ''
             set -g @fingers-key y
             set -g @fingers-hint-style "fg=green,bold"
             set -g @fingers-highlight-style "fg=yellow"
             set -g @fingers-backdrop-style "dim"
           '';
+
+          plugin = fingers;
         }
         {
-          plugin = pkgs.internal.tmux-power-zoom;
-          extraConfig = "";
-        }
-        {
-          plugin = fzf-tmux-url;
           extraConfig = ''
             set -g @fzf-url-bind 'u'
           '';
+
+          plugin = fzf-tmux-url;
         }
         {
-          plugin = tmux-sessionx;
+          extraConfig = ''
+            set -g @resurrect-dir "${config.xdg.stateHome}/tmux/resurrect"
+            set -g @resurrect-processes 'false'
+            set -g @resurrect-save 'S'
+            set -g @resurrect-restore 'R'
+          '';
+
+          plugin = resurrect;
+        }
+        {
           extraConfig = ''
             set -g @sessionx-bind 'o'
             set -g @sessionx-zoxide-mode '${
@@ -164,9 +166,10 @@
             set -g @sessionx-custom-paths-subdirectories "true"
             set -g @sessionx-bind-kill-session 'alt-x'
           '';
+
+          plugin = tmux-sessionx;
         }
         {
-          plugin = pkgs.internal.tmux-theme;
           extraConfig = ''
             set -g @theme_custom_theme_dir "${themesDir}"
             set -g @theme_custom_plugin_dir "${themeModulesDir}"
@@ -187,24 +190,30 @@
             set -g @theme_status_modules_right "directory continuum session"
             set -g @theme_directory_text "#( echo #{pane_current_path} | sed 's|$HOME|~|' | rev | cut -d'/' -f-3 | rev )"
           '';
+
+          plugin = pkgs.internal.tmux-theme;
         }
         {
-          plugin = resurrect;
           extraConfig = ''
-            set -g @resurrect-dir "${config.xdg.stateHome}/tmux/resurrect"
-            set -g @resurrect-processes 'false'
-            set -g @resurrect-save 'S'
-            set -g @resurrect-restore 'R'
+            set -g @vim_navigator_mapping_prev ""
+
+            # Speed up pane switching in most usecases by skipping the `ps` check if the current pane is running vim or a shell
+            is_vim="\
+            echo '#{pane_current_command}' | grep -iqE '^@vim_navigator_pattern$' && exit 0
+            echo '#{pane_current_command}' | grep -iqE '^(bash|zsh|fish)$' && exit 1
+            ps -o state= -o comm= -t '#{pane_tty}' \
+                | grep -iqE '^[^TXZ ]+ +@vim_navigator_pattern$'"
+
+            set -g @vim_navigator_check "''${is_vim}"
           '';
-        }
-        {
-          plugin = continuum;
-          extraConfig = ''
-            set -g @continuum-restore 'on'
-            set -g @continuum-save-interval '5'
-          '';
+
+          plugin = vim-tmux-navigator;
         }
       ];
+
+      prefix = "C-Space";
+      shell = "${getExe config.shell.defaultShell}";
+      terminal = "tmux-256color";
     };
   };
 }

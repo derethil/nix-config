@@ -15,8 +15,43 @@ in {
     programs.dank-material-shell.plugins = {
       claudeCodeUsage = {
         inherit (config.programs.claude-code) enable;
+        settings.showPacing = false;
+      };
+
+      dankActions = {
+        inherit (config.wayland.windowManager.niri) enable;
+
+        settings.variants = [
+          {
+            clickCommand = "niri msg action set-dynamic-cast-window --id $(niri msg --json pick-window | ${getExe pkgs.jq} -r .id)";
+            icon = "cast";
+            id = "variant_cast_window";
+            name = "Cast Window";
+            showText = false;
+            visibilityCommand = "niri msg --json casts | ${getExe pkgs.jq} -e 'any(.is_dynamic_target == true)'";
+            visibilityInterval = 1;
+          }
+        ];
+      };
+
+      easyEffects.enable = config.services.easyeffects.enable || (self.lib.hasPackage config.home.packages "easyeffects");
+      emojiLauncher.enable = true;
+
+      hueManager = {
+        enable = true;
+
         settings = {
-          showPacing = false;
+          autoSyncAccent = false;
+          openHuePath = "openhue";
+
+          syncRoomIds = [
+            "96fee890-6752-4ff3-a6a6-e3a8781db180"
+            "bbc69f6f-f959-4efd-a46d-a9996de111f0"
+            "ce9dc0c6-a60e-447d-bde4-ce09b035893c"
+            "ee53b611-782f-435a-bec0-a3135cae771a"
+          ];
+
+          useDeviceIcons = true;
         };
       };
 
@@ -24,91 +59,52 @@ in {
         inherit (config.wayland.windowManager.niri) enable;
       };
 
-      dankActions = {
-        inherit (config.wayland.windowManager.niri) enable;
+      nixPackageRunner = {
+        enable = true;
+
         settings = {
-          variants = [
-            {
-              id = "variant_cast_window";
-              name = "Cast Window";
-              icon = "cast";
-              showText = false;
-              clickCommand = "niri msg action set-dynamic-cast-window --id $(niri msg --json pick-window | ${getExe pkgs.jq} -r .id)";
-              visibilityCommand = "niri msg --json casts | ${getExe pkgs.jq} -e 'any(.is_dynamic_target == true)'";
-              visibilityInterval = 1;
-            }
-          ];
+          execFlag = "-e";
+          terminal = concatStrings config.terminal.commands.base;
         };
       };
 
-      easyEffects = {
-        enable = config.services.easyeffects.enable || (self.lib.hasPackage config.home.packages "easyeffects");
-      };
-
-      nixPackageRunner = {
+      systemMonitorPlus = {
         enable = true;
+
         settings = {
-          terminal = concatStrings config.terminal.commands.base;
-          execFlag = "-e";
+          cpuTempDangerThreshold = 75;
+          cpuTempEnabled = true;
+          cpuTempIconName = "memory";
+          cpuTempProgressMaxValue = 100;
+          cpuTempVisualStyle = "gauge";
+          cpuTempWarningThreshold = 60;
+          cpuUsageEnabled = false;
+          gpuTempDangerThreshold = 75;
+          gpuTempEnabled = true;
+          gpuTempProgressMaxValue = 100;
+          gpuTempVisualStyle = "gauge";
+          gpuTempWarningThreshold = 60;
+          ramUsageEnabled = true;
+          ramUsageVisualStyle = "gauge";
+          resourceOrder = "cpuTemp,gpuTemp,ramUsage,cpuUsage,diskPartitionUsage,networkSpeed";
         };
       };
 
       webSearch = {
         enable = true;
+
         settings = {
-          trigger = "?";
-          searchEngines = [];
           disabledEngines = [
-            "aur"
             "archlinux"
+            "aur"
             "bing"
-            "kagi"
             "brave"
             "duckduckgo"
+            "kagi"
           ];
-        };
-      };
 
-      emojiLauncher = {
-        enable = true;
-      };
-
-      systemMonitorPlus = {
-        enable = true;
-        settings = {
-          resourceOrder = "cpuTemp,gpuTemp,ramUsage,cpuUsage,diskPartitionUsage,networkSpeed";
-          cpuUsageEnabled = false;
-
-          cpuTempEnabled = true;
-          cpuTempVisualStyle = "gauge";
-          cpuTempIconName = "memory";
-          cpuTempWarningThreshold = 60;
-          cpuTempDangerThreshold = 75;
-          cpuTempProgressMaxValue = 100;
-
-          gpuTempEnabled = true;
-          gpuTempVisualStyle = "gauge";
-          gpuTempWarningThreshold = 60;
-          gpuTempDangerThreshold = 75;
-          gpuTempProgressMaxValue = 100;
-
-          ramUsageEnabled = true;
-          ramUsageVisualStyle = "gauge";
-        };
-      };
-
-      hueManager = {
-        enable = true;
-        settings = {
-          openHuePath = "openhue";
-          useDeviceIcons = true;
-          syncRoomIds = [
-            "ee53b611-782f-435a-bec0-a3135cae771a"
-            "bbc69f6f-f959-4efd-a46d-a9996de111f0"
-            "96fee890-6752-4ff3-a6a6-e3a8781db180"
-            "ce9dc0c6-a60e-447d-bde4-ce09b035893c"
-          ];
-          autoSyncAccent = false;
+          searchEngines = [];
+          trigger = "?";
         };
       };
     };

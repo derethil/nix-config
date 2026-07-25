@@ -43,39 +43,42 @@
 
     services.sunshine = {
       enable = true;
-      autoStart = true;
-      openFirewall = true;
-      capSysAdmin = false;
-      settings = {
-        encoder = "vaapi";
-        keyboard = "disabled";
-        controller = "disabled";
-        mouse = "disabled";
-        hevc_mode = "2";
-        min_fps_factor = "2";
-        system_tray = "disabled";
-      };
+
       applications = {
-        env = {
-          PATH = "$(PATH):$(HOME)/.local/bin";
-        };
         apps = [
           {
-            name = "Steam Big Picture";
             detached = ["${launchBigPicture}"];
+            image-path = "steam.png";
+            name = "Steam Big Picture";
+
             prep-cmd = [
-              {
-                do = "${switchStreaming}";
-                undo = "${switchNormal}";
-              }
               {
                 do = "";
                 undo = "setsid steam steam://close/bigpicture";
               }
+              {
+                do = "${switchStreaming}";
+                undo = "${switchNormal}";
+              }
             ];
-            image-path = "steam.png";
           }
         ];
+
+        env.PATH = "$(PATH):$(HOME)/.local/bin";
+      };
+
+      autoStart = true;
+      capSysAdmin = false;
+      openFirewall = true;
+
+      settings = {
+        controller = "disabled";
+        encoder = "vaapi";
+        hevc_mode = "2";
+        keyboard = "disabled";
+        min_fps_factor = "2";
+        mouse = "disabled";
+        system_tray = "disabled";
       };
     };
   };

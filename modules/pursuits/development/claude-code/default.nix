@@ -8,8 +8,8 @@
 
     programs.claude-code = {
       enable = true;
-      enableMcpIntegration = true;
       commandsDir = ./_commands;
+
       context = ''
         Do not over-plan. For simple tasks, just make the change directly.
         Do not explore project context, ask clarifying questions, propose
@@ -29,25 +29,28 @@
         source as raw URLs rather than markdown links. This is to ensure
         I can open the links directly in my browser without having to copy and paste them.
       '';
+
+      enableMcpIntegration = true;
+
       settings = {
+        enabledPlugins = {
+          "gopls-lsp@claude-plugins-official" = true;
+          "pr-review-toolkit@claude-plugins-official" = true;
+          "serena@claude-plugins-official" = true;
+          "superpowers@claude-plugins-official" = true;
+          "typescript-lsp@claude-plugins-official" = true;
+        };
+
+        includeCoAuthoredBy = false;
         model = "sonnet";
 
-        showThinkingSummaries = true;
-        includeCoAuthoredBy = false;
-        skipAutoPermissionsPrompt = true;
-
         permissions = {
-          deny = ["Bash(git commit*)"];
           defaultMode = "auto";
+          deny = ["Bash(git commit*)"];
         };
 
-        enabledPlugins = {
-          "superpowers@claude-plugins-official" = true;
-          "serena@claude-plugins-official" = true;
-          "pr-review-toolkit@claude-plugins-official" = true;
-          "typescript-lsp@claude-plugins-official" = true;
-          "gopls-lsp@claude-plugins-official" = true;
-        };
+        showThinkingSummaries = true;
+        skipAutoPermissionsPrompt = true;
       };
     };
   };

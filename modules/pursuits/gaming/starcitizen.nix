@@ -1,13 +1,11 @@
 {
-  inputs,
   self,
+  inputs,
   ...
 }: {
-  flake-file.inputs = {
-    nix-citizen = {
-      url = "github:LovingMelody/nix-citizen";
-      inputs.nix-gaming.follows = "nix-gaming";
-    };
+  flake-file.inputs.nix-citizen = {
+    inputs.nix-gaming.follows = "nix-gaming";
+    url = "github:LovingMelody/nix-citizen";
   };
 
   flake.modules.nixos.starcitizen = {pkgs, ...}: {
@@ -23,8 +21,7 @@
 
     programs.rsi-launcher = {
       enable = true;
-      umu.enable = true;
-      wine = pkgs.unstable.wineWow64Packages.staging;
+
       preCommands = ''
         export DXVK_HUD=compiler
         export PROTON_ENABLE_NGX_UPDATER="1"
@@ -34,6 +31,9 @@
         export DXVK_NVAPI_DRS_NGX_DLSS_SR_OVERRIDE_RENDER_PRESET_SELECTION="render_preset_latest"
         export DXVK_NVAPI_DRS_NGX_DLSS_RR_OVERRIDE_RENDER_PRESET_SELECTION="render_preset_latest"
       '';
+
+      umu.enable = true;
+      wine = pkgs.unstable.wineWow64Packages.staging;
     };
   };
 }

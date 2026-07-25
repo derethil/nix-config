@@ -6,8 +6,8 @@
   ...
 }: let
   flakeRootOption = lib.mkOption {
-    type = lib.types.str;
     description = "Absolute path to the flake root directory.";
+    type = lib.types.str;
   };
 
   mkHomeManagerModule = flakeRoot: {
@@ -16,24 +16,20 @@
 in {
   flake.modules = {
     nixos.flake-root = {config, ...}: {
-      options.internal = {
-        flakeRoot = flakeRootOption;
-      };
+      options.internal.flakeRoot = flakeRootOption;
 
       config.home-manager.sharedModules = [
-        self.modules.homeManager.flake-root
         (mkHomeManagerModule config.internal.flakeRoot)
+        self.modules.homeManager.flake-root
       ];
     };
 
     darwin.flake-root = {config, ...}: {
-      options.internal = {
-        flakeRoot = flakeRootOption;
-      };
+      options.internal.flakeRoot = flakeRootOption;
 
       config.home-manager.sharedModules = [
-        self.modules.homeManager.flake-root
         (mkHomeManagerModule config.internal.flakeRoot)
+        self.modules.homeManager.flake-root
       ];
     };
 

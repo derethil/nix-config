@@ -3,14 +3,14 @@
     services.paneru.settings = {
       restore = {
         enabled = false;
-        startup_grace_ms = 2000;
         missing_windows = "ignore";
+        startup_grace_ms = 2000;
       };
 
       windows.alacritty = {
-        title = ".*";
+        bindings_passthrough = ["ctrl-h" "ctrl-j" "ctrl-k" "ctrl-l"];
         bundle_id = "org.alacritty";
-        bindings_passthrough = ["ctrl-h" "ctrl-l" "ctrl-j" "ctrl-k"];
+        title = ".*";
       };
     };
   };

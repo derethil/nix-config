@@ -3,35 +3,29 @@
   inputs,
   ...
 }: {
-  flake-file.inputs = {
-    paneru = {
-      url = "github:karinushka/paneru";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+  flake-file.inputs.paneru = {
+    inputs.nixpkgs.follows = "nixpkgs";
+    url = "github:karinushka/paneru";
   };
 
   flake.modules = {
-    darwin.paneru-nix = {
-      imports = [inputs.paneru.darwinModules.paneru];
-    };
+    darwin = {
+      paneru = {
+        imports = [
+          self.modules.darwin.darwin-surfaces
+          self.modules.darwin.mediamate
+          self.modules.darwin.paneru-nix
+        ];
 
-    homeManager.paneru = {
-      imports = [
-        self.modules.homeManager.fonts
-        self.modules.homeManager.wallpaper
-      ];
-    };
-
-    darwin.paneru = {
-      imports = [
-        self.modules.darwin.paneru-nix
-        self.modules.darwin.darwin-surfaces
-        self.modules.darwin.mediamate
-      ];
-
-      services.paneru = {
-        enable = true;
+        services.paneru.enable = true;
       };
+
+      paneru-nix.imports = [inputs.paneru.darwinModules.paneru];
     };
+
+    homeManager.paneru.imports = [
+      self.modules.homeManager.fonts
+      self.modules.homeManager.wallpaper
+    ];
   };
 }

@@ -2,39 +2,45 @@
   inherit (lib) mkOption types;
 
   fontOptions = type: {
-    name = mkOption {
-      type = types.str;
-      description = "Name of the default ${type} font.";
-    };
     package = mkOption {
-      type = types.nullOr types.package;
       default = null;
       description = "Package for the default ${type} font.";
+      type = types.nullOr types.package;
     };
-    size = mkOption {
-      type = types.int;
-      default = 9;
-    };
-    style = mkOption {
+
+    name = mkOption {
+      description = "Name of the default ${type} font.";
       type = types.str;
+    };
+
+    size = mkOption {
+      default = 9;
+      type = types.int;
+    };
+
+    style = mkOption {
       default = "Regular";
+      type = types.str;
     };
   };
 in {
   flake.modules.generic.fonts-options = {
     key = "fonts-options";
+
     options.font = {
-      serif = fontOptions "serif";
-      sansSerif = fontOptions "sans-serif";
-      monospace = fontOptions "monospace";
       emoji = {
         inherit (fontOptions "emoji") name package;
       };
+
       extraPackages = mkOption {
-        type = types.listOf types.package;
         default = [];
         description = "Additional font packages to install.";
+        type = types.listOf types.package;
       };
+
+      monospace = fontOptions "monospace";
+      sansSerif = fontOptions "sans-serif";
+      serif = fontOptions "serif";
     };
   };
 }

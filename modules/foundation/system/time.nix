@@ -1,7 +1,5 @@
 {
   flake.modules.nixos.time = {
-    services.automatic-timezoned = {
-      enable = true;
-    };
+    services.automatic-timezoned.enable = true;
   };
 }

@@ -1,13 +1,26 @@
 {
   flake.modules.homeManager.firefox-ublock-origin = {
     home.file.".mozilla/managed-storage/uBlock0@raymondhill.net.json".text = builtins.toJSON {
-      name = "uBlock0@raymondhill.net";
-      description = "_";
-      type = "storage";
       data = {
-        adminSettings = {
-          userFilters = "";
-        };
+        adminSettings.userFilters = "";
+
+        toOverwrite.filterLists = [
+          "adguard-cookies"
+          "easylist"
+          "easyprivacy"
+          "fanboy-cookiemonster"
+          "plowe-0"
+          "ublock-badware"
+          "ublock-cookies-adguard"
+          "ublock-cookies-easylist"
+          "ublock-filters"
+          "ublock-privacy"
+          "ublock-quick-fixes"
+          "ublock-unbreak"
+          "urlhaus-1"
+          "user-filters"
+        ];
+
         userSettings = [
           ["advancedUserEnabled" "true"]
           ["autoUpdate" "true"]
@@ -15,25 +28,11 @@
           ["contextMenuEnabled" "true"]
           ["dynamicFilteringEnabled" "false"]
         ];
-        toOverwrite = {
-          filterLists = [
-            "user-filters"
-            "ublock-filters"
-            "ublock-badware"
-            "ublock-privacy"
-            "ublock-quick-fixes"
-            "ublock-unbreak"
-            "easylist"
-            "easyprivacy"
-            "urlhaus-1"
-            "plowe-0"
-            "fanboy-cookiemonster"
-            "ublock-cookies-easylist"
-            "adguard-cookies"
-            "ublock-cookies-adguard"
-          ];
-        };
       };
+
+      description = "_";
+      name = "uBlock0@raymondhill.net";
+      type = "storage";
     };
   };
 }

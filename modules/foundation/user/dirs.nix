@@ -8,6 +8,7 @@
     home = {
       preferXdgDirectories = true;
       sessionPath = ["${config.home.homeDirectory}/.local/bin"];
+
       sessionVariables = {
         CUDA_CACHE_PATH = "${config.xdg.cacheHome}/nv";
         # Use system portals instead of home-manager's default
@@ -23,19 +24,20 @@
       enable = true;
       autostart.readOnly = true;
       cacheHome = "${config.home.homeDirectory}/.local/cache";
+
       userDirs = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         enable = true;
         createDirectories = true;
-        setSessionVariables = true;
         desktop = "${config.home.homeDirectory}/Desktop";
         documents = "${config.home.homeDirectory}/Documents";
         download = "${config.home.homeDirectory}/Downloads";
+        extraConfig.SCREENSHOTS = "${config.home.homeDirectory}/Pictures/screenshots";
         music = "${config.home.homeDirectory}/Music";
         pictures = "${config.home.homeDirectory}/Pictures";
-        videos = "${config.home.homeDirectory}/Videos";
-        templates = "${config.home.homeDirectory}/Templates";
         publicShare = "${config.home.homeDirectory}/Public";
-        extraConfig.SCREENSHOTS = "${config.home.homeDirectory}/Pictures/screenshots";
+        setSessionVariables = true;
+        templates = "${config.home.homeDirectory}/Templates";
+        videos = "${config.home.homeDirectory}/Videos";
       };
     };
   };

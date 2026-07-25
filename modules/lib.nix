@@ -8,8 +8,6 @@
 in {
   flake.lib = {
     inherit mergeStrict';
-    mergeStrict = a: b: mergeStrict' a b "attribute";
-    mergeModules = a: b: mergeStrict' a b "module name";
 
     # True if any package in `packages` matches `pname`.
     # Uses lib.getName, which prefers pname and falls back to stripping the
@@ -17,5 +15,8 @@ in {
     # and overrides/wraps (which preserve pname) still work.
     hasPackage = packages: pname:
       lib.any (p: lib.getName p == pname) packages;
+
+    mergeModules = a: b: mergeStrict' a b "module name";
+    mergeStrict = a: b: mergeStrict' a b "attribute";
   };
 }

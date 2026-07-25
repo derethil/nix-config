@@ -8,7 +8,7 @@
     pkgs,
     ...
   }: let
-    inherit (lib) mkOption types mkIf concatMapStringsSep;
+    inherit (lib) concatMapStringsSep mkIf mkOption types;
     cfg = config.internal.services.szuru;
     host = config.networking.hostName;
 
@@ -19,8 +19,8 @@
 
     secret = {
       inherit group;
-      owner = user;
       mode = "0440";
+      owner = user;
     };
   in {
     imports = with self.modules.nixos; [
@@ -29,89 +29,48 @@
     ];
 
     options.internal.services.szuru = {
-      port = mkOption {
-        type = types.port;
-        default = 9000;
-        description = "Port the web interface listens on.";
-      };
       allowedIPs = mkOption {
-        type = types.nullOr (types.listOf types.str);
         default = null;
         description = "If set, only these source IPs/subnets get firewall rules; otherwise the port is open to all.";
+        type = types.nullOr (types.listOf types.str);
+      };
+
+      port = mkOption {
+        default = 9000;
+        description = "Port the web interface listens on.";
+        type = types.port;
       };
     };
 
     config = {
       documentation.nixos.enable = true;
 
-      internal.services.postgresql = {
-        user.extraGroups = [group];
-        databases = [
-          {
-            name = "szurubooru";
-            owner = user;
-            users = [
-              {
-                name = user;
-                passwordFile = config.sops.secrets."${szuruSecretPath}/database_password".path;
-                extraSettings.ensureDBOwnership = true;
-              }
-            ];
-          }
-        ];
-      };
+      internal = {
+        boot.impermanence.extraDirectories = [dataDir];
 
-      sops.secrets = {
-        "${szuruSecretPath}/secret" = secret;
-        "${szuruSecretPath}/database_password" = secret;
-      };
-
-      services.szurubooru = {
-        enable = true;
-        inherit user group dataDir;
-        server = {
-          package = pkgs.szurubooru.server;
-          settings = {
-            domain = "http://${host}.local:${toString cfg.port}";
-            delete_source_files = "yes";
-            secretFile = config.sops.secrets."${szuruSecretPath}/secret".path;
-          };
-        };
-        database = {
-          passwordFile = config.sops.secrets."${szuruSecretPath}/database_password".path;
-        };
-        client = {
-          package = pkgs.szurubooru.client;
-        };
-      };
-
-      services.nginx = {
-        enable = true;
-        virtualHosts."${host}.local" = {
-          listen = [
+        services.postgresql = {
+          databases = [
             {
-              addr = "0.0.0.0";
-              inherit (cfg) port;
+              name = "szurubooru";
+              owner = user;
+
+              users = [
+                {
+                  extraSettings.ensureDBOwnership = true;
+                  name = user;
+                  passwordFile = config.sops.secrets."${szuruSecretPath}/database_password".path;
+                }
+              ];
             }
           ];
-          locations = {
-            "~ ^/api$".return = "302 /api/";
-            "~ ^/api/(.*)$".extraConfig = ''
-              if ($request_uri ~* "/api/(.*)") {
-                proxy_pass http://127.0.0.1:8080/$1;
-              }
-            '';
-            "/data/".alias = "${dataDir}/data/";
-            "/" = {
-              tryFiles = "$uri /index.htm";
-              root = "${pkgs.szurubooru.client}";
-            };
-          };
+
+          user.extraGroups = [group];
         };
       };
 
       networking.firewall = {
         allowedTCPPorts = mkIf (cfg.allowedIPs == null) [cfg.port];
+
         extraCommands = mkIf (cfg.allowedIPs != null) ''
           ${concatMapStringsSep "\n" (ip: ''
               iptables -A nixos-fw -p tcp --dport ${toString cfg.port} -s ${ip} -j nixos-fw-accept
@@ -120,7 +79,58 @@
         '';
       };
 
-      internal.boot.impermanence.extraDirectories = [dataDir];
+      services = {
+        nginx = {
+          enable = true;
+
+          virtualHosts."${host}.local" = {
+            listen = [
+              {
+                inherit (cfg) port;
+                addr = "0.0.0.0";
+              }
+            ];
+
+            locations = {
+              "/" = {
+                root = "${pkgs.szurubooru.client}";
+                tryFiles = "$uri /index.htm";
+              };
+
+              "/data/".alias = "${dataDir}/data/";
+              "~ ^/api$".return = "302 /api/";
+
+              "~ ^/api/(.*)$".extraConfig = ''
+                if ($request_uri ~* "/api/(.*)") {
+                  proxy_pass http://127.0.0.1:8080/$1;
+                }
+              '';
+            };
+          };
+        };
+
+        szurubooru = {
+          inherit dataDir group user;
+          enable = true;
+          client.package = pkgs.szurubooru.client;
+          database.passwordFile = config.sops.secrets."${szuruSecretPath}/database_password".path;
+
+          server = {
+            package = pkgs.szurubooru.server;
+
+            settings = {
+              delete_source_files = "yes";
+              domain = "http://${host}.local:${toString cfg.port}";
+              secretFile = config.sops.secrets."${szuruSecretPath}/secret".path;
+            };
+          };
+        };
+      };
+
+      sops.secrets = {
+        "${szuruSecretPath}/database_password" = secret;
+        "${szuruSecretPath}/secret" = secret;
+      };
     };
   };
 }

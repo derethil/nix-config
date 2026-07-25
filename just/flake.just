@@ -23,7 +23,7 @@ get-hash url:
 
 # Regenerate flake.nix and flake.lock from the current inputs
 write:
-    nix run .#write-flake && nix flake lock
+    nix run .#write-flake
 
 # Update a flake input and commit the change to flake.lock (-a to amend the last commit)
 [arg("amend", long="amend", short="a", value="true", help="Amend the last commit instead of creating a new one")]

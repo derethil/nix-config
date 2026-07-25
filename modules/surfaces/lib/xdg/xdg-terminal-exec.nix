@@ -1,8 +1,8 @@
 {self, ...}: {
   flake.modules.homeManager.xdg-terminal-exec = {
     config,
-    pkgs,
     lib,
+    pkgs,
     ...
   }: {
     imports = [self.modules.homeManager.terminal-options];

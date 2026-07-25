@@ -1,19 +1,19 @@
 {self, ...}: {
   flake.modules.homeManager.firefox = {
-    pkgs,
-    lib,
     config,
+    lib,
+    pkgs,
     ...
   }: let
-    inherit (lib) mkMerge mkForce;
+    inherit (lib) mkForce mkMerge;
 
     firefoxPkg = pkgs.firefox.override {nativeMessagingHosts = [pkgs.tridactyl-native];};
   in {
     imports = [
       self.modules.homeManager.displays
-      self.modules.homeManager.mimeapps
       self.modules.homeManager.firefox-tridactyl
       self.modules.homeManager.firefox-ublock-origin
+      self.modules.homeManager.mimeapps
     ];
 
     home.sessionVariables.BROWSER =
@@ -23,141 +23,154 @@
 
     programs.firefox = {
       enable = true;
-      configPath = lib.mkIf (!pkgs.stdenv.isDarwin) "${config.xdg.configHome}/mozilla/firefox";
       package = firefoxPkg;
+      configPath = lib.mkIf (!pkgs.stdenv.isDarwin) "${config.xdg.configHome}/mozilla/firefox";
+
       policies = {
-        # Privacy
-        HttpsOnlyMode = "enabled";
-        DisableTelemetry = true;
-        DisableFirefoxStudies = true;
-        DisableFeedbackCommands = true;
-        DisableSetDesktopBackground = true;
-        EnableTrackingProtection = {
-          Locked = true;
-          Value = true;
-          Cryptomining = true;
-          Fingerprinting = true;
-          EmailTracking = true;
-        };
-        # UI
-        DisablePocket = true;
-        DisableFormHistory = true;
-        PromptForDownloadLocation = false;
-        DisplayBookmarksToolbar = "never";
-        PasswordManagerEnabled = false;
         # Lock configuration
         BlockAboutAddons = false;
+        DisableFeedbackCommands = true;
+        DisableFirefoxStudies = true;
+        DisableFormHistory = true;
+        # UI
+        DisablePocket = true;
+        DisableSetDesktopBackground = true;
         DisableSystemAddonUpdate = true;
+        DisableTelemetry = true;
+        DisplayBookmarksToolbar = "never";
+
+        EnableTrackingProtection = {
+          Cryptomining = true;
+          EmailTracking = true;
+          Fingerprinting = true;
+          Locked = true;
+          Value = true;
+        };
+
+        # Privacy
+        HttpsOnlyMode = "enabled";
+        PasswordManagerEnabled = false;
+        PromptForDownloadLocation = false;
       };
 
       profiles = rec {
-        demos = {
-          id = 1;
-          isDefault = false;
-
-          inherit (default) extraConfig;
-          inherit (default) userChrome;
+        default = {
+          bookmarks = {};
 
           extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
-            tridactyl
+            augmented-steam
             bitwarden
+            clearurls
             darkreader
+            i-dont-care-about-cookies
+            # Site-specific
+            improved-tube
+            private-relay
+            # Development
+            react-devtools
+            reduxdevtools
+            refined-github
+            # Privacy / Enhancements
+            sponsorblock
+            # Tools
+            tridactyl
             ublock-origin
           ];
-
-          settings = mkMerge [
-            default.settings
-            {
-              "browser.startup.homepage" = mkForce "about:blank";
-              "browser.startup.page" = mkForce 1;
-            }
-          ];
-        };
-
-        default = {
-          id = 0;
-          isDefault = true;
-          search = {
-            force = true;
-            default = "google";
-            privateDefault = "ddg";
-            engines = {
-              "Nix Packages" = {
-                urls = [
-                  {
-                    template = "https://search.nixos.org/packages";
-                    params = [
-                      {
-                        name = "type";
-                        value = "packages";
-                      }
-                      {
-                        name = "query";
-                        value = "{searchTerms}";
-                      }
-                    ];
-                  }
-                ];
-                icon = "https://nixos.wiki/favicon.png";
-                definedAliases = ["@np"];
-              };
-              "NixOS Options" = {
-                urls = [{template = "https://search.nixos.org/options?query={searchTerms}";}];
-                icon = "https://nixos.wiki/favicon.png";
-                definedAliases = ["@no"];
-              };
-              "NixOS Wiki" = {
-                urls = [{template = "https://nixos.wiki/index.php?search={searchTerms}";}];
-                icon = "https://nixos.wiki/favicon.png";
-                updateInterval = 24 * 60 * 60 * 1000;
-                definedAliases = ["@nw"];
-              };
-              "ProtonDB" = {
-                urls = [{template = "https://www.protondb.com/search?q={searchTerms}";}];
-                icon = "https://www.protondb.com/sites/protondb/images/favicon.ico";
-                definedAliases = ["@pd"];
-              };
-              "bing".metaData.hidden = true;
-            };
-          };
 
           extraConfig = ''
             user_pref("extensions.autoDisableScopes", 0);
             user_pref("extensions.enabledScopes", 15);
           '';
 
-          userChrome = builtins.readFile ./_userChrome.css;
+          id = 0;
+          isDefault = true;
 
-          bookmarks = {};
+          search = {
+            default = "google";
 
-          extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
-            # Tools
-            tridactyl
-            bitwarden
-            darkreader
+            engines = {
+              "Nix Packages" = {
+                definedAliases = ["@np"];
+                icon = "https://nixos.wiki/favicon.png";
 
-            # Privacy / Enhancements
-            sponsorblock
-            ublock-origin
-            private-relay
-            clearurls
-            i-dont-care-about-cookies
+                urls = [
+                  {
+                    params = [
+                      {
+                        name = "query";
+                        value = "{searchTerms}";
+                      }
+                      {
+                        name = "type";
+                        value = "packages";
+                      }
+                    ];
 
-            # Site-specific
-            improved-tube
-            augmented-steam
-            refined-github
+                    template = "https://search.nixos.org/packages";
+                  }
+                ];
+              };
 
-            # Development
-            react-devtools
-            reduxdevtools
-          ];
+              "NixOS Options" = {
+                definedAliases = ["@no"];
+                icon = "https://nixos.wiki/favicon.png";
+                urls = [{template = "https://search.nixos.org/options?query={searchTerms}";}];
+              };
+
+              "NixOS Wiki" = {
+                definedAliases = ["@nw"];
+                icon = "https://nixos.wiki/favicon.png";
+                updateInterval = 24 * 60 * 60 * 1000;
+                urls = [{template = "https://nixos.wiki/index.php?search={searchTerms}";}];
+              };
+
+              "ProtonDB" = {
+                definedAliases = ["@pd"];
+                icon = "https://www.protondb.com/sites/protondb/images/favicon.ico";
+                urls = [{template = "https://www.protondb.com/search?q={searchTerms}";}];
+              };
+
+              "bing".metaData.hidden = true;
+            };
+
+            force = true;
+            privateDefault = "ddg";
+          };
 
           settings = {
+            # Disable some telemetry
+            "app.shield.optoutstudies.enabled" = false;
+            "browser.contentblocking.report.lockwise.enabled" = false;
+            "browser.discovery.enabled" = false;
+            "browser.download.useDownloadDir" = false;
+            "browser.newtabpage.activity-stream.feeds.telemetry" = false;
+            "browser.newtabpage.activity-stream.showSponsored" = false;
+            "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+            "browser.newtabpage.activity-stream.telemetry" = false;
+            "browser.ping-centre.telemetry" = false;
             "browser.startup.homepage" = "about:blank";
             "browser.startup.page" = 3;
             "browser.toolbars.bookmarks.visibility" = "never";
-
+            "browser.uiCustomization.state" = builtins.readFile ./_ui-state.json;
+            "browser.uitour.enabled" = false;
+            "datareporting.healthreport.service.enabled" = false;
+            "datareporting.healthreport.uploadEnabled" = false;
+            "datareporting.policy.dataSubmissionEnabled" = false;
+            "datareporting.sessions.current.clean" = true;
+            # No location telemetry
+            "device.sensors.enabled" = false;
+            "devtools.onboarding.telemetry.logged" = false;
+            "extensions.abuseReport.enabled" = false;
+            "extensions.activeThemeID" = "{c161a71c-fb42-4608-b001-5634b3f59a8b}";
+            "extensions.formautofill.addresses.enabled" = false;
+            "extensions.formautofill.creditCards.enabled" = false;
+            # Disable useless stuff
+            "extensions.pocket.enabled" = false;
+            "geo.enabled" = false;
+            "layout.frame_rate" = config.internal.primaryDisplay.framerate;
+            "privacy.globalprivacycontrol.enabled" = true;
+            # Request not to track
+            "privacy.globalprivacycontrol.functionality.enabled" = true;
             # Only sync browser history and tabs
             "services.sync.engine.addons" = false;
             "services.sync.engine.addresses" = false;
@@ -167,39 +180,9 @@
             "services.sync.engine.passwords" = false;
             "services.sync.engine.prefs" = false;
             "services.sync.engine.tabs" = true;
-
-            "browser.download.useDownloadDir" = false;
+            # UI
+            "sidebar.verticalTabs" = true;
             "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-
-            # No location telemetry
-            "device.sensors.enabled" = false;
-            "geo.enabled" = false;
-
-            # Request not to track
-            "privacy.globalprivacycontrol.functionality.enabled" = true;
-            "privacy.globalprivacycontrol.enabled" = true;
-
-            # Disable useless stuff
-            "extensions.pocket.enabled" = false;
-            "extensions.abuseReport.enabled" = false;
-            "extensions.formautofill.creditCards.enabled" = false;
-            "extensions.formautofill.addresses.enabled" = false;
-            "browser.contentblocking.report.lockwise.enabled" = false;
-            "browser.uitour.enabled" = false;
-            "browser.newtabpage.activity-stream.showSponsored" = false;
-            "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
-
-            # Disable some telemetry
-            "app.shield.optoutstudies.enabled" = false;
-            "browser.discovery.enabled" = false;
-            "browser.newtabpage.activity-stream.feeds.telemetry" = false;
-            "browser.newtabpage.activity-stream.telemetry" = false;
-            "browser.ping-centre.telemetry" = false;
-            "datareporting.healthreport.service.enabled" = false;
-            "datareporting.healthreport.uploadEnabled" = false;
-            "datareporting.policy.dataSubmissionEnabled" = false;
-            "datareporting.sessions.current.clean" = true;
-            "devtools.onboarding.telemetry.logged" = false;
             "toolkit.telemetry.archive.enabled" = false;
             "toolkit.telemetry.bhrPing.enabled" = false;
             "toolkit.telemetry.enabled" = false;
@@ -214,50 +197,65 @@
             "toolkit.telemetry.unified" = false;
             "toolkit.telemetry.unifiedIsOptIn" = false;
             "toolkit.telemetry.updatePing.enabled" = false;
-
-            # UI
-            "sidebar.verticalTabs" = true;
-            "extensions.activeThemeID" = "{c161a71c-fb42-4608-b001-5634b3f59a8b}";
-            "browser.uiCustomization.state" = builtins.readFile ./_ui-state.json;
-
             # NOTE: Not needed after NVIDIA drivers are 575.64.5+
             # Wayland screencasting fix
             "widget.dmabuf.force-enabled" = true;
-
-            # Use XDG Desktop Portal (1 = always, 2 = auto/flatpak only, 0 = never)
-            "widget.use-xdg-desktop-portal.file-picker" = 1;
-            "widget.use-xdg-desktop-portal.mime-handler" = 1;
-            "widget.use-xdg-desktop-portal.settings" = 1;
-            "widget.use-xdg-desktop-portal.location" = 1;
-            "widget.use-xdg-desktop-portal.open-uri" = 1;
-
             # Make scrollbar bigger (I'm blind lol)
             "widget.non-native-theme.scrollbar.size.override" = 24;
-
-            "layout.frame_rate" = config.internal.primaryDisplay.framerate;
+            # Use XDG Desktop Portal (1 = always, 2 = auto/flatpak only, 0 = never)
+            "widget.use-xdg-desktop-portal.file-picker" = 1;
+            "widget.use-xdg-desktop-portal.location" = 1;
+            "widget.use-xdg-desktop-portal.mime-handler" = 1;
+            "widget.use-xdg-desktop-portal.open-uri" = 1;
+            "widget.use-xdg-desktop-portal.settings" = 1;
           };
+
+          userChrome = builtins.readFile ./_userChrome.css;
+        };
+
+        demos = {
+          inherit (default) extraConfig;
+          inherit (default) userChrome;
+
+          extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
+            bitwarden
+            darkreader
+            tridactyl
+            ublock-origin
+          ];
+
+          id = 1;
+          isDefault = false;
+
+          settings = mkMerge [
+            default.settings
+            {
+              "browser.startup.homepage" = mkForce "about:blank";
+              "browser.startup.page" = mkForce 1;
+            }
+          ];
         };
       };
     };
 
     xdg.mimeApps.defaultApplications = self.lib.mkMimeApps "firefox.desktop" [
-      "x-scheme-handler/http"
-      "x-scheme-handler/https"
-      # Documents
-      "text/html"
-      "application/xhtml+xml"
-      "text/xml"
-      "application/xml"
       "application/pdf"
+      "application/xhtml+xml"
+      "application/xml"
+      "image/avif"
+      "image/bmp"
+      "image/gif"
       # Images
       "image/jpeg"
       "image/jpg"
-      "image/webp"
       "image/png"
-      "image/gif"
       "image/svg+xml"
-      "image/bmp"
-      "image/avif"
+      "image/webp"
+      # Documents
+      "text/html"
+      "text/xml"
+      "x-scheme-handler/http"
+      "x-scheme-handler/https"
     ];
   };
 }

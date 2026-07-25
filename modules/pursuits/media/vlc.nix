@@ -1,7 +1,7 @@
 {
   flake.modules.homeManager.vlc = {
-    pkgs,
     lib,
+    pkgs,
     ...
   }:
     lib.mkIf pkgs.stdenv.isLinux {

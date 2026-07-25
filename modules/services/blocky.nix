@@ -7,45 +7,46 @@
 
     options.internal.homelab = {
       address = mkOption {
-        type = types.str;
         default = "192.168.8.10";
         description = "LAN IP that homelab DNS records resolve to (feldspar's static address).";
+        type = types.str;
       };
 
       domain = mkOption {
-        type = types.str;
         default = "lumelle.me";
         description = "Base domain homelab services are published under (e.g. recipes.\${domain}).";
+        type = types.str;
       };
     };
 
     config = {
+      networking.firewall = {
+        allowedTCPPorts = [53];
+        allowedUDPPorts = [53];
+      };
+
       services.blocky = {
         enable = true;
+
         settings = {
-          # aardvark-dns from podman already on 10.88.0.1:53 so listen only on loopback and the LAN address
-          ports.dns = "127.0.0.1:53,${address}:53";
-
-          upstreams.groups.default = [
-            "1.1.1.1"
-            "1.0.0.1"
-          ];
-
           customDNS = {
             customTTL = "1h";
             filterUnmappedTypes = true;
           };
+
+          # aardvark-dns from podman already on 10.88.0.1:53 so listen only on loopback and the LAN address
+          ports.dns = "127.0.0.1:53,${address}:53";
+
+          upstreams.groups.default = [
+            "1.0.0.1"
+            "1.1.1.1"
+          ];
         };
       };
 
       systemd.services.blocky = {
-        startLimitIntervalSec = 0;
         serviceConfig.RestartSec = "2";
-      };
-
-      networking.firewall = {
-        allowedTCPPorts = [53];
-        allowedUDPPorts = [53];
+        startLimitIntervalSec = 0;
       };
     };
   };

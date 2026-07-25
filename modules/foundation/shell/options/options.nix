@@ -3,16 +3,18 @@
 in {
   flake.modules.generic.shell-options = {
     options.shell = {
+      abbreviations = mkOption {
+        default = {};
+        type = types.attrsOf types.str;
+      };
+
+      aliases = mkOption {
+        default = {};
+        type = types.attrsOf types.str;
+      };
+
       defaultShell = mkOption {
         type = types.package;
-      };
-      aliases = mkOption {
-        type = types.attrsOf types.str;
-        default = {};
-      };
-      abbreviations = mkOption {
-        type = types.attrsOf types.str;
-        default = {};
       };
     };
   };

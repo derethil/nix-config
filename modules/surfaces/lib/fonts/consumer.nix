@@ -3,54 +3,42 @@
   lib,
   ...
 }: let
-  inherit (lib) optional flatten;
+  inherit (lib) flatten optional;
 
   mkImports = pkgs: [
-    self.modules.generic.fonts-options
     (self.factory.fonts-defaults {inherit pkgs;})
+    self.modules.generic.fonts-options
   ];
 
   mkFontPackages = config:
     flatten [
-      (optional (config.font.serif.package != null) config.font.serif.package)
-      (optional (config.font.sansSerif.package != null) config.font.sansSerif.package)
-      (optional (config.font.monospace.package != null) config.font.monospace.package)
       (optional (config.font.emoji.package != null) config.font.emoji.package)
+      (optional (config.font.monospace.package != null) config.font.monospace.package)
+      (optional (config.font.sansSerif.package != null) config.font.sansSerif.package)
+      (optional (config.font.serif.package != null) config.font.serif.package)
       config.font.extraPackages
     ];
 
   mkDefaultFonts = config: {
-    serif = [config.font.serif.name];
-    sansSerif = [config.font.sansSerif.name];
-    monospace = [config.font.monospace.name];
     emoji = [config.font.emoji.name];
+    monospace = [config.font.monospace.name];
+    sansSerif = [config.font.sansSerif.name];
+    serif = [config.font.serif.name];
   };
 in {
   flake.modules = {
-    homeManager.fonts = {
-      config,
-      pkgs,
-      ...
-    }: {
-      imports = mkImports pkgs;
-      home.packages = mkFontPackages config;
-      fonts.fontconfig = {
-        enable = true;
-        defaultFonts = mkDefaultFonts config;
-      };
-    };
-
     nixos.fonts = {
       config,
       pkgs,
       ...
     }: {
       imports = mkImports pkgs;
+
       fonts = {
-        enableGhostscriptFonts = true;
         enableDefaultPackages = false;
-        packages = mkFontPackages config;
+        enableGhostscriptFonts = true;
         fontconfig.defaultFonts = mkDefaultFonts config;
+        packages = mkFontPackages config;
       };
     };
 
@@ -61,6 +49,21 @@ in {
     }: {
       imports = mkImports pkgs;
       fonts.packages = mkFontPackages config;
+    };
+
+    homeManager.fonts = {
+      config,
+      pkgs,
+      ...
+    }: {
+      imports = mkImports pkgs;
+
+      fonts.fontconfig = {
+        enable = true;
+        defaultFonts = mkDefaultFonts config;
+      };
+
+      home.packages = mkFontPackages config;
     };
   };
 }

@@ -1,7 +1,7 @@
 {
   flake.modules.darwin.keychain = {
-    lib,
     config,
+    lib,
     ...
   }: let
     inherit (lib) mkAfter optionalString;

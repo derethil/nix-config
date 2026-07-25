@@ -1,7 +1,7 @@
 {lib, ...}: {
   perSystem = {
-    system,
     pkgs,
+    system,
     ...
   }:
     lib.optionalAttrs (lib.elem system lib.platforms.linux) {
@@ -9,12 +9,10 @@
         name = "ff";
 
         runtimeInputs = with pkgs; [
-          plocate
           fzf
+          plocate
           wl-clipboard
         ];
-
-        meta.platforms = lib.platforms.linux;
 
         text = ''
           set -euo pipefail
@@ -61,6 +59,8 @@
             exit 1
           fi
         '';
+
+        meta.platforms = lib.platforms.linux;
       };
     };
 }

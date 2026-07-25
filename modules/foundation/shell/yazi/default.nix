@@ -1,11 +1,11 @@
 {
-  inputs,
   self,
+  inputs,
   ...
 }: {
   flake-file.inputs.yazi-gruvbox-dark = {
-    url = "github:bennyyip/gruvbox-dark.yazi";
     flake = false;
+    url = "github:bennyyip/gruvbox-dark.yazi";
   };
 
   flake.modules.homeManager.yazi = {
@@ -14,7 +14,7 @@
     pkgs,
     ...
   }: let
-    inherit (lib) mkMerge mkIf getExe;
+    inherit (lib) getExe mkIf mkMerge;
     inherit (pkgs.stdenv.hostPlatform) isLinux;
   in {
     imports = [
@@ -22,29 +22,6 @@
     ];
 
     config = mkMerge [
-      {
-        programs.yazi = {
-          enable = true;
-          shellWrapperName = "yy";
-
-          enableBashIntegration = config.programs.bash.enable;
-          enableFishIntegration = config.programs.fish.enable;
-          enableZshIntegration = config.programs.zsh.enable;
-          enableNushellIntegration = config.programs.nushell.enable;
-
-          flavors.gruvbox-dark = inputs.yazi-gruvbox-dark;
-          theme.flavor.dark = "gruvbox-dark";
-
-          settings.mgr = {
-            ratio = [2 3 3];
-            sort_dir_first = true;
-            linemode = "none";
-            show_hidden = true;
-            show_symlink = true;
-          };
-        };
-      }
-
       (mkIf isLinux {
         programs.yazi.keymap.mgr.prepend_keymap = [
           {
@@ -53,26 +30,49 @@
           }
         ];
 
-        xdg.desktopEntries.yazi = {
-          name = "Yazi";
-          icon = "yazi";
-          genericName = "File Manager";
-          comment = "Blazing fast terminal file manager written in Rust, based on async I/O";
-          exec = "${getExe pkgs.xdg-terminal-exec} --app-id=yazi yazi %u";
-          type = "Application";
-          categories = ["System" "FileTools" "FileManager"];
-          mimeType = ["inode/directory"];
-        };
+        xdg = {
+          configFile."xdg-desktop-portal-termfilechooser/config".source = (pkgs.formats.ini {}).generate "termchooser" {
+            filechooser = {
+              cmd = "${pkgs.xdg-desktop-portal-termfilechooser}/share/xdg-desktop-portal-termfilechooser/yazi-wrapper.sh";
+              default_dir = "$HOME";
+              env = "TERMCMD='${getExe pkgs.xdg-terminal-exec} --app-id=yazi'";
+              save_mode = "suggested";
+            };
+          };
 
-        xdg.configFile."xdg-desktop-portal-termfilechooser/config".source = (pkgs.formats.ini {}).generate "termchooser" {
-          filechooser = {
-            cmd = "${pkgs.xdg-desktop-portal-termfilechooser}/share/xdg-desktop-portal-termfilechooser/yazi-wrapper.sh";
-            default_dir = "$HOME";
-            save_mode = "suggested";
-            env = "TERMCMD='${getExe pkgs.xdg-terminal-exec} --app-id=yazi'";
+          desktopEntries.yazi = {
+            categories = ["FileManager" "FileTools" "System"];
+            comment = "Blazing fast terminal file manager written in Rust, based on async I/O";
+            exec = "${getExe pkgs.xdg-terminal-exec} --app-id=yazi yazi %u";
+            genericName = "File Manager";
+            icon = "yazi";
+            mimeType = ["inode/directory"];
+            name = "Yazi";
+            type = "Application";
           };
         };
       })
+      {
+        programs.yazi = {
+          enable = true;
+          enableBashIntegration = config.programs.bash.enable;
+          enableFishIntegration = config.programs.fish.enable;
+          enableNushellIntegration = config.programs.nushell.enable;
+          enableZshIntegration = config.programs.zsh.enable;
+          flavors.gruvbox-dark = inputs.yazi-gruvbox-dark;
+
+          settings.mgr = {
+            linemode = "none";
+            ratio = [2 3 3];
+            show_hidden = true;
+            show_symlink = true;
+            sort_dir_first = true;
+          };
+
+          shellWrapperName = "yy";
+          theme.flavor.dark = "gruvbox-dark";
+        };
+      }
     ];
   };
 }

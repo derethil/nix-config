@@ -1,13 +1,28 @@
 {
   flake.modules.homeManager.yazi = {pkgs, ...}: {
     programs.yazi = {
+      extraPackages = with pkgs; [
+        ffmpeg
+        ffmpegthumbnailer
+        imagemagick
+        mediainfo
+      ];
+
+      keymap.mgr.prepend_keymap = [
+        {
+          desc = "Toggle media preview metadata";
+          on = ["<F9>"];
+          run = ["plugin mediainfo -- toggle-metadata"];
+        }
+      ];
+
       plugins.mediainfo = pkgs.yaziPlugins.mediainfo;
 
       settings = {
         plugin = {
           prepend_preloaders = [
             {
-              mime = "{audio,video,image}/*";
+              mime = "application/postscript";
               run = "mediainfo";
             }
             {
@@ -15,14 +30,14 @@
               run = "mediainfo";
             }
             {
-              mime = "application/postscript";
+              mime = "{audio,video,image}/*";
               run = "mediainfo";
             }
           ];
 
           prepend_previewers = [
             {
-              mime = "{audio,video,image}/*";
+              mime = "application/postscript";
               run = "mediainfo";
             }
             {
@@ -30,7 +45,7 @@
               run = "mediainfo";
             }
             {
-              mime = "application/postscript";
+              mime = "{audio,video,image}/*";
               run = "mediainfo";
             }
           ];
@@ -38,21 +53,6 @@
 
         tasks.image_alloc = 1073741824;
       };
-
-      keymap.mgr.prepend_keymap = [
-        {
-          on = ["<F9>"];
-          run = ["plugin mediainfo -- toggle-metadata"];
-          desc = "Toggle media preview metadata";
-        }
-      ];
-
-      extraPackages = with pkgs; [
-        mediainfo
-        imagemagick
-        ffmpeg
-        ffmpegthumbnailer
-      ];
     };
   };
 }

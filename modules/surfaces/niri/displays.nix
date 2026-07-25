@@ -4,7 +4,7 @@
     lib,
     ...
   }: let
-    inherit (lib) mkIf mkMerge filter;
+    inherit (lib) filter mkIf mkMerge;
 
     toTransform = rotation: flipped:
       if flipped
@@ -18,23 +18,25 @@
 
     toNiriOutput = d:
       mkMerge [
-        {
-          _args = [d.port];
-          mode = "${toString d.resolution.width}x${toString d.resolution.height}@${toString (d.framerate / 1.0)}";
-          position._props = {
-            x = d.position.x;
-            y = d.position.y;
-          };
-          inherit (d) scale;
-          transform = toTransform d.rotation d.flipped;
-        }
-        (mkIf d.primary {focus-at-startup = [];})
         (mkIf (d.vrr != false) {
           variable-refresh-rate =
             if d.vrr == "on-demand"
             then {_props."on-demand" = true;}
             else {};
         })
+        (mkIf d.primary {focus-at-startup = [];})
+        {
+          inherit (d) scale;
+          _args = [d.port];
+          mode = "${toString d.resolution.width}x${toString d.resolution.height}@${toString (d.framerate / 1.0)}";
+
+          position._props = {
+            x = d.position.x;
+            y = d.position.y;
+          };
+
+          transform = toTransform d.rotation d.flipped;
+        }
       ];
   in {
     imports = [self.modules.homeManager.displays];

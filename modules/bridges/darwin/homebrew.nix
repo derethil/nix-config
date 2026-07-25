@@ -6,11 +6,9 @@
 
     homebrew = {
       enable = true;
-      masApps = {};
       casks = [];
-      onActivation = {
-        cleanup = "zap";
-      };
+      masApps = {};
+      onActivation.cleanup = "zap";
     };
   };
 }

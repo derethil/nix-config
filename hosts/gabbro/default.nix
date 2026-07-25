@@ -10,38 +10,36 @@
 
   displays = [
     {
+      framerate = 60;
       name = "Built-in";
       port = "Built-in";
       primary = true;
+
       resolution = {
-        width = 3024;
         height = 1964;
+        width = 3024;
       };
-      framerate = 60;
+
       wallpaper = "fuji-bird.jpeg";
     }
   ];
 in {
   flake = {
     # HOST CONFIGURATION
-
     modules = {
       darwin.gabbro = {pkgs, ...}: {
         imports = with (mergeModules self.modules.generic self.modules.darwin); [
-          # Framework
-          user-derethil
-
-          # Baseline
-          foundation
           bridges
-
-          # Desktop
-          paneru
-
+          comms-work
           # Pursuits
           development
-          comms-work
+          # Baseline
+          foundation
           lightweight-gaming
+          # Desktop
+          paneru
+          # Framework
+          user-derethil
         ];
 
         internal = {
@@ -49,16 +47,16 @@ in {
 
           dock.apps = [
             {app = "${pkgs.alacritty}/Applications/Alacritty.app";}
-            {app = "${pkgs.firefox}/Applications/Firefox.app";}
-            {app = "/System/Applications/Messages.app";}
-            {app = "/Applications/Mattermost.app";}
-            {app = "/Applications/Discord.app";}
             {app = "${pkgs.bruno}/Applications/Bruno.app";}
-            {app = "${pkgs.obsidian}/Applications/Obsidian.app";}
-            {app = "${pkgs.spotify}/Applications/Spotify.app";}
+            {app = "${pkgs.firefox}/Applications/Firefox.app";}
             {app = "${pkgs.internal.stremio}/Applications/Stremio.app";}
+            {app = "${pkgs.obsidian}/Applications/Obsidian.app";}
             {app = "${pkgs.prismlauncher}/Applications/PrismLauncher.app";}
+            {app = "${pkgs.spotify}/Applications/Spotify.app";}
+            {app = "/Applications/Discord.app";}
+            {app = "/Applications/Mattermost.app";}
             {app = "/Applications/Steam.app";}
+            {app = "/System/Applications/Messages.app";}
           ];
         };
 
@@ -70,55 +68,52 @@ in {
 
       homeManager.gabbro-derethil = {
         imports = with self.modules.homeManager; [
-          # Baseline
-          foundation
-
           # Terminals
           alacritty
-
-          # Surfaces
-          mac-app-util
-          paneru
-
           # Pursuits
           browsers
           comms-work
           development
+          # Baseline
+          foundation
           lightweight-gaming
+          # Surfaces
+          mac-app-util
           media
+          paneru
           utilities
         ];
 
-        internal = {
-          inherit flakeRoot displays;
-        };
-
         home.stateVersion = "25.05";
+
+        internal = {
+          inherit displays flakeRoot;
+        };
       };
     };
 
     # HOST DEFINITION
-
     darwinConfigurations.gabbro = inputs.nix-darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
-      pkgs = withSystem "aarch64-darwin" ({pkgs, ...}: pkgs);
       modules = [
+        inputs.home-manager.darwinModules.home-manager
         self.modules.darwin.gabbro
         self.modules.darwin.home-manager
-        inputs.home-manager.darwinModules.home-manager
         {home-manager.users.derethil = self.modules.homeManager.gabbro-derethil;}
       ];
+
+      pkgs = withSystem "aarch64-darwin" ({pkgs, ...}: pkgs);
+      system = "aarch64-darwin";
     };
 
     # HOME MANAGER DEFINITION
-
     homeConfigurations."derethil@gabbro" = withSystem "aarch64-darwin" ({pkgs, ...}:
       inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        extraSpecialArgs = {inherit self inputs;};
+        extraSpecialArgs = {inherit inputs self;};
+
         modules = [
-          self.modules.homeManager.home-manager
           self.modules.homeManager.gabbro-derethil
+          self.modules.homeManager.home-manager
           self.modules.homeManager.user-derethil
         ];
       });

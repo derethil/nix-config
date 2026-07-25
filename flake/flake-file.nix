@@ -1,24 +1,26 @@
 {
-  inputs,
   lib,
+  inputs,
   ...
 }: {
-  imports = [
-    inputs.flake-file.flakeModules.dendritic
-  ];
-
   flake-file = {
     description = "Personal NixOS, Nix Darwin, and Home Manager configurations";
 
-    inputs = {
-      disko = {
-        url = "github:nix-community/disko";
-        inputs.nixpkgs.follows = "nixpkgs";
+    formatter = pkgs:
+      pkgs.writeShellApplication {
+        name = "pedantix";
+        runtimeInputs = [inputs.pedantix.packages.${pkgs.stdenv.hostPlatform.system}.pedantix-wrapped];
+        text = ''exec pedantix --config ${inputs.self}/pedantix.toml "$@"'';
       };
 
-      self = {
-        submodules = true;
+    inputs = {
+      disko = {
+        inputs.nixpkgs.follows = "nixpkgs";
+        url = "github:nix-community/disko";
       };
+
+      pedantix.url = "github:Swarsel/pedantix";
+      self.submodules = true;
     };
 
     outputs = lib.mkForce ''
@@ -33,5 +35,22 @@
         ]
       )
     '';
+
+    write-hooks = [
+      {
+        index = 10;
+
+        program = pkgs:
+          pkgs.writeShellApplication {
+            name = "nix-flake-lock";
+            runtimeInputs = [pkgs.nix];
+            text = "nix flake lock";
+          };
+      }
+    ];
   };
+
+  imports = [
+    inputs.flake-file.flakeModules.dendritic
+  ];
 }

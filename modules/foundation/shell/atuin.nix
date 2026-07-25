@@ -7,32 +7,44 @@
   }: {
     imports = [self.modules.homeManager.secrets];
 
-    sops.secrets."services/atuin/key" = {
-      path = "${config.home.homeDirectory}/.local/share/atuin/key";
-    };
-
     programs = {
       atuin = {
         enable = true;
         package = pkgs.unstable.atuin;
-
+        daemon.enable = true;
         enableBashIntegration = config.programs.bash.enable;
         enableFishIntegration = config.programs.fish.enable;
-        enableZshIntegration = config.programs.zsh.enable;
         enableNushellIntegration = config.programs.nushell.enable;
-
-        daemon.enable = true;
+        enableZshIntegration = config.programs.zsh.enable;
 
         settings = {
-          style = "compact";
-          search_mode = "daemon-fuzzy";
-          search_mode_shell_up_key_binding = "daemon-fuzzy";
           enter_accept = true;
           keymap_mode = "vim-insert";
-
-          sync.records = true;
-          search.authors = ["$all-user" "$all-agent"];
           logs.dir = "${config.xdg.stateHome}/atuin/logs";
+          search.authors = ["$all-agent" "$all-user"];
+          search_mode = "daemon-fuzzy";
+          search_mode_shell_up_key_binding = "daemon-fuzzy";
+          style = "compact";
+          sync.records = true;
+        };
+      };
+
+      claude-code = let
+        atuin-hook = {
+          hooks = [
+            {
+              command = "atuin hook claude-code";
+              type = "command";
+            }
+          ];
+
+          matcher = "Bash";
+        };
+      in {
+        settings.hooks = {
+          PostToolUse = [atuin-hook];
+          PostToolUseFailure = [atuin-hook];
+          PreToolUse = [atuin-hook];
         };
       };
 
@@ -41,24 +53,8 @@
         bind --mode default j '_atuin_search'
         bind --mode default up '_atuin_search'
       '';
-
-      claude-code = let
-        atuin-hook = {
-          matcher = "Bash";
-          hooks = [
-            {
-              type = "command";
-              command = "atuin hook claude-code";
-            }
-          ];
-        };
-      in {
-        settings.hooks = {
-          PreToolUse = [atuin-hook];
-          PostToolUse = [atuin-hook];
-          PostToolUseFailure = [atuin-hook];
-        };
-      };
     };
+
+    sops.secrets."services/atuin/key".path = "${config.home.homeDirectory}/.local/share/atuin/key";
   };
 }

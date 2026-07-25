@@ -1,17 +1,17 @@
 {
   flake.modules.homeManager.yazi = {pkgs, ...}: {
     programs.yazi = {
-      plugins.rsync = pkgs.yaziPlugins.rsync;
+      extraPackages = [pkgs.rsync];
 
       keymap.mgr.prepend_keymap = [
         {
+          desc = "rsync";
           on = ["R"];
           run = ["plugin rsync"];
-          desc = "rsync";
         }
       ];
 
-      extraPackages = [pkgs.rsync];
+      plugins.rsync = pkgs.yaziPlugins.rsync;
     };
   };
 }

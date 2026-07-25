@@ -1,0 +1,56 @@
+formatter = "alejandra"
+
+[args]
+sort  = true
+first = ["self", "config", "lib", "pkgs", "options", "modulesPath", "utils"]
+last  = ["<defaulted>", "..."]
+
+[inherits]
+sort = true
+
+[lists]
+sort = true
+
+[attrs]
+merge = true
+flatten = true
+blank-lines = 1
+blank-lines-mode = "multiline"
+first = [
+  # Inputs / imports / meta stuff always appear at top
+  "flake-file",
+  "key",
+  "imports",
+
+  # Force flake-parts modules order
+  "generic",
+  "nixos",
+  "darwin",
+  "homeManager",
+
+  # Config
+  "options",
+  "config",
+  "enable",
+  "package",
+]
+last = ["meta", "home.stateVersion", "assertions"]
+
+[[overrides]]
+path              = "**.sops.templates.*"
+attrs.first       = ["mode", "name", "content", "path"]
+attrs.blank-lines = 0
+
+[[overrides]]
+path          = "flake.modules.*.*"
+attrs.flatten = false
+
+[[overrides]]
+path = "flake"
+attrs.first = [
+  "modules",
+  "homeManager.*",
+  "nixosConfigurations",
+  "darwinConfigurations",
+  "homeConfigurations",
+]

@@ -1,7 +1,7 @@
 {
   flake.modules.homeManager.niri = {
-    pkgs,
     lib,
+    pkgs,
     ...
   }: {
     wayland.windowManager.niri.settings.xwayland-satellite.path =

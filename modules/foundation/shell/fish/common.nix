@@ -1,5 +1,5 @@
 {lib, ...}: let
-  inherit (lib) mkMerge optionalAttrs getExe;
+  inherit (lib) getExe mkMerge optionalAttrs;
   inherit (lib.attrsets) mapAttrs;
 in {
   flake.modules.generic.fish-common = {
@@ -8,14 +8,11 @@ in {
     ...
   }: {
     programs.fish = mkMerge [
+      (optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+        generateCompletions = true;
+      })
       {
         enable = true;
-        shellAbbrs =
-          mapAttrs (_: value: {
-            expansion = value;
-            position = "anywhere";
-          })
-          config.shell.abbreviations;
 
         interactiveShellInit = ''
           set fish_greeting
@@ -29,10 +26,14 @@ in {
 
           ${getExe pkgs.any-nix-shell} fish --info-right | source
         '';
+
+        shellAbbrs =
+          mapAttrs (_: value: {
+            expansion = value;
+            position = "anywhere";
+          })
+          config.shell.abbreviations;
       }
-      (optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
-        generateCompletions = true;
-      })
     ];
   };
 }

@@ -1,51 +1,45 @@
 {
-  inputs,
   self,
+  inputs,
   ...
 }: {
-  flake-file.inputs = {
-    nvim-config.url = "github:derethil/nvim-config";
-  };
+  flake-file.inputs.nvim-config.url = "github:derethil/nvim-config";
 
   flake.modules = {
-    generic.neovim-config = {
-      programs.nvim-config = {
+    generic.neovim-config.programs.nvim-config = {
+      enable = true;
+
+      neovim = {
+        defaultEditor = true;
+        nightly = false;
+      };
+
+      sonarlint = {
         enable = true;
 
-        neovim = {
-          defaultEditor = true;
-          nightly = false;
-        };
-
-        sonarlint = {
+        connectedMode = {
           enable = true;
-          connectedMode = {
-            enable = true;
-            connections.sonarqube = [
-              {
-                connectionId = "dragonarmy";
-                serverUrl = "https://sonarqube.dragonarmy.rocks";
-                disableNotifications = false;
-              }
-            ];
-          };
+
+          connections.sonarqube = [
+            {
+              connectionId = "dragonarmy";
+              disableNotifications = false;
+              serverUrl = "https://sonarqube.dragonarmy.rocks";
+            }
+          ];
         };
       };
     };
 
-    nixos.neovim = {
-      imports = [
-        inputs.nvim-config.nixosModules.nvim-config
-        self.modules.generic.neovim-config
-      ];
-    };
+    nixos.neovim.imports = [
+      inputs.nvim-config.nixosModules.nvim-config
+      self.modules.generic.neovim-config
+    ];
 
-    darwin.neovim = {
-      imports = [
-        inputs.nvim-config.darwinModules.nvim-config
-        self.modules.generic.neovim-config
-      ];
-    };
+    darwin.neovim.imports = [
+      inputs.nvim-config.darwinModules.nvim-config
+      self.modules.generic.neovim-config
+    ];
 
     homeManager.neovim = {config, ...}: {
       imports = [
@@ -59,30 +53,29 @@
           inherit (config.programs.claude-code) enable package;
         };
 
+        extraSettings.vim.lsp.servers.nixd.settings.nixd = {
+          options = {
+            nixos.expr = "(builtins.getFlake \"${config.internal.flakeRoot}\").nixosConfigurations.feldspar.options";
+            "home-manager".expr = "(builtins.getFlake \"${config.internal.flakeRoot}\").homeConfigurations.\"${config.home.username}@feldspar\".options";
+          };
+
+          nixpkgs.expr = "import (builtins.getFlake \"${config.internal.flakeRoot}\").inputs.nixpkgs {}";
+        };
+
         sonarlint.connectedMode.projects = {
           "${config.home.homeDirectory}/development/dragonarmy/vigil" = {
             connectionId = "dragonarmy";
             projectKey = "dragon-army_hatchlab-srt_5a7d51c9-c50c-44fa-bd66-3ce24e000515";
           };
         };
-
-        extraSettings = {
-          vim.lsp.servers.nixd.settings.nixd = {
-            nixpkgs.expr = "import (builtins.getFlake \"${config.internal.flakeRoot}\").inputs.nixpkgs {}";
-            options = {
-              nixos.expr = "(builtins.getFlake \"${config.internal.flakeRoot}\").nixosConfigurations.feldspar.options";
-              "home-manager".expr = "(builtins.getFlake \"${config.internal.flakeRoot}\").homeConfigurations.\"${config.home.username}@feldspar\".options";
-            };
-          };
-        };
       };
 
       xdg.mimeApps.defaultApplications = self.lib.mkMimeApps "nvim.desktop" [
-        "text/plain"
-        "text/markdown"
         "application/json"
-        "application/yaml"
         "application/toml"
+        "application/yaml"
+        "text/markdown"
+        "text/plain"
       ];
     };
   };

@@ -4,26 +4,28 @@
     pkgs,
     ...
   }: let
-    inherit (lib) mkOption types flatten concatMapStringsSep optionalString mkAfter getExe';
+    inherit (lib) concatMapStringsSep flatten getExe' mkAfter mkOption optionalString types;
     cfg = config.internal.services.postgresql;
 
     pkg = pkgs.unstable.postgresql_18;
 
     userType = types.submodule {
       options = {
-        name = mkOption {
-          type = types.str;
-          description = "Username.";
-        };
-        passwordFile = mkOption {
-          type = types.nullOr types.str;
-          default = null;
-          description = "Path to a file containing the user's password. Read at service start.";
-        };
         extraSettings = mkOption {
-          type = types.attrs;
           default = {};
           description = "Extra attributes merged into services.postgresql.ensureUsers.<this>.";
+          type = types.attrs;
+        };
+
+        name = mkOption {
+          description = "Username.";
+          type = types.str;
+        };
+
+        passwordFile = mkOption {
+          default = null;
+          description = "Path to a file containing the user's password. Read at service start.";
+          type = types.nullOr types.str;
         };
       };
     };
@@ -31,18 +33,20 @@
     databaseType = types.submodule {
       options = {
         name = mkOption {
-          type = types.str;
           description = "Database name.";
+          type = types.str;
         };
+
         owner = mkOption {
-          type = types.nullOr types.str;
           default = null;
           description = "Database owner.";
+          type = types.nullOr types.str;
         };
+
         users = mkOption {
-          type = types.listOf userType;
           default = [];
           description = "Users granted access to this database.";
+          type = types.listOf userType;
         };
       };
     };
@@ -50,28 +54,30 @@
     users = flatten (map (db: db.users) cfg.databases);
   in {
     options.internal.services.postgresql = {
-      user.extraGroups = mkOption {
-        type = types.listOf types.str;
-        default = [];
-        description = "Additional groups to add the postgres system user to (useful for reading password files).";
-      };
-
       databases = mkOption {
-        type = types.listOf databaseType;
         default = [];
         description = "Databases to create on service start.";
+        type = types.listOf databaseType;
+      };
+
+      user.extraGroups = mkOption {
+        default = [];
+        description = "Additional groups to add the postgres system user to (useful for reading password files).";
+        type = types.listOf types.str;
       };
     };
 
     config = {
+      internal.boot.impermanence.extraDirectories = [
+        "/var/lib/postgresql/${config.services.postgresql.package.psqlSchema}"
+      ];
+
       services.postgresql = {
         enable = true;
         package = pkg;
         ensureDatabases = map (db: db.name) cfg.databases;
         ensureUsers = map (user: {inherit (user) name;} // user.extraSettings) users;
       };
-
-      users.users.postgres.extraGroups = cfg.user.extraGroups;
 
       # Set initial passwords from files on first start. Adapted from
       # https://github.com/NixOS/nixpkgs/pull/326306
@@ -92,9 +98,7 @@
         users
       );
 
-      internal.boot.impermanence.extraDirectories = [
-        "/var/lib/postgresql/${config.services.postgresql.package.psqlSchema}"
-      ];
+      users.users.postgres.extraGroups = cfg.user.extraGroups;
     };
   };
 }

@@ -5,45 +5,44 @@
     ...
   }: {
     imports = [
-      self.modules.darwin.secrets
       self.modules.darwin.keychain
+      self.modules.darwin.secrets
     ];
 
     environment.systemPackages = [pkgs.internal.mediamate];
 
-    system.defaults.controlcenter.NowPlaying = false;
-
-    sops.secrets."applications/mediamate/license_key" = {};
-
     internal.system.keychain.entries = [
       {
-        secretFile = config.sops.secrets."applications/mediamate/license_key".path;
-        service = "com.tweety.MediaMate";
         account = "license";
         comment = "MediaMate license key";
+        secretFile = config.sops.secrets."applications/mediamate/license_key".path;
+        service = "com.tweety.MediaMate";
         trustedApp = "/Applications/MediaMate.app";
       }
     ];
 
-    system.defaults.CustomUserPreferences = {
-      "com.tweety.MediaMate" = {
+    sops.secrets."applications/mediamate/license_key" = {};
+
+    system.defaults = {
+      CustomUserPreferences."com.tweety.MediaMate" = {
         LSUIElement = true;
         SUAutomaticallyUpdate = true;
         SUEnableAutomaticChecks = true;
         SUSendProfileInfo = false;
-
-        # Volume
-        listenToExternalChanges = true;
-
+        compactHUDVisibilityMode = 1;
+        # Launch Settings
+        hasLaunchedBefore = true;
         # HUD Settings
         hideNativeHUDsForAudio = "{\"name\":\"Lunar\"}";
         hideNativeHUDsForBrightness = "{\"name\":\"Lunar\"}";
-        compactHUDVisibilityMode = 1;
-        showOnScreenBehavior = 0;
-
+        # Volume
+        listenToExternalChanges = true;
+        # Display Settings
+        notchUseMenubarHeightOnNormalDisplays = false;
         # Now Playing Settings
         nowPlayingAlwaysUseNotchScreen = false;
         nowPlayingCaptureKeys = true;
+        nowPlayingHideDelay = 3;
         nowPlayingHideSongTitleExtras = false;
         nowPlayingNotchThemeButtons = 7;
         nowPlayingShowCloseButton = false;
@@ -52,24 +51,18 @@
         nowPlayingShowOnPause = false;
         nowPlayingShowOnPlay = false;
         nowPlayingShowOnVolumeChange = false;
-        nowPlayingHideDelay = 3;
         nowPlayingTheme = "{\"all\":{\"_0\":{\"notch\":{}}}}";
         nowPlayingUseScriptingBridge = true;
-
-        # Display Settings
-        notchUseMenubarHeightOnNormalDisplays = false;
-
-        # Theme Settings
-        theme = "{\"all\":{\"_0\":\"notch\"}}";
-
         # UI Settings
         settingsTabSelection = 4;
-        styleTabSelection = 1;
         showMenuBarIcon = false;
-
-        # Launch Settings
-        hasLaunchedBefore = true;
+        showOnScreenBehavior = 0;
+        styleTabSelection = 1;
+        # Theme Settings
+        theme = "{\"all\":{\"_0\":\"notch\"}}";
       };
+
+      controlcenter.NowPlaying = false;
     };
   };
 }

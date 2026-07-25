@@ -21,6 +21,7 @@
       (pkgs.writeShellApplication {
         name = "niri-window-picker-menu";
         runtimeInputs = with pkgs; [jq niri wlr-which-key];
+
         text = ''
           cmd_template="''${1:-}"
           if [[ -z "$cmd_template" ]]; then

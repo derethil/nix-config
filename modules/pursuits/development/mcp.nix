@@ -1,8 +1,8 @@
 {self, ...}: {
   flake.modules.homeManager.mcp = {
     config,
-    pkgs,
     lib,
+    pkgs,
     ...
   }: let
     inherit (lib) getExe;
@@ -17,14 +17,15 @@
       self.modules.homeManager.secrets
     ];
 
-    sops.secrets."applications/mcp/context7/api_key" = {};
-
     programs.mcp = {
       enable = true;
+
       servers = {
         nixos.command = getExe pkgs.mcp-nixos;
         context7.command = toString context7;
       };
     };
+
+    sops.secrets."applications/mcp/context7/api_key" = {};
   };
 }

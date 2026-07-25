@@ -1,7 +1,7 @@
 {
   flake.modules.homeManager.aws-cli = {
-    pkgs,
     lib,
+    pkgs,
     ...
   }: {
     home.packages = [
@@ -12,28 +12,30 @@
       awscli = {
         enable = true;
         package = pkgs.awscli2;
+
         settings = {
           default = {
-            sso_session = "DragonArmy";
+            output = "json";
+            region = "us-gov-west-1";
             sso_account_id = "284740501404";
             sso_role_name = "DRAGONArmy";
-            region = "us-gov-west-1";
-            output = "json";
+            sso_session = "DragonArmy";
           };
+
           "sso-session DragonArmy" = {
-            sso_start_url = "https://start.us-gov-west-1.us-gov-home.awsapps.com/directory/dragonarmy";
             sso_region = "us-gov-west-1";
             sso_registration_scopes = "sso:account:access";
+            sso_start_url = "https://start.us-gov-west-1.us-gov-home.awsapps.com/directory/dragonarmy";
           };
         };
       };
 
-      fish.interactiveShellInit = lib.mkAfter ''
-        complete --command aws --no-files --arguments '(begin; set --local --export COMP_SHELL fish; set --local --export COMP_LINE (commandline); aws_completer | sed "s/ \$//"; end)'
-      '';
-
       bash.initExtra = ''
         complete -C aws_completer aws
+      '';
+
+      fish.interactiveShellInit = lib.mkAfter ''
+        complete --command aws --no-files --arguments '(begin; set --local --export COMP_SHELL fish; set --local --export COMP_LINE (commandline); aws_completer | sed "s/ \$//"; end)'
       '';
 
       zsh.initContent = ''

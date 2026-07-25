@@ -1,7 +1,7 @@
 {
   flake.modules.homeManager.chromium = {
-    pkgs,
     lib,
+    pkgs,
     ...
   }:
     lib.mkIf pkgs.stdenv.isLinux {

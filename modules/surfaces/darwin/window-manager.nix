@@ -1,16 +1,13 @@
 {
   flake.modules.darwin.window-manager = {
     system.defaults = {
-      WindowManager = {
-        AutoHide = true; # auto-hide recent apps in stage
-        EnableStandardClickToShowDesktop = false;
-        EnableTilingOptionAccelerator = true;
-        EnableTopTilingByEdgeDrag = true;
-        StandardHideDesktopIcons = false;
-      };
+      CustomUserPreferences.NSGlobalDomain = {
+        NSQuitAlwaysKeepsWindows = false;
 
-      spaces = {
-        spans-displays = false;
+        NSUserKeyEquivalents = {
+          "Enter Full Screen" = "@f";
+          "Exit Full Screen" = "@f";
+        };
       };
 
       NSGlobalDomain = {
@@ -19,15 +16,15 @@
         NSWindowShouldDragOnGesture = true;
       };
 
-      CustomUserPreferences = {
-        NSGlobalDomain = {
-          NSQuitAlwaysKeepsWindows = false;
-          NSUserKeyEquivalents = {
-            "Enter Full Screen" = "@f";
-            "Exit Full Screen" = "@f";
-          };
-        };
+      WindowManager = {
+        AutoHide = true; # auto-hide recent apps in stage
+        EnableStandardClickToShowDesktop = false;
+        EnableTilingOptionAccelerator = true;
+        EnableTopTilingByEdgeDrag = true;
+        StandardHideDesktopIcons = false;
       };
+
+      spaces.spans-displays = false;
     };
   };
 }

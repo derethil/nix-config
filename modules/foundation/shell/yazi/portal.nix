@@ -13,12 +13,13 @@
     imports = [self.modules.nixos.portals];
 
     xdg.portal = {
-      extraPortals = [termfilechooser-patched];
       config = {
         common."org.freedesktop.impl.portal.FileChooser" = "termfilechooser";
-        niri."org.freedesktop.impl.portal.FileChooser" = "termfilechooser";
         hyprland."org.freedesktop.impl.portal.FileChooser" = "termfilechooser";
+        niri."org.freedesktop.impl.portal.FileChooser" = "termfilechooser";
       };
+
+      extraPortals = [termfilechooser-patched];
     };
   };
 }

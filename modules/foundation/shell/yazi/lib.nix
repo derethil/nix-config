@@ -4,12 +4,12 @@
     pkgs,
     flavor,
     yaziConfig,
-    openToPath ? "",
-    icon ? "file-manager",
-    name ? "Yazi [${flavor}]",
-    genericName ? "File Manager",
     comment ? "Open Yazi file manager",
+    genericName ? "File Manager",
+    icon ? "file-manager",
     mimeType ? [],
+    name ? "Yazi [${flavor}]",
+    openToPath ? "",
   }: let
     mkYaziSymlink = p: config.lib.file.mkOutOfStoreSymlink "${config.xdg.configHome}/yazi/${p}";
 
@@ -21,21 +21,21 @@
   in {
     xdg = {
       configFile = {
-        "${flavor}/yazi.toml".text = yaziConfig;
+        "${flavor}/flavors".source = mkYaziSymlink "flavors";
         "${flavor}/init.lua".source = mkYaziSymlink "init.lua";
         "${flavor}/keymap.toml".source = mkYaziSymlink "keymap.toml";
-        "${flavor}/theme.toml".source = mkYaziSymlink "theme.toml";
         "${flavor}/plugins".source = mkYaziSymlink "plugins";
-        "${flavor}/flavors".source = mkYaziSymlink "flavors";
+        "${flavor}/theme.toml".source = mkYaziSymlink "theme.toml";
+        "${flavor}/yazi.toml".text = yaziConfig;
       };
 
       desktopEntries = {
         "${flavor}" =
           {
-            inherit icon name genericName comment;
-            type = "Application";
-            categories = ["System" "FileTools" "FileManager"];
+            inherit comment genericName icon name;
+            categories = ["FileManager" "FileTools" "System"];
             exec = "${launchScript}";
+            type = "Application";
           }
           // lib.optionalAttrs (mimeType != []) {inherit mimeType;};
       };

@@ -1,16 +1,16 @@
 {lib, ...}: {
   flake.modules.nixos.ntsync = {
-    pkgs,
     config,
+    pkgs,
     ...
   }: {
     boot.kernelModules = ["ntsync"];
 
     services.udev.packages = [
       (pkgs.writeTextFile {
+        destination = "/etc/udev/rules.d/70-ntsync.rules";
         name = "ntsync-udev-rules";
         text = ''KERNEL=="ntsync", MODE="0660", TAG+="uaccess"'';
-        destination = "/etc/udev/rules.d/70-ntsync.rules";
       })
     ];
 

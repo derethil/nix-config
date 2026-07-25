@@ -5,7 +5,7 @@
     pkgs,
     ...
   }: let
-    inherit (lib) mkOption types pathExists getExe mkIf filter head length flatten;
+    inherit (lib) filter flatten getExe head length mkIf mkOption pathExists types;
     sourceDir = ./wallpapers;
     targetDir = "${config.home.homeDirectory}/Pictures/wallpapers";
 
@@ -22,23 +22,23 @@
     imports = [self.modules.homeManager.displays];
 
     options.internal.wallpaper.targetDir = mkOption {
-      type = types.str;
-      readOnly = true;
       description = "Directory where wallpapers are linked in the user's home.";
+      readOnly = true;
+      type = types.str;
     };
 
     config = {
-      internal.wallpaper.targetDir = targetDir;
-
       home = {
-        file.${targetDir}.source = sourceDir;
-
         activation.setWallpapers = mkIf (isDarwin && displaysWithWallpaper != []) (
           config.lib.dag.entryAfter ["writeBoundary"] ''
             ${getExe setWallpapers}
           ''
         );
+
+        file.${targetDir}.source = sourceDir;
       };
+
+      internal.wallpaper.targetDir = targetDir;
 
       assertions = flatten [
         (

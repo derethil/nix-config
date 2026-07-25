@@ -4,14 +4,14 @@
   ...
 }: {
   flake-file.inputs.nixpak = {
-    url = "github:nixpak/nixpak";
     inputs.nixpkgs.follows = "nixpkgs";
+    url = "github:nixpak/nixpak";
   };
 
   flake.modules.homeManager.zoom = {
     config,
-    pkgs,
     lib,
+    pkgs,
     ...
   }: let
     mkNixPak = inputs.nixpak.lib.nixpak {
@@ -23,38 +23,40 @@
       (mkNixPak {
         config = {sloth, ...}: {
           app.package = pkgs.zoom-us;
-          flatpak.appId = "us.zoom.Zoom";
+
+          bubblewrap = {
+            bind = {
+              dev = [
+                "/dev/snd"
+                "/dev/video0"
+                "/dev/video1"
+              ];
+
+              rw = [
+                (sloth.concat' (sloth.env "HOME") "/.zoom")
+                (sloth.concat' (sloth.env "XDG_CACHE_HOME") "/zoom")
+                (sloth.env "XDG_CONFIG_HOME")
+              ];
+            };
+
+            network = true;
+
+            sockets = {
+              pipewire = true;
+              pulse = true;
+              wayland = true;
+            };
+
+            tmpfs = ["/tmp"];
+          };
 
           dbus.policies = {
             "org.freedesktop.portal.*" = "talk";
             "org.freedesktop.secrets" = "talk";
           };
 
+          flatpak.appId = "us.zoom.Zoom";
           gpu.enable = true;
-
-          bubblewrap = {
-            network = true;
-
-            sockets = {
-              wayland = true;
-              pipewire = true;
-              pulse = true;
-            };
-
-            tmpfs = ["/tmp"];
-
-            bind.rw = [
-              (sloth.env "XDG_CONFIG_HOME")
-              (sloth.concat' (sloth.env "XDG_CACHE_HOME") "/zoom")
-              (sloth.concat' (sloth.env "HOME") "/.zoom")
-            ];
-
-            bind.dev = [
-              "/dev/video0"
-              "/dev/video1"
-              "/dev/snd"
-            ];
-          };
         };
       }).config.env;
   in {
@@ -70,14 +72,14 @@
       )
     ];
 
-    xdg.mimeApps.defaultApplications = self.lib.mkMimeApps "Zoom.desktop" [
-      "x-scheme-handler/zoommtg"
-      "x-scheme-handler/zoomus"
-    ];
-
     programs.firefox.profiles.default.settings = lib.mkIf config.programs.firefox.enable {
       "network.protocol-handler.expose.zoommtg" = false;
       "network.protocol-handler.expose.zoomus" = false;
     };
+
+    xdg.mimeApps.defaultApplications = self.lib.mkMimeApps "Zoom.desktop" [
+      "x-scheme-handler/zoommtg"
+      "x-scheme-handler/zoomus"
+    ];
   };
 }

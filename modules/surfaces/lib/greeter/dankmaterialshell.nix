@@ -1,13 +1,11 @@
 {
-  inputs,
   self,
+  inputs,
   ...
 }: {
-  flake-file.inputs = {
-    dank-greeter = {
-      url = "github:AvengeMedia/dank-greeter";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+  flake-file.inputs.dank-greeter = {
+    inputs.nixpkgs.follows = "nixpkgs";
+    url = "github:AvengeMedia/dank-greeter";
   };
 
   flake.modules.nixos.dankmaterialshell-greeter = {
@@ -24,36 +22,36 @@
 
     enabledCompositors = lib.attrNames (lib.filterAttrs (_: v: v) supportedCompositors);
   in {
-    assertions = [
-      {
-        assertion = enabledCompositors != [];
-        message = ''
-          dankmaterialshell-greeter: no supported compositor enabled on primary user (${config.internal.primaryUser}).
-          Enable one of: ${lib.concatStringsSep ", " (lib.attrNames supportedCompositors)}.
-        '';
-      }
-    ];
-
     imports = [
+      inputs.dank-greeter.nixosModules.default
       self.modules.nixos.greeter
       self.modules.nixos.primary-user
-      inputs.dank-greeter.nixosModules.default
     ];
 
     internal.boot.impermanence.extraDirectories = ["/var/lib/dms-greeter"];
 
     programs.dms-greeter = {
       enable = true;
-      quickshell.package = pkgs.inputs.quickshell.default;
-
+      compositor.name = lib.mkDefault (lib.head enabledCompositors);
       configHome = config.users.users.${config.internal.primaryUser}.home;
 
-      compositor.name = lib.mkDefault (lib.head enabledCompositors);
-
       logs = {
-        save = true;
         path = "/tmp/dms-greeter.log";
+        save = true;
       };
+
+      quickshell.package = pkgs.inputs.quickshell.default;
     };
+
+    assertions = [
+      {
+        assertion = enabledCompositors != [];
+
+        message = ''
+          dankmaterialshell-greeter: no supported compositor enabled on primary user (${config.internal.primaryUser}).
+          Enable one of: ${lib.concatStringsSep ", " (lib.attrNames supportedCompositors)}.
+        '';
+      }
+    ];
   };
 }

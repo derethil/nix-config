@@ -8,7 +8,8 @@
 
     wlsunset-auto = pkgs.writeShellApplication {
       name = "wlsunset-auto";
-      runtimeInputs = with pkgs; [wlsunset curl jq];
+      runtimeInputs = with pkgs; [curl jq wlsunset];
+
       text = ''
         location=$(curl -s http://ip-api.com/json?fields=lat,lon)
         lat=$(echo "$location" | jq -r '.lat')
@@ -19,26 +20,26 @@
     };
 
     args = lib.cli.toCommandLineShellGNU {} {
-      t = 3000; # Nighttime color temperature in Kelvin
       T = 6500; # Daytime color temperature in Kelvin
       g = 1.0; # Gamma adjustment (1.0 = no adjustment)
+      t = 3000; # Nighttime color temperature in Kelvin
     };
   in {
     systemd.user.services.wlsunset = {
-      Unit = {
-        Description = "Day/night gamma adjustments for Wayland compositors";
-        After = [systemdTarget];
-        PartOf = [systemdTarget];
-      };
+      Install.WantedBy = [systemdTarget];
 
       Service = {
-        Type = "simple";
+        ExecStart = "${lib.getExe wlsunset-auto} ${args}";
         Restart = "on-failure";
         RestartSec = 1;
-        ExecStart = "${lib.getExe wlsunset-auto} ${args}";
+        Type = "simple";
       };
 
-      Install.WantedBy = [systemdTarget];
+      Unit = {
+        After = [systemdTarget];
+        Description = "Day/night gamma adjustments for Wayland compositors";
+        PartOf = [systemdTarget];
+      };
     };
   };
 }

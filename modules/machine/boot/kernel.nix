@@ -1,46 +1,48 @@
 {inputs, ...}: {
-  flake-file.inputs.cachyos-kernel = {
-    url = "github:xddxdd/nix-cachyos-kernel/release";
-  };
+  flake-file.inputs.cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
   flake.modules.nixos.kernel = {
-    pkgs,
-    lib,
     config,
+    lib,
+    pkgs,
     ...
   }: let
-    inherit (lib) mkEnableOption mkOption types mkIf;
+    inherit (lib) mkEnableOption mkIf mkOption types;
   in {
     options.internal.boot.kernel = {
       cachyos.enable = mkEnableOption "CachyOS kernel";
+
       packages = mkOption {
-        type = types.raw;
         default = pkgs.linuxPackages_latest;
+        type = types.raw;
       };
+
       params = mkOption {
-        type = types.listOf types.str;
         default = [];
+        type = types.listOf types.str;
       };
     };
 
     config = let
       cfg = config.internal.boot.kernel;
     in {
-      nixpkgs.overlays = mkIf cfg.cachyos.enable [
-        inputs.cachyos-kernel.overlays.pinned
-      ];
+      boot = {
+        kernelPackages =
+          if cfg.cachyos.enable
+          then pkgs.cachyosKernels.linuxPackages-cachyos-latest
+          else cfg.packages;
+
+        kernelParams = cfg.params;
+      };
 
       nix.settings = mkIf cfg.cachyos.enable {
         substituters = ["https://attic.xuyh0120.win/lantian"];
         trusted-public-keys = ["lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="];
       };
 
-      boot.kernelPackages =
-        if cfg.cachyos.enable
-        then pkgs.cachyosKernels.linuxPackages-cachyos-latest
-        else cfg.packages;
-
-      boot.kernelParams = cfg.params;
+      nixpkgs.overlays = mkIf cfg.cachyos.enable [
+        inputs.cachyos-kernel.overlays.pinned
+      ];
     };
   };
 }

@@ -13,7 +13,7 @@
     ];
 
     internal.homelab.services.blombooru = {
-      inherit subdomain port;
+      inherit port subdomain;
     };
 
     sops = {
@@ -34,67 +34,9 @@
     };
 
     virtualisation.quadlet = {
-      pods.blombooru = {
-        podConfig = {
-          publishPorts = ["127.0.0.1:${port}:${internalPort}"];
-          exitPolicy = "continue";
-        };
-        autoStart = true;
-      };
-
       containers = {
-        blombooru-web = {
-          containerConfig = {
-            pod = pods.blombooru.ref;
-            image = "ghcr.io/mrblomblo/blombooru:${version}";
-            pull = "newer";
-            environmentFiles = [config.sops.templates."blombooru-env".path];
-            environments = {
-              APP_NAME = "Blombooru";
-              APP_PORT = internalPort;
-              UVICORN_PORT = internalPort;
-              POSTGRES_HOST = "localhost";
-              POSTGRES_PORT = "5432";
-              REDIS_ENABLED = "true";
-              REDIS_HOST = "localhost";
-              REDIS_PORT = "6379";
-              REDIS_DB = "0";
-              # cache WD tagger models in the persisted data volume so they
-              # survive container recreation instead of re-downloading
-              HF_HOME = "/app/data/huggingface";
-            };
-            volumes = [
-              "blombooru-media:/app/media"
-              "blombooru-data:/app/data"
-            ];
-            dropCapabilities = ["ALL"];
-            addCapabilities = [
-              "CHOWN"
-              "SETGID"
-              "SETUID"
-            ];
-            noNewPrivileges = true;
-          };
-          unitConfig = {
-            Description = "Blombooru Media Tagging";
-            After = ["blombooru-db.service" "blombooru-redis.service"];
-            Requires = ["blombooru-db.service" "blombooru-redis.service"];
-          };
-          serviceConfig = {
-            Restart = "always";
-          };
-        };
-
         blombooru-db = {
           containerConfig = {
-            pod = pods.blombooru.ref;
-            image = "docker.io/library/postgres:17";
-            pull = "newer";
-            environmentFiles = [config.sops.templates."blombooru-env".path];
-            volumes = [
-              "blombooru-db:/var/lib/postgresql/data"
-            ];
-            dropCapabilities = ["ALL"];
             addCapabilities = [
               "CHOWN"
               "DAC_READ_SEARCH"
@@ -102,47 +44,109 @@
               "SETGID"
               "SETUID"
             ];
+
+            dropCapabilities = ["ALL"];
+            environmentFiles = [config.sops.templates."blombooru-env".path];
+            image = "docker.io/library/postgres:17";
             noNewPrivileges = true;
+            pod = pods.blombooru.ref;
+            pull = "newer";
+
+            volumes = [
+              "blombooru-db:/var/lib/postgresql/data"
+            ];
           };
-          unitConfig = {
-            Description = "Blombooru PostgreSQL Database";
-          };
-          serviceConfig = {
-            Restart = "always";
-          };
+
+          serviceConfig.Restart = "always";
+          unitConfig.Description = "Blombooru PostgreSQL Database";
         };
 
         blombooru-redis = {
           containerConfig = {
-            pod = pods.blombooru.ref;
+            dropCapabilities = ["ALL"];
+            environmentFiles = [config.sops.templates."blombooru-env".path];
+
+            exec = [
+              ''exec redis-server --save 60 1 --loglevel warning --requirepass "$REDIS_PASSWORD"''
+              "-c"
+              "sh"
+            ];
+
             image = "docker.io/library/redis:7-alpine";
+            noNewPrivileges = true;
+            pod = pods.blombooru.ref;
             pull = "newer";
             user = "redis";
-            environmentFiles = [config.sops.templates."blombooru-env".path];
-            exec = [
-              "sh"
-              "-c"
-              ''exec redis-server --save 60 1 --loglevel warning --requirepass "$REDIS_PASSWORD"''
-            ];
+
             volumes = [
               "blombooru-redis:/data"
             ];
+          };
+
+          serviceConfig.Restart = "always";
+          unitConfig.Description = "Blombooru Redis Cache";
+        };
+
+        blombooru-web = {
+          containerConfig = {
+            addCapabilities = [
+              "CHOWN"
+              "SETGID"
+              "SETUID"
+            ];
+
             dropCapabilities = ["ALL"];
+            environmentFiles = [config.sops.templates."blombooru-env".path];
+
+            environments = {
+              APP_NAME = "Blombooru";
+              APP_PORT = internalPort;
+              # cache WD tagger models in the persisted data volume so they
+              # survive container recreation instead of re-downloading
+              HF_HOME = "/app/data/huggingface";
+              POSTGRES_HOST = "localhost";
+              POSTGRES_PORT = "5432";
+              REDIS_DB = "0";
+              REDIS_ENABLED = "true";
+              REDIS_HOST = "localhost";
+              REDIS_PORT = "6379";
+              UVICORN_PORT = internalPort;
+            };
+
+            image = "ghcr.io/mrblomblo/blombooru:${version}";
             noNewPrivileges = true;
+            pod = pods.blombooru.ref;
+            pull = "newer";
+
+            volumes = [
+              "blombooru-data:/app/data"
+              "blombooru-media:/app/media"
+            ];
           };
+
+          serviceConfig.Restart = "always";
+
           unitConfig = {
-            Description = "Blombooru Redis Cache";
-          };
-          serviceConfig = {
-            Restart = "always";
+            After = ["blombooru-db.service" "blombooru-redis.service"];
+            Description = "Blombooru Media Tagging";
+            Requires = ["blombooru-db.service" "blombooru-redis.service"];
           };
         };
       };
 
+      pods.blombooru = {
+        autoStart = true;
+
+        podConfig = {
+          exitPolicy = "continue";
+          publishPorts = ["127.0.0.1:${port}:${internalPort}"];
+        };
+      };
+
       volumes = {
-        blombooru-media = {};
         blombooru-data = {};
         blombooru-db = {};
+        blombooru-media = {};
         blombooru-redis = {};
       };
     };

@@ -7,28 +7,20 @@
   # but not homeConfigurations (it's a home-manager convention, not a core flake output).
   # Declare it so multiple hosts can each contribute one entry.
   options.flake.homeConfigurations = lib.mkOption {
-    type = lib.types.lazyAttrsOf lib.types.unspecified;
     default = {};
+    type = lib.types.lazyAttrsOf lib.types.unspecified;
   };
 
   config = {
-    flake-file.inputs = {
-      home-manager = {
-        url = "github:nix-community/home-manager/release-26.05";
-        inputs.nixpkgs.follows = "nixpkgs";
-      };
+    flake-file.inputs.home-manager = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/home-manager/release-26.05";
     };
 
     flake.modules = {
-      generic.home-manager-options = {
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-        };
-      };
-
-      homeManager.home-manager = {pkgs, ...}: {
-        home.packages = [pkgs.unstable.home-manager];
+      generic.home-manager-options.home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
       };
 
       nixos.home-manager = {
@@ -38,8 +30,15 @@
 
       darwin.home-manager = {
         imports = [self.modules.generic.home-manager-options];
-        home-manager.useUserPackages = lib.mkForce false;
-        home-manager.sharedModules = [self.modules.homeManager.home-manager];
+
+        home-manager = {
+          sharedModules = [self.modules.homeManager.home-manager];
+          useUserPackages = lib.mkForce false;
+        };
+      };
+
+      homeManager.home-manager = {pkgs, ...}: {
+        home.packages = [pkgs.unstable.home-manager];
       };
     };
   };

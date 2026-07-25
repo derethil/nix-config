@@ -1,28 +1,26 @@
 {
-  flake.modules = {
-    homeManager.just = {
-      pkgs,
-      lib,
-      ...
-    }: {
-      home.packages = [pkgs.just];
+  flake.modules.homeManager.just = {
+    lib,
+    pkgs,
+    ...
+  }: {
+    home.packages = [pkgs.just];
 
-      programs = {
-        fish.completions.just = ''
-          JUST_COMPLETE=fish just | source
-        '';
+    programs = {
+      bash.initExtra = ''
+        source <(just --completions bash)
+      '';
 
-        bash.initExtra = ''
-          source <(just --completions bash)
-        '';
+      fish.completions.just = ''
+        JUST_COMPLETE=fish just | source
+      '';
 
-        zsh.initContent = lib.mkBefore ''
-          fpath+=(${pkgs.runCommand "just-zsh-completions" {} ''
-            mkdir -p $out
-            ${pkgs.just}/bin/just --completions zsh > $out/_just
-          ''})
-        '';
-      };
+      zsh.initContent = lib.mkBefore ''
+        fpath+=(${pkgs.runCommand "just-zsh-completions" {} ''
+          mkdir -p $out
+          ${pkgs.just}/bin/just --completions zsh > $out/_just
+        ''})
+      '';
     };
   };
 }

@@ -1,6 +1,16 @@
 {
   flake.modules.homeManager.yazi = {pkgs, ...}: {
     programs.yazi = {
+      extraPackages = [pkgs.ouch];
+
+      keymap.mgr.prepend_keymap = [
+        {
+          desc = "Compress with ouch";
+          on = ["C"];
+          run = ["plugin ouch"];
+        }
+      ];
+
       plugins.ouch = pkgs.yaziPlugins.ouch;
 
       settings.plugin.prepend_previewers = [
@@ -9,16 +19,6 @@
           run = "ouch --archive-icon=''";
         }
       ];
-
-      keymap.mgr.prepend_keymap = [
-        {
-          on = ["C"];
-          run = ["plugin ouch"];
-          desc = "Compress with ouch";
-        }
-      ];
-
-      extraPackages = [pkgs.ouch];
     };
   };
 }
