@@ -105,6 +105,9 @@ install hostname ip target_user="root" build_on="local":
     just secrets rekey
     just secrets update -p
 
+    just print "{{ GREEN }}" "==> Pushing config repo so the updated submodule pointer is available remotely..."
+    git push
+
     # ─── HARDWARE.NIX GENERATION ─────────────────────────────────────────────
 
     hw_file="hosts/{{ hostname }}/_hardware.nix"
@@ -155,6 +158,7 @@ install hostname ip target_user="root" build_on="local":
         just print "{{ GREEN }}" "==> Committing generated hardware config..."
         git add "$hw_file"
         git commit -m "feat(hosts): add hardware config for {{ hostname }}"
+        just print "{{ YELLOW }}" "==> Warning: hardware config committed locally but not pushed to Git."
     fi
 
 # Bootstrap a new host by installing NixOS, waiting for it to come online, and deploying the flake

@@ -24,6 +24,11 @@ update should_push="false":
     #!/usr/bin/env bash
     set -euo pipefail
 
+    # Stash the currently staged changes so the secrets commit stays isolated,
+    # then re-stage them once we're done.
+    mapfile -t previously_staged < <(git diff --cached --name-only)
+    git reset -q
+
     if ! git -C secrets diff --quiet; then
         git -C secrets add secrets.yaml
         git -C secrets commit -m "chore(secrets): update secrets config"
@@ -35,13 +40,17 @@ update should_push="false":
         git commit -m "chore(secrets): update secrets config"
     fi
 
+    if [ "${#previously_staged[@]}" -gt 0 ]; then
+        git add -- "${previously_staged[@]}"
+    fi
+
     if [ "{{ should_push }}" = "true" ]; then
-        git push --recurse-submodules=on-demand
+        git -C secrets push
     fi
 
 # Register an already-running host by fetching its existing SSH key
-[arg("hostname", help="NixOS configuration name (must match a flake output)")]
 [arg("ip", pattern="^([0-9]{1,3}[.]){3}[0-9]{1,3}$", help="IP address of the running host")]
+[arg("hostname", help="NixOS configuration name (must match a flake output)")]
 add-host hostname ip:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -51,8 +60,8 @@ add-host hostname ip:
     just secrets update
 
 # Copy personal age identity onto a machine so home-manager can decrypt secrets
-[arg("user", help="SSH user on the target machine")]
 [arg("ip", pattern="^([0-9]{1,3}[.]){3}[0-9]{1,3}$", help="IP address of the target machine")]
+[arg("user", help="SSH user on the target machine")]
 provision-identity user ip:
     #!/usr/bin/env bash
     set -euo pipefail

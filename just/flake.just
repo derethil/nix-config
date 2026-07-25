@@ -29,11 +29,10 @@ write:
 [arg("amend", long="amend", short="a", value="true", help="Amend the last commit instead of creating a new one")]
 update input amend="false":
     nix flake update {{ input }}
-    git add flake.lock
-    @if ! git diff --cached --quiet flake.lock; then \
+    @if ! git diff flake.lock --quiet; then \
         if [ "{{ amend }}" = "true" ]; then \
-            git commit --amend --no-edit; \
+            git commit --amend --no-edit -- flake.lock; \
         else \
-            git commit -m "chore(flake): update {{ input }} input"; \
+            git commit -m "chore(flake): update {{ input }} input" -- flake.lock; \
         fi; \
     fi
