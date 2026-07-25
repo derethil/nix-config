@@ -35,21 +35,18 @@
     };
 
     virtualisation.quadlet = {
-      pods.tandoor-recipes = {
+      pods.tandoor = {
         podConfig = {
           publishPorts = ["127.0.0.1:${port}:${internalPort}"];
-
-          # let each container handle its own restart policy
-          # so that the pod doesn't restart if one container fails
           exitPolicy = "continue";
         };
         autoStart = true;
       };
 
       containers = {
-        tandoor = {
+        tandoor-web = {
           containerConfig = {
-            pod = pods.tandoor-recipes.ref;
+            pod = pods.tandoor.ref;
             image = "docker.io/vabene1111/recipes:${version}";
             pull = "newer";
             environmentFiles = [config.sops.templates."tandoor-recipes-env".path];
@@ -76,17 +73,17 @@
           };
           unitConfig = {
             Description = "Tandoor Recipes Manager";
-            After = ["tandoordb.service"];
-            Requires = ["tandoordb.service"];
+            After = ["tandoor-db.service"];
+            Requires = ["tandoor-db.service"];
           };
           serviceConfig = {
             Restart = "always";
           };
         };
 
-        tandoordb = {
+        tandoor-db = {
           containerConfig = {
-            pod = pods.tandoor-recipes.ref;
+            pod = pods.tandoor.ref;
             image = "docker.io/library/postgres:17-alpine";
             pull = "newer";
             environmentFiles = [config.sops.templates."tandoor-recipes-env".path];

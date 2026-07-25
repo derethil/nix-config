@@ -1,5 +1,5 @@
 {lib, ...}: let
-  inherit (lib) mkOption types mkEnableOption attrNames filterAttrs head toString concatStringsSep length mkIf;
+  inherit (lib) mkOption types mkEnableOption attrNames filterAttrs head concatStringsSep length mkIf;
 in {
   flake.modules.nixos.primary-user = {config, ...}: {
     key = "primary-user";

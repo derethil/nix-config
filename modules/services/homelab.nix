@@ -33,7 +33,7 @@
             type = types.coercedTo types.str toInt types.port;
             description = "Loopback port the reverse proxy forwards to (declared as a string, validated as a port).";
           };
-          extraConfig = mkOption {
+          caddy.extraConfig = mkOption {
             type = types.lines;
             default = "";
             description = "Extra Caddyfile directives appended inside the generated vhost (e.g. basic_auth, forward_auth, headers).";
@@ -48,7 +48,7 @@
       in {
         caddy.virtualHosts.${host}.extraConfig = ''
           reverse_proxy 127.0.0.1:${toString service.port}
-          ${service.extraConfig}
+          ${service.caddy.extraConfig}
         '';
 
         blocky = {

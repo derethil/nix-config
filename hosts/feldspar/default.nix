@@ -69,9 +69,10 @@ in {
           sunshine
           utilities
 
-          # Hosted
+          # Served
           szuru
           tandoor-recipes
+          blombooru
         ];
 
         internal = {
