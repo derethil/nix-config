@@ -9,12 +9,7 @@
   perSystem = {system, ...}: {
     _module.args.pkgs = import inputs.nixpkgs {
       inherit system;
-
-      config = {
-        allowDeprecatedx86_64Darwin = true; # silences 26.05 x86_64-darwin warnings
-        allowUnfree = true;
-      };
-
+      config.allowUnfree = true;
       overlays = lib.attrValues self.overlays;
     };
   };

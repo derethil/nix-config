@@ -1827,7 +1827,6 @@
         "quadlet-nix": "quadlet-nix",
         "quickshell": "quickshell",
         "sops-nix": "sops-nix",
-        "systems": "systems_7",
         "tmux-power-zoom": "tmux-power-zoom",
         "tmux-theme": "tmux-theme",
         "yazi-gruvbox-dark": "yazi-gruvbox-dark"
@@ -1962,21 +1961,6 @@
       }
     },
     "systems_6": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
-    "systems_7": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",

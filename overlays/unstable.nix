@@ -4,11 +4,7 @@
   flake.overlays.unstable = final: _prev: {
     unstable = import inputs.nixpkgs-unstable {
       inherit (final.stdenv.hostPlatform) system;
-
-      config = {
-        allowDeprecatedx86_64Darwin = true;
-        allowUnfree = true;
-      };
+      config.allowUnfree = true;
     };
   };
 }
