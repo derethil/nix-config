@@ -125,6 +125,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:Mic92/sops-nix";
     };
+
     tmux-power-zoom = {
       flake = false;
       url = "github:jaclu/tmux-power-zoom";

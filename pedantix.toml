@@ -36,15 +36,18 @@ first = [
 ]
 last = ["meta", "home.stateVersion", "assertions"]
 
+# Define specific order for sops templates since default was ugly
 [[overrides]]
 path              = "**.sops.templates.*"
 attrs.first       = ["mode", "name", "content", "path"]
 attrs.blank-lines = 0
 
+# Force flake-parts modules to be defined separately from their attributes
 [[overrides]]
 path          = "flake.modules.*.*"
 attrs.flatten = false
 
+# Define flake-parts module ordering
 [[overrides]]
 path = "flake"
 attrs.first = [
@@ -54,3 +57,8 @@ attrs.first = [
   "darwinConfigurations",
   "homeConfigurations",
 ]
+
+# Don't sort lists in niri animation curves as order matters
+[[overrides]]
+path       = "**.curve"
+lists.sort = false

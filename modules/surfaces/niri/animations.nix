@@ -1,17 +1,17 @@
 {
   flake.modules.homeManager.niri = let
     materialDesignDecelerate = {
-      curve = [0.05 0.1 0.7 1.0 "cubic-bezier"];
+      curve = ["cubic-bezier" 0.05 0.7 0.1 1.0];
       duration-ms = 100;
     };
 
     materialDesignAccelerate = {
-      curve = [0.0 0.15 0.3 0.8 "cubic-bezier"];
+      curve = ["cubic-bezier" 0.3 0.0 0.8 0.15];
       duration-ms = 75;
     };
 
     menuDecelerate = {
-      curve = [0.0 0.1 1.0 1.0 "cubic-bezier"];
+      curve = ["cubic-bezier" 0.1 1.0 0.0 1.0];
       duration-ms = 100;
     };
     #

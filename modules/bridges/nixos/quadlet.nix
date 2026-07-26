@@ -4,15 +4,11 @@
   inputs,
   ...
 }: let
-  inherit (lib) mkOption types mkDefault;
+  inherit (lib) mkOption types;
 in {
   flake-file.inputs.quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
 
-  flake.modules.nixos.quadlet = {
-    config,
-    pkgs,
-    ...
-  }: {
+  flake.modules.nixos.quadlet = {config, ...}: {
     key = "quadlet";
 
     imports = [
@@ -21,24 +17,14 @@ in {
       self.modules.nixos.time
     ];
 
-    options.virtualisation.quadlet.containers = let
-      tzEnvFile = "/run/quadlet-tz.env";
-      writeTz = pkgs.writeShellScript "quadlet-write-tz" ''
-        echo "TZ=$(${config.systemd.package}/bin/timedatectl show -p Timezone --value)" > ${tzEnvFile}
-      '';
-    in
-      mkOption {
-        type = types.attrsOf (types.submodule {
-          config = {
-            containerConfig = {
-              environmentFiles = [tzEnvFile];
-              timezone = mkDefault "local";
-            };
-
-            serviceConfig.ExecStartPre = mkDefault "${writeTz}";
-          };
-        });
-      };
+    options.virtualisation.quadlet.containers = mkOption {
+      type = types.attrsOf (types.submodule {
+        config.containerConfig = {
+          environments.TZ = config.time.timeZone;
+          volumes = ["/etc/localtime:/etc/localtime:ro"];
+        };
+      });
+    };
 
     config.virtualisation.quadlet.enable = true;
   };
