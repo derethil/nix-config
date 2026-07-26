@@ -5,15 +5,37 @@
     port = "20020";
     internalPort = "8000";
     inherit (config.virtualisation.quadlet) pods;
+    inherit (self.lib) podmanVolume;
   in {
     imports = [
-      self.modules.nixos.homelab
+      self.modules.nixos.homelab-routing
       self.modules.nixos.quadlet
+      self.modules.nixos.restic
       self.modules.nixos.secrets
     ];
 
-    internal.homelab.services.blombooru = {
-      inherit port subdomain;
+    internal.homelab = {
+      backups.blombooru = {
+        exclude = ["${podmanVolume "blombooru-data"}/huggingface"];
+        onCalendar = "03:30";
+
+        paths = [
+          (podmanVolume "blombooru-data")
+          (podmanVolume "blombooru-media")
+        ];
+
+        postgres = [
+          {
+            container = "blombooru-db";
+            database = "blombooru";
+            user = "blombooru";
+          }
+        ];
+      };
+
+      routing.blombooru = {
+        inherit port subdomain;
+      };
     };
 
     sops = {
@@ -67,9 +89,9 @@
             environmentFiles = [config.sops.templates."blombooru-env".path];
 
             exec = [
-              ''exec redis-server --save 60 1 --loglevel warning --requirepass "$REDIS_PASSWORD"''
-              "-c"
               "sh"
+              "-c"
+              ''exec redis-server --save 60 1 --loglevel warning --requirepass "$REDIS_PASSWORD"''
             ];
 
             image = "docker.io/library/redis:7-alpine";

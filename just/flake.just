@@ -15,7 +15,7 @@ check:
 
 # Format with alejandra
 format:
-    alejandra $(fd .nix --exclude flake.nix)
+    nix formatter run $(fd .nix)
 
 # Prefetch a file and print its sha256 hash
 get-hash url:

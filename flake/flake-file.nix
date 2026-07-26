@@ -6,6 +6,11 @@
   flake-file = {
     description = "Personal NixOS, Nix Darwin, and Home Manager configurations";
 
+    do-not-edit = ''
+      # DO-NOT-EDIT. This file was auto-generated using github:vic/flake-file.
+      # Use `just flake write` to regenerate it.
+    '';
+
     formatter = pkgs:
       pkgs.writeShellApplication {
         name = "pedantix";

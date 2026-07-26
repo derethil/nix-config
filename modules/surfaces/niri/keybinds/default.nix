@@ -174,7 +174,7 @@
           "Mod+MouseForward".toggle-window-floating = [];
 
           "Mod+O" = mkKeybinds {hotkey-overlay-title = "Cast Window (Pick)";} {
-            spawn = ["-c" "bash" "niri msg action set-dynamic-cast-window --id $(niri msg --json pick-window | jq .id)"];
+            spawn = ["bash" "-c" "niri msg action set-dynamic-cast-window --id $(niri msg --json pick-window | jq .id)"];
           };
 
           "Mod+Period".focus-column-last = [];

@@ -1,5 +1,5 @@
 # DO-NOT-EDIT. This file was auto-generated using github:vic/flake-file.
-# Use `nix run .#write-flake` to regenerate it.
+# Use `just flake write` to regenerate it.
 {
   description = "Personal NixOS, Nix Darwin, and Home Manager configurations";
 
@@ -96,7 +96,6 @@
     };
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
-    nixpkgs-szurubooru-pr.url = "github:RatCornu/nixpkgs/szurubooru";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     nur = {
@@ -149,9 +148,9 @@
   }:
     flake-parts.lib.mkFlake {inherit inputs;} (
       import-tree [
+        ./modules
         ./flake
         ./hosts
-        ./modules
         ./overlays
         ./templates
       ]

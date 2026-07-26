@@ -43,6 +43,7 @@ in {
           foundation
           gaming
           gnome-keyring
+          homelab
           impermanence
           networking
           niri
@@ -51,7 +52,6 @@ in {
           radeon
           self.modules.nixos.displays
           sunshine
-          tandoor-recipes
           user-derethil
           utilities
           virtualization
@@ -96,7 +96,6 @@ in {
           foot
           foundation
           gaming
-          kitty
           media
           melonloader
           niri

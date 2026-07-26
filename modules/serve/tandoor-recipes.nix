@@ -6,15 +6,32 @@
     internalPort = "8080";
     host = "${subdomain}.${config.internal.homelab.domain}";
     inherit (config.virtualisation.quadlet) pods;
+    inherit (self.lib) podmanVolume;
   in {
     imports = [
-      self.modules.nixos.homelab
+      self.modules.nixos.homelab-routing
       self.modules.nixos.quadlet
+      self.modules.nixos.restic
       self.modules.nixos.secrets
     ];
 
-    internal.homelab.services.tandoor = {
-      inherit port subdomain;
+    internal.homelab = {
+      backups.tandoor = {
+        onCalendar = "03:00";
+        paths = [(podmanVolume "tandoor-media")];
+
+        postgres = [
+          {
+            container = "tandoor-db";
+            database = "djangodb";
+            user = "djangodb";
+          }
+        ];
+      };
+
+      routing.tandoor = {
+        inherit port subdomain;
+      };
     };
 
     sops = {

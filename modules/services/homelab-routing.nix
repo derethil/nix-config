@@ -3,25 +3,25 @@
   lib,
   ...
 }: {
-  flake.modules.nixos.homelab = {config, ...}: let
+  flake.modules.nixos.homelab-routing = {config, ...}: let
     inherit (lib) attrValues concatMapStringsSep count filter mkMerge mkOption toInt types unique;
 
     cfg = config.internal.homelab;
     fqdn = service: "${service.subdomain}.${cfg.domain}";
 
-    usedPorts = map (service: service.port) (attrValues cfg.services);
+    usedPorts = map (service: service.port) (attrValues cfg.routing);
     duplicates = unique (filter (port: count (other: other == port) usedPorts > 1) usedPorts);
   in {
-    key = "homelab";
+    key = "homelab-routing";
 
     imports = [
       self.modules.nixos.blocky
       self.modules.nixos.caddy
     ];
 
-    options.internal.homelab.services = mkOption {
+    options.internal.homelab.routing = mkOption {
       default = {};
-      description = "Homelab services to publish: each gets a DNS record and a reverse proxy.";
+      description = "Homelab services to route: each gets a DNS record and a reverse proxy.";
 
       type = types.attrsOf (types.submodule ({name, ...}: {
         options = {
@@ -59,12 +59,12 @@
         '';
       };
     in {
-      services = mkMerge (map publishService (attrValues cfg.services));
+      services = mkMerge (map publishService (attrValues cfg.routing));
 
       assertions = [
         {
           assertion = duplicates == [];
-          message = "internal.homelab.services: ports must be unique across services; reused: ${concatMapStringsSep ", " toString duplicates}";
+          message = "internal.homelab.routing: ports must be unique across services; reused: ${concatMapStringsSep ", " toString duplicates}";
         }
       ];
     };
