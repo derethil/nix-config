@@ -1659,15 +1659,14 @@
         "nvf": "nvf",
         "nvim-tcss": "nvim-tcss",
         "pedantix": "pedantix",
-        "sort-nvim": "sort-nvim",
-        "systems": "systems_6"
+        "sort-nvim": "sort-nvim"
       },
       "locked": {
-        "lastModified": 1785089802,
-        "narHash": "sha256-TIFls14JeI6xYzWccTxLWVWe7wQ/RtVI535TpQos4cg=",
+        "lastModified": 1785090683,
+        "narHash": "sha256-jLTI5gHX6TPHrgre6Mni6BFeGg9IRI+3/pJwYDzENHs=",
         "owner": "derethil",
         "repo": "nvim-config",
-        "rev": "28130cc2416d64496e508acad9b591c9efd64c95",
+        "rev": "55f2fbe543b1a3afc232bba3f5ad9de5e27d242c",
         "type": "github"
       },
       "original": {
@@ -1946,21 +1945,6 @@
       }
     },
     "systems_5": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
-    "systems_6": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
