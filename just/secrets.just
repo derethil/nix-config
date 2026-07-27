@@ -11,12 +11,52 @@ default:
 get-path:
     @echo {{ sops_file }}
 
-edit:
+# Edit secrets, then automatically validate them for a host
+[arg("hostname", help="Host to validate after editing (default: feldspar)")]
+edit hostname="feldspar":
+    #!/usr/bin/env bash
+    set -euo pipefail
     sops {{ sops_file }}
+    just secrets check {{ hostname }}
 
 # Add/update the age keys in the sops config
 rekey:
     sops updatekeys {{ sops_file }}
+
+# Validate every secret for a host decrypts and renders, without touching the system
+[arg("hostname", help="NixOS configuration to validate (default: feldspar)")]
+check hostname="feldspar":
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    just print "{{ GREEN }}" "==> Building {{ hostname }} to locate its sops manifests..."
+    toplevel=$(nix build --no-link --print-out-paths ".#nixosConfigurations.{{ hostname }}.config.system.build.toplevel")
+
+    sops_bin=$(grep -m1 -oE "/nix/store/[a-z0-9]+-sops-install-secrets[^ ]*/bin/sops-install-secrets" "$toplevel/activate" || true)
+    if [[ -z "$sops_bin" ]]; then
+        just print "{{ YELLOW }}" "==> No sops secrets configured for {{ hostname }} — nothing to check."
+        exit 0
+    fi
+
+    mapfile -t manifests < <(grep -oE "/nix/store/[a-z0-9]+-manifest(-for-users)?\.json" "$toplevel/activate" | sort -u)
+
+    rc=0
+    for manifest in "${manifests[@]}"; do
+        if "$sops_bin" -check-mode=manifest "$manifest" >/dev/null 2>&1; then
+            just print "{{ GREEN }}" "==> OK   $(basename "$manifest")"
+        else
+            just print "{{ RED }}" "==> FAIL $(basename "$manifest")"
+            "$sops_bin" -check-mode=manifest "$manifest" || true
+            rc=1
+        fi
+    done
+
+    if [[ "$rc" -eq 0 ]]; then
+        just print "{{ GREEN }}" "==> All secrets decrypt and render cleanly for {{ hostname }}."
+    else
+        just print "{{ RED }}" "==> Secret validation FAILED — do not activate {{ hostname }}."
+    fi
+    exit "$rc"
 
 # Commit any changes to the secrets submodule and the sops config
 [arg("should_push", long="push", short="p", value="true", help="Push commits after updating")]
