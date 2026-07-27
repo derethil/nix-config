@@ -74,16 +74,16 @@
       perMonitorWallpaper = false;
 
       pinnedApps = [
-        "Mattermost"
-        "Spotify"
-        "bruno"
-        "firefox"
         "footclient"
-        "obsidian"
-        "prismlauncher"
-        "steam"
-        "stremio"
+        "firefox"
         "vesktop"
+        "Mattermost"
+        "bruno"
+        "obsidian"
+        "steam"
+        "prismlauncher"
+        "Spotify"
+        "stremio"
       ];
 
       pluginBrowserInstalledFirst = false;

@@ -33,7 +33,7 @@
       enableAudioWavelength = true;
       enableCalendarEvents = true;
       enableClipboardPaste = true;
-      enableDynamicTheming = true;
+      enableDynamicTheming = false;
       enableSystemMonitoring = true;
       enableVPN = false;
       quickshell.package = pkgs.inputs.quickshell.default;

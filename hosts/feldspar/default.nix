@@ -31,23 +31,15 @@ in {
       nixos.feldspar = {
         imports = with (mergeModules self.modules.generic self.modules.nixos); [
           ./_disko.nix
-          # Host
           ./_hardware.nix
-          # Hardware
           audio
-          blombooru
           bluetooth
-          # Boot & persistence
           boot
-          # System services
           coolercontrol-it87
-          # Desktop
           dankmaterialshell-greeter
-          # Pursuits
           development
           docker
           feldspar-ath12k-fixes
-          # Baseline
           foundation
           gaming
           gnome-keyring
@@ -59,10 +51,7 @@ in {
           radeon
           self.modules.nixos.displays
           sunshine
-          # Served
-          szuru
           tandoor-recipes
-          # Framework
           user-derethil
           utilities
           virtualization
@@ -100,23 +89,17 @@ in {
 
       homeManager.feldspar-derethil = {
         imports = with self.modules.homeManager; [
-          # Pursuits
           browsers
           comms-work
           development
-          # Surfaces
           easyeffects
-          # Terminals
           foot
-          # Baseline
           foundation
           gaming
           kitty
           media
           melonloader
-          # Compositor
           niri
-          # Services
           remote-pull
           utilities
         ];

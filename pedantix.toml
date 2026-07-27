@@ -62,3 +62,8 @@ attrs.first = [
 [[overrides]]
 path       = "**.curve"
 lists.sort = false
+
+# Don't sort lists in dankmaterialshell settings as order matters
+[[overrides]]
+path       = "**.dank-material-shell.**"
+lists.sort = false

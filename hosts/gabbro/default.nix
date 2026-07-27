@@ -31,14 +31,10 @@ in {
         imports = with (mergeModules self.modules.generic self.modules.darwin); [
           bridges
           comms-work
-          # Pursuits
           development
-          # Baseline
           foundation
           lightweight-gaming
-          # Desktop
           paneru
-          # Framework
           user-derethil
         ];
 
@@ -68,16 +64,12 @@ in {
 
       homeManager.gabbro-derethil = {
         imports = with self.modules.homeManager; [
-          # Terminals
           alacritty
-          # Pursuits
           browsers
           comms-work
           development
-          # Baseline
           foundation
           lightweight-gaming
-          # Surfaces
           mac-app-util
           media
           paneru

@@ -68,11 +68,11 @@
           centerWidgets = [
             {
               enabled = true;
-              id = "clock";
+              id = "music";
             }
             {
               enabled = true;
-              id = "music";
+              id = "clock";
             }
             {
               enabled = true;
@@ -93,19 +93,11 @@
           leftWidgets = [
             {
               enabled = true;
-              id = "dankActions:variant_cast_window";
-            }
-            {
-              enabled = true;
-              id = "hueManager";
-            }
-            {
-              enabled = true;
               id = "launcherButton";
             }
             {
               enabled = true;
-              id = "privacyIndicator";
+              id = "workspaceSwitcher";
             }
             {
               enabled = true;
@@ -114,7 +106,15 @@
             }
             {
               enabled = true;
-              id = "workspaceSwitcher";
+              id = "hueManager";
+            }
+            {
+              enabled = true;
+              id = "privacyIndicator";
+            }
+            {
+              enabled = true;
+              id = "dankActions:variant_cast_window";
             }
           ];
 
@@ -132,11 +132,15 @@
             }
             {
               enabled = true;
-              id = "controlCenterButton";
+              id = "systemMonitorPlus";
             }
             {
               enabled = true;
               id = "easyEffects";
+            }
+            {
+              enabled = true;
+              id = "controlCenterButton";
             }
             {
               enabled = true;
@@ -145,10 +149,6 @@
             {
               enabled = true;
               id = "powerMenuButton";
-            }
-            {
-              enabled = true;
-              id = "systemMonitorPlus";
             }
           ];
 
@@ -221,12 +221,22 @@
       controlCenterWidgets = [
         {
           enabled = true;
-          id = "audioInput";
+          id = "volumeSlider";
           width = 50;
         }
         {
           enabled = true;
-          id = "audioOutput";
+          id = "idleInhibitor";
+          width = 25;
+        }
+        {
+          enabled = true;
+          id = "doNotDisturb";
+          width = 25;
+        }
+        {
+          enabled = true;
+          id = "wifi";
           width = 50;
         }
         {
@@ -236,18 +246,13 @@
         }
         {
           enabled = true;
-          id = "colorPicker";
+          id = "audioOutput";
           width = 50;
         }
         {
           enabled = true;
-          id = "doNotDisturb";
-          width = 25;
-        }
-        {
-          enabled = true;
-          id = "idleInhibitor";
-          width = 25;
+          id = "audioInput";
+          width = 50;
         }
         {
           enabled = true;
@@ -256,12 +261,7 @@
         }
         {
           enabled = true;
-          id = "volumeSlider";
-          width = 50;
-        }
-        {
-          enabled = true;
-          id = "wifi";
+          id = "colorPicker";
           width = 50;
         }
       ];
@@ -309,15 +309,11 @@
       dashTabs = [
         {
           enabled = true;
-          id = "media";
-        }
-        {
-          enabled = true;
           id = "overview";
         }
         {
           enabled = true;
-          id = "settings";
+          id = "media";
         }
         {
           enabled = true;
@@ -326,6 +322,10 @@
         {
           enabled = true;
           id = "weather";
+        }
+        {
+          enabled = true;
+          id = "settings";
         }
       ];
 
@@ -619,12 +619,12 @@
       powerActionHoldDuration = 0.75;
 
       powerMenuActions = [
-        "lock"
+        "reboot"
         "logout"
         "poweroff"
-        "reboot"
-        "restart"
+        "lock"
         "suspend"
+        "restart"
       ];
 
       powerMenuDefaultAction = "logout";
