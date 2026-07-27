@@ -52,7 +52,7 @@
       terminal = {
         commands = {
           base = mkOverride priority ["kitty"];
-          withTmux = mkOverride priority ["-As" "-e" "base" "kitty" "new-session" "tmux"];
+          withTmux = mkOverride priority ["kitty" "-e" "tmux" "new-session" "-As" "base"];
         };
 
         desktopFiles = mkOrder priority ["kitty.desktop"];

@@ -13,14 +13,11 @@
 
   common-pkgs = pkgs:
     with pkgs; [
-      # nix tools
       alejandra
-      # terminal utilities
       bat
       bottom
       diff-so-fancy
       dix
-      # file management
       duf
       eza
       fd

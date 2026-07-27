@@ -106,7 +106,7 @@
       terminal = {
         commands = {
           base = mkOverride priority ["alacritty"];
-          withTmux = mkOverride priority ["-As" "-e" "alacritty" "base" "new-session" "tmux"];
+          withTmux = mkOverride priority ["alacritty" "-e" "tmux" "new-session" "-As" "base"];
         };
 
         desktopFiles = mkOrder priority ["Alacritty.desktop"];

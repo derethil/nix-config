@@ -9,7 +9,7 @@ last  = ["<defaulted>", "..."]
 sort = true
 
 [lists]
-sort = true
+sort = false
 
 [attrs]
 merge = true
@@ -57,13 +57,3 @@ attrs.first = [
   "darwinConfigurations",
   "homeConfigurations",
 ]
-
-# Don't sort lists in niri animation curves as order matters
-[[overrides]]
-path       = "**.curve"
-lists.sort = false
-
-# Don't sort lists in dankmaterialshell settings as order matters
-[[overrides]]
-path       = "**.dank-material-shell.**"
-lists.sort = false

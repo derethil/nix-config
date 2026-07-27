@@ -64,7 +64,7 @@
       terminal = {
         commands = {
           base = mkOverride priority ["footclient"];
-          withTmux = mkOverride priority ["-As" "base" "footclient" "new-session" "tmux"];
+          withTmux = mkOverride priority ["footclient" "tmux" "new-session" "-As" "base"];
         };
 
         desktopFiles = mkOrder priority ["foot.desktop"];

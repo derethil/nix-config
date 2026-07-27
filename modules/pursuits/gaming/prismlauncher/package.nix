@@ -12,7 +12,6 @@
 
           targetPkgs = p:
             with p; [
-              # For MCEF (embedded Chromium)
               alsa-lib
               at-spi2-atk
               atk
@@ -24,7 +23,6 @@
               gtk3
               libdrm
               libgbm
-              # For watermedia (embedded VLC)
               libvlc
               libx11
               libxcb

@@ -63,16 +63,12 @@
             clearurls
             darkreader
             i-dont-care-about-cookies
-            # Site-specific
             improved-tube
             private-relay
-            # Development
             react-devtools
             reduxdevtools
             refined-github
-            # Privacy / Enhancements
             sponsorblock
-            # Tools
             tridactyl
             ublock-origin
           ];
@@ -138,7 +134,6 @@
           };
 
           settings = {
-            # Disable some telemetry
             "app.shield.optoutstudies.enabled" = false;
             "browser.contentblocking.report.lockwise.enabled" = false;
             "browser.discovery.enabled" = false;
@@ -157,21 +152,17 @@
             "datareporting.healthreport.uploadEnabled" = false;
             "datareporting.policy.dataSubmissionEnabled" = false;
             "datareporting.sessions.current.clean" = true;
-            # No location telemetry
             "device.sensors.enabled" = false;
             "devtools.onboarding.telemetry.logged" = false;
             "extensions.abuseReport.enabled" = false;
             "extensions.activeThemeID" = "{c161a71c-fb42-4608-b001-5634b3f59a8b}";
             "extensions.formautofill.addresses.enabled" = false;
             "extensions.formautofill.creditCards.enabled" = false;
-            # Disable useless stuff
             "extensions.pocket.enabled" = false;
             "geo.enabled" = false;
             "layout.frame_rate" = config.internal.primaryDisplay.framerate;
             "privacy.globalprivacycontrol.enabled" = true;
-            # Request not to track
             "privacy.globalprivacycontrol.functionality.enabled" = true;
-            # Only sync browser history and tabs
             "services.sync.engine.addons" = false;
             "services.sync.engine.addresses" = false;
             "services.sync.engine.bookmarks" = false;
@@ -180,7 +171,6 @@
             "services.sync.engine.passwords" = false;
             "services.sync.engine.prefs" = false;
             "services.sync.engine.tabs" = true;
-            # UI
             "sidebar.verticalTabs" = true;
             "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
             "toolkit.telemetry.archive.enabled" = false;
@@ -197,12 +187,8 @@
             "toolkit.telemetry.unified" = false;
             "toolkit.telemetry.unifiedIsOptIn" = false;
             "toolkit.telemetry.updatePing.enabled" = false;
-            # NOTE: Not needed after NVIDIA drivers are 575.64.5+
-            # Wayland screencasting fix
             "widget.dmabuf.force-enabled" = true;
-            # Make scrollbar bigger (I'm blind lol)
             "widget.non-native-theme.scrollbar.size.override" = 24;
-            # Use XDG Desktop Portal (1 = always, 2 = auto/flatpak only, 0 = never)
             "widget.use-xdg-desktop-portal.file-picker" = 1;
             "widget.use-xdg-desktop-portal.location" = 1;
             "widget.use-xdg-desktop-portal.mime-handler" = 1;
@@ -245,13 +231,11 @@
       "image/avif"
       "image/bmp"
       "image/gif"
-      # Images
       "image/jpeg"
       "image/jpg"
       "image/png"
       "image/svg+xml"
       "image/webp"
-      # Documents
       "text/html"
       "text/xml"
       "x-scheme-handler/http"

@@ -114,44 +114,44 @@
           "Ctrl+XF86AudioLowerVolume" = mkKeybinds {
             allow-when-locked = true;
             hotkey-overlay-title = "Decrease Mic Volume";
-          } {spawn-sh = ["0.1-" "@DEFAULT_AUDIO_SOURCE@" "set-volume" "wpctl"];};
+          } {spawn-sh = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SOURCE@" "0.1-"];};
 
           "Ctrl+XF86AudioMute" = mkKeybinds {
             allow-when-locked = true;
             hotkey-overlay-title = "Toggle Mic Mute";
-          } {spawn-sh = ["@DEFAULT_AUDIO_SOURCE@" "set-mute" "toggle" "wpctl"];};
+          } {spawn-sh = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"];};
 
           "Ctrl+XF86AudioRaiseVolume" = mkKeybinds {
             allow-when-locked = true;
             hotkey-overlay-title = "Increase Mic Volume";
-          } {spawn-sh = ["0.1+" "@DEFAULT_AUDIO_SOURCE@" "set-volume" "wpctl"];};
+          } {spawn-sh = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SOURCE@" "0.1+"];};
 
           "XF86AudioLowerVolume" = mkKeybinds {
             allow-when-locked = true;
             hotkey-overlay-title = "Decrease Volume";
-          } {spawn-sh = ["0.1-" "@DEFAULT_AUDIO_SINK@" "set-volume" "wpctl"];};
+          } {spawn-sh = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"];};
 
           "XF86AudioMute" = mkKeybinds {
             allow-when-locked = true;
             hotkey-overlay-title = "Toggle Mute";
-          } {spawn-sh = ["@DEFAULT_AUDIO_SINK@" "set-mute" "toggle" "wpctl"];};
+          } {spawn-sh = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"];};
 
           "XF86AudioRaiseVolume" = mkKeybinds {
             allow-when-locked = true;
             hotkey-overlay-title = "Increase Volume";
-          } {spawn-sh = ["0.1+" "@DEFAULT_AUDIO_SINK@" "set-volume" "wpctl"];};
+          } {spawn-sh = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"];};
         })
         # Brightness
         (mkIf cfg.binds.defaultBrightnessBinds {
           "XF86MonBrightnessDown" = mkKeybinds {
             allow-when-locked = true;
             hotkey-overlay-title = "Decrease Brightness";
-          } {spawn-sh = ["10%-" "brightnessctl" "set"];};
+          } {spawn-sh = ["brightnessctl" "set" "10%-"];};
 
           "XF86MonBrightnessUp" = mkKeybinds {
             allow-when-locked = true;
             hotkey-overlay-title = "Increase Brightness";
-          } {spawn-sh = ["10%+" "brightnessctl" "set"];};
+          } {spawn-sh = ["brightnessctl" "set" "10%+"];};
         })
         # Workspace 1-10 binds
         (mkWorkspaceBinds "Mod" "focus-workspace")

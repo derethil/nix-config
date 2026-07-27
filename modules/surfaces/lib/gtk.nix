@@ -8,7 +8,7 @@
       pkgs,
       ...
     }: let
-      inherit (lib) mkDefault toString;
+      inherit (lib) mkDefault;
 
       font = config.font.sansSerif;
       cursor = config.home.pointerCursor;
