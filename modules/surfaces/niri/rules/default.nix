@@ -122,6 +122,15 @@
 
         open-floating = true;
       }
+      # Window cast indicator
+      {
+        border = {
+          active-color = "#fb4934";
+          inactive-color = "#cc241d";
+        };
+
+        match = [{_props.is-window-cast-target = true;}];
+      }
     ];
   };
 }
