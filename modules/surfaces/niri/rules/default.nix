@@ -12,11 +12,25 @@
       ;
   in {
     imports = with self.modules.homeManager; [
+      niri-auto-consume-rules
       niri-dynamic-float-rules
       niri-sticky-float-rules
     ];
 
     surfaces.niri = {
+      auto-consume-rules = [
+        {
+          match = [
+            {
+              app_id = "^firefox$";
+              title = "^Developer Tools";
+            }
+          ];
+          direction = "left";
+          tabbed = true;
+        }
+      ];
+
       dynamic-float-rules = [
         {
           height = 600;
