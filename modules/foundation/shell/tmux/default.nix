@@ -116,16 +116,20 @@
         sensible
         yank
         {
-          extraConfig = "";
-          plugin = pkgs.internal.tmux-power-zoom;
-        }
-        {
           extraConfig = ''
-            set -g @continuum-restore 'on'
-            set -g @continuum-save-interval '5'
+            set -g @vim_navigator_mapping_prev ""
+
+            # Speed up pane switching in most usecases by skipping the `ps` check if the current pane is running vim or a shell
+            is_vim="\
+            echo '#{pane_current_command}' | grep -iqE '^@vim_navigator_pattern$' && exit 0
+            echo '#{pane_current_command}' | grep -iqE '^(bash|zsh|fish)$' && exit 1
+            ps -o state= -o comm= -t '#{pane_tty}' \
+                | grep -iqE '^[^TXZ ]+ +@vim_navigator_pattern$'"
+
+            set -g @vim_navigator_check "''${is_vim}"
           '';
 
-          plugin = continuum;
+          plugin = vim-tmux-navigator;
         }
         {
           extraConfig = ''
@@ -138,21 +142,15 @@
           plugin = fingers;
         }
         {
+          extraConfig = "";
+          plugin = pkgs.internal.tmux-power-zoom;
+        }
+        {
           extraConfig = ''
             set -g @fzf-url-bind 'u'
           '';
 
           plugin = fzf-tmux-url;
-        }
-        {
-          extraConfig = ''
-            set -g @resurrect-dir "${config.xdg.stateHome}/tmux/resurrect"
-            set -g @resurrect-processes 'false'
-            set -g @resurrect-save 'S'
-            set -g @resurrect-restore 'R'
-          '';
-
-          plugin = resurrect;
         }
         {
           extraConfig = ''
@@ -195,19 +193,21 @@
         }
         {
           extraConfig = ''
-            set -g @vim_navigator_mapping_prev ""
-
-            # Speed up pane switching in most usecases by skipping the `ps` check if the current pane is running vim or a shell
-            is_vim="\
-            echo '#{pane_current_command}' | grep -iqE '^@vim_navigator_pattern$' && exit 0
-            echo '#{pane_current_command}' | grep -iqE '^(bash|zsh|fish)$' && exit 1
-            ps -o state= -o comm= -t '#{pane_tty}' \
-                | grep -iqE '^[^TXZ ]+ +@vim_navigator_pattern$'"
-
-            set -g @vim_navigator_check "''${is_vim}"
+            set -g @resurrect-dir "${config.xdg.stateHome}/tmux/resurrect"
+            set -g @resurrect-processes 'false'
+            set -g @resurrect-save 'S'
+            set -g @resurrect-restore 'R'
           '';
 
-          plugin = vim-tmux-navigator;
+          plugin = resurrect;
+        }
+        {
+          extraConfig = ''
+            set -g @continuum-restore 'on'
+            set -g @continuum-save-interval '5'
+          '';
+
+          plugin = continuum;
         }
       ];
 
