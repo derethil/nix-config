@@ -46,6 +46,7 @@
         inputs.nvim-config.homeManagerModules.nvim-config
         self.modules.generic.neovim-config
         self.modules.homeManager.mimeapps
+        self.modules.homeManager.secrets
       ];
 
       programs.nvim-config = {
@@ -62,12 +63,23 @@
           nixpkgs.expr = "import (builtins.getFlake \"${config.internal.flakeRoot}\").inputs.nixpkgs {}";
         };
 
+        gitlab.configDirPath = dirOf config.sops.templates.".gitlab.nvim".path;
+
         sonarlint.connectedMode.projects = {
           "${config.home.homeDirectory}/development/dragonarmy/vigil" = {
             connectionId = "dragonarmy";
             projectKey = "dragon-army_hatchlab-srt_5a7d51c9-c50c-44fa-bd66-3ce24e000515";
           };
         };
+      };
+
+      sops = {
+        secrets."applications/neovim/gitlab_token" = {};
+
+        templates.".gitlab.nvim".content = ''
+          auth_token=${config.sops.placeholder."applications/neovim/gitlab_token"}
+          url=https://gitlab.dragonarmy.rocks
+        '';
       };
 
       xdg.mimeApps.defaultApplications = self.lib.mkMimeApps "nvim.desktop" [
