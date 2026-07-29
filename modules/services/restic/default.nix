@@ -67,8 +67,9 @@
             inherit (job) exclude;
             backupCleanupCommand = "${pingStop name}";
             backupPrepareCommand = "${prepareScript name job}";
-            checkOpts = ["--read-data-subset=5%"];
+            checkOpts = ["--retry-lock" job.retryLock "--read-data-subset=5%"];
             environmentFile = config.sops.templates."restic-env".path;
+            extraBackupArgs = ["--retry-lock" job.retryLock];
             initialize = true;
             passwordFile = config.sops.secrets."services/homelab/restic/repository_password".path;
 
@@ -78,6 +79,7 @@
             ];
 
             pruneOpts = [
+              "--retry-lock ${job.retryLock}"
               "--keep-daily 7"
               "--keep-monthly 6"
               "--keep-weekly 4"

@@ -51,6 +51,12 @@
         description = "Extra shell run before the backup (e.g. custom dumps).";
         type = types.lines;
       };
+
+      retryLock = mkOption {
+        default = "30m";
+        description = "Duration to retry acquiring the restic lock before giving up.";
+        type = types.str;
+      };
     };
   };
 in {
