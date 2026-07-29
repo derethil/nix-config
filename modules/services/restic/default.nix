@@ -11,37 +11,37 @@
     inherit (lib) concatMapStringsSep flatten getExe' mapAttrs;
 
     cfg = config.internal.homelab.backups;
+    healthChecksDomain = "https://${config.internal.homelab.routing.healthchecks.subdomain}.${config.internal.homelab.domain}";
 
     stagingRoot = "/var/lib/restic/staging";
     cacheDir = "/var/lib/restic/cache";
 
     curl = getExe' pkgs.curl "curl";
     podman = getExe' pkgs.podman "podman";
-    pg_dump = getExe' pkgs.postgresql_17 "pg_dump";
 
     stagingDir = name: "${stagingRoot}/${name}";
     dumpFile = name: pg: "${stagingDir name}/${pg.container}-${pg.database}.dump";
 
     dumpCommands = name: job:
       concatMapStringsSep "\n"
-      (pg: ''${podman} exec ${pg.container} ${pg_dump} -U ${pg.user} -Fc ${pg.database} > ${dumpFile name pg}'')
+      (pg: ''${podman} exec ${pg.container} pg_dump -U ${pg.user} -Fc ${pg.database} > ${dumpFile name pg}'')
       job.postgres;
 
     prepareScript = name: job:
-      pkgs.writeShellScript "restic-prepare-${name}" ''
+      pkgs.writeShellScript "restic-prepare-${name}-backup" ''
         set -euo pipefail
         mkdir -p ${stagingDir name}
         ${job.prepareCommand}
         ${dumpCommands name job}
-        ${curl} -fsS -m 10 --retry 3 "$HC_PING_URL/${name}/start?create=1" || true
+        ${curl} -fsS -m 10 --retry 3 "$HC_PING_URL/${name}-backup/start?create=1" || true
       '';
 
     pingStop = name:
       pkgs.writeShellScript "restic-ping-${name}" ''
         if [ "$EXIT_STATUS" = "0" ]; then
-          ${curl} -fsS -m 10 --retry 3 "$HC_PING_URL/${name}?create=1" || true
+          ${curl} -fsS -m 10 --retry 3 "$HC_PING_URL/${name}-backup?create=1" || true
         else
-          ${curl} -fsS -m 10 --retry 3 "$HC_PING_URL/${name}/fail?create=1" || true
+          ${curl} -fsS -m 10 --retry 3 "$HC_PING_URL/${name}-backup/fail?create=1" || true
         fi
       '';
   in {
@@ -50,9 +50,15 @@
     imports = [
       self.modules.nixos.restic-options
       self.modules.nixos.secrets
+      self.modules.nixos.postgresql
     ];
 
     config = {
+      environment.systemPackages = [
+        pkgs.restic
+        pkgs.backblaze-b2
+      ];
+
       internal.boot.impermanence.extraDirectories = ["/var/lib/restic"];
 
       services.restic.backups =
@@ -92,7 +98,7 @@
         secrets = {
           "services/homelab/restic/b2_account_id" = {};
           "services/homelab/restic/b2_account_key" = {};
-          "services/homelab/restic/hc_ping_url" = {};
+          "services/homelab/restic/healthchecks_ping_key" = {};
           "services/homelab/restic/repository" = {};
           "services/homelab/restic/repository_password" = {};
         };
@@ -100,7 +106,7 @@
         templates."restic-env".content = ''
           B2_ACCOUNT_ID=${config.sops.placeholder."services/homelab/restic/b2_account_id"}
           B2_ACCOUNT_KEY=${config.sops.placeholder."services/homelab/restic/b2_account_key"}
-          HC_PING_URL=${config.sops.placeholder."services/homelab/restic/hc_ping_url"}
+          HC_PING_URL=${healthChecksDomain}/ping/${config.sops.placeholder."services/homelab/restic/healthchecks_ping_key"}
           RESTIC_CACHE_DIR=${cacheDir}
         '';
       };

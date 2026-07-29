@@ -12,7 +12,7 @@
       self.modules.nixos.secrets
     ];
 
-    internal.homelab.routing.status = {
+    internal.homelab.routing.healthchecks = {
       inherit port subdomain;
     };
 
