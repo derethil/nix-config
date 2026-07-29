@@ -29,9 +29,8 @@
         source as raw URLs rather than markdown links. This is to ensure
         I can open the links directly in my browser without having to copy and paste them.
 
-        When I ask you to give me a command to run, print the command and then additionally
-        pipe it to wl-copy to copy it to my clipboard.
-        ```
+        When giving me a command to run, also run it through Bash as
+        `printf 'the-command' | wl-copy` to copy it to my clipboard, then show it in a code block.
       '';
 
       enableMcpIntegration = true;
