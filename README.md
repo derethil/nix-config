@@ -12,8 +12,10 @@
 
 # About
 
-My configs for NixOS, MacOS, and Home Manager dotfiles. Uses flake-parts and the
-[dendritic pattern](https://github.com/Doc-Steve/dendritic-design-with-flake-parts).
+My configs for NixOS, MacOS, and Home Manager dotfiles. I use flake-parts and
+the
+[dendritic pattern](https://github.com/Doc-Steve/dendritic-design-with-flake-parts)
+to manage my development/gaming machine, laptop, and a self-hosted server.
 
 ## Layout
 
@@ -37,6 +39,13 @@ My configs for NixOS, MacOS, and Home Manager dotfiles. Uses flake-parts and the
   pulled from my private repo
 - **Self-hosting**: Uses quadlet/podman to manage services with fully
   declarative backup configuration and failure notifications
+
+# Task Runner
+
+Common operations are managed via [`just`](https://github.com/casey/just). Run
+`just` at the repo root to see all available commands, organized into modules:
+`flake`, `secrets`, and `backups`. Everything from rebuilding to secret
+management to backup restoration has a recipe.
 
 # Templates
 
