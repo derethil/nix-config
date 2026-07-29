@@ -43,6 +43,7 @@
             ALLOWED_HOSTS = host;
             DB = "sqlite";
             DB_NAME = "/data/hc.sqlite";
+            DEBUG = "False";
             INTEGRATIONS_ALLOW_PRIVATE_IPS = "True";
             REGISTRATION_OPEN = "False";
             SITE_NAME = "Homelab Status";

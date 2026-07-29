@@ -59,11 +59,10 @@
       };
     };
 
-    tabbedWindowRules =
-      map (r: {
-        default-column-display = "tabbed";
-        match = map toNiriMatch (lib.filter (m: m.app_id != null || m.title != null) r.match);
-      }) (lib.filter (r: r.tabbed) rules);
+    tabbedWindowRules = map (r: {
+      default-column-display = "tabbed";
+      match = map toNiriMatch (lib.filter (m: m.app_id != null || m.title != null) r.match);
+    }) (lib.filter (r: r.tabbed) rules);
   in {
     options.surfaces.niri.auto-consume-rules = mkOption {
       default = [];

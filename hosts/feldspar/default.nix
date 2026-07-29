@@ -45,6 +45,7 @@ in {
           gnome-keyring
           homelab
           impermanence
+          ntfy-subscribe
           networking
           niri
           openrgb
@@ -76,6 +77,7 @@ in {
 
           services = {
             coolercontrol.it87.mmio = true;
+            ntfy-subscribe.topics = ["healthchecks_log"];
             openrgb.startupProfile = "Minimal";
           };
         };

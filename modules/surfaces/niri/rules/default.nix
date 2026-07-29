@@ -20,13 +20,15 @@
     surfaces.niri = {
       auto-consume-rules = [
         {
+          direction = "left";
+
           match = [
             {
               app_id = "^firefox$";
               title = "^Developer Tools";
             }
           ];
-          direction = "left";
+
           tabbed = true;
         }
       ];

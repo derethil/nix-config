@@ -28,17 +28,18 @@
         When you list your sources after using online search, you must output the
         source as raw URLs rather than markdown links. This is to ensure
         I can open the links directly in my browser without having to copy and paste them.
+
+        When I ask you to give me a command to run, print the command and then additionally
+        pipe it to wl-copy to copy it to my clipboard.
+        ```
       '';
 
       enableMcpIntegration = true;
 
       settings = {
         enabledPlugins = {
-          "gopls-lsp@claude-plugins-official" = true;
           "pr-review-toolkit@claude-plugins-official" = true;
-          "serena@claude-plugins-official" = true;
           "superpowers@claude-plugins-official" = true;
-          "typescript-lsp@claude-plugins-official" = true;
         };
 
         includeCoAuthoredBy = false;

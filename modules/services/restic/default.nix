@@ -11,7 +11,7 @@
     inherit (lib) concatMapStringsSep flatten getExe' mapAttrs;
 
     cfg = config.internal.homelab.backups;
-    healthChecksDomain = "https://${config.internal.homelab.routing.healthchecks.subdomain}.${config.internal.homelab.domain}";
+    healthChecksDomain = self.lib.homelab.mkServiceDomain config "healthchecks";
 
     stagingRoot = "/var/lib/restic/staging";
     cacheDir = "/var/lib/restic/cache";
