@@ -5,15 +5,24 @@
     port = "20030";
     internalPort = "8000";
     host = "${subdomain}.${config.internal.homelab.domain}";
+    inherit (self.lib) podmanVolume;
   in {
     imports = [
       self.modules.nixos.homelab-routing
       self.modules.nixos.quadlet
+      self.modules.nixos.restic
       self.modules.nixos.secrets
     ];
 
-    internal.homelab.routing.healthchecks = {
-      inherit port subdomain;
+    internal.homelab = {
+      backups.healthchecks = {
+        onCalendar = "03:30";
+        paths = [(podmanVolume "healthchecks-data")];
+      };
+
+      routing.healthchecks = {
+        inherit port subdomain;
+      };
     };
 
     sops = {
