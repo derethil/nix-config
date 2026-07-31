@@ -42,10 +42,9 @@ the previous report. Match:
 
 - Focus on major improvements and features, not individual commits
 - For each item, explain WHAT was done and WHY it matters to the user/customer
-- Include 3-8 bullet points per project section
-- Each bullet should be 1-3 sentences describing the work and its value
-- Use bullet points with • characters (not indentation or dashes) for email
-  compatibility
-- Format as: **Project Name** • Bullet point describing work and why it matters
-  • Another bullet point
-- Ensure the output is copy-pastable directly into an email
+- Include 3-8 items per project section
+- Each item should be 1-3 sentences describing the work and its value
+- Use plain text only — no markdown, no bullet characters, no bold/italic
+- Format: plain section name on its own line, followed by plain paragraph lines
+- Write the report directly to a file so it can be copy-pasted into Outlook
+  without formatting artifacts
