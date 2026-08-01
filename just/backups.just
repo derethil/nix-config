@@ -6,6 +6,7 @@ pass_file := "/run/secrets/services/homelab/restic/repository_password"
 staging := "/var/lib/restic/staging"
 volumes := "/var/lib/containers/storage/volumes"
 
+[private]
 _load_env := "set -a; eval \"$(sudo cat " + env_file + ")\"; set +a; export RESTIC_REPOSITORY=$(sudo cat " + repo_file + "); export RESTIC_PASSWORD=$(sudo cat " + pass_file + "); export RESTIC_CACHE_DIR=$HOME/.cache/restic"
 
 [private]
@@ -155,3 +156,20 @@ restore-all snapshot="latest":
     just backups restore-healthchecks {{ snapshot }}
     just backups restore-tandoor {{ snapshot }}
     just backups restore-blombooru {{ snapshot }}
+
+# Trigger a manual backup (healthchecks, tandoor, blombooru, or all)
+[arg("service", help="Service to backup (healthchecks, tandoor, blombooru, all)", pattern='^(all|healthchecks|tandoor|blombooru)$')]
+backup service="all":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if [ "{{ service }}" = "all" ]; then
+        for svc in healthchecks tandoor blombooru; do
+            just print "{{ YELLOW }}" "==> Backing up $svc..."
+            sudo systemctl start "restic-backups-$svc.service"
+            just print "{{ GREEN }}" "==> Done."
+        done
+    else
+        just print "{{ YELLOW }}" "==> Backing up {{ service }}..."
+        sudo systemctl start "restic-backups-{{ service }}.service"
+        just print "{{ GREEN }}" "==> Done."
+    fi
