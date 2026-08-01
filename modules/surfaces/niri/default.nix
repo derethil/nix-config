@@ -55,4 +55,8 @@
 
     overlays.niri-nix = inputs.niri-nix.overlays.niri-nix;
   };
+
+  flake.overlays.niri = final: prev: {
+    libdisplay-info_0_3 = prev.libdisplay-info;
+  };
 }
