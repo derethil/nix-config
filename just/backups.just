@@ -158,7 +158,7 @@ restore-all snapshot="latest":
     just backups restore-blombooru {{ snapshot }}
 
 # Trigger a manual backup (healthchecks, tandoor, blombooru, or all)
-[arg("service", help="Service to backup (healthchecks, tandoor, blombooru, all)", pattern='^(all|healthchecks|tandoor|blombooru)$')]
+[arg("service", pattern='^(all|healthchecks|tandoor|blombooru)$', help="Service to backup (healthchecks, tandoor, blombooru, all)")]
 backup service="all":
     #!/usr/bin/env bash
     set -euo pipefail
@@ -172,4 +172,18 @@ backup service="all":
         just print "{{ YELLOW }}" "==> Backing up {{ service }}..."
         sudo systemctl start "restic-backups-{{ service }}.service"
         just print "{{ GREEN }}" "==> Done."
+    fi
+
+[arg("service", pattern='^(all|healthchecks|tandoor|blombooru)$', help="Service to backup (healthchecks, tandoor, blombooru, all)")]
+status service="all":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if [ "{{ service }}" = "all" ]; then
+        for svc in healthchecks tandoor blombooru; do
+            just print "{{ YELLOW }}" "==> Checking status of $svc..."
+            sudo systemctl status "restic-backups-$svc.service"
+        done
+    else
+        just print "{{ YELLOW }}" "==> Checking status of {{ service }}..."
+        sudo systemctl status "restic-backups-{{ service }}.service"
     fi
