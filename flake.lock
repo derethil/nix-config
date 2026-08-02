@@ -1629,11 +1629,11 @@
         "sort-nvim": "sort-nvim"
       },
       "locked": {
-        "lastModified": 1785271456,
-        "narHash": "sha256-KxN62RLc4Zw1OKRCerq0oeCsOJHMjxvdg90QDN00FR4=",
+        "lastModified": 1785781481,
+        "narHash": "sha256-sqKV490mV4wnGUciBCqVfWVz2ys7JYsR9EYm1zLe2lA=",
         "owner": "derethil",
         "repo": "nvim-config",
-        "rev": "60b4248766eb010032b91351f25f096dd72f2326",
+        "rev": "ef09bb6a24b2be2c6923e9153c88237357e21450",
         "type": "github"
       },
       "original": {
