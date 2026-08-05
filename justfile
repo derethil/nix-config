@@ -7,6 +7,9 @@ mod backups 'just/backups.just'
 # Flake maintenance recipes
 mod flake 'just/flake.just'
 
+# Linting recipes
+mod lint 'just/lint.just'
+
 # Secrets management recipes
 mod secrets 'just/secrets.just'
 
