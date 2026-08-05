@@ -54,8 +54,8 @@
 
     toNiriMatch = m: {
       _props = filterAttrs (_: v: v != null) {
+        inherit (m) title;
         app-id = m.app_id;
-        title = m.title;
       };
     };
 

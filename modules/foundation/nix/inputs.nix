@@ -19,13 +19,13 @@
       inputs;
 
     nix = {
-      # NIX_PATH points at the linked inputs (lets `<nixpkgs>` etc. resolve
-      # to the pinned input rather than the system channel).
-      nixPath = ["/etc/nix/inputs"];
       # Make every flake input available via the nix registry, so things
       # like `nix run nixpkgs#hello` resolve to the pinned versions
       # rather than fetching latest.
-      registry = registry;
+      inherit registry;
+      # NIX_PATH points at the linked inputs (lets `<nixpkgs>` etc. resolve
+      # to the pinned input rather than the system channel).
+      nixPath = ["/etc/nix/inputs"];
     };
   };
 in {

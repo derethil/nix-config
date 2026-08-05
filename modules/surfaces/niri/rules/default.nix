@@ -2,7 +2,7 @@
   flake.modules.homeManager.niri = let
     inherit
       (self.lib.niri-rules)
-      floatRule
+      # floatRule
       fullscreenRule
       hideRule
       sizedFloatRule

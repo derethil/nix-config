@@ -43,9 +43,9 @@ to manage my development/gaming machine, laptop, and a self-hosted server.
 # Task Runner
 
 Common operations are managed via [`just`](https://github.com/casey/just). Run
-`just` at the repo root to see all available commands, organized into modules:
-`flake`, `secrets`, and `backups`. Everything from rebuilding to secret
-management to backup restoration has a recipe.
+`just` at the repo root to see all available commands, organized into
+subcommands. Everything from rebuilding to secret management to backup
+restoration to linting has a recipe.
 
 # Templates
 
