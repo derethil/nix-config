@@ -91,6 +91,7 @@
             environmentFiles = [config.sops.templates."tandoor-recipes-env".path];
 
             environments = {
+              AI_ALLOWED_URLS = "https://openrouter.ai/api/v1";
               ALLOWED_HOSTS = "*";
               CSRF_TRUSTED_ORIGINS = "https://${host}";
               DB_ENGINE = "django.db.backends.postgresql";
