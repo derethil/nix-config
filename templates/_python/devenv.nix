@@ -1,10 +1,8 @@
 {
-  languages = {
-    python = {
-      enable = true;
-      version = "3.13";
-      venv.enable = true;
-      uv.enable = true;
-    };
+  languages.python = {
+    enable = true;
+    uv.enable = true;
+    venv.enable = true;
+    version = "3.13";
   };
 }

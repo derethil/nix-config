@@ -7,19 +7,12 @@
   pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   env = {
-    GOPRIVATE = "gitlab.dragonarmy.rocks/*";
     GIT_TERMINAL_PROMPT = "1";
+    GOPRIVATE = "gitlab.dragonarmy.rocks/*";
+    KEYCLOAK_URL = "https://keycloak-dev.dragonarmy.rocks";
     PLAYWRIGHT_BROWSERS_PATH = playwright.playwright-driver.browsers;
     PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = "1";
-    KEYCLOAK_URL = "https://keycloak-dev.dragonarmy.rocks";
   };
-
-  packages = with pkgs; [
-    golangci-lint
-    golangci-lint-langserver
-    playwright.playwright-test
-    temurin-jre-bin-21
-  ];
 
   languages = {
     go = {
@@ -29,27 +22,33 @@ in {
 
     javascript = {
       enable = true;
-      npm.enable = true;
-      directory = "webapp";
       package = pkgs.nodejs_24;
+      directory = "webapp";
+      npm.enable = true;
     };
   };
+
+  packages = with pkgs; [
+    golangci-lint
+    golangci-lint-langserver
+    playwright.playwright-test
+    temurin-jre-bin-21
+  ];
 
   processes = {
     backend = {
       cwd = "./go";
       exec = ''go run main.go ''${DEBUG+-debug}'';
     };
+
     frontend = {
       cwd = "./webapp";
       exec = "npm run dev";
     };
   };
 
-  tasks = {
-    "aws:sso-login" = {
-      exec = "aws sts get-caller-identity --no-cli-pager > /dev/null 2>&1 || aws sso login";
-      before = ["devenv:processes:backend"];
-    };
+  tasks."aws:sso-login" = {
+    before = ["devenv:processes:backend"];
+    exec = "aws sts get-caller-identity --no-cli-pager > /dev/null 2>&1 || aws sso login";
   };
 }

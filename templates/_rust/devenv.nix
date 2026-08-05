@@ -1,5 +1,3 @@
 {
-  languages.rust = {
-    enable = true;
-  };
+  languages.rust.enable = true;
 }

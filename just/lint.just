@@ -7,7 +7,7 @@ default:
 # Run all linters and format checks
 check:
     statix check --ignore .direnv .
-    fd -e nix | xargs deadnix
+    fd -e nix | xargs deadnix --fail
     pedantix --check $(fd -e nix)
 
 # Auto-fix statix warnings and reformat with pedantix
