@@ -4,23 +4,23 @@
   ...
 }: {
   flake = {
-    modules.nixos.homelab-routing = {config, ...}: let
+    modules.nixos.ingress = {config, ...}: let
       inherit (lib) attrValues concatMapStringsSep count filter mkMerge mkOption toInt types unique;
 
       cfg = config.internal.homelab;
       fqdn = service: "${service.subdomain}.${cfg.domain}";
 
-      usedPorts = map (service: service.port) (attrValues cfg.routing);
+      usedPorts = map (service: service.port) (attrValues cfg.ingress);
       duplicates = unique (filter (port: count (other: other == port) usedPorts > 1) usedPorts);
     in {
-      key = "homelab-routing";
+      key = "ingress";
 
       imports = [
         self.modules.nixos.blocky
         self.modules.nixos.caddy
       ];
 
-      options.internal.homelab.routing = mkOption {
+      options.internal.homelab.ingress = mkOption {
         default = {};
         description = "Homelab services to route: each gets a DNS record and a reverse proxy.";
 
@@ -60,17 +60,17 @@
           '';
         };
       in {
-        services = mkMerge (map publishService (attrValues cfg.routing));
+        services = mkMerge (map publishService (attrValues cfg.ingress));
 
         assertions = [
           {
             assertion = duplicates == [];
-            message = "internal.homelab.routing: ports must be unique across services; reused: ${concatMapStringsSep ", " toString duplicates}";
+            message = "internal.homelab.ingress: ports must be unique across services; reused: ${concatMapStringsSep ", " toString duplicates}";
           }
         ];
       };
     };
 
-    lib.homelab.mkServiceDomain = config: service: "https://${config.internal.homelab.routing."${service}".subdomain}.${config.internal.homelab.domain}";
+    lib.homelab.mkServiceDomain = config: service: "https://${config.internal.homelab.ingress."${service}".subdomain}.${config.internal.homelab.domain}";
   };
 }

@@ -19,7 +19,7 @@
     };
   in {
     imports = [
-      self.modules.nixos.homelab-routing
+      self.modules.nixos.ingress
       self.modules.nixos.quadlet
     ];
 
@@ -32,7 +32,7 @@
       {xdg.configFile."ntfy/client.yml".text = configFile;}
     ];
 
-    internal.homelab.routing.ntfy = {
+    internal.homelab.ingress.ntfy = {
       inherit port subdomain;
     };
 

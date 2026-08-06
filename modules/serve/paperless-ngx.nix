@@ -9,7 +9,7 @@
     inherit (self.lib) podmanVolume;
   in {
     imports = [
-      self.modules.nixos.homelab-routing
+      self.modules.nixos.ingress
       self.modules.nixos.quadlet
       self.modules.nixos.restic
       self.modules.nixos.secrets
@@ -34,7 +34,7 @@
         ];
       };
 
-      routing.paperless = {
+      ingress.paperless = {
         inherit port subdomain;
       };
     };
