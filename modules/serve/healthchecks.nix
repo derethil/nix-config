@@ -15,9 +15,16 @@
     ];
 
     internal.homelab = {
+      # NOTE: this backs up the live SQLite DB, which may (very low chance) result in inconsistencies.
+      # Fine for healthchecks because its DB barely changes. A write-heavy SQLite service would need a proper `.backup` dump
+      # strategy similar to Postgres.
       backups.healthchecks = {
-        onCalendar = "03:30";
         paths = [(podmanVolume "healthchecks-data")];
+
+        restore = {
+          startAfter = ["healthchecks.service"];
+          stopServices = ["healthchecks.service"];
+        };
       };
 
       ingress.healthchecks = {

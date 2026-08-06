@@ -17,7 +17,6 @@
 
     internal.homelab = {
       backups.tandoor = {
-        onCalendar = "03:00";
         paths = [(podmanVolume "tandoor-media")];
 
         postgres = [
@@ -27,6 +26,12 @@
             user = "djangodb";
           }
         ];
+
+        restore = {
+          startAfter = ["tandoor-web.service"];
+          startBefore = ["tandoor-pod.service" "tandoor-db.service"];
+          stopServices = ["tandoor-web.service" "tandoor-db.service" "tandoor-pod.service"];
+        };
       };
 
       ingress.tandoor = {

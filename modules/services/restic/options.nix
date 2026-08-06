@@ -20,18 +20,34 @@
     };
   };
 
+  restoreType = types.submodule {
+    options = {
+      startAfter = mkOption {
+        default = [];
+        description = "Systemd services to start after pg_restore (e.g. web, broker).";
+        type = types.listOf types.str;
+      };
+
+      startBefore = mkOption {
+        default = [];
+        description = "Systemd services to start before pg_restore (e.g. pod, db).";
+        type = types.listOf types.str;
+      };
+
+      stopServices = mkOption {
+        default = [];
+        description = "Systemd services to stop before restore.";
+        type = types.listOf types.str;
+      };
+    };
+  };
+
   backupType = types.submodule {
     options = {
       exclude = mkOption {
         default = [];
         description = "restic exclude patterns.";
         type = types.listOf types.str;
-      };
-
-      onCalendar = mkOption {
-        default = "03:00";
-        description = "systemd OnCalendar expression for the backup timer.";
-        type = types.str;
       };
 
       paths = mkOption {
@@ -52,19 +68,27 @@
         type = types.lines;
       };
 
-      retryLock = mkOption {
-        default = "30m";
-        description = "Duration to retry acquiring the restic lock before giving up.";
-        type = types.str;
+      restore = mkOption {
+        default = {};
+        description = "Restore configuration for this backup job.";
+        type = restoreType;
       };
     };
   };
 in {
   flake.modules.nixos.restic-options = {
-    options.internal.homelab.backups = mkOption {
-      default = {};
-      description = "restic backup jobs; each feature registers its own.";
-      type = types.attrsOf backupType;
+    options.internal.homelab = {
+      backups = mkOption {
+        default = {};
+        description = "restic backup jobs; each feature registers its own.";
+        type = types.attrsOf backupType;
+      };
+
+      restic.retryLock = mkOption {
+        default = "30m";
+        description = "Duration to retry acquiring the restic repository lock before giving up.";
+        type = types.str;
+      };
     };
   };
 }

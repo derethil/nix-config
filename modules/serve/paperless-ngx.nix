@@ -17,8 +17,6 @@
 
     internal.homelab = {
       backups.paperless = {
-        onCalendar = "02:00";
-
         paths = [
           (podmanVolume "paperless-data")
           (podmanVolume "paperless-media")
@@ -32,6 +30,12 @@
             user = "paperless";
           }
         ];
+
+        restore = {
+          startAfter = ["paperless-broker.service" "paperless-web.service"];
+          startBefore = ["paperless-pod.service" "paperless-db.service"];
+          stopServices = ["paperless-web.service" "paperless-broker.service" "paperless-db.service" "paperless-pod.service"];
+        };
       };
 
       ingress.paperless = {

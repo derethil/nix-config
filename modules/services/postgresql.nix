@@ -1,4 +1,8 @@
-{lib, ...}: {
+{
+  self,
+  lib,
+  ...
+}: {
   flake.modules.nixos.postgresql = {
     config,
     pkgs,
@@ -68,6 +72,8 @@
     };
 
     config = {
+      imports = [self.modules.nixos.impermanence-options];
+
       internal.boot.impermanence.extraDirectories = [
         "/var/lib/postgresql/${config.services.postgresql.package.psqlSchema}"
       ];

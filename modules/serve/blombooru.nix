@@ -17,7 +17,6 @@
     internal.homelab = {
       backups.blombooru = {
         exclude = ["${podmanVolume "blombooru-data"}/huggingface"];
-        onCalendar = "03:30";
 
         paths = [
           (podmanVolume "blombooru-data")
@@ -31,6 +30,12 @@
             user = "blombooru";
           }
         ];
+
+        restore = {
+          startAfter = ["blombooru-redis.service" "blombooru-web.service"];
+          startBefore = ["blombooru-pod.service" "blombooru-db.service"];
+          stopServices = ["blombooru-web.service" "blombooru-redis.service" "blombooru-db.service" "blombooru-pod.service"];
+        };
       };
 
       ingress.blombooru = {
