@@ -6,6 +6,8 @@ pass_file := "/run/secrets/services/homelab/restic/repository_password"
 staging := "/var/lib/restic/staging"
 volumes := "/var/lib/containers/storage/volumes"
 
+services := "healthchecks tandoor blombooru paperless"
+
 [private]
 _load_env := "set -a; eval \"$(sudo cat " + env_file + ")\"; set +a; export RESTIC_REPOSITORY=$(sudo cat " + repo_file + "); export RESTIC_PASSWORD=$(sudo cat " + pass_file + "); export RESTIC_CACHE_DIR=$HOME/.cache/restic"
 
@@ -150,20 +152,58 @@ restore-blombooru snapshot="latest":
     sudo systemctl start blombooru-redis.service blombooru-web.service
     just print "{{ GREEN }}" "==> Done."
 
+# Restore paperless from a snapshot (data + media + consume + postgres)
+[arg("snapshot", help="Snapshot ID to restore from (default: latest)")]
+restore-paperless snapshot="latest":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    {{ _load_env }}
+    tmp=$(mktemp -d)
+    trap 'rm -rf "$tmp"' EXIT
+
+    just print "{{ YELLOW }}" "==> Stopping paperless..."
+    sudo systemctl stop paperless-web.service paperless-broker.service \
+        paperless-db.service paperless-pod.service
+
+    just print "{{ YELLOW }}" "==> Restoring {{ snapshot }}..."
+    restic restore {{ snapshot }} \
+        --path "{{ volumes }}/paperless-data/_data" \
+        --include "{{ volumes }}/paperless-data" \
+        --include "{{ volumes }}/paperless-media" \
+        --include "{{ volumes }}/paperless-consume" \
+        --include "{{ staging }}/paperless" \
+        --target "$tmp"
+
+    just print "{{ YELLOW }}" "==> Syncing data volumes..."
+    sudo rsync -a --delete "$tmp/{{ volumes }}/paperless-data/_data/" \
+        "{{ volumes }}/paperless-data/_data/"
+    sudo rsync -a --delete "$tmp/{{ volumes }}/paperless-media/_data/" \
+        "{{ volumes }}/paperless-media/_data/"
+    sudo rsync -a --delete "$tmp/{{ volumes }}/paperless-consume/_data/" \
+        "{{ volumes }}/paperless-consume/_data/"
+
+    sudo systemctl start paperless-pod.service paperless-db.service
+    just backups _pg-restore paperless-db paperless paperless "$tmp/{{ staging }}/paperless/paperless-db-paperless.dump"
+
+    just print "{{ YELLOW }}" "==> Starting paperless..."
+    sudo systemctl start paperless-broker.service paperless-web.service
+    just print "{{ GREEN }}" "==> Done."
+
 # Restore all services from a snapshot
 [arg("snapshot", help="Snapshot ID to restore from (default: latest)")]
 restore-all snapshot="latest":
-    just backups restore-healthchecks {{ snapshot }}
-    just backups restore-tandoor {{ snapshot }}
-    just backups restore-blombooru {{ snapshot }}
+    #!/usr/bin/env bash
+    for svc in {{ services }}; do
+        just backups restore-$svc {{ snapshot }}
+    done
 
-# Trigger a manual backup (healthchecks, tandoor, blombooru, or all)
-[arg("service", pattern='^(all|healthchecks|tandoor|blombooru)$', help="Service to backup (healthchecks, tandoor, blombooru, all)")]
+# Trigger a manual backup (or all)
+[arg("service", pattern='^(all|healthchecks|tandoor|blombooru|paperless)$', help="Service to backup (or all)")]
 backup service="all":
     #!/usr/bin/env bash
     set -euo pipefail
     if [ "{{ service }}" = "all" ]; then
-        for svc in healthchecks tandoor blombooru; do
+        for svc in {{ services }}; do
             just print "{{ YELLOW }}" "==> Backing up $svc..."
             sudo systemctl start "restic-backups-$svc.service"
             just print "{{ GREEN }}" "==> Done."
@@ -174,12 +214,12 @@ backup service="all":
         just print "{{ GREEN }}" "==> Done."
     fi
 
-[arg("service", pattern='^(all|healthchecks|tandoor|blombooru)$', help="Service to backup (healthchecks, tandoor, blombooru, all)")]
+[arg("service", pattern='^(all|healthchecks|tandoor|blombooru|paperless)$', help="Service to check status for (or all)")]
 status service="all":
     #!/usr/bin/env bash
     set -euo pipefail
     if [ "{{ service }}" = "all" ]; then
-        for svc in healthchecks tandoor blombooru; do
+        for svc in {{ services }}; do
             just print "{{ YELLOW }}" "==> Checking status of $svc..."
             sudo systemctl status "restic-backups-$svc.service"
         done
