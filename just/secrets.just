@@ -17,6 +17,7 @@ edit hostname="feldspar":
     #!/usr/bin/env bash
     set -euo pipefail
     sops {{ sops_file }}
+    just secrets update -p
     just secrets check {{ hostname }}
 
 # Add/update the age keys in the sops config

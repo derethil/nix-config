@@ -14,9 +14,9 @@
         pkgs.jira-cli-go
       ];
 
-      sessionVariables.JIRA_API_TOKEN = "$(${lib.getExe' pkgs.coreutils "cat"} ${config.sops.secrets."applications/jira_cli/api_token".path})";
+      sessionVariables.JIRA_API_TOKEN = "$(${lib.getExe' pkgs.coreutils "cat"} ${config.sops.secrets."pursuits/development/jira_cli/api_token".path})";
     };
 
-    sops.secrets."applications/jira_cli/api_token" = {};
+    sops.secrets."pursuits/development/jira_cli/api_token" = {};
   };
 }

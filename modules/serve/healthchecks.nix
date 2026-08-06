@@ -26,12 +26,12 @@
     };
 
     sops = {
-      secrets."services/homelab/healthchecks/secret_key" = {};
+      secrets."serve/healthchecks/secret_key" = {};
 
       templates."healthchecks-env" = {
         mode = "0400";
         content = ''
-          SECRET_KEY=${config.sops.placeholder."services/homelab/healthchecks/secret_key"}
+          SECRET_KEY=${config.sops.placeholder."serve/healthchecks/secret_key"}
         '';
       };
     };

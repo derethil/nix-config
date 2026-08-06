@@ -40,8 +40,8 @@
 
     sops = {
       secrets = {
-        "services/homelab/blombooru/postgres_password" = {};
-        "services/homelab/blombooru/redis_password" = {};
+        "serve/blombooru/postgres_password" = {};
+        "serve/blombooru/redis_password" = {};
       };
 
       templates."blombooru-env" = {
@@ -49,8 +49,8 @@
         content = ''
           POSTGRES_DB=blombooru
           POSTGRES_USER=blombooru
-          POSTGRES_PASSWORD=${config.sops.placeholder."services/homelab/blombooru/postgres_password"}
-          REDIS_PASSWORD=${config.sops.placeholder."services/homelab/blombooru/redis_password"}
+          POSTGRES_PASSWORD=${config.sops.placeholder."serve/blombooru/postgres_password"}
+          REDIS_PASSWORD=${config.sops.placeholder."serve/blombooru/redis_password"}
         '';
       };
     };

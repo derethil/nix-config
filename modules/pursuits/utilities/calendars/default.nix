@@ -11,7 +11,7 @@
     ...
   }: let
     inherit (lib) attrNames concatMapStringsSep getExe;
-    outlookPasswordPath = "accounts/calendars/outlook/password";
+    outlookPasswordPath = "pursuits/utilities/calendars/outlook/password";
   in {
     imports = with self.modules.homeManager; [
       davmail

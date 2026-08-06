@@ -74,10 +74,10 @@
       };
 
       sops = {
-        secrets."applications/neovim/gitlab_token" = {};
+        secrets."foundation/neovim/gitlab_token" = {};
 
         templates.".gitlab.nvim".content = ''
-          auth_token=${config.sops.placeholder."applications/neovim/gitlab_token"}
+          auth_token=${config.sops.placeholder."foundation/neovim/gitlab_token"}
           url=https://gitlab.dragonarmy.rocks
         '';
       };

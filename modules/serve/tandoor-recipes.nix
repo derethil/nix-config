@@ -36,17 +36,17 @@
 
     sops = {
       secrets = {
-        "services/homelab/tandoor/postgres_password" = {};
-        "services/homelab/tandoor/secret_key" = {};
+        "serve/tandoor/postgres_password" = {};
+        "serve/tandoor/secret_key" = {};
       };
 
       templates."tandoor-recipes-env" = {
         mode = "0400";
         content = ''
-          POSTGRES_PASSWORD=${config.sops.placeholder."services/homelab/tandoor/postgres_password"}
+          POSTGRES_PASSWORD=${config.sops.placeholder."serve/tandoor/postgres_password"}
           POSTGRES_USER=djangodb
           POSTGRES_DB=djangodb
-          SECRET_KEY=${config.sops.placeholder."services/homelab/tandoor/secret_key"}
+          SECRET_KEY=${config.sops.placeholder."serve/tandoor/secret_key"}
         '';
       };
     };

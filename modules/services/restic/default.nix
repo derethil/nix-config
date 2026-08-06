@@ -71,7 +71,7 @@
             environmentFile = config.sops.templates."restic-env".path;
             extraBackupArgs = ["--retry-lock" job.retryLock];
             initialize = true;
-            passwordFile = config.sops.secrets."services/homelab/restic/repository_password".path;
+            passwordFile = config.sops.secrets."services/restic/repository_password".path;
 
             paths = flatten [
               (map (pg: dumpFile name pg) job.postgres)
@@ -85,7 +85,7 @@
               "--keep-weekly 4"
             ];
 
-            repositoryFile = config.sops.secrets."services/homelab/restic/repository".path;
+            repositoryFile = config.sops.secrets."services/restic/repository".path;
 
             timerConfig = {
               OnCalendar = job.onCalendar;
@@ -98,17 +98,17 @@
 
       sops = {
         secrets = {
-          "services/homelab/restic/b2_account_id" = {};
-          "services/homelab/restic/b2_account_key" = {};
-          "services/homelab/restic/healthchecks_ping_key" = {};
-          "services/homelab/restic/repository" = {};
-          "services/homelab/restic/repository_password" = {};
+          "services/restic/b2_account_id" = {};
+          "services/restic/b2_account_key" = {};
+          "services/restic/healthchecks_ping_key" = {};
+          "services/restic/repository" = {};
+          "services/restic/repository_password" = {};
         };
 
         templates."restic-env".content = ''
-          B2_ACCOUNT_ID=${config.sops.placeholder."services/homelab/restic/b2_account_id"}
-          B2_ACCOUNT_KEY=${config.sops.placeholder."services/homelab/restic/b2_account_key"}
-          HC_PING_URL=${healthChecksDomain}/ping/${config.sops.placeholder."services/homelab/restic/healthchecks_ping_key"}
+          B2_ACCOUNT_ID=${config.sops.placeholder."services/restic/b2_account_id"}
+          B2_ACCOUNT_KEY=${config.sops.placeholder."services/restic/b2_account_key"}
+          HC_PING_URL=${healthChecksDomain}/ping/${config.sops.placeholder."services/restic/healthchecks_ping_key"}
           RESTIC_CACHE_DIR=${cacheDir}
         '';
       };

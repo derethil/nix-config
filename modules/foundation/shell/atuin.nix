@@ -55,6 +55,6 @@
       '';
     };
 
-    sops.secrets."services/atuin/key".path = "${config.home.homeDirectory}/.local/share/atuin/key";
+    sops.secrets."foundation/atuin/key".path = "${config.home.homeDirectory}/.local/share/atuin/key";
   };
 }

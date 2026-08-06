@@ -9,9 +9,9 @@
 
     home = {
       packages = [pkgs.cachix];
-      sessionVariables.CACHIX_AUTH_TOKEN = "$(${lib.getExe' pkgs.coreutils "cat"} ${config.sops.secrets."nix/cachix/local_auth_token".path})";
+      sessionVariables.CACHIX_AUTH_TOKEN = "$(${lib.getExe' pkgs.coreutils "cat"} ${config.sops.secrets."foundation/cachix/local_auth_token".path})";
     };
 
-    sops.secrets."nix/cachix/local_auth_token" = {};
+    sops.secrets."foundation/cachix/local_auth_token" = {};
   };
 }

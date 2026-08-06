@@ -15,13 +15,13 @@
       {
         account = "license";
         comment = "MediaMate license key";
-        secretFile = config.sops.secrets."applications/mediamate/license_key".path;
+        secretFile = config.sops.secrets."surfaces/mediamate/license_key".path;
         service = "com.tweety.MediaMate";
         trustedApp = "/Applications/MediaMate.app";
       }
     ];
 
-    sops.secrets."applications/mediamate/license_key" = {};
+    sops.secrets."surfaces/mediamate/license_key" = {};
 
     system.defaults = {
       CustomUserPreferences."com.tweety.MediaMate" = {

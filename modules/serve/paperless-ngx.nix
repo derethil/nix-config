@@ -41,8 +41,8 @@
 
     sops = {
       secrets = {
-        "services/homelab/paperless/postgres_password" = {};
-        "services/homelab/paperless/secret_key" = {};
+        "serve/paperless/postgres_password" = {};
+        "serve/paperless/secret_key" = {};
       };
 
       templates."paperless-ngx-env" = {
@@ -50,9 +50,9 @@
         content = ''
           POSTGRES_DB=paperless
           POSTGRES_USER=paperless
-          POSTGRES_PASSWORD=${config.sops.placeholder."services/homelab/paperless/postgres_password"}
-          PAPERLESS_DBPASS=${config.sops.placeholder."services/homelab/paperless/postgres_password"}
-          PAPERLESS_SECRET_KEY=${config.sops.placeholder."services/homelab/paperless/secret_key"}
+          POSTGRES_PASSWORD=${config.sops.placeholder."serve/paperless/postgres_password"}
+          PAPERLESS_DBPASS=${config.sops.placeholder."serve/paperless/postgres_password"}
+          PAPERLESS_SECRET_KEY=${config.sops.placeholder."serve/paperless/secret_key"}
         '';
       };
     };

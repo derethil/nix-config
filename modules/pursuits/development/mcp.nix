@@ -9,7 +9,7 @@
 
     context7 = pkgs.writeShellScript "context7-mcp" ''
       export PATH="${pkgs.nodejs}/bin:$PATH"
-      API_KEY=$(cat ${config.sops.secrets."applications/mcp/context7/api_key".path})
+      API_KEY=$(cat ${config.sops.secrets."pursuits/development/mcp/context7/api_key".path})
       exec npx -y @upstash/context7-mcp --api-key "$API_KEY"
     '';
   in {
@@ -26,6 +26,6 @@
       };
     };
 
-    sops.secrets."applications/mcp/context7/api_key" = {};
+    sops.secrets."pursuits/development/mcp/context7/api_key" = {};
   };
 }

@@ -81,8 +81,8 @@ install hostname ip target_user="root" build_on="local":
     sops_file=$(just secrets get-path)
     if [[ -n "$luks_device" ]]; then
         just print "{{ GREEN }}" "==> LUKS device '$luks_device' configured — extracting password..."
-        sops -d --extract "[\"systems\"][\"{{ hostname }}\"][\"luksPassword\"]" "$sops_file" > "$tmp/luks-password.txt" \
-            || { just print "{{ RED }}" "No systems.{{ hostname }}.luksPassword found in secrets.yaml" >&2; exit 1; }
+        sops -d --extract "[\"machine\"][\"{{ hostname }}\"][\"luksPassword\"]" "$sops_file" > "$tmp/luks-password.txt" \
+            || { just print "{{ RED }}" "No machine.{{ hostname }}.luksPassword found in secrets.yaml" >&2; exit 1; }
         chmod 600 "$tmp/luks-password.txt"
         disk_encryption_flag=(--disk-encryption-keys /tmp/secret.key "$tmp/luks-password.txt")
     else

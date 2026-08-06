@@ -35,13 +35,13 @@
 
     sops = {
       secrets = {
-        "services/homelab/caddy/acme_email" = {};
-        "services/homelab/caddy/cloudflare_api_token" = {};
+        "services/caddy/acme_email" = {};
+        "services/caddy/cloudflare_api_token" = {};
       };
 
       templates."caddy-cloudflare-env".content = ''
-        CLOUDFLARE_API_TOKEN=${config.sops.placeholder."services/homelab/caddy/cloudflare_api_token"}
-        CADDY_ACME_EMAIL=${config.sops.placeholder."services/homelab/caddy/acme_email"}
+        CLOUDFLARE_API_TOKEN=${config.sops.placeholder."services/caddy/cloudflare_api_token"}
+        CADDY_ACME_EMAIL=${config.sops.placeholder."services/caddy/acme_email"}
       '';
     };
   };
