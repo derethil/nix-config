@@ -1,0 +1,19 @@
+name: Mirror
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  mirror:
+    name: Mirror to Codeberg
+    runs-on: ubuntu-latest
+    steps:
+      - uses: wearerequired/git-mirror-action@v1
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.MIRROR_SSH_PRIVATE_KEY }}
+        with:
+          source-repo: git@github.com:derethil/nix-config.git
+          destination-repo: ssh://git@codeberg.org/derethil/nix-config.git

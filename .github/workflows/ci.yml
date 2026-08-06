@@ -1,6 +1,6 @@
-name: Validate
+name: CI
 
-on: 
+on:
   push:
     branches-ignore:
       - 'update-flake/**'
@@ -8,10 +8,30 @@ on:
   workflow_dispatch:
 
 jobs:
-  checks:
+  lint:
+    name: Lint expressions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          install_url: https://nixos.org/nix/install
+          extra_nix_config: |
+            auto-optimise-store = true
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+            experimental-features = nix-command flakes
+
+      - name: Install lint tools
+        run: nix profile install nixpkgs#just nixpkgs#fd nixpkgs#statix nixpkgs#deadnix github:Swarsel/pedantix#pedantix-wrapped
+
+      - name: Lint
+        run: just lint check
+
+  validate:
     name: Check expressions
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v6
 
@@ -29,10 +49,10 @@ jobs:
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
             experimental-features = nix-command flakes
 
-      - name: "Validate Flake"
+      - name: Validate flake
         run: nix flake check --all-systems
 
-      - name: "Check Flake Health"
+      - name: Check flake health
         uses: DeterminateSystems/flake-checker-action@v12
         with:
           ignore-missing-flake-lock: false
