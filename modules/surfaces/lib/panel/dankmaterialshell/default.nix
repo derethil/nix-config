@@ -24,7 +24,7 @@
     imports = [
       inputs.dank-material-shell.homeModules.dank-material-shell
       inputs.dms-plugin-registry.homeModules.default
-      self.modules.homeManager.calendars
+      self.modules.homeManager.dankcalendar
     ];
 
     programs.dank-material-shell = {

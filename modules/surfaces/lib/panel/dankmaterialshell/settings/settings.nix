@@ -76,6 +76,10 @@
             }
             {
               enabled = true;
+              id = "dankCalendarAgenda";
+            }
+            {
+              enabled = true;
               id = "weather";
             }
           ];
@@ -98,11 +102,6 @@
             {
               enabled = true;
               id = "workspaceSwitcher";
-            }
-            {
-              enabled = true;
-              id = "systemTray";
-              trayUseInlineExpansion = false;
             }
             {
               enabled = true;

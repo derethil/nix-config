@@ -23,6 +23,11 @@
       url = "github:AvengeMedia/DankMaterialShell";
     };
 
+    dcal = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:AvengeMedia/dcal";
+    };
+
     disko = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/disko";
@@ -57,11 +62,6 @@
     it87 = {
       flake = false;
       url = "github:frankcrawford/it87/h2ram-mmio";
-    };
-
-    khal-notify = {
-      inputs.nixpkgs.follows = "nixpkgs";
-      url = "github:martiert/khal_notifications";
     };
 
     mac-app-util.url = "github:mcflis/mac-app-util/fix/missing-icons";

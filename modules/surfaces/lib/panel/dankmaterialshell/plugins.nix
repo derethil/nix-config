@@ -34,6 +34,11 @@ in {
         ];
       };
 
+      dankCalendarAgenda = {
+        inherit (config.programs.dank-calendar) enable;
+        settings.dynamicWidth = true;
+      };
+
       easyEffects.enable = config.services.easyeffects.enable || (self.lib.hasPackage config.home.packages "easyeffects");
       emojiLauncher.enable = true;
 
