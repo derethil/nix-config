@@ -1,10 +1,14 @@
 {self, ...}: {
   flake.modules.nixos.paperless-ngx = {config, ...}: let
     version = "3.0.5";
+    postgresVersion = "17-alpine";
+    valkeyVersion = "9-alpine";
+
     subdomain = "documents";
     port = "20050";
     internalPort = "8000";
     host = "${subdomain}.${config.internal.homelab.domain}";
+
     inherit (config.virtualisation.quadlet) pods;
     inherit (self.lib) podmanVolume;
   in {
@@ -66,7 +70,7 @@
         paperless-broker = {
           containerConfig = {
             dropCapabilities = ["ALL"];
-            image = "docker.io/valkey/valkey:9-alpine";
+            image = "docker.io/valkey/valkey:${valkeyVersion}";
             noNewPrivileges = true;
             pod = pods.paperless.ref;
             pull = "newer";
@@ -90,7 +94,7 @@
 
             dropCapabilities = ["ALL"];
             environmentFiles = [config.sops.templates."paperless-ngx-env".path];
-            image = "docker.io/library/postgres:17-alpine";
+            image = "docker.io/library/postgres:${postgresVersion}";
             noNewPrivileges = true;
             pod = pods.paperless.ref;
             pull = "newer";

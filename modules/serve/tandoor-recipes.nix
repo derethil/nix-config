@@ -1,10 +1,13 @@
 {self, ...}: {
   flake.modules.nixos.tandoor-recipes = {config, ...}: let
     version = "2.6.13";
+    postgresVersion = "17-alpine";
+
     subdomain = "recipes";
     port = "20010";
     internalPort = "8080";
     host = "${subdomain}.${config.internal.homelab.domain}";
+
     inherit (config.virtualisation.quadlet) pods;
     inherit (self.lib) podmanVolume;
   in {
@@ -70,7 +73,7 @@
 
             dropCapabilities = ["ALL"];
             environmentFiles = [config.sops.templates."tandoor-recipes-env".path];
-            image = "docker.io/library/postgres:17-alpine";
+            image = "docker.io/library/postgres:${postgresVersion}";
             noNewPrivileges = true;
             pod = pods.tandoor.ref;
             pull = "newer";

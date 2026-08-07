@@ -1,9 +1,13 @@
 {self, ...}: {
   flake.modules.nixos.blombooru = {config, ...}: let
     version = "1.40.0";
+    postgresVersion = "17-alpine";
+    redisVersion = "7-alpine";
+
     subdomain = "stash";
     port = "20020";
     internalPort = "8000";
+
     inherit (config.virtualisation.quadlet) pods;
     inherit (self.lib) podmanVolume;
   in {
@@ -74,7 +78,7 @@
 
             dropCapabilities = ["ALL"];
             environmentFiles = [config.sops.templates."blombooru-env".path];
-            image = "docker.io/library/postgres:17";
+            image = "docker.io/library/postgres:${postgresVersion}";
             noNewPrivileges = true;
             pod = pods.blombooru.ref;
             pull = "newer";
@@ -99,7 +103,7 @@
               ''exec redis-server --save 60 1 --loglevel warning --requirepass "$REDIS_PASSWORD"''
             ];
 
-            image = "docker.io/library/redis:7-alpine";
+            image = "docker.io/library/redis:${redisVersion}";
             noNewPrivileges = true;
             pod = pods.blombooru.ref;
             pull = "newer";
