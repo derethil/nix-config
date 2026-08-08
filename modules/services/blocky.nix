@@ -53,6 +53,12 @@
         enable = true;
 
         settings = {
+          # Do not map the apex (config.internal.homelab.domain) here. It must stay
+          # unmapped so blocky forwards its SOA to Cloudflare; otherwise
+          # filterUnmappedTypes returns NODATA and Caddy's DNS-01 zone walk slides
+          # up to the ".me" TLD and cert issuance fails. If we ever need per-host
+          # tls config in Caddy, switch to a `resolvers 1.1.1.1 1.0.0.1` tls block
+          # per the Caddy cloudflare plugin README instead and this constraint goes away.
           customDNS = {
             customTTL = "1h";
             filterUnmappedTypes = true;

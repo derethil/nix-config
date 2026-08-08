@@ -31,6 +31,10 @@
         email {env.CADDY_ACME_EMAIL}
         acme_dns cloudflare {env.CLOUDFLARE_API_TOKEN}
       '';
+
+      virtualHosts."${config.internal.homelab.domain}".extraConfig = ''
+        respond 200
+      '';
     };
 
     sops = {
