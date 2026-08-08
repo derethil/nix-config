@@ -1,68 +1,57 @@
-{
-  self,
-  lib,
-  ...
-}: {
+{lib, ...}: {
   flake.modules.nixos.ntfy-subscribe = {
     config,
     pkgs,
     ...
   }: let
-    inherit (lib) head length listToAttrs mkOption types;
+    inherit (lib) head length;
 
-    cfg = config.internal.services.ntfy-subscribe;
+    ntfyBase = "https://ntfy.sh";
+    ntfyTopicSecret = config.sops.secrets."serve/gatus/ntfy_topic".path;
 
-    ntfyBase = self.lib.homelab.mkServiceDomain config "ntfy";
-
-    notifySendScript = topic:
-      pkgs.writeShellScript "ntfy-notify-${topic}" ''
-        [ "${"\${NTFY_PRIORITY:-3}"}" -lt 3 ] && exit 0
-        ${pkgs.libnotify}/bin/notify-send \
-          --app-name "Ntfy" \
-          --icon "${./icon.png}" \
-          "$NTFY_TITLE" \
-          "$NTFY_MESSAGE"
-      '';
+    notifyScript = pkgs.writeShellScript "ntfy-notify" ''
+      [ "${"\${NTFY_PRIORITY:-3}"}" -lt 3 ] && exit 0
+      ${pkgs.libnotify}/bin/notify-send \
+        --app-name "Ntfy" \
+        --icon "${./icon.png}" \
+        "$NTFY_TITLE" \
+        "$NTFY_MESSAGE"
+    '';
 
     supportedDaemons = [
       {
-        makeNotifyScript = notifySendScript;
+        inherit notifyScript;
         name = "notify-send";
       }
     ];
 
     activeDaemon = head supportedDaemons;
   in {
-    options.internal.services.ntfy-subscribe.topics = mkOption {
-      default = [];
-      type = types.listOf types.str;
-    };
-
     config = {
       home-manager.sharedModules = [
         {
-          systemd.user.services = listToAttrs (map (topic: {
-              name = "ntfy-subscribe-${topic}";
+          systemd.user.services.ntfy-subscribe = {
+            Install.WantedBy = ["graphical-session.target"];
 
-              value = {
-                Install.WantedBy = ["graphical-session.target"];
+            Service = {
+              Environment = "PATH=/etc/profiles/per-user/%u/bin:/run/current-system/sw/bin";
 
-                Service = {
-                  Environment = "PATH=/etc/profiles/per-user/%u/bin:/run/current-system/sw/bin";
-                  ExecStart = "${pkgs.ntfy-sh}/bin/ntfy subscribe ${ntfyBase}/${topic} ${activeDaemon.makeNotifyScript topic}";
-                  PassEnvironment = "XDG_RUNTIME_DIR";
-                  Restart = "on-failure";
-                  RestartSec = "5s";
-                };
+              ExecStart = pkgs.writeShellScript "ntfy-subscribe" ''
+                topic=$(cat ${ntfyTopicSecret})
+                exec ${pkgs.ntfy-sh}/bin/ntfy subscribe ${ntfyBase}/"$topic" ${activeDaemon.notifyScript}
+              '';
 
-                Unit = {
-                  After = ["graphical-session.target"];
-                  Description = "ntfy desktop notifications: ${topic}";
-                  PartOf = ["graphical-session.target"];
-                };
-              };
-            })
-            cfg.topics);
+              PassEnvironment = "XDG_RUNTIME_DIR";
+              Restart = "on-failure";
+              RestartSec = "5s";
+            };
+
+            Unit = {
+              After = ["graphical-session.target"];
+              Description = "ntfy desktop notifications";
+              PartOf = ["graphical-session.target"];
+            };
+          };
         }
       ];
 
