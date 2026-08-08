@@ -1,9 +1,16 @@
-{lib, ...}: {
+{
+  self,
+  lib,
+  ...
+}: {
   flake.modules.nixos.blocky = {config, ...}: let
-    inherit (lib) mkOption types;
+    inherit (lib) attrNames head mkIf mkOption types;
     inherit (config.internal.homelab) address;
+
+    mappedHosts = attrNames (config.services.blocky.settings.customDNS.mapping or {});
   in {
     key = "blocky";
+    imports = [self.modules.nixos.gatus-options];
 
     options.internal.homelab = {
       address = mkOption {
@@ -20,6 +27,23 @@
     };
 
     config = {
+      internal.homelab.gatus.endpoints = mkIf (mappedHosts != []) {
+        blocky = {
+          conditions = [
+            "[DNS_RCODE] == NOERROR"
+            "[BODY] == ${address}"
+          ];
+
+          dns = {
+            query-name = "${head mappedHosts}.";
+            query-type = "A";
+          };
+
+          group = "internal";
+          url = address;
+        };
+      };
+
       networking.firewall = {
         allowedTCPPorts = [53];
         allowedUDPPorts = [53];

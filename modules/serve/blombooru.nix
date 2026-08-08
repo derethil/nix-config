@@ -12,6 +12,7 @@
     inherit (self.lib) podmanVolume;
   in {
     imports = [
+      self.modules.nixos.gatus-options
       self.modules.nixos.ingress
       self.modules.nixos.quadlet
       self.modules.nixos.restic
@@ -41,6 +42,8 @@
           stopServices = ["blombooru-web.service" "blombooru-redis.service" "blombooru-db.service" "blombooru-pod.service"];
         };
       };
+
+      gatus.endpoints.blombooru = {};
 
       ingress.blombooru = {
         inherit port subdomain;

@@ -1,4 +1,8 @@
-{lib, ...}: {
+{
+  self,
+  lib,
+  ...
+}: {
   flake.modules.nixos.restic-backup = {
     config,
     pkgs,
@@ -11,10 +15,21 @@
     stagingRoot = "/var/lib/restic/staging";
 
     podman = getExe' pkgs.podman "podman";
-    curl = getExe' pkgs.curl "curl";
+    sqlite3 = getExe' pkgs.sqlite "sqlite3";
 
     stagingDir = name: "${stagingRoot}/${name}";
     dumpFile = name: pg: "${stagingDir name}/${pg.container}-${pg.database}.dump";
+    sqliteDumpFile = name: db: "${stagingDir name}/${db.name}.db";
+
+    ping = {
+      name,
+      success,
+      error ? null,
+    }:
+      self.lib.gatus.mkPush {
+        inherit error name pkgs success;
+        group = "backups";
+      };
 
     dumpCommands = name: job:
       concatMapStringsSep "\n"
@@ -23,28 +38,49 @@
         ${podman} exec ${pg.container} pg_dump -U ${pg.user} -Fc ${pg.database} > ${dumpFile name pg}'')
       job.postgres;
 
-    ping = name: suffix: "${curl} -fsS -m 10 --retry 3 \"$HC_PING_URL/${name}-backup${suffix}?create=1\" || true";
+    sqliteDumpCommands = name: job:
+      concatMapStringsSep "\n"
+      (db: ''
+        echo "==> Dumping SQLite ${db.name}..."
+        ${sqlite3} "${db.path}" ".backup '${sqliteDumpFile name db}'"'')
+      job.sqlite;
 
     prepareScript = name: job:
       pkgs.writeShellScript "restic-prepare-${name}-backup" ''
         set -euo pipefail
-        on_error() { ${ping name "/fail"}; }
-        trap on_error ERR
+
         echo "==> Preparing ${name} backup..."
-        ${ping name "/start"}
         rm -rf ${stagingDir name}
+
         mkdir -p ${stagingDir name}
+        date +%s%3N > ${stagingDir name}/start_time_ms
+
         ${job.prepareCommand}
         ${dumpCommands name job}
+        ${sqliteDumpCommands name job}
       '';
 
     cleanupScript = name:
       pkgs.writeShellScript "restic-cleanup-${name}-backup" ''
+        set -euo pipefail
+
+        START_TIME_MS=$(cat ${stagingDir name}/start_time_ms || date +%s%3N)
+        NOW=$(date +%s%3N)
+        DURATION=$(( NOW - START_TIME_MS ))
+
         rm -rf ${stagingDir name}
+
         if [ "$EXIT_STATUS" = "0" ]; then
-          ${ping name ""}
+          ${ping {
+          inherit name;
+          success = true;
+        }} --duration "$DURATION"ms
         else
-          ${ping name "/fail"}
+          ${ping {
+          inherit name;
+          error = "restic backup failed for ${name} (exit $EXIT_STATUS)";
+          success = false;
+        }} --duration "$DURATION"ms
         fi
       '';
   in {
@@ -64,6 +100,7 @@
 
             paths = flatten [
               (map (pg: dumpFile name pg) job.postgres)
+              (map (db: sqliteDumpFile name db) job.sqlite)
               job.paths
             ];
 

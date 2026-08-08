@@ -11,7 +11,10 @@
       fqdn = service: "${service.subdomain}.${cfg.domain}";
 
       usedPorts = map (service: service.port) (attrValues cfg.ingress);
-      duplicates = unique (filter (port: count (other: other == port) usedPorts > 1) usedPorts);
+      duplicatePorts = unique (filter (port: count (other: other == port) usedPorts > 1) usedPorts);
+
+      usedSubdomains = map (service: service.subdomain) (attrValues cfg.ingress);
+      duplicateSubdomains = unique (filter (subdomain: count (other: other == subdomain) usedSubdomains > 1) usedSubdomains);
     in {
       key = "ingress";
 
@@ -64,8 +67,12 @@
 
         assertions = [
           {
-            assertion = duplicates == [];
-            message = "internal.homelab.ingress: ports must be unique across services; reused: ${concatMapStringsSep ", " toString duplicates}";
+            assertion = duplicatePorts == [];
+            message = "internal.homelab.ingress: ports must be unique across services; reused: ${concatMapStringsSep ", " toString duplicatePorts}";
+          }
+          {
+            assertion = duplicateSubdomains == [];
+            message = "internal.homelab.ingress: subdomains must be unique across services; reused: ${concatMapStringsSep ", " toString duplicateSubdomains}";
           }
         ];
       };

@@ -14,15 +14,17 @@
     podman = getExe' pkgs.podman "podman";
     restic = getExe pkgs.restic;
     rsync = getExe' pkgs.rsync "rsync";
+    sqlite3 = getExe' pkgs.sqlite "sqlite3";
 
     stagingDir = name: "${stagingRoot}/${name}";
     dumpFile = name: pg: "${stagingDir name}/${pg.container}-${pg.database}.dump";
+    sqliteDumpFile = name: db: "${stagingDir name}/${db.name}.db";
 
     restoreScript = name: job: let
       restoreArgs = flatten [
         "--tag ${name}"
         (map (p: "--include ${removeSuffix "/_data" p}") job.paths)
-        (optional (job.postgres != []) "--include ${stagingRoot}/${name}")
+        (optional (job.postgres != [] || job.sqlite != []) "--include ${stagingRoot}/${name}")
       ];
 
       rsyncExcludeArgs = p:
@@ -45,6 +47,16 @@
           sudo ${rsync} -a --delete ${rsyncExcludeArgs p} "$tmp${p}/" "${p}/"
         '')
         job.paths;
+
+      sqliteRestoreCmds = concatMapStringsSep "\n" (db: ''
+        if ! sudo test -s "$tmp${sqliteDumpFile name db}"; then
+          echo "==> ERROR: SQLite dump for ${db.name} is missing or empty; refusing to restore" >&2
+          exit 1
+        fi
+
+        echo "==> Restoring SQLite ${db.name}..."
+        sudo ${sqlite3} "${db.path}" ".restore '$tmp${sqliteDumpFile name db}'"'')
+      job.sqlite;
 
       pgRestoreCmds = concatMapStringsSep "\n" (pg: ''
         if ! sudo test -s "$tmp${dumpFile name pg}"; then
@@ -92,6 +104,8 @@
         ${rsyncCmds}
 
         ${optionalString (job.restore.startBefore != []) "sudo systemctl start ${concatStringsSep " " job.restore.startBefore}"}
+
+        ${sqliteRestoreCmds}
 
         ${pgRestoreCmds}
 

@@ -12,6 +12,7 @@
     inherit (self.lib) podmanVolume;
   in {
     imports = [
+      self.modules.nixos.gatus-options
       self.modules.nixos.ingress
       self.modules.nixos.quadlet
       self.modules.nixos.restic
@@ -36,6 +37,8 @@
           stopServices = ["tandoor-web.service" "tandoor-db.service" "tandoor-pod.service"];
         };
       };
+
+      gatus.endpoints.tandoor = {};
 
       ingress.tandoor = {
         inherit port subdomain;
