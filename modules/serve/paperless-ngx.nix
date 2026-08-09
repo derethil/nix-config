@@ -10,7 +10,7 @@
     host = "${subdomain}.${config.internal.homelab.domain}";
 
     inherit (config.virtualisation.quadlet) pods;
-    inherit (self.lib) podmanVolume;
+    inherit (self.lib.podman) svc volume;
   in {
     imports = [
       self.modules.nixos.gatus-options
@@ -22,13 +22,7 @@
 
     internal.homelab = {
       backups.paperless = {
-        paths = [
-          (podmanVolume "paperless-data")
-          (podmanVolume "paperless-media")
-          (podmanVolume "paperless-consume")
-        ];
-
-        postgres = [
+        databases.postgres = [
           {
             container = "paperless-db";
             database = "paperless";
@@ -36,10 +30,12 @@
           }
         ];
 
-        restore = {
-          startAfter = ["paperless-broker.service" "paperless-web.service"];
-          startBefore = ["paperless-pod.service" "paperless-db.service"];
-          stopServices = ["paperless-web.service" "paperless-broker.service" "paperless-db.service" "paperless-pod.service"];
+        files.paths = map volume ["paperless-data" "paperless-media" "paperless-consume"];
+
+        restore.services = {
+          afterRestore = map svc ["paperless-broker" "paperless-web"];
+          afterSync = map svc ["paperless-pod" "paperless-db"];
+          stop = map svc ["paperless-web" "paperless-broker" "paperless-db" "paperless-pod"];
         };
       };
 
@@ -145,9 +141,9 @@
           serviceConfig.Restart = "always";
 
           unitConfig = {
-            After = ["paperless-db.service" "paperless-broker.service"];
+            After = map svc ["paperless-db" "paperless-broker"];
             Description = "Paperless-ngx Document Manager";
-            Requires = ["paperless-db.service" "paperless-broker.service"];
+            Requires = map svc ["paperless-db" "paperless-broker"];
           };
         };
       };

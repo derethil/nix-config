@@ -23,8 +23,8 @@
     restoreScript = name: job: let
       restoreArgs = flatten [
         "--tag ${name}"
-        (map (p: "--include ${removeSuffix "/_data" p}") job.paths)
-        (optional (job.postgres != [] || job.sqlite != []) "--include ${stagingRoot}/${name}")
+        (map (p: "--include ${removeSuffix "/_data" p}") job.files.paths)
+        (optional (job.databases.postgres != [] || job.databases.sqlite != []) "--include ${stagingRoot}/${name}")
       ];
 
       rsyncExcludeArgs = p:
@@ -34,7 +34,7 @@
             then ''--exclude "${removePrefix p e}"''
             else ''--exclude "${e}"''
         )
-        (filter (e: hasPrefix "${p}/" e || !hasPrefix "/" e) job.exclude);
+        (filter (e: hasPrefix "${p}/" e || !hasPrefix "/" e) job.files.exclude);
 
       rsyncCmds =
         concatMapStringsSep "\n" (p: ''
@@ -46,7 +46,7 @@
           sudo mkdir -p "${p}"
           sudo ${rsync} -a --delete ${rsyncExcludeArgs p} "$tmp${p}/" "${p}/"
         '')
-        job.paths;
+        job.files.paths;
 
       sqliteRestoreCmds = concatMapStringsSep "\n" (db: ''
         if ! sudo test -s "$tmp${sqliteDumpFile name db}"; then
@@ -56,7 +56,7 @@
 
         echo "==> Restoring SQLite ${db.name}..."
         sudo ${sqlite3} "${db.path}" ".restore '$tmp${sqliteDumpFile name db}'"'')
-      job.sqlite;
+      job.databases.sqlite;
 
       pgRestoreCmds = concatMapStringsSep "\n" (pg: ''
         if ! sudo test -s "$tmp${dumpFile name pg}"; then
@@ -69,7 +69,7 @@
         echo "==> Restoring ${pg.database}..."
         sudo cat "$tmp${dumpFile name pg}" \
             | sudo ${podman} exec -i ${pg.container} pg_restore -U ${pg.user} -d ${pg.database} --clean --if-exists --single-transaction'')
-      job.postgres;
+      job.databases.postgres;
     in
       pkgs.writeShellScriptBin "restic-restore-${name}" ''
         set -euo pipefail
@@ -80,10 +80,11 @@
         tmp=$(mktemp -d)
         trap 'sudo rm -rf "$tmp"' EXIT
 
-        ${optionalString (job.restore.stopServices != []) ''
+        ${optionalString (job.restore.services.stop != []) ''
           echo "==> Stopping services..."
-          sudo systemctl stop ${concatStringsSep " " job.restore.stopServices}
+          sudo systemctl stop ${concatStringsSep " " job.restore.services.stop}
         ''}
+
         echo "==> Restoring $snapshot..."
         # Run restic as root so it restores the original ownership. Secrets are
         # read from files by root, so they never touch our env or any argv.
@@ -103,16 +104,17 @@
         echo "==> Syncing volumes..."
         ${rsyncCmds}
 
-        ${optionalString (job.restore.startBefore != []) "sudo systemctl start ${concatStringsSep " " job.restore.startBefore}"}
+        ${optionalString (job.restore.services.afterSync != []) "sudo systemctl start ${concatStringsSep " " job.restore.services.afterSync}"}
 
         ${sqliteRestoreCmds}
 
         ${pgRestoreCmds}
 
-        ${optionalString (job.restore.startAfter != []) ''
+        ${optionalString (job.restore.services.afterRestore != []) ''
           echo "==> Starting services..."
-          sudo systemctl start ${concatStringsSep " " job.restore.startAfter}
+          sudo systemctl start ${concatStringsSep " " job.restore.services.afterRestore}
         ''}
+
         echo "==> Done."
       '';
   in {

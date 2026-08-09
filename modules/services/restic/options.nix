@@ -9,7 +9,7 @@
       };
 
       path = mkOption {
-        description = "Absolute path to the .db file on the host (e.g. via podmanVolume).";
+        description = "Absolute path to the .db file on the host (e.g. via self.lib.podman.volume).";
         type = types.str;
       };
     };
@@ -34,29 +34,39 @@
     };
   };
 
-  restoreType = types.submodule {
+  servicesType = types.submodule {
     options = {
-      startAfter = mkOption {
+      afterRestore = mkOption {
         default = [];
-        description = "Systemd services to start after the restore completes.";
+        description = "Systemd services to start after all restores complete.";
         type = types.listOf types.str;
       };
 
-      startBefore = mkOption {
+      afterSync = mkOption {
         default = [];
-        description = "Systemd services to start before data is written (e.g. a database container that pg_restore connects to).";
+        description = "Systemd services to start after volumes are synced, before any database restores.";
         type = types.listOf types.str;
       };
 
-      stopServices = mkOption {
+      stop = mkOption {
         default = [];
-        description = "Systemd services to stop before restore.";
+        description = "Systemd services to stop before restore begins.";
         type = types.listOf types.str;
       };
     };
   };
 
-  backupType = types.submodule {
+  restoreType = types.submodule {
+    options = {
+      services = mkOption {
+        default = {};
+        description = "Systemd services to stop/start at specific points during the restore.";
+        type = servicesType;
+      };
+    };
+  };
+
+  filesType = types.submodule {
     options = {
       exclude = mkOption {
         default = [];
@@ -69,29 +79,57 @@
         description = "Absolute paths to back up.";
         type = types.listOf types.str;
       };
+    };
+  };
 
+  databasesType = types.submodule {
+    options = {
       postgres = mkOption {
         default = [];
         description = "Postgres databases to dump via podman exec and include in the backup.";
         type = types.listOf postgresType;
       };
 
-      prepareCommand = mkOption {
-        default = "";
-        description = "Extra shell run before the backup (e.g. custom dumps).";
-        type = types.lines;
+      sqlite = mkOption {
+        default = [];
+        description = "SQLite databases to dump via sqlite3 .backup on the host and include in the backup.";
+        type = types.listOf sqliteType;
+      };
+    };
+  };
+
+  backupHooksType = types.submodule {
+    options.before = mkOption {
+      default = "";
+      description = "Shell commands to run before dumps and the restic backup.";
+      type = types.lines;
+    };
+  };
+
+  backupType = types.submodule {
+    options = {
+      databases = mkOption {
+        default = {};
+        description = "Databases to dump and include in the backup.";
+        type = databasesType;
+      };
+
+      files = mkOption {
+        default = {};
+        description = "Filesystem paths to include in the backup.";
+        type = filesType;
+      };
+
+      hooks = mkOption {
+        default = {};
+        description = "Shell hooks to run at specific points during the backup.";
+        type = backupHooksType;
       };
 
       restore = mkOption {
         default = {};
         description = "Restore configuration for this backup job.";
         type = restoreType;
-      };
-
-      sqlite = mkOption {
-        default = [];
-        description = "SQLite databases to dump via sqlite3 .backup on the host and include in the backup.";
-        type = types.listOf sqliteType;
       };
     };
   };

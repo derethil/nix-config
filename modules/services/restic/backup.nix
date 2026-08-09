@@ -36,14 +36,14 @@
       (pg: ''
         echo "==> Dumping ${pg.database}..."
         ${podman} exec ${pg.container} pg_dump -U ${pg.user} -Fc ${pg.database} > ${dumpFile name pg}'')
-      job.postgres;
+      job.databases.postgres;
 
     sqliteDumpCommands = name: job:
       concatMapStringsSep "\n"
       (db: ''
         echo "==> Dumping SQLite ${db.name}..."
         ${sqlite3} "${db.path}" ".backup '${sqliteDumpFile name db}'"'')
-      job.sqlite;
+      job.databases.sqlite;
 
     prepareScript = name: job:
       pkgs.writeShellScript "restic-prepare-${name}-backup" ''
@@ -55,7 +55,7 @@
         mkdir -p ${stagingDir name}
         date +%s%3N > ${stagingDir name}/start_time_ms
 
-        ${job.prepareCommand}
+        ${job.hooks.before}
         ${dumpCommands name job}
         ${sqliteDumpCommands name job}
       '';
@@ -90,7 +90,7 @@
       services.restic.backups =
         mapAttrs (
           name: job: {
-            inherit (job) exclude;
+            inherit (job.files) exclude;
             backupCleanupCommand = "${cleanupScript name}";
             backupPrepareCommand = "${prepareScript name job}";
             environmentFile = config.sops.templates."restic-env".path;
@@ -99,9 +99,9 @@
             passwordFile = config.sops.secrets."services/restic/repository_password".path;
 
             paths = flatten [
-              (map (pg: dumpFile name pg) job.postgres)
-              (map (db: sqliteDumpFile name db) job.sqlite)
-              job.paths
+              (map (pg: dumpFile name pg) job.databases.postgres)
+              (map (db: sqliteDumpFile name db) job.databases.sqlite)
+              job.files.paths
             ];
 
             repositoryFile = config.sops.secrets."services/restic/repository".path;

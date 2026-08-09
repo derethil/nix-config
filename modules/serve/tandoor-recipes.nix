@@ -9,7 +9,7 @@
     host = "${subdomain}.${config.internal.homelab.domain}";
 
     inherit (config.virtualisation.quadlet) pods;
-    inherit (self.lib) podmanVolume;
+    inherit (self.lib.podman) svc volume;
   in {
     imports = [
       self.modules.nixos.gatus-options
@@ -21,9 +21,7 @@
 
     internal.homelab = {
       backups.tandoor = {
-        paths = [(podmanVolume "tandoor-media")];
-
-        postgres = [
+        databases.postgres = [
           {
             container = "tandoor-db";
             database = "djangodb";
@@ -31,10 +29,12 @@
           }
         ];
 
-        restore = {
-          startAfter = ["tandoor-web.service"];
-          startBefore = ["tandoor-pod.service" "tandoor-db.service"];
-          stopServices = ["tandoor-web.service" "tandoor-db.service" "tandoor-pod.service"];
+        files.paths = map volume ["tandoor-media"];
+
+        restore.services = {
+          afterRestore = map svc ["tandoor-web"];
+          afterSync = map svc ["tandoor-pod" "tandoor-db"];
+          stop = map svc ["tandoor-web" "tandoor-db" "tandoor-pod"];
         };
       };
 
@@ -80,10 +80,7 @@
             noNewPrivileges = true;
             pod = pods.tandoor.ref;
             pull = "newer";
-
-            volumes = [
-              "tandoor-db:/var/lib/postgresql/data"
-            ];
+            volumes = ["tandoor-db:/var/lib/postgresql/data"];
           };
 
           serviceConfig.Restart = "always";
@@ -126,9 +123,9 @@
           serviceConfig.Restart = "always";
 
           unitConfig = {
-            After = ["tandoor-db.service"];
+            After = map svc ["tandoor-db"];
             Description = "Tandoor Recipes Manager";
-            Requires = ["tandoor-db.service"];
+            Requires = map svc ["tandoor-db"];
           };
         };
       };

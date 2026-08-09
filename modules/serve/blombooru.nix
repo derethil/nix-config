@@ -9,7 +9,7 @@
     internalPort = "8000";
 
     inherit (config.virtualisation.quadlet) pods;
-    inherit (self.lib) podmanVolume;
+    inherit (self.lib.podman) svc volume;
   in {
     imports = [
       self.modules.nixos.gatus-options
@@ -21,14 +21,7 @@
 
     internal.homelab = {
       backups.blombooru = {
-        exclude = ["${podmanVolume "blombooru-data"}/huggingface"];
-
-        paths = [
-          (podmanVolume "blombooru-data")
-          (podmanVolume "blombooru-media")
-        ];
-
-        postgres = [
+        databases.postgres = [
           {
             container = "blombooru-db";
             database = "blombooru";
@@ -36,10 +29,17 @@
           }
         ];
 
+        files = {
+          exclude = ["${volume "blombooru-data"}/huggingface"];
+          paths = map volume ["blombooru-data" "blombooru-media"];
+        };
+
         restore = {
-          startAfter = ["blombooru-redis.service" "blombooru-web.service"];
-          startBefore = ["blombooru-pod.service" "blombooru-db.service"];
-          stopServices = ["blombooru-web.service" "blombooru-redis.service" "blombooru-db.service" "blombooru-pod.service"];
+          services = {
+            afterRestore = map svc ["blombooru-redis" "blombooru-web"];
+            afterSync = map svc ["blombooru-pod" "blombooru-db"];
+            stop = map svc ["blombooru-web" "blombooru-redis" "blombooru-db" "blombooru-pod"];
+          };
         };
       };
 
@@ -85,10 +85,7 @@
             noNewPrivileges = true;
             pod = pods.blombooru.ref;
             pull = "newer";
-
-            volumes = [
-              "blombooru-db:/var/lib/postgresql/data"
-            ];
+            volumes = ["blombooru-db:/var/lib/postgresql/data"];
           };
 
           serviceConfig.Restart = "always";
@@ -111,10 +108,7 @@
             pod = pods.blombooru.ref;
             pull = "newer";
             user = "redis";
-
-            volumes = [
-              "blombooru-redis:/data"
-            ];
+            volumes = ["blombooru-redis:/data"];
           };
 
           serviceConfig.Restart = "always";
@@ -161,9 +155,9 @@
           serviceConfig.Restart = "always";
 
           unitConfig = {
-            After = ["blombooru-db.service" "blombooru-redis.service"];
+            After = map svc ["blombooru-db" "blombooru-redis"];
             Description = "Blombooru Media Tagging";
-            Requires = ["blombooru-db.service" "blombooru-redis.service"];
+            Requires = map svc ["blombooru-db" "blombooru-redis"];
           };
         };
       };

@@ -12,6 +12,7 @@
     # - Replace internet endpoint with the proper 'connectivity' that turns off checks when it goes red.
 
     inherit (config.virtualisation.quadlet) pods;
+    inherit (self.lib.podman) svc;
   in {
     imports = [
       self.modules.nixos.gatus-options
@@ -25,7 +26,7 @@
 
     internal.homelab = {
       backups.gatus = {
-        postgres = [
+        databases.postgres = [
           {
             container = "gatus-db";
             database = "gatus";
@@ -33,10 +34,10 @@
           }
         ];
 
-        restore = {
-          startAfter = ["gatus-web.service"];
-          startBefore = ["gatus-pod.service" "gatus-db.service"];
-          stopServices = ["gatus-web.service" "gatus-db.service" "gatus-pod.service"];
+        restore.services = {
+          afterRestore = map svc ["gatus-web"];
+          afterSync = map svc ["gatus-pod" "gatus-db"];
+          stop = map svc ["gatus-web" "gatus-db" "gatus-pod"];
         };
       };
 
@@ -86,10 +87,7 @@
             noNewPrivileges = true;
             pod = pods.gatus.ref;
             pull = "newer";
-
-            volumes = [
-              "gatus-db:/var/lib/postgresql/data"
-            ];
+            volumes = ["gatus-db:/var/lib/postgresql/data"];
           };
 
           serviceConfig.Restart = "always";
@@ -113,9 +111,9 @@
           serviceConfig.Restart = "always";
 
           unitConfig = {
-            After = ["gatus-db.service"];
+            After = map svc ["gatus-db"];
             Description = "Gatus Health Dashboard";
-            Requires = ["gatus-db.service"];
+            Requires = map svc ["gatus-db"];
           };
         };
       };

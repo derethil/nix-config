@@ -28,6 +28,9 @@
       };
     };
 
-    lib.podmanVolume = name: "/var/lib/containers/storage/volumes/${name}/_data";
+    lib.podman = {
+      svc = container: "${container}.service";
+      volume = name: "/var/lib/containers/storage/volumes/${name}/_data";
+    };
   };
 }
