@@ -38,19 +38,19 @@
     options = {
       afterRestore = mkOption {
         default = "";
-        description = "Shell commands to run after all restores and startAfter services are up.";
+        description = "Shell commands to run after all restores and services are up.";
         type = types.lines;
       };
 
       afterStop = mkOption {
         default = "";
-        description = "Shell commands to run after services are stopped, before restic restores.";
+        description = "Shell commands to run after services are stopped but before restic restores.";
         type = types.lines;
       };
 
       afterSync = mkOption {
         default = "";
-        description = "Shell commands to run after volumes are rsynced, before any database restores.";
+        description = "Shell commands to run after files are restored but before any database restores.";
         type = types.lines;
       };
     };
@@ -66,7 +66,7 @@
 
       afterSync = mkOption {
         default = [];
-        description = "Systemd services to start after volumes are synced, before any database restores.";
+        description = "Systemd services to start after files are synced but before any database restores.";
         type = types.listOf types.str;
       };
 

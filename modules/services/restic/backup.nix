@@ -84,32 +84,28 @@
         fi
       '';
   in {
-    config = {
-      environment.systemPackages = [pkgs.restic pkgs.backblaze-b2];
+    config.services.restic.backups =
+      mapAttrs (
+        name: job: {
+          inherit (job.files) exclude;
+          backupCleanupCommand = "${cleanupScript name}";
+          backupPrepareCommand = "${prepareScript name job}";
+          environmentFile = config.sops.templates."restic-env".path;
+          extraBackupArgs = ["--retry-lock" config.internal.homelab.restic.retryLock "--tag" name];
+          initialize = true;
+          passwordFile = config.sops.secrets."services/restic/repository_password".path;
 
-      services.restic.backups =
-        mapAttrs (
-          name: job: {
-            inherit (job.files) exclude;
-            backupCleanupCommand = "${cleanupScript name}";
-            backupPrepareCommand = "${prepareScript name job}";
-            environmentFile = config.sops.templates."restic-env".path;
-            extraBackupArgs = ["--retry-lock" config.internal.homelab.restic.retryLock "--tag" name];
-            initialize = true;
-            passwordFile = config.sops.secrets."services/restic/repository_password".path;
+          paths = flatten [
+            (map (pg: dumpFile name pg) job.databases.postgres)
+            (map (db: sqliteDumpFile name db) job.databases.sqlite)
+            job.files.paths
+          ];
 
-            paths = flatten [
-              (map (pg: dumpFile name pg) job.databases.postgres)
-              (map (db: sqliteDumpFile name db) job.databases.sqlite)
-              job.files.paths
-            ];
-
-            repositoryFile = config.sops.secrets."services/restic/repository".path;
-            # restic-nightly controls the timer for all jobs, so we don't want to create a timer for each job
-            timerConfig = null;
-          }
-        )
-        cfg;
-    };
+          repositoryFile = config.sops.secrets."services/restic/repository".path;
+          # restic-nightly controls the timer for all jobs, so we don't want to create a timer for each job
+          timerConfig = null;
+        }
+      )
+      cfg;
   };
 }

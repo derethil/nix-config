@@ -1,5 +1,9 @@
 {self, ...}: {
-  flake.modules.nixos.restic = {config, ...}: let
+  flake.modules.nixos.restic = {
+    config,
+    pkgs,
+    ...
+  }: let
     cacheDir = "/var/lib/restic/cache";
     gatusDomain = self.lib.homelab.mkServiceDomain config "gatus";
   in {
@@ -16,6 +20,7 @@
     ];
 
     config = {
+      environment.systemPackages = [pkgs.restic pkgs.backblaze-b2];
       internal.boot.impermanence.extraDirectories = ["/var/lib/restic"];
 
       sops = {

@@ -4,7 +4,7 @@
     pkgs,
     ...
   }: let
-    inherit (lib) concatMapStringsSep concatStringsSep filter flatten getExe getExe' hasPrefix mapAttrsToList optional optionalString removePrefix removeSuffix;
+    inherit (lib) concatMapStringsSep concatStringsSep getExe getExe' mapAttrsToList optionalString;
 
     cfg = config.internal.homelab.backups;
 
@@ -13,53 +13,37 @@
     bash = getExe pkgs.bash;
     podman = getExe' pkgs.podman "podman";
     restic = getExe pkgs.restic;
-    rsync = getExe' pkgs.rsync "rsync";
     sqlite3 = getExe' pkgs.sqlite "sqlite3";
 
     stagingDir = name: "${stagingRoot}/${name}";
     dumpFile = name: pg: "${stagingDir name}/${pg.container}-${pg.database}.dump";
     sqliteDumpFile = name: db: "${stagingDir name}/${db.name}.db";
 
+    resticEnv = ''
+      set -a
+      source ${config.sops.templates."restic-env".path}
+      set +a
+      export RESTIC_REPOSITORY_FILE=${config.sops.secrets."services/restic/repository".path}
+      export RESTIC_PASSWORD_FILE=${config.sops.secrets."services/restic/repository_password".path}
+      export RESTIC_CACHE_DIR=/var/lib/restic/cache
+    '';
+
     restoreScript = name: job: let
-      restoreArgs = flatten [
-        "--tag ${name}"
-        (map (p: "--include ${removeSuffix "/_data" p}") job.files.paths)
-        (optional (job.databases.postgres != [] || job.databases.sqlite != []) "--include ${stagingRoot}/${name}")
-      ];
-
-      rsyncExcludeArgs = p:
-        concatMapStringsSep " " (
-          e:
-            if hasPrefix "${p}/" e
-            then ''--exclude "${removePrefix p e}"''
-            else ''--exclude "${e}"''
-        )
-        (filter (e: hasPrefix "${p}/" e || !hasPrefix "/" e) job.files.exclude);
-
-      rsyncCmds =
-        concatMapStringsSep "\n" (p: ''
-          if ! sudo test -d "$tmp${p}" || [ -z "$(sudo ls -A "$tmp${p}")" ]; then
-            echo "==> ERROR: restic restored nothing to $tmp${p}; refusing to rsync --delete into ${p}" >&2
-            exit 1
-          fi
-
-          sudo mkdir -p "${p}"
-          sudo ${rsync} -a --delete ${rsyncExcludeArgs p} "$tmp${p}/" "${p}/"
-        '')
-        job.files.paths;
+      hasFiles = job.files.paths != [];
+      hasDbs = builtins.any (dbs: dbs != []) (builtins.attrValues job.databases);
 
       sqliteRestoreCmds = concatMapStringsSep "\n" (db: ''
-        if ! sudo test -s "$tmp${sqliteDumpFile name db}"; then
+        if ! sudo test -s "${sqliteDumpFile name db}"; then
           echo "==> ERROR: SQLite dump for ${db.name} is missing or empty; refusing to restore" >&2
           exit 1
         fi
 
         echo "==> Restoring SQLite ${db.name}..."
-        sudo ${sqlite3} "${db.path}" ".restore '$tmp${sqliteDumpFile name db}'"'')
+        sudo ${sqlite3} "${db.path}" ".restore '${sqliteDumpFile name db}'"'')
       job.databases.sqlite;
 
       pgRestoreCmds = concatMapStringsSep "\n" (pg: ''
-        if ! sudo test -s "$tmp${dumpFile name pg}"; then
+        if ! sudo test -s "${dumpFile name pg}"; then
           echo "==> ERROR: dump for ${pg.database} is missing or empty; refusing to --clean the live database" >&2
           exit 1
         fi
@@ -67,18 +51,13 @@
         echo "==> Waiting for ${pg.container}..."
         until timeout 2 sudo ${podman} exec ${pg.container} pg_isready -U ${pg.user} &>/dev/null; do sleep 1; done
         echo "==> Restoring ${pg.database}..."
-        sudo cat "$tmp${dumpFile name pg}" \
+        sudo cat "${dumpFile name pg}" \
             | sudo ${podman} exec -i ${pg.container} pg_restore -U ${pg.user} -d ${pg.database} --clean --if-exists --single-transaction'')
       job.databases.postgres;
     in
       pkgs.writeShellScriptBin "restic-restore-${name}" ''
         set -euo pipefail
         snapshot="''${1:-latest}"
-
-        # restic restores files into $tmp as root so it can preserve the
-        # original uid/gid; everything touching $tmp afterwards needs sudo.
-        tmp=$(mktemp -d)
-        trap 'sudo rm -rf "$tmp"' EXIT
 
         ${optionalString (job.restore.services.stop != []) ''
           echo "==> Stopping services..."
@@ -90,24 +69,16 @@
           ${job.restore.hooks.afterStop}
         ''}
 
-        echo "==> Restoring $snapshot..."
-        # Run restic as root so it restores the original ownership. Secrets are
-        # read from files by root, so they never touch our env or any argv.
-        sudo ${bash} -c '
-          set -euo pipefail
-          set -a
-          source ${config.sops.templates."restic-env".path}
-          set +a
-          export RESTIC_REPOSITORY_FILE=${config.sops.secrets."services/restic/repository".path}
-          export RESTIC_PASSWORD_FILE=${config.sops.secrets."services/restic/repository_password".path}
-          export RESTIC_CACHE_DIR=/var/lib/restic/cache
-          exec ${restic} restore "$1" \
-            ${concatStringsSep " " restoreArgs} \
-            --target "$2"
-        ' restic-restore "$snapshot" "$tmp"
+        ${optionalString hasDbs "trap 'sudo rm -rf ${stagingDir name}' EXIT"}
 
-        echo "==> Syncing volumes..."
-        ${rsyncCmds}
+        ${optionalString (hasFiles || hasDbs) ''
+          echo "==> Restoring $snapshot..."
+          sudo ${bash} -c '
+            set -euo pipefail
+            ${resticEnv}
+            exec ${restic} restore "$1" --tag ${name} --overwrite if-changed --target /
+          ' restic-restore "$snapshot"
+        ''}
 
         ${optionalString (job.restore.hooks.afterSync != "") ''
           echo "==> Running afterSync hooks..."
@@ -116,9 +87,9 @@
 
         ${optionalString (job.restore.services.afterSync != []) "sudo systemctl start ${concatStringsSep " " job.restore.services.afterSync}"}
 
-        ${sqliteRestoreCmds}
+        ${optionalString (job.databases.sqlite != []) sqliteRestoreCmds}
 
-        ${pgRestoreCmds}
+        ${optionalString (job.databases.postgres != []) pgRestoreCmds}
 
         ${optionalString (job.restore.services.afterRestore != []) ''
           echo "==> Starting services..."
