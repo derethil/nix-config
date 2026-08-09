@@ -14,6 +14,7 @@
     imports = [
       self.modules.nixos.gatus-options
       self.modules.nixos.ingress
+      self.modules.nixos.oauth2-proxy
       self.modules.nixos.quadlet
       self.modules.nixos.restic
       self.modules.nixos.secrets
@@ -52,6 +53,7 @@
 
       ingress.blombooru = {
         inherit port subdomain;
+        caddy.protect = true;
       };
     };
 

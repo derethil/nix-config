@@ -13,6 +13,7 @@
   in {
     imports = [
       self.modules.nixos.gatus-options
+      self.modules.nixos.pocket-id
       self.modules.nixos.ingress
       self.modules.nixos.quadlet
       self.modules.nixos.restic
@@ -42,11 +43,26 @@
 
       ingress.tandoor = {
         inherit port subdomain;
+
+        # HACK: Tandoor hardcodes its post-logout redirect, but logs out on GET. Hit both on the logout endpoint
+        caddy.extraConfig = ''
+          handle /accounts/logout* {
+            forward_auth 127.0.0.1:${port} {
+              uri /accounts/logout/
+              @done status 2xx 3xx
+              handle_response @done {
+                redir * ${self.lib.homelab.logoutRedirectUrl config}
+              }
+            }
+          }
+        '';
       };
     };
 
     sops = {
       secrets = {
+        "serve/tandoor/oidc/client_id" = {};
+        "serve/tandoor/oidc/client_secret" = {};
         "serve/tandoor/postgres_password" = {};
         "serve/tandoor/secret_key" = {};
       };
@@ -57,7 +73,10 @@
           POSTGRES_PASSWORD=${config.sops.placeholder."serve/tandoor/postgres_password"}
           POSTGRES_USER=djangodb
           POSTGRES_DB=djangodb
+
           SECRET_KEY=${config.sops.placeholder."serve/tandoor/secret_key"}
+
+          SOCIALACCOUNT_PROVIDERS={"openid_connect":{"APPS":[{"provider_id":"pocket-id","name":"Pocket ID","client_id":"${config.sops.placeholder."serve/tandoor/oidc/client_id"}","secret":"${config.sops.placeholder."serve/tandoor/oidc/client_secret"}","settings":{"server_url":"https://auth.${config.internal.homelab.domain}/.well-known/openid-configuration"}}]}}
         '';
       };
     };
@@ -103,9 +122,13 @@
               ALLOWED_HOSTS = "*";
               CSRF_TRUSTED_ORIGINS = "https://${host}";
               DB_ENGINE = "django.db.backends.postgresql";
+              HIDE_LOGIN_FORM = "1";
               POSTGRES_HOST = "localhost";
               POSTGRES_PORT = "5432";
               SECURE_PROXY_SSL_HEADER = "HTTP_X_FORWARDED_PROTO,https";
+              SOCIALACCOUNT_LOGIN_ON_GET = "1";
+              SOCIALACCOUNT_ONLY = "1";
+              SOCIAL_PROVIDERS = "allauth.socialaccount.providers.openid_connect";
               TANDOOR_PORT = internalPort;
             };
 

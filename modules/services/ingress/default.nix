@@ -5,7 +5,7 @@
 }: {
   flake = {
     modules.nixos.ingress = {config, ...}: let
-      inherit (lib) attrValues concatMapStringsSep count filter mkMerge mkOption toInt types unique;
+      inherit (lib) attrValues concatMapStringsSep count filter mkMerge optionalString unique;
 
       cfg = config.internal.homelab;
       fqdn = service: "${service.subdomain}.${cfg.domain}";
@@ -21,33 +21,8 @@
       imports = [
         self.modules.nixos.blocky
         self.modules.nixos.caddy
+        self.modules.nixos.ingress-options
       ];
-
-      options.internal.homelab.ingress = mkOption {
-        default = {};
-        description = "Homelab services to route: each gets a DNS record and a reverse proxy.";
-
-        type = types.attrsOf (types.submodule ({name, ...}: {
-          options = {
-            caddy.extraConfig = mkOption {
-              default = "";
-              description = "Extra Caddyfile directives appended inside the generated vhost (e.g. basic_auth, forward_auth, headers).";
-              type = types.lines;
-            };
-
-            port = mkOption {
-              description = "Loopback port the reverse proxy forwards to (declared as a string, validated as a port).";
-              type = types.coercedTo types.str toInt types.port;
-            };
-
-            subdomain = mkOption {
-              default = name;
-              description = "Subdomain under internal.homelab.domain (defaults to the attribute name).";
-              type = types.str;
-            };
-          };
-        }));
-      };
 
       config = let
         publishService = service: let
@@ -58,7 +33,23 @@
           };
 
           caddy.virtualHosts.${host}.extraConfig = ''
-            reverse_proxy 127.0.0.1:${toString service.port}
+            ${optionalString service.caddy.protect ''
+              forward_auth 127.0.0.1:${toString cfg.ingress.oauth2-proxy.port} {
+                uri /oauth2/auth
+                header_up X-Real-IP {remote_host}
+                copy_headers X-Auth-Request-User X-Auth-Request-Email
+
+                @unauthenticated status 401
+                handle_response @unauthenticated {
+                  redir * ${self.lib.homelab.mkServiceDomain config "oauth2-proxy"}/oauth2/start?rd={scheme}://{host}{uri}
+                }
+              }
+            ''}
+
+            reverse_proxy 127.0.0.1:${toString service.port} {
+              header_up X-Real-IP {remote_host}
+            }
+
             ${service.caddy.extraConfig}
           '';
         };
@@ -78,6 +69,9 @@
       };
     };
 
-    lib.homelab.mkServiceDomain = config: service: "https://${config.internal.homelab.ingress."${service}".subdomain}.${config.internal.homelab.domain}";
+    lib.homelab = {
+      logoutRedirectUrl = config: "${self.lib.homelab.mkServiceDomain config "pocket-id"}/api/oidc/end-session";
+      mkServiceDomain = config: service: "https://${config.internal.homelab.ingress."${service}".subdomain}.${config.internal.homelab.domain}";
+    };
   };
 }

@@ -48,6 +48,8 @@
 
     sops = {
       secrets = {
+        "serve/paperless/oidc/client_id" = {};
+        "serve/paperless/oidc/client_secret" = {};
         "serve/paperless/postgres_password" = {};
         "serve/paperless/secret_key" = {};
       };
@@ -60,6 +62,7 @@
           POSTGRES_PASSWORD=${config.sops.placeholder."serve/paperless/postgres_password"}
           PAPERLESS_DBPASS=${config.sops.placeholder."serve/paperless/postgres_password"}
           PAPERLESS_SECRET_KEY=${config.sops.placeholder."serve/paperless/secret_key"}
+          PAPERLESS_SOCIALACCOUNT_PROVIDERS={"openid_connect":{"APPS":[{"provider_id":"pocket-id","name":"Pocket ID","client_id":"${config.sops.placeholder."serve/paperless/oidc/client_id"}","secret":"${config.sops.placeholder."serve/paperless/oidc/client_secret"}","settings":{"server_url":"https://auth.${config.internal.homelab.domain}/.well-known/openid-configuration"}}]}}
         '';
       };
     };
@@ -118,12 +121,18 @@
             environmentFiles = [config.sops.templates."paperless-ngx-env".path];
 
             environments = {
+              PAPERLESS_ACCOUNT_ALLOW_SIGNUPS = "false";
+              PAPERLESS_APPS = "allauth.socialaccount.providers.openid_connect";
               PAPERLESS_DBENGINE = "postgresql";
               PAPERLESS_DBHOST = "localhost";
               PAPERLESS_DBNAME = "paperless";
               PAPERLESS_DBPORT = "5432";
               PAPERLESS_DBUSER = "paperless";
+              PAPERLESS_DISABLE_REGULAR_LOGIN = "1";
+              PAPERLESS_LOGOUT_REDIRECT_URL = "${self.lib.homelab.logoutRedirectUrl config}";
+              PAPERLESS_REDIRECT_LOGIN_TO_SSO = "1";
               PAPERLESS_REDIS = "redis://localhost:6379";
+              PAPERLESS_SOCIAL_AUTO_SIGNUP = "1";
               PAPERLESS_URL = "https://${host}";
             };
 
