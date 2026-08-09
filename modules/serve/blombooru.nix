@@ -35,6 +35,11 @@
         };
 
         restore = {
+          hooks.afterRestore = ''
+            echo "==> Flushing Redis cache..."
+            sudo podman exec blombooru-redis sh -c 'redis-cli -a "$REDIS_PASSWORD" FLUSHALL'
+          '';
+
           services = {
             afterRestore = map svc ["blombooru-redis" "blombooru-web"];
             afterSync = map svc ["blombooru-pod" "blombooru-db"];

@@ -34,6 +34,28 @@
     };
   };
 
+  hooksType = types.submodule {
+    options = {
+      afterRestore = mkOption {
+        default = "";
+        description = "Shell commands to run after all restores and startAfter services are up.";
+        type = types.lines;
+      };
+
+      afterStop = mkOption {
+        default = "";
+        description = "Shell commands to run after services are stopped, before restic restores.";
+        type = types.lines;
+      };
+
+      afterSync = mkOption {
+        default = "";
+        description = "Shell commands to run after volumes are rsynced, before any database restores.";
+        type = types.lines;
+      };
+    };
+  };
+
   servicesType = types.submodule {
     options = {
       afterRestore = mkOption {
@@ -58,6 +80,12 @@
 
   restoreType = types.submodule {
     options = {
+      hooks = mkOption {
+        default = {};
+        description = "Shell hooks to run at specific points during the restore.";
+        type = hooksType;
+      };
+
       services = mkOption {
         default = {};
         description = "Systemd services to stop/start at specific points during the restore.";

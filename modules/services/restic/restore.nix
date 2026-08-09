@@ -85,6 +85,11 @@
           sudo systemctl stop ${concatStringsSep " " job.restore.services.stop}
         ''}
 
+        ${optionalString (job.restore.hooks.afterStop != "") ''
+          echo "==> Running afterStop hooks..."
+          ${job.restore.hooks.afterStop}
+        ''}
+
         echo "==> Restoring $snapshot..."
         # Run restic as root so it restores the original ownership. Secrets are
         # read from files by root, so they never touch our env or any argv.
@@ -104,6 +109,11 @@
         echo "==> Syncing volumes..."
         ${rsyncCmds}
 
+        ${optionalString (job.restore.hooks.afterSync != "") ''
+          echo "==> Running afterSync hooks..."
+          ${job.restore.hooks.afterSync}
+        ''}
+
         ${optionalString (job.restore.services.afterSync != []) "sudo systemctl start ${concatStringsSep " " job.restore.services.afterSync}"}
 
         ${sqliteRestoreCmds}
@@ -113,6 +123,11 @@
         ${optionalString (job.restore.services.afterRestore != []) ''
           echo "==> Starting services..."
           sudo systemctl start ${concatStringsSep " " job.restore.services.afterRestore}
+        ''}
+
+        ${optionalString (job.restore.hooks.afterRestore != "") ''
+          echo "==> Running afterRestore hooks..."
+          ${job.restore.hooks.afterRestore}
         ''}
 
         echo "==> Done."
