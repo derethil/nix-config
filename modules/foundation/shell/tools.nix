@@ -63,6 +63,7 @@ in {
           (optionals pkgs.stdenv.isLinux [
             hwinfo
             wl-clipboard
+            wtype
           ])
           [
             chafa

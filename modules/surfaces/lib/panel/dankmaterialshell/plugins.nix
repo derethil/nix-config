@@ -34,13 +34,27 @@ in {
         ];
       };
 
+      dankBitwarden = {
+        enable = true;
+
+        settings = {
+          loginAction = "type:password";
+          noTrigger = false;
+          trigger = ":bw";
+        };
+      };
+
       dankCalendarAgenda = {
         inherit (config.programs.dank-calendar) enable;
         settings.dynamicWidth = true;
       };
 
       easyEffects.enable = config.services.easyeffects.enable || (self.lib.hasPackage config.home.packages "easyeffects");
-      emojiLauncher.enable = true;
+
+      emojiLauncher = {
+        enable = true;
+        settings.trigger = ":e";
+      };
 
       hueManager = {
         enable = true;

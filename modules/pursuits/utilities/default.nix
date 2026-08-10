@@ -2,6 +2,7 @@
   flake.modules = {
     nixos.utilities.imports = [
       self.modules.nixos.sideloading
+      self.modules.nixos.rbw
     ];
 
     homeManager.utilities.imports = [

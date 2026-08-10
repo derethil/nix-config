@@ -33,9 +33,9 @@
         "Ctrl+Print" = mkKeybinds {hotkey-overlay-title = "Take Screenshot [File]";} {spawn-sh = "dms screenshot -d ${config.surfaces.niri.screenshots.path}";};
         "Mod+C" = mkKeybinds {hotkey-overlay-title = "Open Control Center";} {spawn-sh = "dms ipc call control-center toggle";};
         "Mod+E" = mkKeybinds {hotkey-overlay-title = "Open Dashboard";} {spawn-sh = "dms ipc call dash toggle overview";};
-        "Mod+I" = mkKeybinds {hotkey-overlay-title = "Open Spotlight [Emoji]";} {spawn-sh = "dms ipc call spotlight toggleQuery 'e'";};
+        "Mod+I" = mkKeybinds {hotkey-overlay-title = "Open Spotlight [Emoji]";} {spawn-sh = "dms ipc call spotlight toggleQuery ':e '";};
         "Mod+N" = mkKeybinds {hotkey-overlay-title = "Open Notifications";} {spawn-sh = "dms ipc call notifications toggle";};
-        "Mod+P" = mkKeybinds {hotkey-overlay-title = "Open Notepad";} {spawn-sh = "dms ipc call notepad toggle";};
+        "Mod+P" = mkKeybinds {hotkey-overlay-title = "Open Spotlight [Passwords]";} {spawn-sh = "dms ipc call spotlight toggleQuery ':bw '";};
         "Mod+Semicolon" = mkKeybinds {hotkey-overlay-title = "Open Settings";} {spawn-sh = "dms ipc call settings toggle";};
         # Keybinds
         "Mod+Shift+I" = mkKeybinds {hotkey-overlay-title = "Toggle Idle Inhibitor";} {spawn-sh = "dms notify --app 'Idle Inhibitor' --icon '${dmsLogo}' \"$(dms ipc call inhibit toggle)\"";};
