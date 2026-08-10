@@ -5,10 +5,12 @@
 }: {
   flake = {
     modules.nixos.ingress = {config, ...}: let
-      inherit (lib) attrValues concatMapStringsSep count filter mkMerge optionalString unique;
+      inherit (lib) attrValues concatMapStringsSep concatStringsSep count filter mkMerge optionalString unique;
 
       cfg = config.internal.homelab;
-      fqdn = service: "${service.subdomain}.${cfg.domain}";
+
+      anyProtected = self.lib.homelab.anyProtected config;
+      auth = cfg.authMiddleware;
 
       usedPorts = map (service: service.port) (attrValues cfg.ingress);
       duplicatePorts = unique (filter (port: count (other: other == port) usedPorts > 1) usedPorts);
@@ -26,22 +28,22 @@
 
       config = let
         publishService = service: let
-          host = fqdn service;
+          host = service.fqdn;
         in {
           blocky.settings = {
             customDNS.mapping.${host} = cfg.address;
           };
 
           caddy.virtualHosts.${host}.extraConfig = ''
-            ${optionalString service.caddy.protect ''
-              forward_auth 127.0.0.1:${toString cfg.ingress.oauth2-proxy.port} {
-                uri /oauth2/auth
+            ${optionalString (service.caddy.proxyProtect && auth != null) ''
+              forward_auth ${auth.endpoint} {
+                uri ${auth.uri}
                 header_up X-Real-IP {remote_host}
-                copy_headers X-Auth-Request-User X-Auth-Request-Email
+                ${optionalString (auth.copyHeaders != []) "copy_headers ${concatStringsSep " " auth.copyHeaders}"}
 
                 @unauthenticated status 401
                 handle_response @unauthenticated {
-                  redir * ${self.lib.homelab.mkServiceDomain config "oauth2-proxy"}/oauth2/start?rd={scheme}://{host}{uri}
+                  redir * ${auth.signInUrl}?rd={scheme}://{host}{uri}
                 }
               }
             ''}
@@ -65,13 +67,14 @@
             assertion = duplicateSubdomains == [];
             message = "internal.homelab.ingress: subdomains must be unique across services; reused: ${concatMapStringsSep ", " toString duplicateSubdomains}";
           }
+          {
+            assertion = anyProtected -> (auth != null);
+            message = "internal.homelab.ingress: a service sets caddy.proxyProtect but no authMiddleware is configured; import an auth provider (e.g. self.modules.nixos.oauth2-proxy).";
+          }
         ];
       };
     };
 
-    lib.homelab = {
-      logoutRedirectUrl = config: "${self.lib.homelab.mkServiceDomain config "pocket-id"}/api/oidc/end-session";
-      mkServiceDomain = config: service: "https://${config.internal.homelab.ingress."${service}".subdomain}.${config.internal.homelab.domain}";
-    };
+    lib.homelab.anyProtected = config: lib.any (service: service.caddy.proxyProtect) (lib.attrValues config.internal.homelab.ingress);
   };
 }

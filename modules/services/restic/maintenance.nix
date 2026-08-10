@@ -8,9 +8,11 @@
     pkgs,
     ...
   }: let
-    inherit (lib) attrNames concatMapStringsSep getExe getExe' mapAttrs mkIf mkMerge;
+    inherit (lib) attrNames concatMapStringsSep getExe getExe' mapAttrs mkIf mkMerge optionalString;
 
     backupCfg = config.internal.homelab.backups;
+
+    hasGatus = config.internal.homelab.gatus.pushUrl != null;
 
     restic = getExe pkgs.restic;
     date = getExe' pkgs.coreutils "date";
@@ -53,14 +55,16 @@
 
       DURATION_MS=$(($(date +%s%3N) - START_TIME_MS))
 
-      if [ "$status" = 0 ]; then
-        ${ping {success = true;}} --duration "$DURATION_MS"ms
-      else
-        ${ping {
-        error = "nightly restic run failed (a backup job, prune, or repository check failed)";
-        success = false;
-      }} --duration "$DURATION"ms
-      fi
+      ${optionalString hasGatus ''
+        if [ "$status" = 0 ]; then
+          ${ping {success = true;}} --duration "$DURATION_MS"ms
+        else
+          ${ping {
+          error = "nightly restic run failed (a backup job, prune, or repository check failed)";
+          success = false;
+        }} --duration "$DURATION_MS"ms
+        fi
+      ''}
       exit $status
     '';
 

@@ -4,27 +4,17 @@
   ...
 }: {
   flake.modules.nixos.blocky = {config, ...}: let
-    inherit (lib) attrNames head mkIf mkOption types;
+    inherit (lib) attrNames head mkIf;
     inherit (config.internal.homelab) address;
 
     mappedHosts = attrNames (config.services.blocky.settings.customDNS.mapping or {});
   in {
     key = "blocky";
-    imports = [self.modules.nixos.gatus-options];
 
-    options.internal.homelab = {
-      address = mkOption {
-        default = "192.168.8.10";
-        description = "LAN IP that homelab DNS records resolve to (feldspar's static address).";
-        type = types.str;
-      };
-
-      domain = mkOption {
-        default = "lumelle.me";
-        description = "Base domain homelab services are published under (e.g. recipes.\${domain}).";
-        type = types.str;
-      };
-    };
+    imports = [
+      self.modules.nixos.gatus-options
+      self.modules.nixos.homelab-options
+    ];
 
     config = {
       internal.homelab.gatus.endpoints = mkIf (mappedHosts != []) {

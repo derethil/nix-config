@@ -107,6 +107,12 @@ in {
         description = "Gatus internal port (loopback, not exposed to the LAN).";
         type = types.str;
       };
+
+      pushUrl = mkOption {
+        default = null;
+        description = "Base URL for pushing external-endpoint heartbeats (gatus-cli push --url). Populated by the gatus service module; null when gatus isn't deployed, in which case features skip their heartbeat pushes.";
+        type = types.nullOr types.str;
+      };
     };
   };
 }

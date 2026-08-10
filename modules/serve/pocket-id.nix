@@ -6,14 +6,17 @@
     subdomain = "auth";
     port = "20060";
     internalPort = "1411";
-    host = "${subdomain}.${config.internal.homelab.domain}";
+    url = config.internal.homelab.ingress.pocket-id.url;
 
     inherit (config.virtualisation.quadlet) pods;
     inherit (self.lib.podman) svc volume;
   in {
+    key = "pocket-id";
+
     imports = [
       self.modules.nixos.gatus-options
       self.modules.nixos.ingress
+      self.modules.nixos.oidc-options
       self.modules.nixos.quadlet
       self.modules.nixos.restic
       self.modules.nixos.secrets
@@ -42,6 +45,14 @@
 
       ingress.pocket-id = {
         inherit port subdomain;
+      };
+
+      oidc = {
+        discoveryUrl = "${url}/.well-known/openid-configuration";
+        endSessionUrl = "${url}/api/oidc/end-session";
+        issuerUrl = url;
+        name = "Pocket ID";
+        providerId = "pocket-id";
       };
     };
 
@@ -104,7 +115,7 @@
 
             environments = {
               ALLOW_INSECURE_CALLBACK_URLS = "false";
-              APP_URL = "https://${host}";
+              APP_URL = url;
               TRUST_PROXY = "127.0.0.1";
             };
 

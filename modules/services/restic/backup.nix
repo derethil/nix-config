@@ -8,9 +8,11 @@
     pkgs,
     ...
   }: let
-    inherit (lib) concatMapStringsSep flatten getExe' mapAttrs;
+    inherit (lib) concatMapStringsSep flatten getExe' mapAttrs optionalString;
 
     cfg = config.internal.homelab.backups;
+
+    hasGatus = config.internal.homelab.gatus.pushUrl != null;
 
     stagingRoot = "/var/lib/restic/staging";
 
@@ -70,18 +72,20 @@
 
         rm -rf ${stagingDir name}
 
-        if [ "$EXIT_STATUS" = "0" ]; then
-          ${ping {
-          inherit name;
-          success = true;
-        }} --duration "$DURATION"ms
-        else
-          ${ping {
-          inherit name;
-          error = "restic backup failed for ${name} (exit $EXIT_STATUS)";
-          success = false;
-        }} --duration "$DURATION"ms
-        fi
+        ${optionalString hasGatus ''
+          if [ "$EXIT_STATUS" = "0" ]; then
+            ${ping {
+            inherit name;
+            success = true;
+          }} --duration "$DURATION"ms
+          else
+            ${ping {
+            inherit name;
+            error = "restic backup failed for ${name} (exit $EXIT_STATUS)";
+            success = false;
+          }} --duration "$DURATION"ms
+          fi
+        ''}
       '';
   in {
     config.services.restic.backups =

@@ -1,4 +1,4 @@
-{self, ...}: {
+{
   flake.modules.nixos.gatus-config-file = {
     config,
     lib,
@@ -17,11 +17,11 @@
       then endpoint.url
       else
         assert assertMsg (config.internal.homelab.ingress ? ${name})
-        "gatus.endpoints.${name}: set `url`, or add an ingress service named `${name}` to derive it from"; "${self.lib.homelab.mkServiceDomain config name}${endpoint.path}";
+        "gatus.endpoints.${name}: set `url`, or add an ingress service named `${name}` to derive it from"; "${config.internal.homelab.ingress.${name}.url}${endpoint.path}";
   in {
     config.internal.homelab.gatus.configFile = (pkgs.formats.yaml {}).generate "gatus.yaml" {
       alerting.ntfy = {
-        click = self.lib.homelab.mkServiceDomain config "gatus";
+        click = config.internal.homelab.ingress.gatus.url;
 
         default-alert = {
           failure-threshold = 3;

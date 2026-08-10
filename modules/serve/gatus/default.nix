@@ -43,6 +43,7 @@
 
       gatus = {
         inherit internalPort;
+        pushUrl = config.internal.homelab.ingress.gatus.url;
       };
 
       ingress.gatus = {

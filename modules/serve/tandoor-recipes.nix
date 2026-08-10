@@ -13,8 +13,8 @@
   in {
     imports = [
       self.modules.nixos.gatus-options
-      self.modules.nixos.pocket-id
       self.modules.nixos.ingress
+      self.modules.nixos.oidc-options
       self.modules.nixos.quadlet
       self.modules.nixos.restic
       self.modules.nixos.secrets
@@ -51,7 +51,7 @@
               uri /accounts/logout/
               @done status 2xx 3xx
               handle_response @done {
-                redir * ${self.lib.homelab.logoutRedirectUrl config}
+                redir * ${config.internal.homelab.oidc.endSessionUrl}
               }
             }
           }
@@ -76,7 +76,11 @@
 
           SECRET_KEY=${config.sops.placeholder."serve/tandoor/secret_key"}
 
-          SOCIALACCOUNT_PROVIDERS={"openid_connect":{"APPS":[{"provider_id":"pocket-id","name":"Pocket ID","client_id":"${config.sops.placeholder."serve/tandoor/oidc/client_id"}","secret":"${config.sops.placeholder."serve/tandoor/oidc/client_secret"}","settings":{"server_url":"https://auth.${config.internal.homelab.domain}/.well-known/openid-configuration"}}]}}
+          SOCIALACCOUNT_PROVIDERS=${self.lib.oidc.allauthProvider {
+            inherit (config.internal.homelab.oidc) discoveryUrl name providerId;
+            clientId = config.sops.placeholder."serve/tandoor/oidc/client_id";
+            clientSecret = config.sops.placeholder."serve/tandoor/oidc/client_secret";
+          }}
         '';
       };
     };

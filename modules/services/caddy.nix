@@ -7,6 +7,7 @@
     key = "caddy";
 
     imports = [
+      self.modules.nixos.homelab-options
       self.modules.nixos.impermanence-options
       self.modules.nixos.secrets
     ];

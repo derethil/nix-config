@@ -15,6 +15,7 @@
     imports = [
       self.modules.nixos.gatus-options
       self.modules.nixos.ingress
+      self.modules.nixos.oidc-options
       self.modules.nixos.quadlet
       self.modules.nixos.restic
       self.modules.nixos.secrets
@@ -62,7 +63,11 @@
           POSTGRES_PASSWORD=${config.sops.placeholder."serve/paperless/postgres_password"}
           PAPERLESS_DBPASS=${config.sops.placeholder."serve/paperless/postgres_password"}
           PAPERLESS_SECRET_KEY=${config.sops.placeholder."serve/paperless/secret_key"}
-          PAPERLESS_SOCIALACCOUNT_PROVIDERS={"openid_connect":{"APPS":[{"provider_id":"pocket-id","name":"Pocket ID","client_id":"${config.sops.placeholder."serve/paperless/oidc/client_id"}","secret":"${config.sops.placeholder."serve/paperless/oidc/client_secret"}","settings":{"server_url":"https://auth.${config.internal.homelab.domain}/.well-known/openid-configuration"}}]}}
+          PAPERLESS_SOCIALACCOUNT_PROVIDERS=${self.lib.oidc.allauthProvider {
+            inherit (config.internal.homelab.oidc) discoveryUrl name providerId;
+            clientId = config.sops.placeholder."serve/paperless/oidc/client_id";
+            clientSecret = config.sops.placeholder."serve/paperless/oidc/client_secret";
+          }}
         '';
       };
     };
@@ -129,7 +134,7 @@
               PAPERLESS_DBPORT = "5432";
               PAPERLESS_DBUSER = "paperless";
               PAPERLESS_DISABLE_REGULAR_LOGIN = "1";
-              PAPERLESS_LOGOUT_REDIRECT_URL = "${self.lib.homelab.logoutRedirectUrl config}";
+              PAPERLESS_LOGOUT_REDIRECT_URL = config.internal.homelab.oidc.endSessionUrl;
               PAPERLESS_REDIRECT_LOGIN_TO_SSO = "1";
               PAPERLESS_REDIS = "redis://localhost:6379";
               PAPERLESS_SOCIAL_AUTO_SIGNUP = "1";
