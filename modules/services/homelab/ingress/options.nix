@@ -14,7 +14,7 @@ in {
     options.internal.homelab = {
       authMiddleware = mkOption {
         default = null;
-        description = "Forward-auth middleware that proxyProtect services are gated behind. Populated by an auth provider module (e.g. oauth2-proxy); null when no provider is present.";
+        description = "Forward-auth middleware that forwardAuth.enable services are gated behind. Populated by an auth provider module (e.g. oauth2-proxy); null when no provider is present.";
 
         type = types.nullOr (types.submodule {
           options = {
@@ -64,10 +64,30 @@ in {
                 type = types.lines;
               };
 
-              proxyProtect = mkOption {
+              forwardAuth.enable = mkOption {
                 default = false;
                 description = "Gate this service behind the configured authMiddleware via forward_auth.";
                 type = types.bool;
+              };
+
+              jwtBearer = {
+                enable = mkOption {
+                  default = false;
+                  description = "Also accept a self-verified JWT bearer token (via caddy-jwt, checked against internal.homelab.oidc's issuer/JWKS) as an alternative to the forward_auth session, for non-interactive/machine clients that can't complete a browser SSO login.";
+                  type = types.bool;
+                };
+
+                audience = mkOption {
+                  default = null;
+                  description = "OIDC client_id trusted as the JWT audience. Required when jwtBearer.enable is set.";
+                  type = types.nullOr types.str;
+                };
+
+                header = mkOption {
+                  default = "X-Bearer-Token";
+                  description = "Request header carrying the bearer JWT that caddy-jwt checks when jwtBearer.enable is set.";
+                  type = types.str;
+                };
               };
             };
 

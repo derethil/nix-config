@@ -22,8 +22,12 @@
       enable = true;
 
       package = pkgs.caddy.withPlugins {
-        hash = "sha256-7GoH8YLCoPmPExQxoga2FHB58zQDoZVf1BBwkVi0SsQ=";
-        plugins = ["github.com/caddy-dns/cloudflare@v0.2.4"];
+        hash = "sha256-0ZE38PFwQ0OC1N9KhFLM8Fsea6LV4UGUwyZYe3Rg6YQ=";
+
+        plugins = [
+          "github.com/caddy-dns/cloudflare@v0.2.4"
+          "github.com/ggicci/caddy-jwt@v1.3.0"
+        ];
       };
 
       environmentFile = config.sops.templates."caddy-cloudflare-env".path;

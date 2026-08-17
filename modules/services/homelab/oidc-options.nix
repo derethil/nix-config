@@ -6,10 +6,10 @@ in {
       key = "oidc-options";
 
       options.internal.homelab.oidc = mkOption {
-        default = {};
+        default = null;
         description = "OIDC provider endpoints, populated by the identity provider module and consumed by relying modules.";
 
-        type = types.submodule {
+        type = types.nullOr (types.submodule {
           options = {
             discoveryUrl = mkOption {
               description = "OIDC discovery document URL (.well-known/openid-configuration).";
@@ -36,7 +36,7 @@ in {
               type = types.str;
             };
           };
-        };
+        });
       };
     };
 

@@ -52,7 +52,16 @@
 
       ingress.blombooru = {
         inherit port subdomain;
-        caddy.proxyProtect = true;
+
+        caddy = {
+          forwardAuth.enable = true;
+
+          jwtBearer = {
+            enable = true;
+            audience = "5fd7306e-26cc-4728-a79a-aff1545910bd";
+            header = "X-Pocket-Id-Token";
+          };
+        };
       };
     };
 
