@@ -29,7 +29,7 @@
             query-type = "A";
           };
 
-          group = "internal";
+          group = "infrastructure";
           url = address;
         };
       };

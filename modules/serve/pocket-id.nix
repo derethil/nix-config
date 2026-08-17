@@ -41,7 +41,7 @@
         };
       };
 
-      gatus.endpoints.pocket-id = {};
+      gatus.endpoints.pocket-id.group = "infrastructure";
 
       ingress.pocket-id = {
         inherit port subdomain;

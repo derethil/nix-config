@@ -44,7 +44,7 @@ in {
             };
 
             group = mkOption {
-              default = "services";
+              default = "applications";
               description = "Dashboard group the endpoint is displayed under.";
               type = types.str;
             };
