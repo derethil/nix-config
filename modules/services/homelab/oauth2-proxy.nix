@@ -83,6 +83,12 @@
           '';
         };
       };
+
+      systemd.services.oauth2-proxy = {
+        serviceConfig.RestartSec = "5s";
+        startLimitBurst = 20;
+        startLimitIntervalSec = 300;
+      };
     };
   };
 }
