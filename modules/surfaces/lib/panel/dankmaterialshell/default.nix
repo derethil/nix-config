@@ -29,7 +29,6 @@
 
     programs.dank-material-shell = {
       enable = true;
-      dgop.package = pkgs.unstable.dgop;
       enableAudioWavelength = true;
       enableCalendarEvents = true;
       enableClipboardPaste = true;
