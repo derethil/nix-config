@@ -8,13 +8,15 @@
       */
       ''
         local messagesSavedState = os.getenv("HOME")
-          .. "/Library/Saved Application State/com.apple.MobileSMS.savedState"
+          .. "/Library/Saved Application State/com.apple.iChat.savedState"
 
         local messagesQuitWatcher = hs.application.watcher.new(function(appName, event)
           if appName == "Messages" and event == hs.application.watcher.terminated then
             os.execute('rm -rf "' .. messagesSavedState .. '"')
+            os.execute("defaults delete com.apple.iChat")
           end
         end)
+
         messagesQuitWatcher:start()
       ''
     ];
