@@ -3,7 +3,7 @@ set working-directory := ".."
 env_file := "/run/secrets/rendered/restic-env"
 repo_file := "/run/secrets/services/restic/repository"
 pass_file := "/run/secrets/services/restic/repository_password"
-services := `systemctl list-unit-files 'restic-backups-*.service' --no-legend | awk '{print $1}' | sed 's/^restic-backups-//; s/\.service$//' | sort | xargs`
+services := `systemctl list-unit-files 'restic-backups-*.service' --no-legend 2>/dev/null | awk '{print $1}' | sed 's/^restic-backups-//; s/\.service$//' | sort | xargs`
 
 [private]
 _load_env := "set -a; source <(sudo cat " + env_file + "); set +a; export RESTIC_REPOSITORY=$(sudo cat " + repo_file + "); export RESTIC_PASSWORD=$(sudo cat " + pass_file + "); export RESTIC_CACHE_DIR=$HOME/.cache/restic"

@@ -4,6 +4,9 @@ import 'just/bootstrap.just'
 # Restic backup management and restoration
 mod backups 'just/backups.just'
 
+# Darwin (macOS) maintenance recipes
+mod darwin 'just/darwin.just'
+
 # Flake maintenance recipes
 mod flake 'just/flake.just'
 
