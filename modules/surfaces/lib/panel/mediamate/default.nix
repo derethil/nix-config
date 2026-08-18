@@ -33,8 +33,8 @@
         # Launch Settings
         hasLaunchedBefore = true;
         # HUD Settings
-        hideNativeHUDsForAudio = "{\"name\":\"Lunar\"}";
-        hideNativeHUDsForBrightness = "{\"name\":\"Lunar\"}";
+        hideNativeHUDsForAudio = "{\"name\":\"Keyboard\"}";
+        hideNativeHUDsForBrightness = "{\"name\":\"Keyboard\"}";
         # Volume
         listenToExternalChanges = true;
         # Display Settings

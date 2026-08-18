@@ -3,10 +3,13 @@
     pkgs,
     system,
     ...
-  }:
+  }: let
+    version = "3.8.4";
+    build = "321";
+  in
     lib.optionalAttrs (lib.elem system lib.platforms.darwin) {
-      packages.mediamate = pkgs.stdenvNoCC.mkDerivation rec {
-        build = "319";
+      packages.mediamate = pkgs.stdenvNoCC.mkDerivation {
+        inherit build version;
 
         installPhase = ''
           mkdir -p $out/Applications
@@ -18,11 +21,10 @@
         sourceRoot = ".";
 
         src = pkgs.fetchurl {
-          hash = "sha256-ZW9xi1ueU+FA/rtPCwJTzyYHXCz2P2r4vybzJDkthBY=";
+          hash = "sha256-Rhq+5HODz/qhSppNXhzO5AnZcwbzAN1NxwXD12got04=";
           url = "https://github.com/Wouter01/MediaMate-Releases/releases/download/v${version}_${build}/MediaMate_v${version}-${build}.zip";
         };
 
-        version = "3.8.3";
         meta.platforms = lib.platforms.darwin;
       };
     };
