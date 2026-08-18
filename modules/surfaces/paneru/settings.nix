@@ -18,14 +18,6 @@
       };
 
       decorations = {
-        active.border = {
-          color = "#d4be98";
-          enabled = true;
-          opacity = 1.0;
-          radius = "auto";
-          width = 1.0;
-        };
-
         workspace_menu_status = true;
         workspace_popup_status = true;
       };

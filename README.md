@@ -37,8 +37,9 @@ to manage my development/gaming machine, laptop, and a self-hosted server.
   modding tools
 - **Storage**: BTRFS impermanence with root rollback, LUKS, encrypted secrets
   pulled from my private repo
-- **Self-hosting**: Uses quadlet/podman to manage services with fully
-  declarative backup configuration and failure notifications
+- **Self-hosting**: Rootless Podman containers integrated with fully declarative
+  restic backup/restore and caddy modules, Gatus dashboard, and ntfy-backed
+  notification system
 
 # Task Runner
 

@@ -22,6 +22,8 @@ in {
           set fish_cursor_replace_one underscore blink
           set fish_cursor_visual      block
 
+          bind -M insert \cf forward-char
+
           ${builtins.readFile ./theme.fish}
 
           ${getExe pkgs.any-nix-shell} fish --info-right | source
