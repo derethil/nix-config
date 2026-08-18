@@ -44,16 +44,16 @@ in {
 
           dock.apps = [
             {app = "${pkgs.alacritty}/Applications/Alacritty.app";}
-            {app = "${pkgs.bruno}/Applications/Bruno.app";}
             {app = "${pkgs.firefox}/Applications/Firefox.app";}
-            {app = "${pkgs.internal.stremio}/Applications/Stremio.app";}
-            {app = "${pkgs.obsidian}/Applications/Obsidian.app";}
-            {app = "${pkgs.prismlauncher}/Applications/PrismLauncher.app";}
-            {app = "${pkgs.spotify}/Applications/Spotify.app";}
-            {app = "/Applications/Discord.app";}
-            {app = "/Applications/Mattermost.app";}
-            {app = "/Applications/Steam.app";}
             {app = "/System/Applications/Messages.app";}
+            {app = "/Applications/Mattermost.app";}
+            {app = "/Applications/Discord.app";}
+            {app = "${pkgs.bruno}/Applications/Bruno.app";}
+            {app = "${pkgs.obsidian}/Applications/Obsidian.app";}
+            {app = "${pkgs.internal.stremio}/Applications/Stremio.app";}
+            {app = "${pkgs.spotify}/Applications/Spotify.app";}
+            {app = "${pkgs.prismlauncher}/Applications/PrismLauncher.app";}
+            {app = "/Applications/Steam.app";}
           ];
         };
 
