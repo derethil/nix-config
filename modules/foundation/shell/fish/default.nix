@@ -25,6 +25,8 @@ in {
         self.modules.generic.fish-common
       ];
 
+      environment.shells = [pkgs.fish];
+
       users.users = self.lib.forEachNormalUser config (_: {
         shell = pkgs.fish;
       });

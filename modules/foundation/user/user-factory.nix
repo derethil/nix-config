@@ -13,10 +13,20 @@ in {
     fullName ? "",
     primary ? true,
     superuser ? true,
-    uid ? 1000,
+    uid ? null,
   }: let
     internal-user = {inherit email fullName name;};
     module-name = "user-${name}";
+
+    nixosUid =
+      if uid != null
+      then uid
+      else 1000;
+
+    darwinUid =
+      if uid != null
+      then uid
+      else 501;
   in {
     # NIXOS
 
@@ -47,7 +57,7 @@ in {
         mutableUsers = false;
 
         users.${name} = {
-          inherit name uid;
+          inherit name;
           description = fullName;
           extraGroups = extraGroups ++ optional superuser "wheel";
           group = "users";
@@ -55,6 +65,7 @@ in {
           home = "/home/${name}";
           isNormalUser = true;
           isPrimary = mkDefault primary;
+          uid = nixosUid;
         };
       };
     };
@@ -75,9 +86,14 @@ in {
       nix.settings.trusted-users = [name];
       system.primaryUser = mkIf superuser name;
 
-      users.users.${name} = {
-        inherit name;
-        home = "/Users/${name}";
+      users = {
+        knownUsers = [name];
+
+        users.${name} = {
+          inherit name;
+          home = "/Users/${name}";
+          uid = darwinUid;
+        };
       };
     };
 
