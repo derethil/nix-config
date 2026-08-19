@@ -33,6 +33,7 @@
         networkmanager = {
           enable = true;
           dhcp = "internal";
+          wifi.backend = "iwd";
         };
       };
 
