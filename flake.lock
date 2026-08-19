@@ -1598,11 +1598,11 @@
         "sort-nvim": "sort-nvim"
       },
       "locked": {
-        "lastModified": 1786342287,
-        "narHash": "sha256-0Ec0rOpYw4vCajBaGHvgNqa1K3iv68mqcRx9FRc042s=",
+        "lastModified": 1787166093,
+        "narHash": "sha256-FI1Gb+o4hXhd01lNiDKQ51Xh8hq9OgaGF6+92ksp9ps=",
         "owner": "derethil",
         "repo": "nvim-config",
-        "rev": "cbe423be5584068223df80ca5b3ea2efad9758c8",
+        "rev": "d4045a166703de18a8c7fa0fe4dcc5e8549fd293",
         "type": "github"
       },
       "original": {
