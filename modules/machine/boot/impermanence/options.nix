@@ -1,5 +1,32 @@
 {lib, ...}: let
   inherit (lib) mkOption types;
+
+  directoryEntry = types.submodule {
+    options = {
+      directory = mkOption {
+        description = "Path to the directory to bind mount to persistent storage.";
+        type = types.str;
+      };
+
+      group = mkOption {
+        default = "root";
+        description = "Group to own the directory if it doesn't already exist in persistent storage.";
+        type = types.str;
+      };
+
+      mode = mkOption {
+        default = "0755";
+        description = "Permissions to create the directory with if it doesn't already exist in persistent storage.";
+        type = types.str;
+      };
+
+      user = mkOption {
+        default = "root";
+        description = "User to own the directory if it doesn't already exist in persistent storage.";
+        type = types.str;
+      };
+    };
+  };
 in {
   flake.modules.nixos.impermanence-options = {
     key = "impermanence-options";
@@ -24,7 +51,7 @@ in {
 
         extraDirectories = mkOption {
           default = [];
-          type = types.listOf types.str;
+          type = types.listOf (types.either types.str directoryEntry);
         };
 
         extraFiles = mkOption {

@@ -14,6 +14,7 @@
   in {
     imports = [
       self.modules.nixos.gatus-options
+      self.modules.nixos.hydroxide
       self.modules.nixos.ingress
       self.modules.nixos.oidc-options
       self.modules.nixos.quadlet

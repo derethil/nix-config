@@ -46,7 +46,7 @@
 
         permissions = {
           defaultMode = "auto";
-          deny = ["Bash(git commit*)"];
+          deny = ["Bash(git commit*)" "Bash(nixos-rebuild switch*)"];
         };
 
         showThinkingSummaries = true;
