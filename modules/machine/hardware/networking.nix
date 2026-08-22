@@ -4,8 +4,9 @@
   ...
 }: {
   flake.modules.nixos.networking = {config, ...}: let
-    inherit (lib) mkIf mkOption types;
+    inherit (lib) mkIf mkMerge mkOption optionals types;
     cfg = config.internal.hardware.networking;
+    iwdEnabled = config.networking.networkmanager.wifi.backend == "iwd";
   in {
     options.internal.hardware.networking = {
       avahi.enable = mkOption {
@@ -22,9 +23,14 @@
     };
 
     config = {
-      internal.boot.impermanence.extraDirectories = [
-        "/etc/NetworkManager/system-connections"
-        "/var/lib/NetworkManager"
+      internal.boot.impermanence.extraDirectories = mkMerge [
+        [
+          "/etc/NetworkManager/system-connections"
+          "/var/lib/NetworkManager"
+        ]
+        (optionals iwdEnabled [
+          "/var/lib/iwd"
+        ])
       ];
 
       networking = {
