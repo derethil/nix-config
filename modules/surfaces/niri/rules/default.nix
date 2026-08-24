@@ -111,7 +111,7 @@
           title = "^[Ss]team$";
         };
       }
-      # Steam notification toasts float in the bottom-right corner
+      # Steam notification toasts float in the bottom-right corner and shouldn't steal focus/workspace on activation
       {
         default-floating-position._props = {
           relative-to = "bottom-right";
@@ -123,6 +123,8 @@
           app-id = "^steam$";
           title._raw = ''r#"^notificationtoasts_\d+_desktop$"#'';
         };
+
+        on-xdg-activate = "ignore";
       }
       # Floating and tiling overrides
       {
