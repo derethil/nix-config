@@ -150,6 +150,7 @@
               "paperless-data:/usr/src/paperless/data"
               "paperless-media:/usr/src/paperless/media"
               "paperless-consume:/usr/src/paperless/consume"
+              "paperless-export:/usr/src/paperless/export"
             ];
           };
 
@@ -177,6 +178,7 @@
         paperless-consume = {};
         paperless-data = {};
         paperless-db = {};
+        paperless-export = {};
         paperless-media = {};
       };
     };
