@@ -77,7 +77,7 @@
         "footclient"
         "firefox"
         "vesktop"
-        "Mattermost"
+        "Mattermost.Desktop"
         "bruno"
         "obsidian"
         "steam"
