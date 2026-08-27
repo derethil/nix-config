@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  inherit (lib) concatStrings getExe;
+  inherit (lib) concatStrings getExe mkForce;
 in {
   flake.modules.homeManager.dankmaterialshell-panel = {
     config,
@@ -47,6 +47,15 @@ in {
       dankCalendarAgenda = {
         inherit (config.programs.dank-calendar) enable;
         settings.dynamicWidth = true;
+
+        # Tracks my fix/respect-time-settings branch
+        # until upstream (arqueon/dms-dankcalendar) merges it.
+        src = mkForce (pkgs.fetchFromGitHub {
+          hash = "sha256-YWeTNVVfN7yEatbcamwiGIUZqmu6Pr+3n/wuiQtY63c=";
+          owner = "derethil";
+          repo = "dms-dankcalendar";
+          rev = "02357de443e40aedb3c7e7606d4970221269a952";
+        });
       };
 
       easyEffects.enable = config.services.easyeffects.enable || (self.lib.hasPackage config.home.packages "easyeffects");
