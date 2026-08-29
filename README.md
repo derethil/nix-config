@@ -48,15 +48,19 @@ Common operations are managed via [`just`](https://github.com/casey/just). Run
 subcommands. Everything from rebuilding to secret management to backup
 restoration to linting has a recipe.
 
-# Templates
+# Development Environments
+
+I use `devenv` to manage my environments. Each of these templates supply project
+management or development tooling for a specific language. Copy one into a
+project with:
 
 `nix flake init -t github:derethil/nix-config#<name>`
 
-- `npm` - pnpm + node, `dev` process pre-wired
-- `python` - python 3.13 with `uv` and a venv
-- `dragonarmy-npm-golang` - work template; go backend + node frontend with
-  playwright, golangci-lint, and an AWS SSO pre-task
-- `rust` - hello_world cargo project managed by `devenv`
+- `fullstack-node-go` - tooling for golang+node projects with AWS SSO
+  authentication
+- `node` - standalone Node.js tooling managed via `pnpm`
+- `python` - `uv` based python environment
+- `rust` - a `hello_world` Cargo project
 
 # Installation
 

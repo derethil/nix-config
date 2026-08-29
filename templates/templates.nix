@@ -1,13 +1,13 @@
 {
   flake.templates = {
-    dragonarmy-npm-golang = {
+    fullstack-node-go = {
       description = "A template for Node.js and Go development using devenv";
-      path = ./_dragonarmy-npm-golang;
+      path = ./_fullstack-node-go;
     };
 
-    npm = {
+    node = {
       description = "A template for Node.js development using devenv";
-      path = ./_npm;
+      path = ./_node;
     };
 
     python = {

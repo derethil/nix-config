@@ -8,8 +8,8 @@
 in {
   env = {
     GIT_TERMINAL_PROMPT = "1";
-    GOPRIVATE = "gitlab.dragonarmy.rocks/*";
-    KEYCLOAK_URL = "https://keycloak-dev.dragonarmy.rocks";
+    GOPRIVATE = "gitlab.example.com/*";
+    NPMRC_PATH = "./webapp/.npmrc";
     PLAYWRIGHT_BROWSERS_PATH = playwright.playwright-driver.browsers;
     PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = "1";
   };
@@ -29,6 +29,7 @@ in {
   };
 
   packages = with pkgs; [
+    delve
     golangci-lint
     golangci-lint-langserver
     playwright.playwright-test
