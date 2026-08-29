@@ -212,7 +212,7 @@
       ];
 
       prefix = "C-Space";
-      shell = "${getExe config.shell.defaultShell}";
+      shell = "/run/current-system/sw/bin/${baseNameOf (getExe config.shell.defaultShell)}";
       terminal = "tmux-256color";
     };
   };
