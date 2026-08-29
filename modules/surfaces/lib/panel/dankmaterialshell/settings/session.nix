@@ -83,7 +83,7 @@
         "steam"
         "prismlauncher"
         "Spotify"
-        "stremio"
+        "com.stremio.Stremio"
       ];
 
       pluginBrowserInstalledFirst = false;

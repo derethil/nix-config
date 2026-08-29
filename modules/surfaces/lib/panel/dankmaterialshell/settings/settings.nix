@@ -29,11 +29,6 @@
           type = "exact";
         }
         {
-          pattern = "com.stremio.stremio";
-          replacement = "stremio";
-          type = "exact";
-        }
-        {
           pattern = "com.transmissionbt.transmission";
           replacement = "transmission-gtk";
           type = "contains";
