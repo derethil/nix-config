@@ -7,21 +7,21 @@
     lib.optionalAttrs (lib.elem system ["aarch64-darwin" "aarch64-linux" "x86_64-linux"]) {
       packages.iloader = let
         pname = "iloader";
-        version = "2.2.6";
+        version = "2.3.1";
 
         sources = {
           aarch64-darwin = {
-            hash = "sha256-Xo0rmVvMeUbtecvxqORd3O5eBnLYQs0LwyxOOghnHb4=";
+            hash = "sha256-21iBb4NW+kArzR0/T272t0smYVJF1yvkDEYr+kY4u9w=";
             url = "https://github.com/nab138/iloader/releases/download/v${version}/iloader-darwin-universal.app.tar.gz";
           };
 
           aarch64-linux = {
-            hash = "sha256-WBQbaGgws/RUgCeFSafn2GXJXpxtITXEW3ypbtAKH4I=";
+            hash = "sha256-AaMzw7PMkCwXZ3o4eFLBK61uYAtK0pTZHjRkpN0kobs=";
             url = "https://github.com/nab138/iloader/releases/download/v${version}/iloader-linux-aarch64.AppImage";
           };
 
           x86_64-linux = {
-            hash = "sha256-rLsDVXct9hFu3cyDv5i7NQX820WDxMfFEMfiUPGrOjU=";
+            hash = "sha256-D+N+6fnr42FrunRSFCSNwtP5/+3EqCQXBsyV2WOBNlI=";
             url = "https://github.com/nab138/iloader/releases/download/v${version}/iloader-linux-amd64.AppImage";
           };
         };
