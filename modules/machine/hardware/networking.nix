@@ -43,9 +43,6 @@
         };
       };
 
-      # NIC re-init is flaky after sleep; bouncing NM clears it.
-      powerManagement.resumeCommands = "systemctl restart NetworkManager";
-
       services.avahi = mkIf cfg.avahi.enable {
         enable = true;
         nssmdns4 = true;
