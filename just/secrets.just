@@ -20,6 +20,15 @@ edit hostname="feldspar":
     just secrets update -p
     just secrets check {{ hostname }}
 
+# Decrypt a single secret and copy its value to the clipboard
+[arg("path", help="Secret path in a/b/c form, matching the nix config.sops.secrets key (e.g. serve/bookorbit/jwt_secret)")]
+copy path:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    query=$(printf '%s' "{{ path }}" | awk -F/ '{for (i = 1; i <= NF; i++) printf "[\"%s\"]", $i}')
+    sops -d --extract "$query" {{ sops_file }} | wl-copy
+    just print "{{ GREEN }}" "==> Copied {{ path }} to clipboard."
+
 # Add/update the age keys in the sops config
 rekey:
     sops updatekeys {{ sops_file }}
