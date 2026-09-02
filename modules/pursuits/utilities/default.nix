@@ -4,6 +4,7 @@
       self.modules.nixos.sideloading
       self.modules.nixos.rbw
       self.modules.nixos.tether
+      self.modules.nixos.librepods
     ];
 
     homeManager.utilities.imports = [

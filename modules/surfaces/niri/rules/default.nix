@@ -73,6 +73,7 @@
           title = ".*";
         }
       ])
+      (sizedFloatRule "^me.kavishdevar.librepods$" 520 340)
       (sizedFloatRule ".*qalculate.*" 1100 800)
       (sizedFloatRule "yazi" 800 720)
       (tileRule "^[mM]inecraft.*$")
