@@ -3,6 +3,7 @@
     nixos.utilities.imports = [
       self.modules.nixos.sideloading
       self.modules.nixos.rbw
+      self.modules.nixos.tether
     ];
 
     homeManager.utilities.imports = [

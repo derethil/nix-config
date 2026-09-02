@@ -1419,6 +1419,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_14": {
+      "locked": {
+        "lastModified": 1787900134,
+        "narHash": "sha256-VYXO0XZlgj06dxJZRhrD3WoSsvq/c7+/Akyoa22pefw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "83199d0d373dd3ac2b9a1996b1d0263f76ab7a4c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1766736597,
@@ -1777,6 +1793,7 @@
         "quadlet-nix": "quadlet-nix",
         "quickshell": "quickshell",
         "sops-nix": "sops-nix",
+        "tether": "tether",
         "tmux-power-zoom": "tmux-power-zoom",
         "tmux-theme": "tmux-theme",
         "yazi-gruvbox-dark": "yazi-gruvbox-dark"
@@ -1875,6 +1892,24 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tether": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_14"
+      },
+      "locked": {
+        "lastModified": 1788314110,
+        "narHash": "sha256-bOI+Z/kdWu9P+XqEH9WnyyL4APdBKcuBbsv4fbU/3Hk=",
+        "owner": "zackb",
+        "repo": "tether",
+        "rev": "c038724964305405a2cc71d5397c320e41a2ab96",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zackb",
+        "repo": "tether",
         "type": "github"
       }
     },

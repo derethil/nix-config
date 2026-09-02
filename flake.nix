@@ -125,6 +125,8 @@
       url = "github:Mic92/sops-nix";
     };
 
+    tether.url = "github:zackb/tether";
+
     tmux-power-zoom = {
       flake = false;
       url = "github:jaclu/tmux-power-zoom";

@@ -83,7 +83,7 @@
       ] {proportion = 2.0 / 3.0;})
       # Workspace assignments
       (workspaceRule 1 ["^chromium$" "^firefox$"])
-      (workspaceRule 2 [".*Mattermost.*" "^discord$" "^vesktop$" "^zoom$"])
+      (workspaceRule 2 [".*Mattermost.*" "^discord$" "^tether-gtk$" "^vesktop$" "^zoom$"])
       (workspaceRule 3 ["^bruno$" "^obsidian$"])
       (workspaceRule 4 [
         ".*[mM]inecraft.*"

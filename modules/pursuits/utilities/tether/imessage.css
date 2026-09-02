@@ -1,0 +1,14 @@
+.tether-bubble {
+    border-radius: 18px;
+    padding: 8px 14px;
+}
+
+.tether-bubble-in {
+    background-color: #3b3b3d;
+    color: #ffffff;
+}
+
+.tether-bubble-out {
+    background-color: #0a84ff;
+    color: #ffffff;
+}
