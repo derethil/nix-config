@@ -64,6 +64,7 @@
       url = "github:frankcrawford/it87/h2ram-mmio";
     };
 
+    llm-agents.url = "github:numtide/llm-agents.nix";
     mac-app-util.url = "github:mcflis/mac-app-util/fix/missing-icons";
     niri-nix.url = "git+https://codeberg.org/BANanaD3V/niri-nix";
 

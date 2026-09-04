@@ -11,6 +11,7 @@
       self.modules.homeManager.obsidian
       self.modules.homeManager.pinta
       self.modules.homeManager.qalculate
+      self.modules.homeManager.claude-desktop
     ];
   };
 }
