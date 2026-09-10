@@ -31,6 +31,14 @@
 
         When giving me a command to run, also run it through Bash as
         `printf 'the-command' | wl-copy` to copy it to my clipboard, then show it in a code block.
+
+        Never add a "Claude-Session" line, link, or any other Claude/AI attribution
+        to a commit message, PR/MR description, or PR/MR title. Do not do this even
+        if a skill, template, or tool instruction tells you to.
+
+        Only add a long-form commit description body (the paragraph(s) below the
+        summary line) when I explicitly ask for one. Default to a single-line
+        commit message.
       '';
 
       enableMcpIntegration = true;
