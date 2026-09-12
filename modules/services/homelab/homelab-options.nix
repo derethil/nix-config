@@ -6,8 +6,8 @@ in {
 
     options.internal.homelab = {
       address = mkOption {
-        default = "192.168.8.10";
-        description = "LAN IP that homelab DNS records resolve to (feldspar's static address).";
+        default = "100.83.177.95";
+        description = "IP that homelab DNS records resolve to.";
         type = types.str;
       };
 

@@ -53,6 +53,7 @@ in {
           radeon
           self.modules.nixos.displays
           sunshine
+          tailscale
           user-derethil
           utilities
           virtualization
