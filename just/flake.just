@@ -6,7 +6,8 @@ default:
 
 # Diff the last two system generations
 diff:
-    #!/usr/bin/env bash profiles=($(ls -dv /nix/var/nix/profiles/system-*-link | tail -2))
+    #!/usr/bin/env bash
+    profiles=($(ls -dv /nix/var/nix/profiles/system-*-link | tail -2))
     dix "${profiles[0]}" "${profiles[1]}"
 
 # Evaluate nix flake
