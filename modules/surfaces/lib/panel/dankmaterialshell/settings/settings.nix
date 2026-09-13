@@ -32,6 +32,7 @@
 
       barConfigs = [
         {
+          attachToScreenEdge = false;
           autoHide = false;
           autoHideDelay = 250;
           borderColor = "surfaceText";
@@ -134,7 +135,6 @@
           transparency = 1;
           visible = true;
           widgetTransparency = 1;
-          attachToScreenEdge = false;
         }
       ];
 
