@@ -22,11 +22,11 @@
       enable = true;
 
       package = pkgs.caddy.withPlugins {
-        hash = "sha256-0ZE38PFwQ0OC1N9KhFLM8Fsea6LV4UGUwyZYe3Rg6YQ=";
+        hash = "sha256-SmBLh2oRnRdsoMw+wP/QyPykzaKy1gkiy2OOfDQxc+M=";
 
         plugins = [
           "github.com/caddy-dns/cloudflare@v0.2.4"
-          "github.com/ggicci/caddy-jwt@v1.3.0"
+          "github.com/ggicci/caddy-jwt@v1.4.0"
         ];
       };
 
