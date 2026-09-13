@@ -7,7 +7,7 @@
     description = "Personal NixOS, Nix Darwin, and Home Manager configurations";
 
     do-not-edit = ''
-      # DO-NOT-EDIT. This file was auto-generated using github:vic/flake-file.
+      # DO-NOT-EDIT. This file was auto-generated using github:denful/flake-file.
       # Use `just flake write` to regenerate it.
     '';
 

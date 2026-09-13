@@ -1,10 +1,10 @@
-# DO-NOT-EDIT. This file was auto-generated using github:vic/flake-file.
+# DO-NOT-EDIT. This file was auto-generated using github:denful/flake-file.
 # Use `just flake write` to regenerate it.
 {
   description = "Personal NixOS, Nix Darwin, and Home Manager configurations";
 
   inputs = {
-    flake-file.url = "github:vic/flake-file";
+    flake-file.url = "github:denful/flake-file";
 
     bongocat = {
       inputs.nixpkgs.follows = "nixpkgs";
@@ -57,7 +57,7 @@
       url = "github:nix-community/impermanence";
     };
 
-    import-tree.url = "github:vic/import-tree";
+    import-tree.url = "github:denful/import-tree";
 
     it87 = {
       flake = false;
