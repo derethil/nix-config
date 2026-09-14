@@ -15,6 +15,7 @@
       self.modules.nixos.gatus-options
       self.modules.nixos.ingress
       self.modules.nixos.oidc-options
+      self.modules.nixos.pick-a-recipe
       self.modules.nixos.quadlet
       self.modules.nixos.restic
       self.modules.nixos.secrets
