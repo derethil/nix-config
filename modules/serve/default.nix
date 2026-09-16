@@ -1,6 +1,7 @@
 {self, ...}: {
   flake.modules.nixos.homelab = {
     imports = [
+      self.modules.nixos.adventurelog
       self.modules.nixos.blombooru
       self.modules.nixos.bookorbit
       self.modules.nixos.gatus
