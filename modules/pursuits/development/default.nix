@@ -12,6 +12,7 @@
       self.modules.homeManager.aws-cli
       self.modules.homeManager.bruno
       self.modules.homeManager.claude-code
+      self.modules.homeManager.codex
       self.modules.homeManager.devenv
       self.modules.homeManager.jira-cli
       self.modules.homeManager.postgresql-client

@@ -13,6 +13,11 @@
 
     cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
+    codex-desktop-linux = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:ilysenko/codex-desktop-linux";
+    };
+
     dank-greeter = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:AvengeMedia/dank-greeter";

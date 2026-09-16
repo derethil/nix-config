@@ -13,7 +13,7 @@ in {
 
         settings = {
           abort-on-warn = false;
-          experimental-features = ["flakes" "nix-command"];
+          experimental-features = ["flakes" "nix-command" "pipe-operators"];
           fallback = true;
           http-connections = 50;
           keep-derivations = true;
