@@ -13,9 +13,15 @@ in {
     imports = [self.modules.homeManager.openhue];
 
     programs.dank-material-shell.plugins = {
-      claudeCodeUsage = {
-        inherit (config.programs.claude-code) enable;
-        settings.showPacing = false;
+      aiOverviewControl = {
+        enable = true;
+
+        settings = {
+          densityMode = "compact";
+          pillMode = "custom";
+          pillProviders = "codex,claude";
+          pinnedProviders = "codex,claude";
+        };
       };
 
       dankActions = {

@@ -103,7 +103,7 @@
           rightWidgets = [
             {
               enabled = true;
-              id = "claudeCodeUsage";
+              id = "aiOverviewControl";
             }
             {
               enabled = true;
