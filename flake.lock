@@ -1761,11 +1761,11 @@
         "sort-nvim": "sort-nvim"
       },
       "locked": {
-        "lastModified": 1787418931,
-        "narHash": "sha256-uTd56qXMEkp6ylhlGYkS6SCTEgZSWYfn0x7SQ1yE3OQ=",
+        "lastModified": 1789601300,
+        "narHash": "sha256-ntvIHf126sdIq3UQrKtc17JbQ9QyVxgyZhC5OPTuQs4=",
         "owner": "derethil",
         "repo": "nvim-config",
-        "rev": "9493dac8b716d02ae55faeed35294375fdd1882a",
+        "rev": "67de8502fa46af033111c4ed5dc4d9290cbbc122",
         "type": "github"
       },
       "original": {

@@ -50,10 +50,6 @@
       ];
 
       programs.nvim-config = {
-        claude = {
-          inherit (config.programs.claude-code) enable package;
-        };
-
         extraSettings.vim.lsp.servers.nixd.settings.nixd = {
           options = {
             nixos.expr = "(builtins.getFlake \"${config.internal.flakeRoot}\").nixosConfigurations.feldspar.options";
@@ -64,6 +60,11 @@
         };
 
         gitlab.configDirPath = dirOf config.sops.templates.".gitlab.nvim".path;
+
+        sidekick = {
+          inherit (config.programs.codex) package;
+          enable = true;
+        };
 
         sonarlint.connectedMode.projects = {
           "${config.home.homeDirectory}/development/dragonarmy/vigil" = {
