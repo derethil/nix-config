@@ -7,7 +7,7 @@
   }: let
     inherit (lib) mkForce mkMerge;
 
-    firefoxPkg = pkgs.firefox.override {nativeMessagingHosts = [pkgs.tridactyl-native];};
+    firefoxPkg = pkgs.firefox-bin.override {nativeMessagingHosts = [pkgs.tridactyl-native];};
   in {
     imports = [
       self.modules.homeManager.displays

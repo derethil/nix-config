@@ -1,22 +1,13 @@
 diff --git a/core/internal/providers/caldav/provider.go b/core/internal/providers/caldav/provider.go
-index e1621bf..93be59b 100644
 --- a/core/internal/providers/caldav/provider.go
 +++ b/core/internal/providers/caldav/provider.go
-@@ -449,13 +449,12 @@ func (p *Provider) multiGetAll(ctx context.Context, calendarPath string) ([]cald
+@@ -456,7 +456,8 @@
  		return nil, nil
  	}
  
 -	req := caldav.CalendarCompRequest{Name: ical.CompCalendar, AllProps: true, AllComps: true}
 +	// Empty CompRequest produces bare <calendar-data/> (go-webdav issue #196).
-+	req := caldav.CalendarMultiGet{CompRequest: caldav.CalendarCompRequest{}}
++	req := caldav.CalendarCompRequest{}
  	var out []caldav.CalendarObject
  	for chunk := range slices.Chunk(paths, 50) {
--		objs, err := p.client.MultiGetCalendar(ctx, calendarPath, &caldav.CalendarMultiGet{
--			Paths:       chunk,
--			CompRequest: req,
--		})
-+		req.Paths = chunk
-+		objs, err := p.client.MultiGetCalendar(ctx, calendarPath, &req)
- 		if err != nil {
- 			return nil, fmt.Errorf("multiget caldav objects: %w", err)
- 		}
+ 		objs, err := p.client.MultiGetCalendar(ctx, calendarPath, &caldav.CalendarMultiGet{
