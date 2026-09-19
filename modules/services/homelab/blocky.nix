@@ -4,8 +4,8 @@
   ...
 }: {
   flake.modules.nixos.blocky = {config, ...}: let
-    inherit (lib) attrNames head mkIf;
-    inherit (config.internal.homelab) address;
+    inherit (lib) attrNames concatMapStringsSep concatStringsSep hasInfix head mkIf unique;
+    inherit (config.internal.homelab) addresses;
 
     mappedHosts = attrNames (config.services.blocky.settings.customDNS.mapping or {});
   in {
@@ -21,7 +21,7 @@
         blocky = {
           conditions = [
             "[DNS_RCODE] == NOERROR"
-            "[BODY] == ${address}"
+            "[BODY] == any(${concatStringsSep ", " addresses})"
           ];
 
           dns = {
@@ -30,7 +30,7 @@
           };
 
           group = "infrastructure";
-          url = address;
+          url = head addresses;
         };
       };
 
@@ -54,8 +54,12 @@
             filterUnmappedTypes = true;
           };
 
-          # aardvark-dns from podman already on 10.88.0.1:53 so listen only on loopback and the LAN address
-          ports.dns = "127.0.0.1:53,${address}:53";
+          ports.dns = concatMapStringsSep "," (
+            address:
+              if hasInfix ":" address
+              then "[${address}]:53"
+              else "${address}:53"
+          ) (unique (["127.0.0.1"] ++ addresses));
 
           upstreams.groups.default = [
             "1.0.0.1"

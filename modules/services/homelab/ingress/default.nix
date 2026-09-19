@@ -71,7 +71,7 @@
           '';
         in {
           blocky.settings = {
-            customDNS.mapping.${host} = cfg.address;
+            customDNS.mapping.${host} = concatStringsSep "," cfg.addresses;
           };
 
           # Wrap in route to preserve order of the blocks

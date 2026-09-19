@@ -76,6 +76,15 @@ in {
             radeon.ppfeaturemask = "0xfff7ffff";
           };
 
+          homelab = {
+            addresses = [
+              "192.168.8.10"
+              "100.83.177.95"
+            ];
+
+            domain = "lumelle.me";
+          };
+
           services = {
             coolercontrol.it87.mmio = true;
             openrgb.startupProfile = "Minimal";

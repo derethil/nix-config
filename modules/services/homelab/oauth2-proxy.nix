@@ -4,7 +4,7 @@
   ...
 }: {
   flake.modules.nixos.oauth2-proxy = {config, ...}: let
-    inherit (config.internal.homelab) address domain oidc;
+    inherit (config.internal.homelab) addresses domain oidc;
 
     anyProtected = self.lib.homelab.anyProtected config;
 
@@ -33,7 +33,7 @@
       };
 
       services = {
-        blocky.settings.customDNS.mapping.${host} = address;
+        blocky.settings.customDNS.mapping.${host} = lib.concatStringsSep "," addresses;
 
         caddy.virtualHosts.${host}.extraConfig = ''
           handle /logout {

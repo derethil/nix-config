@@ -5,14 +5,12 @@ in {
     key = "homelab-options";
 
     options.internal.homelab = {
-      address = mkOption {
-        default = "100.83.177.95";
-        description = "IP that homelab DNS records resolve to.";
-        type = types.str;
+      addresses = mkOption {
+        description = "Non-empty list of IP addresses that homelab DNS records resolve to and Blocky listens on.";
+        type = types.addCheck (types.listOf types.str) (addresses: addresses != []);
       };
 
       domain = mkOption {
-        default = "lumelle.me";
         description = "Base domain homelab services are published under (e.g. recipes.\${domain}).";
         type = types.str;
       };
