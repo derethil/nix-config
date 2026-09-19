@@ -3,7 +3,7 @@
     programs.dank-material-shell.settings = {
       acLockTimeout = 600;
       acSuspendTimeout = 900;
-      animationSpeed = 2;
+      animationDuration = 500;
 
       appIdSubstitutions = [
         {
@@ -28,8 +28,6 @@
         }
       ];
 
-      appLauncherViewMode = "grid";
-
       barConfigs = [
         {
           attachToScreenEdge = false;
@@ -49,6 +47,8 @@
             {
               enabled = true;
               id = "clock";
+              clockDateOrder = "timeFirst";
+              clockCompactMode = true;
             }
             {
               enabled = true;
@@ -78,6 +78,10 @@
             {
               enabled = true;
               id = "workspaceSwitcher";
+              showWorkspacePadding = true;
+              showWorkspaceApps = true;
+              showOccupiedWorkspacesOnly = true;
+              workspaceActiveAppHighlightEnabled = true;
             }
             {
               enabled = true;
@@ -116,6 +120,7 @@
             {
               enabled = true;
               id = "controlCenterButton";
+              showVpnIcon = false;
             }
             {
               enabled = true;
@@ -135,67 +140,80 @@
           transparency = 1;
           visible = true;
           widgetTransparency = 1;
+          followInterfaceStyle = true;
         }
       ];
 
       barElevationEnabled = false;
       blurBorderOpacity = 0;
       blurWallpaperOnOverview = true;
-      builtInPluginSettings.dms_settings_search.trigger = "?";
+      builtInPluginSettings = {
+        dms_settings_search.trigger = "?";
+        dms_clipboard_search.trigger = "cb";
+        dms_power.trigger = "pw";
+        dms_qr_generator.trigger = "qrg";
+      };
       clockDateFormat = "ddd MMM d";
-      clockFormat = "12h";
-      configVersion = 18;
-      controlCenterShowVpnIcon = false;
+      configVersion = 28;
 
       controlCenterWidgets = [
         {
           enabled = true;
           id = "volumeSlider";
-          width = 50;
+          w = 4;
+          h = 1;
         }
         {
           enabled = true;
           id = "idleInhibitor";
-          width = 25;
+          w = 2;
+          h = 1;
         }
         {
           enabled = true;
           id = "doNotDisturb";
-          width = 25;
+          w = 2;
+          h = 1;
         }
         {
           enabled = true;
           id = "wifi";
-          width = 50;
+          w = 4;
+          h = 1;
         }
         {
           enabled = true;
           id = "bluetooth";
-          width = 50;
+          w = 4;
+          h = 1;
         }
         {
           enabled = true;
           id = "audioOutput";
-          width = 50;
+          w = 4;
+          h = 1;
         }
         {
           enabled = true;
           id = "audioInput";
-          width = 50;
+          w = 4;
+          h = 1;
         }
         {
           enabled = true;
           id = "plugin_niriScreenshot";
-          width = 50;
+          w = 4;
+          h = 1;
         }
         {
           enabled = true;
           id = "colorPicker";
-          width = 50;
+          w = 4;
+          h = 1;
         }
       ];
 
-      cornerRadius = 9;
+      radiusStrength = 28;
       currentThemeCategory = "registry";
       currentThemeName = "custom";
 
@@ -220,42 +238,112 @@
       customThemeFile = "${config.home.homeDirectory}/.config/DankMaterialShell/themes/retrobox/theme.json";
       dankLauncherV2Size = "medium";
 
-      desktopClockCustomColor = {
-        a = 1;
-        b = 1;
-        g = 1;
-        hslHue = -1;
-        hslLightness = 1;
-        hslSaturation = 0;
-        hsvHue = -1;
-        hsvSaturation = 0;
-        hsvValue = 1;
-        r = 1;
-        valid = true;
-      };
+      dashTabs = [
+        {
+          id = "overview";
+          enabled = true;
+        }
+        {
+          id = "media";
+          enabled = true;
+        }
+        {
+          id = "wallpaper";
+          enabled = true;
+        }
+        {
+          id = "weather";
+          enabled = true;
+        }
+        {
+          id = "notifications";
+          enabled = true;
+        }
+      ];
 
       displayNameMode = "model";
-      dockAutoHide = true;
-      dockBorderOpacity = 0.5;
-      dockGroupByApp = true;
-      dockIconSize = 48;
-      dockIndicatorStyle = "line";
-      dockOpenOnOverview = true;
-      dockShowTrash = true;
-      dockTrashCustomCommand = "xdg-terminal-exec --app-id=yazi yazi ~/.local/share/Trash/files";
+      dockConfigs = [
+        {
+          id = "dock";
+          name = "Dock";
+          enabled = true;
+          screenPreferences = ["all"];
+          showOnLastDisplay = true;
+          position = 1;
+          mode = "compact";
+          taskbarAlign = "center";
+          widgetExpansion = "popout";
+          iconSize = 48;
+          spacing = 4;
+          itemSpacing = 4;
+          margin = 0;
+          bottomGap = 0;
+          transparency = 1;
+          followInterfaceStyle = true;
+          autoHide = false;
+          smartAutoHide = true;
+          useOverlayLayer = false;
+          editOnRightClick = false;
+          showOnFullscreen = false;
+          openOnOverview = true;
+          groupByApp = true;
+          separatePinnedAndRunningApps = false;
+          restoreSpecialWorkspaceOnClick = false;
+          isolateDisplays = false;
+          indicatorStyle = "line";
+          borderEnabled = false;
+          borderColor = "surfaceText";
+          borderOpacity = 0.5;
+          borderThickness = 1;
+          launcherEnabled = false;
+          launcherLogoMode = "apps";
+          launcherLogoCustomPath = "";
+          launcherLogoColorOverride = "";
+          launcherLogoSizeOffset = 0;
+          launcherLogoBrightness = 0.5;
+          launcherLogoContrast = 1;
+          maxVisibleApps = 0;
+          maxVisibleRunningApps = 0;
+          showOverflowBadge = true;
+          showTrash = true;
+          trashFileManager = "default";
+          trashCustomCommand = "xdg-terminal-exec --app-id=yazi yazi ~/.local/share/Trash/files";
+          order = [];
+
+          widgets = [
+            {
+              id = "dock_launcher";
+              widgetId = "dockLauncher";
+              enabled = true;
+            }
+            {
+              id = "dock_apps";
+              widgetId = "appsDock";
+              enabled = true;
+            }
+            {
+              id = "dock_trash";
+              widgetId = "dockTrash";
+              enabled = true;
+            }
+          ];
+        }
+      ];
       fadeToLockGracePeriod = 15;
       firstDayOfWeek = 0;
       fontFamily = "Inter Medium";
-      keyboardLayoutNameCompactMode = true;
       launcherLogoColorOverride = "#00bcd4";
       launcherLogoMode = "os";
+      launcherStyle = "spotlight";
       launcherPluginVisibility.dms_settings_search.allowWithoutTrigger = false;
       lockBeforeSuspend = true;
       lockScreenNotificationMode = 2;
+      lockScreenShowPowerActions = true;
       matugenTemplateNeovim = true;
       maxFprintTries = 3;
       monoFontFamily = "GeistMono NF";
       networkPreference = "wifi";
+      niriOverviewLauncherStyle = "spotlight";
       notepadLastCustomTransparency = 0.5;
       notepadShowLineNumbers = true;
       notificationOverlayEnabled = true;
@@ -284,32 +372,11 @@
         petrichor = "green";
       };
 
-      runningAppsCompactMode = false;
-      runningAppsCurrentWorkspace = false;
       screenPreferences.wallpaper = ["all"];
-      showDock = true;
-      showOccupiedWorkspacesOnly = true;
-      showWorkspaceApps = true;
-      showWorkspacePadding = true;
       spotlightSectionViewModes.apps = "list";
-
-      systemMonitorCustomColor = {
-        a = 1;
-        b = 1;
-        g = 1;
-        hslHue = -1;
-        hslLightness = 1;
-        hslSaturation = 0;
-        hsvHue = -1;
-        hsvSaturation = 0;
-        hsvValue = 1;
-        r = 1;
-        valid = true;
-      };
 
       useAutoLocation = true;
       useFahrenheit = true;
-      workspaceActiveAppHighlightEnabled = true;
     };
   };
 }
