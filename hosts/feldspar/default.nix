@@ -36,7 +36,6 @@ in {
           bluetooth
           boot
           coolercontrol-it87
-          dankmaterialshell-greeter
           development
           docker
           feldspar-ath12k-fixes

@@ -13,7 +13,7 @@
       inherit (lib) getExe mkDefault mkIf mkMerge;
       inherit (self.lib.niri) mkKeybinds;
       cfg = config.surfaces.niri;
-      dmsEnabled = config.programs.dank-material-shell.enable or false;
+      noctaliaEnabled = config.programs.noctalia.enable or false;
 
       mkWorkspaceBinds = modifier: action:
         builtins.listToAttrs (map (
@@ -89,8 +89,8 @@
       shell.aliases.kill-window = "kill -9 $(niri msg -j pick-window | jq -r '.pid')";
 
       wayland.windowManager.niri.settings.binds = mkMerge [
-        # DMS-disabled fallbacks — niri owns these when DMS isn't in the surface.
-        (mkIf (!dmsEnabled) {
+        # Noctalia supplies these when it is the active shell surface.
+        (mkIf (!noctaliaEnabled) {
           "Mod+Shift+Slash" = mkKeybinds {hotkey-overlay-title = "Show Hotkey Overlay";} {
             spawn-sh = ["action" "msg" "niri" "show-hotkey-overlay"];
           };

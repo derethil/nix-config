@@ -14,6 +14,7 @@
           self.modules.nixos.geoclue
           self.modules.nixos.greeter
           self.modules.nixos.gtk
+          self.modules.nixos.noctalia
           self.modules.nixos.portals
         ];
 
@@ -33,8 +34,8 @@
       homeManager = {
         niri = {pkgs, ...}: {
           imports = with self.modules.homeManager; [
-            dankmaterialshell-panel
-            dankmaterialshell-panel-niri
+            noctalia-panel
+            noctalia-panel-niri
             fonts
             niri-nix
             niri-options

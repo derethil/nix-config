@@ -8,6 +8,7 @@
     ];
 
     homeManager.utilities.imports = [
+      self.modules.homeManager.ai-usagebar
       self.modules.homeManager.obsidian
       self.modules.homeManager.pinta
       self.modules.homeManager.qalculate

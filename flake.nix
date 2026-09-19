@@ -6,6 +6,11 @@
   inputs = {
     flake-file.url = "github:denful/flake-file";
 
+    ai-usagebar = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:akitaonrails/ai-usagebar";
+    };
+
     bongocat = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:saatvik333/wayland-bongocat";
@@ -108,6 +113,12 @@
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    noctalia.url = "github:noctalia-dev/noctalia/cachix";
+
+    noctalia-greeter = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:noctalia-dev/noctalia-greeter";
+    };
 
     nur = {
       inputs.nixpkgs.follows = "nixpkgs";
