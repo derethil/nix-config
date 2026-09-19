@@ -27,7 +27,11 @@ in {
   flake = {
     modules = {
       # HOST CONFIGURATION
-      darwin.gabbro = {pkgs, ...}: {
+      darwin.gabbro = {
+        config,
+        pkgs,
+        ...
+      }: {
         imports = with (mergeModules self.modules.generic self.modules.darwin); [
           bridges
           comms-work
@@ -44,7 +48,7 @@ in {
 
           dock.apps = [
             {app = "${pkgs.alacritty}/Applications/Alacritty.app";}
-            {app = "${pkgs.firefox}/Applications/Firefox.app";}
+            {app = "${config.home-manager.users.derethil.programs.firefox.package}/Applications/Firefox.app";}
             {app = "/System/Applications/Messages.app";}
             {app = "/Applications/Mattermost.app";}
             {app = "/Applications/Discord.app";}
