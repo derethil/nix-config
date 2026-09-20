@@ -28,7 +28,7 @@ to manage my development/gaming machine, laptop, and a self-hosted server.
 ## Stuff I use
 
 - **Compositors**: Niri and Paneru
-- **Shell**: ( Noctalia v5)[https://noctalia.dev/] with calendar event
+- **Shell**: [Noctalia v5](https://noctalia.dev/) with calendar event
   integration via khal, vdirsyncer, and davmail
 - **Development**: My [neovim flake](https://github.com/derethil/nvim-config),
   Claude Code w/ MCPs, AWS and Jira CLIs, Bruno

@@ -134,6 +134,7 @@
           enabled = true;
 
           end = [
+            "todo"
             "clipboard"
             "brightness"
             "battery"
@@ -169,7 +170,6 @@
           start = [
             "launcher"
             "workspaces"
-            "todo"
             "tray"
             "group:g4"
             "group:g3"
@@ -293,6 +293,7 @@
         pinned = [
           "footclient"
           "firefox"
+          "codex-desktop"
           "vesktop"
           "Mattermost.Desktop"
           "bruno"
@@ -513,11 +514,11 @@
             type = "login_box";
           };
 
-          lockscreen-widget-0000000000000002 = {
-            box_height = 304;
-            box_width = 304;
-            cx = 1720;
-            cy = 248;
+          lockscreen-widget-0000000000000003 = {
+            box_height = 144;
+            box_width = 832;
+            cx = 1704;
+            cy = 312;
             enabled = true;
             output = "DP-2";
             placement_height = 1440;
@@ -525,26 +526,12 @@
             rotation = 0;
 
             settings = {
-              background = true;
-              background_radius = 13;
-              circle = true;
-              clock_style = "analog";
+              background = false;
+              font_family = "Inter Display Black";
+              format = "{:%I:%M %p}";
+              shadow = true;
             };
 
-            type = "clock";
-          };
-
-          lockscreen-widget-0000000000000003 = {
-            box_height = 96;
-            box_width = 304;
-            cx = 1720;
-            cy = 464;
-            enabled = true;
-            output = "DP-2";
-            placement_height = 1440;
-            placement_width = 3440;
-            rotation = 0;
-            settings.format = "{:%I:%M %p}";
             type = "clock";
           };
 
@@ -552,7 +539,7 @@
             box_height = 144;
             box_width = 192;
             cx = 1411;
-            cy = 616;
+            cy = 576;
             enabled = true;
             output = "DP-2";
             placement_height = 1440;
@@ -566,13 +553,18 @@
             box_height = 432;
             box_width = 624;
             cx = 1832;
-            cy = 760;
+            cy = 720;
             enabled = true;
             output = "DP-2";
             placement_height = 1440;
             placement_width = 3440;
             rotation = 0;
-            settings.show_events = true;
+
+            settings = {
+              background = true;
+              show_events = true;
+            };
+
             type = "calendar";
           };
 
@@ -580,7 +572,7 @@
             box_height = 272;
             box_width = 192;
             cx = 1411;
-            cy = 840;
+            cy = 800;
             enabled = true;
             output = "DP-2";
             placement_height = 1440;
@@ -593,7 +585,6 @@
 
         widget_order = [
           "lockscreen-widget-0000000000000004"
-          "lockscreen-widget-0000000000000002"
           "lockscreen-login-box@DP-2"
           "lockscreen-widget-0000000000000003"
           "lockscreen-widget-0000000000000007"
@@ -1141,7 +1132,9 @@
         };
 
         workspaces = {
-          hide_when_empty = true;
+          font_family = "Inter ExtraBold";
+          hide_when_empty = false;
+          show_labels = false;
           type = "workspaces";
         };
       };
