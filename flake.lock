@@ -1277,11 +1277,11 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1776366944,
-        "narHash": "sha256-zvRM1Egnw/s27u5UeKrQy+OnRtSUHH8/zguFpn/QvnU=",
+        "lastModified": 1789865150,
+        "narHash": "sha256-yiiFdGAnC3FjMRCWioVEmL2EtSBiPU47E9cpADJu6Uo=",
         "owner": "derethil",
         "repo": "niri-smart-workspace",
-        "rev": "7b10eb74358bea855a1a2db48c9074b94a493e7d",
+        "rev": "a813ac639f2ff578da231c24cea4fb300655e17c",
         "type": "github"
       },
       "original": {
