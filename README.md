@@ -28,9 +28,8 @@ to manage my development/gaming machine, laptop, and a self-hosted server.
 ## Stuff I use
 
 - **Compositors**: Niri and Paneru
-- **Shell**: Dank Material Shell with my own
-  [Hue manager plugin](https://github.com/derethil/dms-hue-manager/tree/main)
-  and Outlook calendar integration
+- **Shell**: ( Noctalia v5)[https://noctalia.dev/] with calendar event
+  integration via khal, vdirsyncer, and davmail
 - **Development**: My [neovim flake](https://github.com/derethil/nvim-config),
   Claude Code w/ MCPs, AWS and Jira CLIs, Bruno
 - **Gaming**: CachyOS kernel, low-latency audio, Steam, PrismLauncher, Sober,
