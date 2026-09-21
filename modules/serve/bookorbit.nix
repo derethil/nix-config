@@ -4,7 +4,7 @@
     pkgs,
     ...
   }: let
-    version = "2.8.1";
+    version = "3.0.0";
     postgresVersion = "pg18";
 
     subdomain = "books";
@@ -54,6 +54,7 @@
 
     sops = {
       secrets = {
+        "serve/bookorbit/book_request_encryption_key" = {};
         "serve/bookorbit/jwt_secret" = {};
         "serve/bookorbit/postgres_password" = {};
         "serve/bookorbit/setup_bootstrap_token" = {};
@@ -67,6 +68,7 @@
           POSTGRES_PASSWORD=${config.sops.placeholder."serve/bookorbit/postgres_password"}
           JWT_SECRET=${config.sops.placeholder."serve/bookorbit/jwt_secret"}
           SETUP_BOOTSTRAP_TOKEN=${config.sops.placeholder."serve/bookorbit/setup_bootstrap_token"}
+          BOOK_REQUEST_ENCRYPTION_KEY=${config.sops.placeholder."serve/bookorbit/book_request_encryption_key"}
         '';
       };
     };
