@@ -113,6 +113,7 @@
 
             environments = {
               APP_URL = url;
+              BOOK_DOCK_PATH = "/data/downloads/book-dock";
               OIDC_ALLOW_LOCAL_ISSUERS = "true";
               PGID = pgid;
               PORT = internalPort;
@@ -129,6 +130,7 @@
             volumes = [
               "bookorbit-books:/books"
               "bookorbit-data:/data"
+              "sabnzbd-downloads:/data/downloads"
             ];
           };
 
