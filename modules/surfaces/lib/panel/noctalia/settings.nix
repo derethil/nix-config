@@ -8,7 +8,7 @@
 
       audio = {
         enable_overdrive = false;
-        enable_sounds = false;
+        enable_sounds = true;
         notification_sound = "";
         sound_volume = 0.5;
         volume_change_sound = "";
@@ -184,7 +184,10 @@
         ];
       };
 
-      battery.warning_threshold = 10;
+      battery = {
+        device."/org/freedesktop/UPower/devices/battery_hidpp_battery_0".warning_threshold = 5;
+        warning_threshold = 10;
+      };
 
       brightness = {
         enable_ddcutil = false;
@@ -194,17 +197,32 @@
       };
 
       calendar = {
-        account.calendars = {
-          calendars = [];
-          color = "primary";
-          credential_source = "secret-service";
-          name = "Vdir Calendars";
-          password_file = "";
-          path = "/home/derethil/.local/share/calendars";
-          provider = "";
-          server_url = "";
-          type = "vdir";
-          username = "";
+        account = {
+          calendars = {
+            calendars = [];
+            color = "primary";
+            credential_source = "secret-service";
+            name = "Vdir Calendars";
+            password_file = "";
+            path = "/home/derethil/.local/share/calendars";
+            provider = "";
+            server_url = "";
+            type = "vdir";
+            username = "";
+          };
+
+          icloud = {
+            calendars = [];
+            color = "secondary";
+            credential_source = "secret-service";
+            name = "iCloud";
+            password_file = "";
+            path = "";
+            provider = "icloud";
+            server_url = "";
+            type = "caldav";
+            username = "madisonglenn@pm.me";
+          };
         };
 
         enabled = true;
@@ -418,6 +436,7 @@
 
         down = [
           "Down"
+          "Ctrl+n"
         ];
 
         left = [
@@ -442,12 +461,14 @@
 
         up = [
           "Up"
+          "Ctrl+p"
         ];
 
         validate = [
           "Return"
           "KP_Enter"
           "space"
+          "Ctrl+y"
         ];
       };
 
@@ -759,9 +780,10 @@
           directory = "/home/derethil/Pictures/screenshots";
           filename_pattern = "";
           freeze_screen = true;
+          include_cursor = true;
           pipe_command = "";
           pipe_to_command = true;
-          remember_last_region = true;
+          remember_last_region = false;
           save_to_file = true;
           show_cursor = true;
           skip_annotate_on_copy_save = false;
@@ -989,10 +1011,9 @@
         bar.type = "azokyen/spotify-media:bar";
 
         cast_window = {
-          actions.left = "exec bash -c 'niri msg action set-dynamic-cast-window --id $(niri msg --json pick-window | jq -r .id)'";
-          glyph = "cast";
-          tooltip = "Cast Window";
-          type = "custom_button";
+          color = "primary";
+          inactive_mode = "dim";
+          type = "derethil/cast-window:cast";
         };
 
         claude_icon = {
