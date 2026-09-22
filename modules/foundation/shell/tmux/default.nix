@@ -110,6 +110,7 @@
         bind-key -T copy-mode-vi 'C-l' select-pane -R
       '';
 
+      focusEvents = true;
       keyMode = "vi";
 
       plugins = with pkgs.tmuxPlugins; [

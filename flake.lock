@@ -846,6 +846,22 @@
         "type": "indirect"
       }
     },
+    "garbage-day-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1787099900,
+        "narHash": "sha256-I5P+1DZUU0Gy+sKJURVSDxq/T20NnQ/pve7ZSDOaIMo=",
+        "owner": "Zeioth",
+        "repo": "garbage-day.nvim",
+        "rev": "225b715cf7e502977e5e040219cf5009eed70ee1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Zeioth",
+        "repo": "garbage-day.nvim",
+        "type": "github"
+      }
+    },
     "git-hooks": {
       "inputs": {
         "flake-compat": [
@@ -1887,6 +1903,7 @@
         "diffview-plus": "diffview-plus",
         "flake-file": "flake-file_2",
         "flake-parts": "flake-parts_8",
+        "garbage-day-nvim": "garbage-day-nvim",
         "gitlab-nvim": "gitlab-nvim",
         "import-nvim": "import-nvim",
         "import-tree": "import-tree_2",
@@ -1901,11 +1918,11 @@
         "sort-nvim": "sort-nvim"
       },
       "locked": {
-        "lastModified": 1789601300,
-        "narHash": "sha256-ntvIHf126sdIq3UQrKtc17JbQ9QyVxgyZhC5OPTuQs4=",
+        "lastModified": 1790051714,
+        "narHash": "sha256-+nS1yCRJWZqkelkjyg4UlsQnU4SqxyM2rQhL4+Yqauo=",
         "owner": "derethil",
         "repo": "nvim-config",
-        "rev": "67de8502fa46af033111c4ed5dc4d9290cbbc122",
+        "rev": "9c4cab7ec9b741ee0876704a8594451cae9c72e1",
         "type": "github"
       },
       "original": {
