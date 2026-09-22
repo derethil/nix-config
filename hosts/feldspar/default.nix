@@ -37,6 +37,7 @@ in {
           boot
           coolercontrol-it87
           development
+          devices
           docker
           feldspar-ath12k-fixes
           foundation
@@ -49,12 +50,12 @@ in {
           niri
           openrgb
           plymouth
+          productivity
           radeon
           self.modules.nixos.displays
           sunshine
           tailscale
           user-derethil
-          utilities
           virtualization
         ];
 
@@ -99,18 +100,20 @@ in {
 
       homeManager.feldspar-derethil = {
         imports = with self.modules.homeManager; [
-          browsers
-          comms-work
+          ai
+          chromium
           development
           easyeffects
+          firefox
           foot
           foundation
           gaming
           media
           melonloader
           niri
+          productivity
           remote-pull
-          utilities
+          social-work
         ];
 
         home.stateVersion = "25.05";

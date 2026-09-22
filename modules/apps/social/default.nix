@@ -1,17 +1,17 @@
 {self, ...}: {
   flake.modules = {
-    darwin.comms-work.imports = [
+    darwin.social-work.imports = [
       self.modules.darwin.discord
       self.modules.darwin.mattermost
     ];
 
     homeManager = {
-      comms.imports = [
+      social.imports = [
         self.modules.homeManager.discord
       ];
 
-      comms-work.imports = [
-        self.modules.homeManager.comms
+      social-work.imports = [
+        self.modules.homeManager.social
         self.modules.homeManager.mattermost
       ];
     };

@@ -34,12 +34,12 @@ in {
       }: {
         imports = with (mergeModules self.modules.generic self.modules.darwin); [
           bridges
-          comms-work
           development
           foundation
           lightweight-gaming
           paneru
           hammerspoon
+          social-work
           user-derethil
         ];
 
@@ -68,16 +68,18 @@ in {
       # HOME MANAGER CONFIGURATION
       homeManager.gabbro-derethil = {
         imports = with self.modules.homeManager; [
+          ai
           alacritty
-          browsers
-          comms-work
+          chromium
           development
+          firefox
           foundation
           lightweight-gaming
           mac-app-util
           media
           paneru
-          utilities
+          productivity
+          social-work
         ];
 
         home.stateVersion = "25.05";

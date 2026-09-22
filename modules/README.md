@@ -1,14 +1,14 @@
 # `modules`
 
 Contains all my configuration outputs. Hosts, templates, overlays, and flake
-plumbing live at the root.
+plumbing are root-lvel.
 
 ## Layout
 
-- `foundation/`: baseline module that every host imports
-- `machine/`: hardware-adjacent services and boot/kernel stuff
-- `surfaces/`: desktop and UI layers
-- `pursuits/`: user-facing applications
+- [`apps/`](./apps): user-facing applications
 - `bridges/`: platform specific integrations
-- `serve/`: self-hosted external services
-- `services/`: system daemons and background services
+- `foundation/`: nix, shell, system, and user config for every host
+- `homelab/`: self-hosted server stack
+- `machine/`: boot, kernel, and hardware configuration
+- `services/`: background daemons not tied to specific hardware
+- `surfaces/`: desktop and UI layers
