@@ -27,15 +27,12 @@ in {
   flake = {
     modules = {
       # HOST CONFIGURATION
-      darwin.gabbro = {
-        config,
-        pkgs,
-        ...
-      }: {
+      darwin.gabbro = {pkgs, ...}: {
         imports = with (mergeModules self.modules.generic self.modules.darwin); [
           bridges
           development
           foundation
+          firefox
           lightweight-gaming
           paneru
           hammerspoon
@@ -48,7 +45,7 @@ in {
 
           dock.apps = [
             {app = "${pkgs.alacritty}/Applications/Alacritty.app";}
-            {app = "${config.home-manager.users.derethil.programs.firefox.package}/Applications/Firefox.app";}
+            {app = "${pkgs.firefox-bin-unwrapped}/Applications/Firefox.app";}
             {app = "/System/Applications/Messages.app";}
             {app = "/Applications/Mattermost.app";}
             {app = "/Applications/Discord.app";}
@@ -70,7 +67,6 @@ in {
         imports = with self.modules.homeManager; [
           ai
           alacritty
-          chromium
           development
           firefox
           foundation
