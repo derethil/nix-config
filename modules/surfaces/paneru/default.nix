@@ -25,6 +25,7 @@
 
     homeManager.paneru.imports = [
       self.modules.homeManager.fonts
+      self.modules.homeManager.mediamate
       self.modules.homeManager.wallpaper
     ];
   };
