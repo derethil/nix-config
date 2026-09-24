@@ -16,17 +16,21 @@ in {
       ];
 
       home-manager.sharedModules = [self.modules.homeManager.reset-launch-services];
-
-      system.activationScripts.resetLaunchServices.text = ''
-        echo "Resetting Launch Services database..."
-        ${lsregister} -r -domain local -domain system -domain user
-      '';
     };
 
     homeManager.reset-launch-services = {lib, ...}: {
-      home.activation.resetLaunchServices = lib.hm.dag.entryAfter ["writeBoundary"] ''
-        echo "Resetting Launch Services database..."
-        ${lsregister} -r -domain local -domain system -domain user
+      # mac-app-util creates these after writeBoundary, so a domain-wide scan
+      # during system activation cannot discover them.
+      home.activation.registerLaunchServices = lib.hm.dag.entryAfter ["trampolineApps"] ''
+        apps="$HOME/Applications/Home Manager Trampolines"
+
+        if [[ -d "$apps" ]]; then
+          echo "Registering Home Manager applications with Launch Services..."
+
+          while IFS= read -r -d $'\0' app; do
+            ${lsregister} -f "$app"
+          done < <(find "$apps" -maxdepth 1 -name '*.app' -print0)
+        fi
       '';
     };
   };
