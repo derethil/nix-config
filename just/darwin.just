@@ -4,6 +4,11 @@ set working-directory := ".."
 default:
     @just --list darwin
 
+# Switch darwin and home-manager together (separate profiles, both required)
+switch:
+    nh darwin switch .
+    nh home switch .
+
 # Reset TCC categories with stale nix store paths
 [arg("service", help="TCC service to clean, e.g. kTCCServiceAccessibility, kTCCServiceCamera (default: every service)")]
 cleanup-privacy service="all":
