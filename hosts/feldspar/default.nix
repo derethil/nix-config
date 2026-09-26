@@ -54,6 +54,7 @@ in {
           radeon
           self.modules.nixos.displays
           sunshine
+          removable-media
           tailscale
           user-derethil
           virtualization

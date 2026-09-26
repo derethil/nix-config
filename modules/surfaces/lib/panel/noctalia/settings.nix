@@ -9,9 +9,8 @@
       audio = {
         enable_overdrive = false;
         enable_sounds = true;
-        notification_sound = "";
+        sound_theme = "freedesktop";
         sound_volume = 0.5;
-        volume_change_sound = "";
       };
 
       backdrop = {
@@ -140,6 +139,7 @@
             "battery"
             "notifications"
             "caffeine"
+            "tray"
             "group:ai_usage"
             "group:g1"
             "help"
@@ -170,7 +170,6 @@
           start = [
             "launcher"
             "workspaces"
-            "tray"
             "group:g4"
             "group:g3"
           ];
@@ -229,6 +228,13 @@
         event_date_format = "%A %e %B";
         event_time_format = "{:%I:%M %p}";
         refresh_minutes = 15;
+
+        reminders = {
+          all_day_digest_time = "09:00";
+          default_lead_minutes = 10;
+          enabled = true;
+          use_event_reminders = true;
+        };
       };
 
       config_version = 14;
@@ -484,11 +490,23 @@
         allow_empty_password = false;
         blur_intensity = 0.5999999865889549;
         blurred_desktop = true;
+        edge_smoothness = 0.30000001192092896;
         enabled = true;
         fingerprint = true;
         lock_before_suspend = true;
         monitors = [];
         tint_intensity = 0.3999999910593033;
+
+        transition = [
+          "fade"
+          "wipe"
+          "disc"
+          "stripes"
+          "zoom"
+          "honeycomb"
+        ];
+
+        transition_duration = 1500;
         wallpaper = "";
       };
 
@@ -849,6 +867,7 @@
           show_shortcuts = true;
         };
 
+        settings_expand_all_groups = false;
         settings_show_advanced = true;
         settings_window_translucent = false;
         setup_wizard_enabled = true;
@@ -863,7 +882,15 @@
         telemetry_enabled = false;
         time_format = "{:%I:%M %p}";
         umbriel_overview_type_to_launch_enabled = false;
-        window_switcher.mru = false;
+
+        window_switcher = {
+          mru = false;
+          show_all_outputs = true;
+          show_app_icon = true;
+          show_caption = true;
+          show_count = true;
+          style = "carousel";
+        };
       };
 
       storage = {
@@ -1138,7 +1165,13 @@
         todo.type = "nightwatch75/todo:todo";
 
         tray = {
-          enabled = false;
+          enabled = true;
+
+          hidden = [
+            "easyeffects"
+            "librepods"
+          ];
+
           type = "tray";
         };
 

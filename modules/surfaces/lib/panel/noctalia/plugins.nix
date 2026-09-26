@@ -14,7 +14,11 @@
 
         "liamwh/emoji-picker".paste_command = "wl-paste";
         "nightwatch75/todo".sound_on_complete = true;
-        "noctalia/bitwarden".gen_special = true;
+
+        "noctalia/bitwarden" = {
+          gen_special = true;
+          hide_actions_when_searching = true;
+        };
       };
 
       plugins = {
