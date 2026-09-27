@@ -45,7 +45,7 @@
       echo "==> Forgetting + pruning..."
       ${restic} unlock || true
       ${restic} forget --prune --group-by tags \
-        --keep-last 1 --keep-daily 7 --keep-monthly 6 --keep-weekly 4 \
+        --keep-last 1 --keep-daily 7 --keep-weekly 4 --keep-monthly 12 --keep-yearly 5 \
         --retry-lock ${retryLock} || status=1
 
       # Verify a deterministic 1/7 slice of the pack data, keyed off day-of-week
