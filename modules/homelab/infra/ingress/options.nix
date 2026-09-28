@@ -57,6 +57,12 @@ in {
           ...
         }: {
           options = {
+            address = mkOption {
+              default = "127.0.0.1";
+              description = "Address of the reverse proxy upstream (defaults to the local host).";
+              type = types.str;
+            };
+
             caddy = {
               extraConfig = mkOption {
                 default = "";
@@ -99,7 +105,7 @@ in {
             };
 
             port = mkOption {
-              description = "Loopback port the reverse proxy forwards to (declared as a string, validated as a port).";
+              description = "Port the reverse proxy forwards to (declared as a string, validated as a port).";
               type = types.coercedTo types.str toInt types.port;
             };
 

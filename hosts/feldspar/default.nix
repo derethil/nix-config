@@ -87,7 +87,11 @@ in {
           };
 
           services = {
-            coolercontrol.it87.mmio = true;
+            coolercontrol = {
+              it87.mmio = true;
+              web.enable = true;
+            };
+
             openrgb.startupProfile = "Minimal";
           };
         };

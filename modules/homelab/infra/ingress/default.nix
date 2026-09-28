@@ -5,7 +5,7 @@
 }: {
   flake = {
     modules.nixos.ingress = {config, ...}: let
-      inherit (lib) attrValues concatMapStringsSep concatStringsSep count filter mkMerge optionalString unique;
+      inherit (lib) attrValues concatMapStringsSep concatStringsSep count filter hasInfix mkMerge optionalString unique;
 
       cfg = config.internal.homelab;
 
@@ -13,8 +13,8 @@
       anyJwtBearer = self.lib.homelab.anyJwtBearer config;
       auth = cfg.authMiddleware;
 
-      usedPorts = map (service: service.port) (attrValues cfg.ingress);
-      duplicatePorts = unique (filter (port: count (other: other == port) usedPorts > 1) usedPorts);
+      usedEndpoints = map (service: "${service.address}:${toString service.port}") (attrValues cfg.ingress);
+      duplicateEndpoints = unique (filter (endpoint: count (other: other == endpoint) usedEndpoints > 1) usedEndpoints);
 
       usedSubdomains = map (service: service.subdomain) (attrValues cfg.ingress);
       duplicateSubdomains = unique (filter (subdomain: count (other: other == subdomain) usedSubdomains > 1) usedSubdomains);
@@ -36,9 +36,13 @@
           host = service.fqdn;
           jwtBearer = service.caddy.jwtBearer;
           forwardAuth = service.caddy.forwardAuth;
+          proxyAddress =
+            if hasInfix ":" service.address
+            then "[${service.address}]"
+            else service.address;
 
           defaultProxy = ''
-            reverse_proxy 127.0.0.1:${toString service.port} {
+            reverse_proxy ${proxyAddress}:${toString service.port} {
               header_up X-Real-IP {remote_host}
             }
           '';
@@ -94,8 +98,8 @@
 
         assertions = [
           {
-            assertion = duplicatePorts == [];
-            message = "internal.homelab.ingress: ports must be unique across services; reused: ${concatMapStringsSep ", " toString duplicatePorts}";
+            assertion = duplicateEndpoints == [];
+            message = "internal.homelab.ingress: address and port pairs must be unique across services; reused: ${concatMapStringsSep ", " toString duplicateEndpoints}";
           }
           {
             assertion = duplicateSubdomains == [];
