@@ -22,6 +22,8 @@
       };
 
       plugins = {
+        auto_update = "all";
+
         enabled = [
           "noctalia/bitwarden"
           "notfinaldev/web-search"
@@ -36,16 +38,19 @@
 
         source = [
           {
+            enabled = true;
             kind = "git";
             location = "https://github.com/noctalia-dev/official-plugins";
             name = "official";
           }
           {
+            enabled = true;
             kind = "git";
             location = "https://github.com/noctalia-dev/community-plugins";
             name = "community";
           }
           {
+            enabled = true;
             kind = "git";
             location = "https://github.com/derethil/noctalia-plugins";
             name = "derethil";

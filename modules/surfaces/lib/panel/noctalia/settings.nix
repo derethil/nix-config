@@ -488,25 +488,20 @@
 
       lockscreen = {
         allow_empty_password = false;
-        blur_intensity = 0.5999999865889549;
+        blur_intensity = 0.5999999642372131;
         blurred_desktop = true;
         edge_smoothness = 0.30000001192092896;
         enabled = true;
         fingerprint = true;
         lock_before_suspend = true;
         monitors = [];
-        tint_intensity = 0.3999999910593033;
+        tint_intensity = 0.3999999761581421;
 
         transition = [
           "fade"
-          "wipe"
-          "disc"
-          "stripes"
-          "zoom"
-          "honeycomb"
         ];
 
-        transition_duration = 1500;
+        transition_duration = 500;
         wallpaper = "";
       };
 
@@ -798,7 +793,6 @@
           directory = "/home/derethil/Pictures/screenshots";
           filename_pattern = "";
           freeze_screen = true;
-          include_cursor = true;
           pipe_command = "";
           pipe_to_command = true;
           remember_last_region = false;
@@ -812,7 +806,7 @@
             {
               action = "lock";
               command = "";
-              countdown_seconds = 0;
+              countdown_seconds = 0.0;
               enabled = true;
               glyph = "";
               label = "";
@@ -822,7 +816,7 @@
             {
               action = "logout";
               command = "";
-              countdown_seconds = 0;
+              countdown_seconds = 0.0;
               enabled = true;
               glyph = "";
               label = "";
@@ -832,7 +826,7 @@
             {
               action = "lock_and_suspend";
               command = "";
-              countdown_seconds = 0;
+              countdown_seconds = 0.0;
               enabled = true;
               glyph = "";
               label = "";
@@ -840,35 +834,45 @@
               variant = "default";
             }
             {
-              action = "reboot";
-              command = "";
-              countdown_seconds = 0;
+              action = "command";
+              command = "systemctl restart --user noctalia.service";
+              countdown_seconds = 0.0;
               enabled = true;
-              glyph = "";
-              label = "";
+              glyph = "noctalia";
+              label = "Restart Noctalia";
               shortcut = "4";
               variant = "default";
             }
             {
-              action = "shutdown";
+              action = "reboot";
               command = "";
-              countdown_seconds = 0;
+              countdown_seconds = 1.0;
               enabled = true;
               glyph = "";
               label = "";
               shortcut = "5";
               variant = "destructive";
             }
+            {
+              action = "shutdown";
+              command = "";
+              countdown_seconds = 1.0;
+              enabled = true;
+              glyph = "";
+              label = "";
+              shortcut = "6";
+              variant = "destructive";
+            }
           ];
 
           grid = false;
-          grid_columns = 5;
+          grid_columns = 2;
           power = {};
           show_shortcuts = true;
         };
 
-        settings_expand_all_groups = false;
-        settings_show_advanced = true;
+        settings_expand_all_groups = true;
+        settings_show_advanced = false;
         settings_window_translucent = false;
         setup_wizard_enabled = true;
 
@@ -884,6 +888,7 @@
         umbriel_overview_type_to_launch_enabled = false;
 
         window_switcher = {
+          current_workspace_only = false;
           mru = false;
           show_all_outputs = true;
           show_app_icon = true;
@@ -1162,7 +1167,10 @@
           type = "sysmon";
         };
 
-        todo.type = "nightwatch75/todo:todo";
+        todo = {
+          show_label = false;
+          type = "nightwatch75/todo:todo";
+        };
 
         tray = {
           enabled = true;
