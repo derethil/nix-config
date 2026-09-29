@@ -109,7 +109,11 @@
         check_for_update_on_startup = false;
         model = "gpt-5.6-sol";
         sandbox_mode = "workspace-write";
-        tui.vim_mode_default = true;
+
+        tui = {
+          auto_recap = false;
+          vim_mode_default = true;
+        };
       };
     };
   };

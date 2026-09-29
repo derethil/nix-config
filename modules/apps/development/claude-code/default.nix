@@ -44,6 +44,8 @@
       enableMcpIntegration = true;
 
       settings = {
+        awaySummaryEnabled = false;
+
         enabledPlugins = {
           "pr-review-toolkit@claude-plugins-official" = true;
           "superpowers@claude-plugins-official" = true;
