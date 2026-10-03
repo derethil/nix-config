@@ -28,7 +28,7 @@ in {
   flake = {
     # HOST CONFIGURATION
     modules = {
-      nixos.feldspar = {
+      nixos.feldspar = {pkgs, ...}: {
         imports = with (mergeModules self.modules.generic self.modules.nixos); [
           ./_disko.nix
           ./_hardware.nix
@@ -74,7 +74,18 @@ in {
 
           hardware = {
             networking.avahi.enable = true;
-            radeon.ppfeaturemask = "0xfff7ffff";
+
+            radeon = {
+              mesa = let
+                backport = base: newer: base.overrideAttrs (_: {inherit (newer) src version;});
+              in {
+                package = backport pkgs.mesa pkgs.unstable.mesa;
+                package32 = backport pkgs.pkgsi686Linux.mesa pkgs.unstable.pkgsi686Linux.mesa;
+                useUnstable = false;
+              };
+
+              ppfeaturemask = "0xfff7ffff";
+            };
           };
 
           homelab = {
