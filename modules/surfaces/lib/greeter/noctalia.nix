@@ -8,11 +8,7 @@
     url = "github:noctalia-dev/noctalia-greeter";
   };
 
-  flake.modules.nixos.noctalia-greeter = {
-    config,
-    pkgs,
-    ...
-  }: {
+  flake.modules.nixos.noctalia-greeter = {config, ...}: {
     imports = [
       inputs.noctalia-greeter.nixosModules.default
       self.modules.nixos.primary-user
@@ -23,9 +19,12 @@
     services.displayManager.noctalia-greeter = {
       enable = true;
 
-      settings.cursor = {
-        inherit (config.home-manager.users.${config.internal.primaryUser}.home.pointerCursor) name size;
-        path = "${pkgs.bibata-cursors}/share/icons";
+      settings.cursor = let
+        cursor = config.home-manager.users.${config.internal.primaryUser}.home.pointerCursor;
+      in {
+        inherit (cursor) size;
+        path = "${cursor.package}/share/icons";
+        theme = cursor.name;
       };
     };
   };
