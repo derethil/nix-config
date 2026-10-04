@@ -26,12 +26,14 @@
           border = "outline";
           border_width = 0;
           capsule = true;
+          capsule_border_width = 1;
           capsule_fill = "surface_variant";
 
           capsule_group = [
             {
               accordion = false;
               accordion_direction = "end";
+              border_width = 1;
               enabled = true;
               fill = "surface_variant";
               id = "ai_usage";
@@ -50,6 +52,7 @@
             {
               accordion = false;
               accordion_direction = "end";
+              border_width = 1;
               enabled = true;
               fill = "surface_variant";
               id = "g1";
@@ -67,6 +70,7 @@
             {
               accordion = false;
               accordion_direction = "end";
+              border_width = 1;
               enabled = true;
               fill = "surface_variant";
               id = "g2";
@@ -83,6 +87,7 @@
             {
               accordion = false;
               accordion_direction = "end";
+              border_width = 1;
               enabled = true;
               fill = "surface_variant";
               id = "g3";
@@ -100,6 +105,7 @@
             {
               accordion = false;
               accordion_direction = "end";
+              border_width = 1;
               enabled = true;
               fill = "surface_variant";
               id = "g4";
@@ -124,9 +130,9 @@
             "audio_visualizer"
             "group:g2"
             "weather"
-            "bar"
           ];
 
+          compositor_blur = true;
           concave_edge_corners = true;
           contact_shadow = false;
           dead_zone = {};
@@ -237,7 +243,7 @@
         };
       };
 
-      config_version = 14;
+      config_version = 15;
 
       control_center = {
         calendar = {
@@ -308,11 +314,10 @@
         launcher_position = "start";
         layer = "overlay";
         magnification = true;
-        magnification_scale = 1.3000000044703484;
+        magnification_scale = 1.2999999523162842;
         main_axis_padding = 16;
         margin_edge = 0;
         margin_ends = 0;
-        monitors = [];
 
         pinned = [
           "footclient"
@@ -636,8 +641,11 @@
       notification = {
         background_opacity = 0.9700000286102295;
         border = true;
+        border_color = "outline";
+        border_width = 1;
         collapse_on_dismiss = true;
         enable_daemon = true;
+        follow_focused_output = false;
         history_retention_hours = 0;
         keep_dismissed_in_history = true;
         layer = "overlay";
@@ -649,12 +657,17 @@
         scale = 1;
         show_actions = true;
         show_app_name = true;
+        width = 360;
       };
 
       osd = {
         background_opacity = 0.9700000286102295;
         border = true;
+        border_color = "outline";
+        border_width = 1;
         enabled = true;
+        follow_focused_output = false;
+        hide_delay_ms = 1400;
 
         kinds = {
           bluetooth = true;
@@ -680,13 +693,13 @@
         orientation = "horizontal";
         position = "bottom_center";
         position_vertical = "center_right";
-        scale = 1.1000000089406967;
+        scale = 1.100000023841858;
       };
 
       shell = {
         animation = {
           enabled = true;
-          speed = 1.2500000186264515;
+          speed = 1.25;
         };
 
         app_icon_colorize = false;
@@ -776,6 +789,8 @@
           mic_filter_regex = "";
           screen_filter_regex = "";
         };
+
+        readline_shortcuts = false;
 
         screen_corners = {
           enabled = true;
@@ -1039,8 +1054,6 @@
           show_when_idle = true;
           type = "audio_visualizer";
         };
-
-        bar.type = "azokyen/spotify-media:bar";
 
         cast_window = {
           color = "primary";
