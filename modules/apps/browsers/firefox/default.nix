@@ -111,12 +111,26 @@
             isDefault = true;
 
             search = {
-              default = "google";
+              default = "Brave";
 
               engines = {
+                "Brave" = {
+                  iconMapObj."24" = ./brave-search.svg;
+
+                  urls = [
+                    {
+                      template = "https://search.brave.com/search?q={searchTerms}";
+                    }
+                    {
+                      template = "https://search.brave.com/api/suggest?q={searchTerms}";
+                      type = "application/x-suggestions+json";
+                    }
+                  ];
+                };
+
                 "Nix Packages" = {
                   definedAliases = ["@np"];
-                  icon = "https://nixos.wiki/favicon.png";
+                  icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
 
                   urls = [
                     {
@@ -138,13 +152,13 @@
 
                 "NixOS Options" = {
                   definedAliases = ["@no"];
-                  icon = "https://nixos.wiki/favicon.png";
+                  icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
                   urls = [{template = "https://search.nixos.org/options?query={searchTerms}";}];
                 };
 
                 "NixOS Wiki" = {
                   definedAliases = ["@nw"];
-                  icon = "https://nixos.wiki/favicon.png";
+                  icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
                   updateInterval = 24 * 60 * 60 * 1000;
                   urls = [{template = "https://nixos.wiki/index.php?search={searchTerms}";}];
                 };
@@ -175,7 +189,7 @@
               "browser.startup.homepage" = "about:blank";
               "browser.startup.page" = 3;
               "browser.toolbars.bookmarks.visibility" = "never";
-              "browser.uiCustomization.state" = builtins.readFile ./_ui-state.json;
+              "browser.uiCustomization.state" = builtins.readFile ./ui-state.json;
               "browser.uitour.enabled" = false;
               "datareporting.healthreport.service.enabled" = false;
               "datareporting.healthreport.uploadEnabled" = false;
@@ -225,7 +239,7 @@
               "widget.use-xdg-desktop-portal.settings" = 1;
             };
 
-            userChrome = builtins.readFile ./_userChrome.css;
+            userChrome = builtins.readFile ./userChrome.css;
           };
 
           demos = {
