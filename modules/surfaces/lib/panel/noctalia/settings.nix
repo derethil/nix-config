@@ -174,10 +174,10 @@
           smart_auto_hide = false;
 
           start = [
-            "launcher"
             "workspaces"
             "group:g4"
             "group:g3"
+            "hue"
           ];
 
           thickness = 44;
@@ -237,7 +237,7 @@
 
         reminders = {
           all_day_digest_time = "09:00";
-          default_lead_minutes = 10;
+          default_lead_minutes = 0;
           enabled = true;
           use_event_reminders = true;
         };
@@ -258,6 +258,9 @@
             type = "wifi";
           }
           {
+            type = "derethil/hue-manager:hue-toggle";
+          }
+          {
             type = "bluetooth";
           }
           {
@@ -268,9 +271,6 @@
           }
           {
             type = "notification";
-          }
-          {
-            type = "power_profile";
           }
         ];
 
@@ -354,7 +354,11 @@
         battery_plugged = [];
         bluetooth_disabled = [];
         bluetooth_enabled = [];
-        colors_changed = [];
+
+        colors_changed = [
+          "noctalia msg plugin derethil/hue-manager:bridge all sync-accent"
+        ];
+
         logging_out = [];
         power_profile_changed = [];
         rebooting = [];
@@ -1104,6 +1108,8 @@
           tooltip = "Open Help";
           type = "custom_button";
         };
+
+        hue.type = "derethil/hue-manager:hue";
 
         input_volume = {
           device = "input";

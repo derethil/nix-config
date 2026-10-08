@@ -1,9 +1,19 @@
 {
   flake.modules.homeManager.noctalia-panel = {pkgs, ...}: {
-    home.packages = [pkgs.bitwarden-cli];
+    home.packages = [
+      pkgs.avahi
+      pkgs.bitwarden-cli
+    ];
 
     programs.noctalia.settings = {
       plugin_settings = {
+        "derethil/hue-manager" = {
+          auto_sync_accent = false;
+          bridge_ip = "";
+          sync_rooms = [];
+          use_device_icons = true;
+        };
+
         "felipeartur/ai-usagebar".panel_open_near_click = true;
 
         "kenn/keybind-cheatsheet" = {
@@ -34,6 +44,7 @@
           "radimous/prismlauncher-instances"
           "felipeartur/ai-usagebar"
           "derethil/cast-window"
+          "derethil/hue-manager"
         ];
 
         source = [
