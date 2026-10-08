@@ -1936,11 +1936,11 @@
         "sort-nvim": "sort-nvim"
       },
       "locked": {
-        "lastModified": 1790298200,
-        "narHash": "sha256-ded7PF8j7vHJ5pQyZtTRPraz4kpRoEpGrstvAP/wuuU=",
+        "lastModified": 1791489081,
+        "narHash": "sha256-YdBPMQH2BHBF9nwwz6KYa93pzrQko0poNPq5djnEM/Y=",
         "owner": "derethil",
         "repo": "nvim-config",
-        "rev": "f6040dd21c1a3c32bdffe0c92d4fed6bb4b6e88f",
+        "rev": "6fbec09f0a0e9b9f8502f647205afd08210a932c",
         "type": "github"
       },
       "original": {
