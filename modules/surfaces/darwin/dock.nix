@@ -11,7 +11,7 @@
     config.system.defaults.dock = {
       appswitcher-all-displays = true;
       autohide = true;
-      autohide-delay = 0.24;
+      autohide-delay = 0.05;
       autohide-time-modifier = 1.0;
       enable-spring-load-actions-on-all-items = true;
       expose-animation-duration = 0.8;
