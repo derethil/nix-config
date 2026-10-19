@@ -36,6 +36,7 @@ in {
           lightweight-gaming
           paneru
           hammerspoon
+          productivity
           social-work
           user-derethil
         ];
