@@ -1,0 +1,13 @@
+diff --git a/src/ecs/mouse.rs b/src/ecs/mouse.rs
+index 1a112a6..ab331f1 100644
+--- a/src/ecs/mouse.rs
++++ b/src/ecs/mouse.rs
+@@ -185,8 +185,6 @@ fn mouse_moved_trigger(
+             debug!("found child of {}: {}", child.id(), window.id());
+         }
+
+-        // Do not reshuffle windows due to moved mouse focus.
+-        global_state.set_skip_reshuffle(true);
+         global_state.set_ffm_flag(Some(window.id()));
+         commands.focus_entity(entity, false);
+     }

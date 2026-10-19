@@ -8,7 +8,7 @@
         focus_follows_mouse = true;
         insert_windows_mid_strip = false;
         mouse_follows_focus = true;
-        preset_column_widths = [0.33 0.5 0.66 1.0];
+        preset_column_widths = [0.33 0.5 0.66 0.97];
         reap_empty_workspaces = false;
         sliver_height = 1.0;
         sliver_width = 5;
@@ -39,7 +39,11 @@
           vertical = true;
         };
 
-        scroll.modifier = "alt";
+        scroll = {
+          modifier = "alt";
+          window_step = true;
+        };
+
         sensitivity = 0.35;
       };
     };
