@@ -106,6 +106,7 @@
 
       settings = {
         approval_policy = "on-request";
+        approvals_reviewer = "auto_review";
         check_for_update_on_startup = false;
         model = "gpt-5.6-sol";
         sandbox_mode = "workspace-write";
