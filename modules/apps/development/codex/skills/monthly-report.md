@@ -16,9 +16,17 @@ The user should provide:
 If these values are provided together in the user's request, interpret them in
 that order.
 
-Derive the first day of the month and the first day of the following month. Use
-the following month as the exclusive upper bound for date queries. This avoids
-assuming every month has 31 days.
+The report period runs from the 29th of the previous month through the 28th of
+the requested month, inclusive (the report is due on the last day of the
+requested month). Derive:
+
+- The start date: the 29th of the previous month.
+- The end date (exclusive upper bound for date queries): the 29th of the
+  requested month.
+
+For example, for `2025-12`, the period is `2025-11-29` through `2025-12-28`,
+so use `2025-11-29` as the start and `2025-12-29` as the exclusive upper
+bound. Remember to roll over the year when the requested month is January.
 
 ## Previous report
 
@@ -34,13 +42,13 @@ format as closely as possible.
 
 ## Git activity
 
-For every provided Git repository, gather commits for the requested month.
+For every provided Git repository, gather commits for the report period.
 
 Run:
 
     git -C <repo> log \
-      --since="<month>-01" \
-      --until="<next-month>-01" \
+      --since="<previous-month>-29" \
+      --until="<month>-29" \
       --pretty=format:"%h - %s (%an)" \
       --no-merges
 
@@ -61,12 +69,13 @@ Focus on meaningful outcomes rather than individual commits.
 Run:
 
     jira issue list \
-      --updated-after '<month>-01' \
-      --updated-before '<next-month>-01' \
+      --updated-after '<previous-month>-29' \
+      --updated-before '<month>-29' \
       --assignee 'Jaren Glenn' \
       --raw
 
-For example, for `2025-12`, use `2026-01-01` as the `--updated-before` value.
+For example, for `2025-12`, use `2025-11-29` as `--updated-after` and
+`2025-12-29` as `--updated-before`.
 
 Inspect relevant issues as needed to determine:
 

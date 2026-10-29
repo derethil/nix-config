@@ -15,18 +15,22 @@ understand:
 
 Then gather new data:
 
+The report period runs from the 29th of the previous month through the 28th
+of {month}, inclusive (the report is due on the last day of {month}). For
+example, if {month} is 2025-12, the period is 2025-11-29 through 2025-12-28.
+
 **For Git repositories** (all paths after the previous report path):
 
 - Run
-  `git -C <repo> log --since="{month}-01" --until="{month}-31" --pretty=format:"%h - %s (%an)" --no-merges`
+  `git -C <repo> log --since="<previous-month>-29" --until="{month}-29" --pretty=format:"%h - %s (%an)" --no-merges`
 - Collect commit statistics and notable changes
 
 **For Jira**:
 
 - Run
-  `jira issue list --updated-after '{month}-01' --updated-before '<next-month>-01' --assignee 'Jaren Glenn' --raw`
-  (Calculate next month for the before date, e.g., if month is 2025-12, use
-  2026-01-01)
+  `jira issue list --updated-after '<previous-month>-29' --updated-before '{month}-29' --assignee 'Jaren Glenn' --raw`
+  (Calculate the previous month for the after date, e.g., if month is
+  2025-12, use 2025-11-29; roll over the year when {month} is January)
 - Get issue details, statuses, and types
 
 **Generate the new report** following the EXACT structure, tone, and format of
