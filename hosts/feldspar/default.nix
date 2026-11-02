@@ -45,6 +45,7 @@ in {
           gnome-keyring
           homelab
           impermanence
+          logitech
           ntfy-subscribe
           networking
           niri
