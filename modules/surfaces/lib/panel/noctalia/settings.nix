@@ -7,8 +7,12 @@
       };
 
       audio = {
+        enable_notification_sounds = true;
         enable_overdrive = false;
+        enable_power_sounds = true;
+        enable_screenshot_sounds = true;
         enable_sounds = true;
+        enable_volume_sounds = true;
         sound_theme = "freedesktop";
         sound_volume = 0.5;
       };
@@ -22,6 +26,7 @@
       bar = {
         default = {
           auto_hide = false;
+          auto_hide_delay_ms = 0;
           background_opacity = 1;
           border = "outline";
           border_width = 0;
@@ -135,7 +140,7 @@
           compositor_blur = true;
           concave_edge_corners = true;
           contact_shadow = false;
-          dead_zone = {};
+          dead_zone.click_through = false;
           enabled = true;
 
           end = [
@@ -171,6 +176,7 @@
           scale = 1;
           shadow = true;
           show_on_workspace_switch = true;
+          show_tooltip = true;
           smart_auto_hide = false;
 
           start = [
@@ -194,6 +200,8 @@
         warning_threshold = 10;
       };
 
+      bluetooth.connect_when_enabled = false;
+
       brightness = {
         enable_ddcutil = false;
         ignore_mmids = [];
@@ -205,6 +213,8 @@
         account = {
           calendars = {
             calendars = [];
+            client_cert_file = "";
+            client_key_file = "";
             color = "primary";
             credential_source = "secret-service";
             name = "Vdir Calendars";
@@ -218,6 +228,8 @@
 
           icloud = {
             calendars = [];
+            client_cert_file = "";
+            client_key_file = "";
             color = "secondary";
             credential_source = "secret-service";
             name = "iCloud";
@@ -230,6 +242,8 @@
           };
         };
 
+        dedupe_events = false;
+        dedupe_ignore_patterns = [];
         enabled = true;
         event_date_format = "%A %e %B";
         event_time_format = "{:%I:%M %p}";
@@ -251,7 +265,9 @@
           show_week_numbers = false;
         };
 
+        circular_avatar = true;
         hidden_tabs = [];
+        media.show_visualizer = true;
 
         shortcuts = [
           {
@@ -502,6 +518,7 @@
         edge_smoothness = 0.30000001192092896;
         enabled = true;
         fingerprint = true;
+        grace_period_seconds = 0;
         lock_before_suspend = true;
         monitors = [];
         tint_intensity = 0.3999999761581421;
@@ -677,6 +694,7 @@
           bluetooth = true;
           brightness = true;
           caffeine = true;
+          custom = true;
           dnd = true;
           keyboard_backlight = true;
           keyboard_layout = true;
@@ -731,9 +749,12 @@
           app_grid = false;
           auto_paste = "auto";
           categories = true;
+          category_icons_only = false;
           compact = false;
+          default_view = "recent";
           dmenu = {};
           fetch_exchange_rates = true;
+          layout = "full";
 
           panels.ignored = [
             "polkit"
@@ -747,17 +768,25 @@
           ];
 
           provider_prefix = "/";
+          search_position = "bottom";
           show_app_actions = true;
           show_app_origin_indicator = true;
           show_icons = true;
+          show_session_button = true;
+          show_settings_button = true;
           sort_by_usage = true;
+          track_usage = true;
+          width = 760;
         };
 
         mpris.blacklist = [];
+        niri_overview_close_on_launch_enabled = false;
         niri_overview_type_to_launch_enabled = true;
         offline_mode = false;
 
         panel = {
+          border_color = "outline";
+          border_width = 1.0;
           borders = true;
           clipboard_placement = "floating";
           clipboard_position = "center";
@@ -781,6 +810,7 @@
           transparency_mode = "solid";
           wallpaper_placement = "attached";
           wallpaper_position = "auto";
+          wallpaper_show_names = true;
         };
 
         password_style = "random";
@@ -811,12 +841,19 @@
           copy_to_clipboard = true;
           directory = "/home/derethil/Pictures/screenshots";
           filename_pattern = "";
+          format = "png";
           freeze_screen = true;
           pipe_command = "";
           pipe_to_command = true;
+          quality = 90;
+          region_border_width = 2.0;
+          region_dim_opacity = 0.6499999761581421;
+          region_modifier = "none";
           remember_last_region = false;
           save_to_file = true;
           show_cursor = true;
+          show_region_dimensions = true;
+          show_region_hint = true;
           skip_annotate_on_copy_save = false;
         };
 
@@ -901,9 +938,12 @@
         };
 
         shared_gl_context = true;
+        show_close_buttons = true;
         show_location = true;
         telemetry_enabled = false;
         time_format = "{:%I:%M %p}";
+        umbriel_audio_provider_enabled = false;
+        umbriel_overview_close_on_launch_enabled = false;
         umbriel_overview_type_to_launch_enabled = false;
 
         window_switcher = {
@@ -968,6 +1008,7 @@
         pure_black_dark = false;
         shell_mode = "follow";
         source = "community";
+        sync_color_scheme = true;
 
         templates = {
           builtin_ids = [];
