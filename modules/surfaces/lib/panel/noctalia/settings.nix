@@ -1046,6 +1046,7 @@
           recursive = false;
         };
 
+        default.path = "/home/derethil/Pictures/wallpapers/fuji-bird.jpeg";
         directory = "/home/derethil/Pictures/wallpapers";
         directory_dark = "";
         directory_light = "";
@@ -1053,6 +1054,8 @@
         enabled = true;
         fill_color = "";
         fill_mode = "crop";
+        last.path = "/home/derethil/Pictures/wallpapers/fuji-bird.jpeg";
+        monitors.DP-2.path = "/home/derethil/Pictures/wallpapers/fuji-bird.jpeg";
         per_monitor_directories = false;
 
         transition = [
