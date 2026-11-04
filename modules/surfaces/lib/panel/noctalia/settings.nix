@@ -3,7 +3,7 @@
     programs.noctalia.settings = {
       accessibility = {
         high_contrast = false;
-        ui_scale = 1;
+        ui_scale = 1.0;
       };
 
       audio = {
@@ -15,6 +15,7 @@
         enable_volume_sounds = true;
         sound_theme = "freedesktop";
         sound_volume = 0.5;
+        spectrum_frame_rate = 60;
       };
 
       backdrop = {
@@ -27,20 +28,20 @@
         default = {
           auto_hide = false;
           auto_hide_delay_ms = 0;
-          background_opacity = 1;
-          border = "outline";
-          border_width = 0;
+          background_opacity = 1.0;
+          border = "outline_variant";
+          border_width = 0.0;
           capsule = true;
-          capsule_border_width = 1;
-          capsule_fill = "surface_variant";
+          capsule_border_width = 1.0;
+          capsule_fill = "surface_container";
 
           capsule_group = [
             {
               accordion = false;
               accordion_direction = "end";
-              border_width = 1;
+              border_width = 1.0;
               enabled = true;
-              fill = "surface_variant";
+              fill = "surface_container";
               id = "ai_usage";
 
               members = [
@@ -50,16 +51,16 @@
                 "ai_usage_claude"
               ];
 
-              opacity = 1;
-              padding = 8;
-              radius = 8;
+              opacity = 1.0;
+              padding = 8.0;
+              radius = 8.0;
             }
             {
               accordion = false;
               accordion_direction = "end";
-              border_width = 1;
+              border_width = 1.0;
               enabled = true;
-              fill = "surface_variant";
+              fill = "surface_container";
               id = "g1";
 
               members = [
@@ -68,16 +69,16 @@
                 "volume"
               ];
 
-              opacity = 1;
-              padding = 8;
-              radius = 8;
+              opacity = 1.0;
+              padding = 8.0;
+              radius = 8.0;
             }
             {
               accordion = false;
               accordion_direction = "end";
-              border_width = 1;
+              border_width = 1.0;
               enabled = true;
-              fill = "surface_variant";
+              fill = "surface_container";
               id = "g2";
 
               members = [
@@ -85,16 +86,16 @@
                 "date"
               ];
 
-              opacity = 1;
-              padding = 8;
-              radius = 8;
+              opacity = 1.0;
+              padding = 8.0;
+              radius = 8.0;
             }
             {
               accordion = false;
               accordion_direction = "end";
-              border_width = 1;
+              border_width = 1.0;
               enabled = true;
-              fill = "surface_variant";
+              fill = "surface_container";
               id = "g3";
 
               members = [
@@ -103,16 +104,16 @@
                 "ram"
               ];
 
-              opacity = 1;
-              padding = 8;
-              radius = 8;
+              opacity = 1.0;
+              padding = 8.0;
+              radius = 8.0;
             }
             {
               accordion = false;
               accordion_direction = "end";
-              border_width = 1;
+              border_width = 1.0;
               enabled = true;
-              fill = "surface_variant";
+              fill = "surface_container";
               id = "g4";
 
               members = [
@@ -120,15 +121,15 @@
                 "cast_window"
               ];
 
-              opacity = 1;
-              padding = 8;
-              radius = 8;
+              opacity = 1.0;
+              padding = 8.0;
+              radius = 8.0;
             }
           ];
 
-          capsule_opacity = 1;
-          capsule_padding = 8;
-          capsule_radius = 8;
+          capsule_opacity = 1.0;
+          capsule_padding = 8.0;
+          capsule_radius = 8.0;
           capsule_thickness = 0.7599999904632568;
 
           center = [
@@ -157,7 +158,7 @@
             "session"
           ];
 
-          font_scale = 1;
+          font_scale = 1.0;
           font_weight = 500;
           hover_highlight = true;
           layer = "top";
@@ -173,7 +174,7 @@
           radius_top_left = 12;
           radius_top_right = 12;
           reserve_space = true;
-          scale = 1;
+          scale = 1.0;
           shadow = true;
           show_on_workspace_switch = true;
           show_tooltip = true;
@@ -200,12 +201,15 @@
         warning_threshold = 10;
       };
 
-      bluetooth.connect_when_enabled = false;
+      bluetooth = {
+        connect_when_enabled = true;
+        connection_notifications = true;
+      };
 
       brightness = {
         enable_ddcutil = false;
         ignore_mmids = [];
-        minimum_brightness = 0;
+        minimum_brightness = 0.0;
         sync_all_monitors = true;
       };
 
@@ -257,11 +261,12 @@
         };
       };
 
-      config_version = 15;
-
       control_center = {
         calendar = {
+          hide_past_events = false;
+          past_events_threshold_minutes = 30;
           show_events_card = true;
+          show_events_location = false;
           show_week_numbers = false;
         };
 
@@ -290,6 +295,7 @@
           }
         ];
 
+        show_avatar_border = true;
         show_session_button = true;
         show_shortcut_labels = true;
         sidebar = "full";
@@ -311,12 +317,13 @@
 
       dock = {
         active_monitor_only = false;
-        active_opacity = 1;
-        active_scale = 1;
+        active_opacity = 1.0;
+        active_scale = 1.0;
         auto_hide = false;
         background_opacity = 0.8799999952316284;
-        border = "outline";
-        border_width = 0;
+        border = "outline_variant";
+        border_width = 0.0;
+        compositor_blur = true;
         concave_edge_corners = true;
         cross_axis_padding = 8;
         enabled = true;
@@ -419,27 +426,27 @@
             action = "lock";
             command = "";
             enabled = true;
-            locked_timeout = 0;
+            locked_timeout = 0.0;
             resume_command = "";
-            timeout = 600;
+            timeout = 600.0;
           };
 
           lock-and-suspend = {
             action = "lock_and_suspend";
             command = "";
             enabled = true;
-            locked_timeout = 0;
+            locked_timeout = 0.0;
             resume_command = "";
-            timeout = 900;
+            timeout = 900.0;
           };
 
           screen-off = {
             action = "screen_off";
             command = "";
             enabled = true;
-            locked_timeout = 0;
+            locked_timeout = 0.0;
             resume_command = "";
-            timeout = 660;
+            timeout = 660.0;
           };
         };
 
@@ -449,7 +456,7 @@
           "lock-and-suspend"
         ];
 
-        pre_action_fade_seconds = 2;
+        pre_action_fade_seconds = 2.0;
       };
 
       keybinds = {
@@ -527,7 +534,7 @@
           "fade"
         ];
 
-        transition_duration = 500;
+        transition_duration = 500.0;
         wallpaper = "";
       };
 
@@ -544,18 +551,18 @@
 
         widget = {
           "lockscreen-login-box@DP-2" = {
-            box_height = 196;
-            box_width = 810;
-            cx = 1720;
-            cy = 1258;
+            box_height = 196.0;
+            box_width = 810.0;
+            cx = 1720.0;
+            cy = 1258.0;
             enabled = true;
             output = "DP-2";
-            placement_height = 1440;
-            placement_width = 3440;
-            rotation = 0;
+            placement_height = 1440.0;
+            placement_width = 3440.0;
+            rotation = 0.0;
 
             settings = {
-              background_color = "surface_variant";
+              background_color = "surface_container";
               background_opacity = 0.88;
               background_radius = 12;
               center_password_text = false;
@@ -575,15 +582,15 @@
           };
 
           lockscreen-widget-0000000000000003 = {
-            box_height = 144;
-            box_width = 832;
-            cx = 1704;
-            cy = 312;
+            box_height = 144.0;
+            box_width = 832.0;
+            cx = 1704.0;
+            cy = 312.0;
             enabled = true;
             output = "DP-2";
-            placement_height = 1440;
-            placement_width = 3440;
-            rotation = 0;
+            placement_height = 1440.0;
+            placement_width = 3440.0;
+            rotation = 0.0;
 
             settings = {
               background = false;
@@ -596,29 +603,29 @@
           };
 
           lockscreen-widget-0000000000000004 = {
-            box_height = 144;
-            box_width = 192;
-            cx = 1411;
-            cy = 576;
+            box_height = 144.0;
+            box_width = 192.0;
+            cx = 1411.0;
+            cy = 576.0;
             enabled = true;
             output = "DP-2";
-            placement_height = 1440;
-            placement_width = 3440;
-            rotation = 0;
+            placement_height = 1440.0;
+            placement_width = 3440.0;
+            rotation = 0.0;
             settings.background = true;
             type = "fancy_audio_visualizer";
           };
 
           lockscreen-widget-0000000000000007 = {
-            box_height = 432;
-            box_width = 624;
-            cx = 1832;
-            cy = 720;
+            box_height = 432.0;
+            box_width = 624.0;
+            cx = 1832.0;
+            cy = 720.0;
             enabled = true;
             output = "DP-2";
-            placement_height = 1440;
-            placement_width = 3440;
-            rotation = 0;
+            placement_height = 1440.0;
+            placement_width = 3440.0;
+            rotation = 0.0;
 
             settings = {
               background = true;
@@ -629,15 +636,15 @@
           };
 
           lockscreen-widget-0000000000000008 = {
-            box_height = 272;
-            box_width = 192;
-            cx = 1411;
-            cy = 800;
+            box_height = 272.0;
+            box_width = 192.0;
+            cx = 1411.0;
+            cy = 800.0;
             enabled = true;
             output = "DP-2";
-            placement_height = 1440;
-            placement_width = 3440;
-            rotation = 0;
+            placement_height = 1440.0;
+            placement_width = 3440.0;
+            rotation = 0.0;
             settings.layout = "vertical";
             type = "media_player";
           };
@@ -662,8 +669,8 @@
       notification = {
         background_opacity = 0.9700000286102295;
         border = true;
-        border_color = "outline";
-        border_width = 1;
+        border_color = "outline_variant";
+        border_width = 1.0;
         collapse_on_dismiss = true;
         enable_daemon = true;
         follow_focused_output = false;
@@ -675,7 +682,7 @@
         offset_x = 20;
         offset_y = 8;
         position = "top_center";
-        scale = 1;
+        scale = 1.0;
         show_actions = true;
         show_app_name = true;
         width = 360;
@@ -684,8 +691,8 @@
       osd = {
         background_opacity = 0.9700000286102295;
         border = true;
-        border_color = "outline";
-        border_width = 1;
+        border_color = "outline_variant";
+        border_width = 1.0;
         enabled = true;
         follow_focused_output = false;
         hide_delay_ms = 1400;
@@ -700,6 +707,7 @@
           keyboard_layout = true;
           lock_keys = true;
           media = true;
+          media_volume = true;
           nightlight = true;
           power_profile = true;
           privacy = true;
@@ -734,7 +742,7 @@
         clipboard_history_max_entries = 100;
         clipboard_image_action_command = "";
         clipboard_keep_from_closed_apps = true;
-        corner_radius_scale = 1;
+        corner_radius_scale = 1.0;
         date_format = "%A, %x";
         disable_mipmaps = false;
         external_ip_enabled = false;
@@ -754,6 +762,7 @@
           default_view = "recent";
           dmenu = {};
           fetch_exchange_rates = true;
+          ignore_mouse = false;
           layout = "full";
 
           panels.ignored = [
@@ -772,6 +781,7 @@
           show_app_actions = true;
           show_app_origin_indicator = true;
           show_icons = true;
+          show_navigation_labels = true;
           show_session_button = true;
           show_settings_button = true;
           sort_by_usage = true;
@@ -785,7 +795,7 @@
         offline_mode = false;
 
         panel = {
-          border_color = "outline";
+          border_color = "outline_variant";
           border_width = 1.0;
           borders = true;
           clipboard_placement = "floating";
@@ -838,6 +848,7 @@
           close_on_copy = true;
           close_on_save = true;
           confirm_region = true;
+          copy_on_close = false;
           copy_to_clipboard = true;
           directory = "/home/derethil/Pictures/screenshots";
           filename_pattern = "";
@@ -866,6 +877,7 @@
               enabled = true;
               glyph = "";
               label = "";
+              lockscreen_shortcut = "";
               shortcut = "1";
               variant = "default";
             }
@@ -876,6 +888,7 @@
               enabled = true;
               glyph = "";
               label = "";
+              lockscreen_shortcut = "";
               shortcut = "2";
               variant = "default";
             }
@@ -886,6 +899,7 @@
               enabled = true;
               glyph = "";
               label = "";
+              lockscreen_shortcut = "";
               shortcut = "3";
               variant = "default";
             }
@@ -896,6 +910,7 @@
               enabled = true;
               glyph = "noctalia";
               label = "Restart Noctalia";
+              lockscreen_shortcut = "";
               shortcut = "4";
               variant = "default";
             }
@@ -906,6 +921,7 @@
               enabled = true;
               glyph = "";
               label = "";
+              lockscreen_shortcut = "";
               shortcut = "5";
               variant = "destructive";
             }
@@ -916,6 +932,7 @@
               enabled = true;
               glyph = "";
               label = "";
+              lockscreen_shortcut = "";
               shortcut = "6";
               variant = "destructive";
             }
@@ -965,39 +982,39 @@
       system.monitor = {
         cpu_freq_activity_threshold = 2.5;
         cpu_freq_critical_threshold = 4.5;
-        cpu_poll_seconds = 2;
-        cpu_temp_activity_threshold = 60;
-        cpu_temp_critical_threshold = 85;
+        cpu_poll_seconds = 2.0;
+        cpu_temp_activity_threshold = 60.0;
+        cpu_temp_critical_threshold = 85.0;
         cpu_temp_sensor_path = "";
-        cpu_usage_activity_threshold = 50;
-        cpu_usage_critical_threshold = 90;
-        disk_free_activity_threshold = 80;
-        disk_free_critical_threshold = 95;
-        disk_free_pct_activity_threshold = 80;
-        disk_free_pct_critical_threshold = 95;
-        disk_poll_seconds = 10;
-        disk_used_activity_threshold = 80;
-        disk_used_critical_threshold = 95;
-        disk_used_pct_activity_threshold = 80;
-        disk_used_pct_critical_threshold = 95;
+        cpu_usage_activity_threshold = 50.0;
+        cpu_usage_critical_threshold = 90.0;
+        disk_free_activity_threshold = 80.0;
+        disk_free_critical_threshold = 95.0;
+        disk_free_pct_activity_threshold = 80.0;
+        disk_free_pct_critical_threshold = 95.0;
+        disk_poll_seconds = 10.0;
+        disk_used_activity_threshold = 80.0;
+        disk_used_critical_threshold = 95.0;
+        disk_used_pct_activity_threshold = 80.0;
+        disk_used_pct_critical_threshold = 95.0;
         enabled = true;
-        gpu_poll_seconds = 5;
-        gpu_temp_activity_threshold = 60;
-        gpu_temp_critical_threshold = 85;
-        gpu_usage_activity_threshold = 50;
-        gpu_usage_critical_threshold = 95;
-        gpu_vram_activity_threshold = 50;
-        gpu_vram_critical_threshold = 90;
-        memory_poll_seconds = 2;
-        net_rx_activity_threshold = 1;
-        net_rx_critical_threshold = 50;
-        net_tx_activity_threshold = 1;
-        net_tx_critical_threshold = 50;
-        network_poll_seconds = 3;
-        ram_pct_activity_threshold = 60;
-        ram_pct_critical_threshold = 90;
-        swap_pct_activity_threshold = 20;
-        swap_pct_critical_threshold = 80;
+        gpu_poll_seconds = 5.0;
+        gpu_temp_activity_threshold = 60.0;
+        gpu_temp_critical_threshold = 85.0;
+        gpu_usage_activity_threshold = 50.0;
+        gpu_usage_critical_threshold = 95.0;
+        gpu_vram_activity_threshold = 50.0;
+        gpu_vram_critical_threshold = 90.0;
+        memory_poll_seconds = 2.0;
+        net_rx_activity_threshold = 1.0;
+        net_rx_critical_threshold = 50.0;
+        net_tx_activity_threshold = 1.0;
+        net_tx_critical_threshold = 50.0;
+        network_poll_seconds = 3.0;
+        ram_pct_activity_threshold = 60.0;
+        ram_pct_critical_threshold = 90.0;
+        swap_pct_activity_threshold = 20.0;
+        swap_pct_critical_threshold = 80.0;
       };
 
       theme = {
@@ -1025,10 +1042,10 @@
           enabled = false;
           interval_seconds = 1800;
           order = "random";
+          pause_on_fullscreen = false;
           recursive = false;
         };
 
-        default.path = "/home/derethil/Pictures/wallpapers/fuji-bird.jpeg";
         directory = "/home/derethil/Pictures/wallpapers";
         directory_dark = "";
         directory_light = "";
@@ -1036,15 +1053,13 @@
         enabled = true;
         fill_color = "";
         fill_mode = "crop";
-        last.path = "/home/derethil/Pictures/wallpapers/fuji-bird.jpeg";
-        monitors.DP-2.path = "/home/derethil/Pictures/wallpapers/fuji-bird.jpeg";
         per_monitor_directories = false;
 
         transition = [
           "disc"
         ];
 
-        transition_duration = 1500;
+        transition_duration = 1500.0;
         transition_on_startup = true;
       };
 
