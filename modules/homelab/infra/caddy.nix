@@ -22,7 +22,7 @@
       enable = true;
 
       package = pkgs.caddy.withPlugins {
-        hash = "sha256-rIGh50Ufg64Qp2I/Zr4eifv5piCSCmZgg6bBh3GP/z4=";
+        hash = "sha256-bHMI9ueUyZjhSVcn9RzjyeYHtvAFibrrWOOY8xm5Bg4=";
 
         plugins = [
           "github.com/caddy-dns/cloudflare@v0.2.4"
