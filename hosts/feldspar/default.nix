@@ -30,35 +30,48 @@ in {
     modules = {
       nixos.feldspar = {pkgs, ...}: {
         imports = with (mergeModules self.modules.generic self.modules.nixos); [
+          # hosts/feldspar
           ./_disko.nix
           ./_hardware.nix
+          feldspar-ath12k-fixes
+
+          # apps
+          development
+          devices
+          gaming
+          productivity
+          sunshine
+
+          # foundation
+          foundation
+          user-derethil
+
+          # homelab
+          homelab
+
+          # machine
           audio
           bluetooth
           boot
           coolercontrol-it87
-          development
-          devices
-          docker
-          feldspar-ath12k-fixes
-          foundation
-          gaming
-          gnome-keyring
-          homelab
+          self.modules.nixos.displays
           impermanence
           logitech
-          ntfy-subscribe
           networking
-          niri
           openrgb
           plymouth
-          productivity
           radeon
-          self.modules.nixos.displays
-          sunshine
           removable-media
-          tailscale
-          user-derethil
           virtualization
+
+          # services
+          docker
+          gnome-keyring
+          ntfy-subscribe
+          tailscale
+
+          # surfaces
+          niri
         ];
 
         internal = {
@@ -117,20 +130,27 @@ in {
 
       homeManager.feldspar-derethil = {
         imports = with self.modules.homeManager; [
+          # apps
           ai
           chromium
           development
-          easyeffects
           firefox
-          foot
-          foundation
           gaming
           media
           melonloader
-          niri
           productivity
-          remote-pull
           social-work
+
+          # foundation
+          foundation
+
+          # services
+          remote-pull
+
+          # surfaces
+          easyeffects
+          foot
+          niri
         ];
 
         home.stateVersion = "25.05";

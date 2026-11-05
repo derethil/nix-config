@@ -29,16 +29,23 @@ in {
       # HOST CONFIGURATION
       darwin.gabbro = {pkgs, ...}: {
         imports = with (mergeModules self.modules.generic self.modules.darwin); [
-          bridges
+          # apps
           development
-          foundation
           firefox
           lightweight-gaming
-          paneru
-          hammerspoon
           productivity
           social-work
+
+          # bridges
+          bridges
+
+          # foundation
+          foundation
           user-derethil
+
+          # surfaces
+          hammerspoon
+          paneru
         ];
 
         internal = {
@@ -66,17 +73,24 @@ in {
       # HOME MANAGER CONFIGURATION
       homeManager.gabbro-derethil = {
         imports = with self.modules.homeManager; [
+          # apps
           ai
-          alacritty
           development
           firefox
-          foundation
           lightweight-gaming
-          mac-app-util
           media
-          paneru
           productivity
           social-work
+
+          # bridges
+          mac-app-util
+
+          # foundation
+          foundation
+
+          # surfaces
+          alacritty
+          paneru
         ];
 
         home.stateVersion = "25.05";
