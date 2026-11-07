@@ -7,6 +7,7 @@
       };
 
       audio = {
+        colorize_icons = false;
         enable_notification_sounds = true;
         enable_overdrive = false;
         enable_power_sounds = true;
@@ -28,6 +29,7 @@
         default = {
           auto_hide = false;
           auto_hide_delay_ms = 0;
+          auto_hide_reserve_space = false;
           background_opacity = 1.0;
           border = "outline_variant";
           border_width = 0.0;
@@ -67,6 +69,7 @@
                 "network"
                 "bluetooth"
                 "volume"
+                "battery"
               ];
 
               opacity = 1.0;
@@ -148,12 +151,10 @@
             "todo"
             "clipboard"
             "brightness"
-            "battery"
             "notifications"
             "caffeine"
             "group:ai_usage"
             "group:g1"
-            "help"
             "session"
           ];
 
@@ -180,6 +181,7 @@
           smart_auto_hide = false;
 
           start = [
+            "help"
             "workspaces"
             "group:g4"
             "group:g3"
@@ -319,13 +321,17 @@
         active_opacity = 1.0;
         active_scale = 1.0;
         auto_hide = false;
+        auto_hide_reveal_delay_ms = 0;
         background_opacity = 0.8799999952316284;
         border = "outline_variant";
         border_width = 0.0;
+        colorize_icons = false;
         compositor_blur = true;
         concave_edge_corners = true;
         cross_axis_padding = 8;
         enabled = true;
+        icon_saturation = 1.0;
+        icon_shadow = false;
         icon_size = 48;
         inactive_opacity = 0.8500000238418579;
         inactive_scale = 0.8500000238418579;
@@ -351,6 +357,7 @@
           "obsidian"
           "steam"
           "org.prismlauncher.PrismLauncher"
+          "steam_app_3316541660"
           "com.stremio.Stremio"
           "spotify"
         ];
@@ -521,12 +528,14 @@
         allow_empty_password = false;
         blur_intensity = 0.5999999642372131;
         blurred_desktop = true;
+        dnd = false;
         edge_smoothness = 0.30000001192092896;
         enabled = true;
         fingerprint = true;
         grace_period_seconds = 0;
         lock_before_suspend = true;
         monitors = [];
+        tint_color = "surface";
         tint_intensity = 0.3999999761581421;
 
         transition = [
@@ -671,13 +680,16 @@
         border_color = "outline_variant";
         border_width = 1.0;
         collapse_on_dismiss = true;
+        colorize_icons = false;
         enable_daemon = true;
         follow_focused_output = false;
+        group_by_app = true;
         history_retention_hours = 0;
         keep_dismissed_in_history = true;
         layer = "overlay";
         max_visible = 0;
         monitors = [];
+        newest_on_edge = true;
         offset_x = 20;
         offset_y = 8;
         position = "top_center";
@@ -731,7 +743,6 @@
           speed = 1.25;
         };
 
-        app_icon_colorize = false;
         avatar_path = "";
         button_borders = true;
         card_borders = true;
@@ -757,6 +768,7 @@
           auto_paste = "auto";
           categories = true;
           category_icons_only = false;
+          colorize_icons = false;
           compact = false;
           default_view = "recent";
           dmenu = {};
@@ -824,6 +836,7 @@
 
         password_style = "random";
         polkit_agent = true;
+        polkit_colorize_icons = false;
         popup_borders = true;
         popup_shadows = true;
 
@@ -840,10 +853,12 @@
           size = 32;
         };
 
+        screen_time_colorize_icons = false;
         screen_time_enabled = true;
 
         screenshot = {
           annotate = false;
+          append_mode_suffix = true;
           close_on_copy = true;
           close_on_save = true;
           confirm_region = true;
@@ -963,6 +978,7 @@
         umbriel_overview_type_to_launch_enabled = false;
 
         window_switcher = {
+          colorize_icons = false;
           current_workspace_only = false;
           mru = false;
           show_all_outputs = true;
@@ -1033,6 +1049,7 @@
           enable_community_templates = true;
         };
 
+        terminal_colors = "palette";
         wallpaper_scheme = "m3-content";
       };
 
@@ -1056,6 +1073,7 @@
         last.path = "/home/derethil/Pictures/wallpapers/fuji-bird.jpeg";
         monitors.DP-2.path = "/home/derethil/Pictures/wallpapers/fuji-bird.jpeg";
         per_monitor_directories = false;
+        sync_transitions = true;
 
         transition = [
           "disc"
@@ -1074,6 +1092,7 @@
 
       widget = {
         active_window = {
+          colorize_icons = false;
           icon_size = 14;
           max_length = 260;
           min_length = 80;
@@ -1084,6 +1103,7 @@
         ai_usage_claude = {
           account = "";
           extras = "none";
+          font_scale = 0.85;
           provider_limit = 1;
           show_glyph = false;
           show_value = true;
@@ -1094,7 +1114,9 @@
 
         ai_usage_codex = {
           account = "";
+          capsule_border_width = 1.5;
           extras = "none";
+          font_scale = 0.85;
           provider_limit = 1;
           show_glyph = false;
           show_value = true;
@@ -1239,6 +1261,11 @@
           type = "sysmon";
         };
 
+        taskbar = {
+          colorize_icons = false;
+          type = "taskbar";
+        };
+
         temp = {
           stat = "cpu_temp";
           type = "sysmon";
@@ -1250,6 +1277,7 @@
         };
 
         tray = {
+          colorize_icons = false;
           enabled = true;
 
           hidden = [
@@ -1271,6 +1299,7 @@
         };
 
         workspaces = {
+          colorize_icons = false;
           font_family = "Inter ExtraBold";
           hide_when_empty = false;
           show_labels = false;
