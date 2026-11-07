@@ -151,7 +151,6 @@
             "battery"
             "notifications"
             "caffeine"
-            "tray"
             "group:ai_usage"
             "group:g1"
             "help"
@@ -1120,7 +1119,7 @@
 
         cast_window = {
           color = "primary";
-          inactive_mode = "dim";
+          inactive_mode = "hide";
           type = "derethil/cast-window:cast";
         };
 

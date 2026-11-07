@@ -4,7 +4,11 @@
     url = "github:akitaonrails/ai-usagebar";
   };
 
-  flake.modules.homeManager.ai-usagebar = {config, pkgs, ...}: {
+  flake.modules.homeManager.ai-usagebar = {
+    config,
+    pkgs,
+    ...
+  }: {
     home.packages = [
       inputs.ai-usagebar.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
