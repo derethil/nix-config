@@ -1,66 +1,71 @@
-{self, ...}: {
-  flake.modules.nixos.prowlarr = {config, ...}: let
-    version = "2.6.5";
+{self, ...}: let
+  version = "2.6.5";
 
-    subdomain = "index";
-    port = "20070";
-    internalPort = "9696";
+  subdomain = "index";
+  port = "20070";
+  internalPort = "9696";
 
-    puid = "1000";
-    pgid = "1000";
+  puid = "1000";
+  pgid = "1000";
 
-    inherit (config.virtualisation.quadlet) pods;
-    inherit (self.lib.podman) svc volume;
-  in {
-    imports = [
-      self.modules.nixos.gatus-options
-      self.modules.nixos.ingress
-      self.modules.nixos.quadlet
-      self.modules.nixos.restic
-    ];
+  inherit (self.lib.podman) svc volume;
+in {
+  flake.modules = self.factory.container-app {
+    name = "prowlarr";
 
-    internal.homelab = {
-      backups.prowlarr = {
-        databases.sqlite = [
-          {
-            name = "prowlarr";
-            path = "${volume "prowlarr-config"}/prowlarr.db";
-          }
-          {
-            name = "prowlarr-logs";
-            path = "${volume "prowlarr-config"}/logs.db";
-          }
-        ];
+    nixos = {
+      imports = [
+        self.modules.nixos.gatus-options
+        self.modules.nixos.ingress
+        self.modules.nixos.quadlet
+        self.modules.nixos.restic
+      ];
 
-        files = {
-          exclude = map (f: "${volume "prowlarr-config"}/${f}") [
-            "prowlarr.db"
-            "prowlarr.db-shm"
-            "prowlarr.db-wal"
-            "logs.db"
-            "logs.db-shm"
-            "logs.db-wal"
+      internal.homelab = {
+        backups.prowlarr = {
+          databases.sqlite = [
+            {
+              name = "prowlarr";
+              path = "${volume "prowlarr-config"}/prowlarr.db";
+            }
+            {
+              name = "prowlarr-logs";
+              path = "${volume "prowlarr-config"}/logs.db";
+            }
           ];
 
-          paths = map volume ["prowlarr-config"];
+          files = {
+            exclude = map (f: "${volume "prowlarr-config"}/${f}") [
+              "prowlarr.db"
+              "prowlarr.db-shm"
+              "prowlarr.db-wal"
+              "logs.db"
+              "logs.db-shm"
+              "logs.db-wal"
+            ];
+
+            paths = map volume ["prowlarr-config"];
+          };
+
+          restore.services = {
+            afterRestore = map svc ["prowlarr-web"];
+            afterSync = map svc ["prowlarr-pod"];
+            stop = map svc ["prowlarr-web" "prowlarr-pod"];
+          };
         };
 
-        restore.services = {
-          afterRestore = map svc ["prowlarr-web"];
-          afterSync = map svc ["prowlarr-pod"];
-          stop = map svc ["prowlarr-web" "prowlarr-pod"];
+        gatus.endpoints.prowlarr = {};
+
+        ingress.prowlarr = {
+          inherit port subdomain;
+          caddy.forwardAuth.enable = true;
         };
-      };
-
-      gatus.endpoints.prowlarr = {};
-
-      ingress.prowlarr = {
-        inherit port subdomain;
-        caddy.forwardAuth.enable = true;
       };
     };
 
-    virtualisation.quadlet = {
+    quadlet = {config, ...}: let
+      inherit (config.virtualisation.quadlet) pods;
+    in {
       containers.prowlarr-web = {
         containerConfig = {
           addCapabilities = [

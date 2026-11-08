@@ -1,79 +1,97 @@
-{self, ...}: {
-  flake.modules.nixos.bookorbit = {
-    config,
-    pkgs,
-    ...
-  }: let
-    version = "3.0.0";
-    postgresVersion = "pg18";
+{
+  self,
+  lib,
+  ...
+}: let
+  inherit (lib) getExe';
 
-    subdomain = "books";
-    port = "20040";
-    internalPort = "3000";
-    url = "https://${subdomain}.${config.internal.homelab.domain}";
+  version = "3.0.0";
+  postgresVersion = "pg18";
 
-    puid = "1000";
-    pgid = "1000";
+  subdomain = "books";
+  port = "20040";
+  internalPort = "3000";
 
-    inherit (config.virtualisation.quadlet) pods;
-    inherit (self.lib.podman) svc volume;
-  in {
-    imports = [
-      self.modules.nixos.gatus-options
-      self.modules.nixos.ingress
-      self.modules.nixos.quadlet
-      self.modules.nixos.restic
-      self.modules.nixos.secrets
-    ];
+  puid = "1000";
+  pgid = "1000";
 
-    internal.homelab = {
-      backups.bookorbit = {
-        databases.postgres = [
-          {
-            container = "bookorbit-db";
-            database = "bookorbit";
-            user = "bookorbit";
-          }
-        ];
+  inherit (self.lib.podman) svc user volume;
+in {
+  flake.modules = self.factory.container-app {
+    name = "bookorbit";
 
-        files.paths = map volume ["bookorbit-books" "bookorbit-data"];
+    nixos = {config, ...}: {
+      imports = [
+        self.modules.nixos.gatus-options
+        self.modules.nixos.ingress
+        self.modules.nixos.quadlet
+        self.modules.nixos.restic
+        self.modules.nixos.secrets
+      ];
 
-        restore.services = {
-          afterRestore = map svc ["bookorbit-web"];
-          afterSync = map svc ["bookorbit-pod" "bookorbit-db"];
-          stop = map svc ["bookorbit-web" "bookorbit-db" "bookorbit-pod"];
+      internal.homelab = {
+        backups.bookorbit = {
+          databases.postgres = [
+            {
+              container = "bookorbit-db";
+              database = "bookorbit";
+              user = "bookorbit";
+            }
+          ];
+
+          files.paths = map volume ["bookorbit-books" "bookorbit-data"];
+
+          restore.services = {
+            afterRestore = map svc ["bookorbit-web"];
+            afterSync = map svc ["bookorbit-pod" "bookorbit-db"];
+            stop = map svc ["bookorbit-web" "bookorbit-db" "bookorbit-pod"];
+          };
+        };
+
+        gatus.endpoints.bookorbit = {};
+
+        ingress.bookorbit = {
+          inherit port subdomain;
         };
       };
 
-      gatus.endpoints.bookorbit = {};
+      sops = {
+        secrets = {
+          "serve/bookorbit/book_request_encryption_key" = {};
+          "serve/bookorbit/jwt_secret" = {};
+          "serve/bookorbit/postgres_password" = {};
+          "serve/bookorbit/setup_bootstrap_token" = {};
+        };
 
-      ingress.bookorbit = {
-        inherit port subdomain;
+        templates."bookorbit-env" = {
+          mode = "0400";
+          content = ''
+            POSTGRES_DB=bookorbit
+            POSTGRES_USER=bookorbit
+            POSTGRES_PASSWORD=${config.sops.placeholder."serve/bookorbit/postgres_password"}
+            JWT_SECRET=${config.sops.placeholder."serve/bookorbit/jwt_secret"}
+            SETUP_BOOTSTRAP_TOKEN=${config.sops.placeholder."serve/bookorbit/setup_bootstrap_token"}
+            BOOK_REQUEST_ENCRYPTION_KEY=${config.sops.placeholder."serve/bookorbit/book_request_encryption_key"}
+          '';
+          owner = user;
+        };
       };
     };
 
-    sops = {
-      secrets = {
-        "serve/bookorbit/book_request_encryption_key" = {};
-        "serve/bookorbit/jwt_secret" = {};
-        "serve/bookorbit/postgres_password" = {};
-        "serve/bookorbit/setup_bootstrap_token" = {};
-      };
+    quadlet = {
+      config,
+      pkgs,
+      osConfig,
+      ...
+    }: let
+      inherit (config.virtualisation.quadlet) pods;
 
-      templates."bookorbit-env" = {
-        mode = "0400";
-        content = ''
-          POSTGRES_DB=bookorbit
-          POSTGRES_USER=bookorbit
-          POSTGRES_PASSWORD=${config.sops.placeholder."serve/bookorbit/postgres_password"}
-          JWT_SECRET=${config.sops.placeholder."serve/bookorbit/jwt_secret"}
-          SETUP_BOOTSTRAP_TOKEN=${config.sops.placeholder."serve/bookorbit/setup_bootstrap_token"}
-          BOOK_REQUEST_ENCRYPTION_KEY=${config.sops.placeholder."serve/bookorbit/book_request_encryption_key"}
-        '';
-      };
-    };
+      url = "https://${subdomain}.${osConfig.internal.homelab.domain}";
+      envFile = osConfig.sops.templates."bookorbit-env".path;
 
-    virtualisation.quadlet = {
+      podman = getExe' pkgs.podman "podman";
+      chown = getExe' pkgs.coreutils "chown";
+    in {
       containers = {
         bookorbit-db = {
           containerConfig = {
@@ -86,7 +104,7 @@
             ];
 
             dropCapabilities = ["ALL"];
-            environmentFiles = [config.sops.templates."bookorbit-env".path];
+            environmentFiles = [envFile];
             image = "docker.io/pgvector/pgvector:${postgresVersion}";
             noNewPrivileges = true;
             pod = pods.bookorbit.ref;
@@ -109,7 +127,7 @@
             ];
 
             dropCapabilities = ["ALL"];
-            environmentFiles = [config.sops.templates."bookorbit-env".path];
+            environmentFiles = [envFile];
 
             environments = {
               APP_URL = url;
@@ -135,7 +153,7 @@
           };
 
           serviceConfig = {
-            ExecStartPre = "${pkgs.coreutils}/bin/chown ${puid}:${pgid} ${volume "bookorbit-books"} ${volume "bookorbit-data"}";
+            ExecStartPre = "${podman} unshare ${chown} ${puid}:${pgid} ${volume "bookorbit-books"} ${volume "bookorbit-data"}";
             Restart = "always";
           };
 

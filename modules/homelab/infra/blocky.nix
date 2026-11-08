@@ -30,7 +30,7 @@
           };
 
           group = "infrastructure";
-          url = head addresses;
+          url = "host.containers.internal";
         };
       };
 

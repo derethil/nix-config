@@ -1,79 +1,91 @@
-{self, ...}: {
-  flake.modules.nixos.paperless-ngx = {config, ...}: let
-    version = "3.0.5";
-    postgresVersion = "17-alpine";
-    valkeyVersion = "9-alpine";
+{self, ...}: let
+  version = "3.0.5";
+  postgresVersion = "17-alpine";
+  valkeyVersion = "9-alpine";
 
-    subdomain = "documents";
-    port = "20050";
-    internalPort = "8000";
-    host = "${subdomain}.${config.internal.homelab.domain}";
+  subdomain = "documents";
+  port = "20050";
+  internalPort = "8000";
 
-    inherit (config.virtualisation.quadlet) pods;
-    inherit (self.lib.podman) svc volume;
-  in {
-    imports = [
-      self.modules.nixos.gatus-options
-      self.modules.nixos.hydroxide
-      self.modules.nixos.ingress
-      self.modules.nixos.oidc-options
-      self.modules.nixos.quadlet
-      self.modules.nixos.restic
-      self.modules.nixos.secrets
-    ];
+  inherit (self.lib.podman) svc user volume;
+in {
+  flake.modules = self.factory.container-app {
+    name = "paperless-ngx";
 
-    internal.homelab = {
-      backups.paperless = {
-        databases.postgres = [
-          {
-            container = "paperless-db";
-            database = "paperless";
-            user = "paperless";
-          }
-        ];
+    nixos = {config, ...}: {
+      imports = [
+        self.modules.nixos.gatus-options
+        self.modules.nixos.hydroxide
+        self.modules.nixos.ingress
+        self.modules.nixos.oidc-options
+        self.modules.nixos.quadlet
+        self.modules.nixos.restic
+        self.modules.nixos.secrets
+      ];
 
-        files.paths = map volume ["paperless-data" "paperless-media" "paperless-consume"];
+      internal.homelab = {
+        backups.paperless = {
+          databases.postgres = [
+            {
+              container = "paperless-db";
+              database = "paperless";
+              user = "paperless";
+            }
+          ];
 
-        restore.services = {
-          afterRestore = map svc ["paperless-broker" "paperless-web"];
-          afterSync = map svc ["paperless-pod" "paperless-db"];
-          stop = map svc ["paperless-web" "paperless-broker" "paperless-db" "paperless-pod"];
+          files.paths = map volume ["paperless-data" "paperless-media" "paperless-consume"];
+
+          restore.services = {
+            afterRestore = map svc ["paperless-broker" "paperless-web"];
+            afterSync = map svc ["paperless-pod" "paperless-db"];
+            stop = map svc ["paperless-web" "paperless-broker" "paperless-db" "paperless-pod"];
+          };
+        };
+
+        gatus.endpoints.paperless = {};
+
+        ingress.paperless = {
+          inherit port subdomain;
         };
       };
 
-      gatus.endpoints.paperless = {};
+      sops = {
+        secrets = {
+          "serve/paperless/oidc/client_id" = {};
+          "serve/paperless/oidc/client_secret" = {};
+          "serve/paperless/postgres_password" = {};
+          "serve/paperless/secret_key" = {};
+        };
 
-      ingress.paperless = {
-        inherit port subdomain;
+        templates."paperless-ngx-env" = {
+          mode = "0400";
+          content = ''
+            POSTGRES_DB=paperless
+            POSTGRES_USER=paperless
+            POSTGRES_PASSWORD=${config.sops.placeholder."serve/paperless/postgres_password"}
+            PAPERLESS_DBPASS=${config.sops.placeholder."serve/paperless/postgres_password"}
+            PAPERLESS_SECRET_KEY=${config.sops.placeholder."serve/paperless/secret_key"}
+            PAPERLESS_SOCIALACCOUNT_PROVIDERS=${self.lib.oidc.allauthProvider {
+              inherit (config.internal.homelab.oidc) discoveryUrl name providerId;
+              clientId = config.sops.placeholder."serve/paperless/oidc/client_id";
+              clientSecret = config.sops.placeholder."serve/paperless/oidc/client_secret";
+            }}
+          '';
+          owner = user;
+        };
       };
     };
 
-    sops = {
-      secrets = {
-        "serve/paperless/oidc/client_id" = {};
-        "serve/paperless/oidc/client_secret" = {};
-        "serve/paperless/postgres_password" = {};
-        "serve/paperless/secret_key" = {};
-      };
+    quadlet = {
+      config,
+      osConfig,
+      ...
+    }: let
+      inherit (config.virtualisation.quadlet) pods;
 
-      templates."paperless-ngx-env" = {
-        mode = "0400";
-        content = ''
-          POSTGRES_DB=paperless
-          POSTGRES_USER=paperless
-          POSTGRES_PASSWORD=${config.sops.placeholder."serve/paperless/postgres_password"}
-          PAPERLESS_DBPASS=${config.sops.placeholder."serve/paperless/postgres_password"}
-          PAPERLESS_SECRET_KEY=${config.sops.placeholder."serve/paperless/secret_key"}
-          PAPERLESS_SOCIALACCOUNT_PROVIDERS=${self.lib.oidc.allauthProvider {
-            inherit (config.internal.homelab.oidc) discoveryUrl name providerId;
-            clientId = config.sops.placeholder."serve/paperless/oidc/client_id";
-            clientSecret = config.sops.placeholder."serve/paperless/oidc/client_secret";
-          }}
-        '';
-      };
-    };
-
-    virtualisation.quadlet = {
+      host = "${subdomain}.${osConfig.internal.homelab.domain}";
+      envFile = osConfig.sops.templates."paperless-ngx-env".path;
+    in {
       containers = {
         paperless-broker = {
           containerConfig = {
@@ -101,7 +113,7 @@
             ];
 
             dropCapabilities = ["ALL"];
-            environmentFiles = [config.sops.templates."paperless-ngx-env".path];
+            environmentFiles = [envFile];
             image = "docker.io/library/postgres:${postgresVersion}";
             noNewPrivileges = true;
             pod = pods.paperless.ref;
@@ -124,7 +136,7 @@
             ];
 
             dropCapabilities = ["ALL"];
-            environmentFiles = [config.sops.templates."paperless-ngx-env".path];
+            environmentFiles = [envFile];
 
             environments = {
               PAPERLESS_ACCOUNT_ALLOW_SIGNUPS = "false";
@@ -135,7 +147,7 @@
               PAPERLESS_DBPORT = "5432";
               PAPERLESS_DBUSER = "paperless";
               PAPERLESS_DISABLE_REGULAR_LOGIN = "1";
-              PAPERLESS_LOGOUT_REDIRECT_URL = config.internal.homelab.oidc.endSessionUrl;
+              PAPERLESS_LOGOUT_REDIRECT_URL = osConfig.internal.homelab.oidc.endSessionUrl;
               PAPERLESS_REDIRECT_LOGIN_TO_SSO = "1";
               PAPERLESS_REDIS = "redis://localhost:6379";
               PAPERLESS_SOCIAL_AUTO_SIGNUP = "1";

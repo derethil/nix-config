@@ -1,4 +1,8 @@
-{lib, ...}: {
+{
+  self,
+  lib,
+  ...
+}: {
   flake.modules.nixos.restic-restore = {
     config,
     pkgs,
@@ -11,9 +15,9 @@
     stagingRoot = "/var/lib/restic/staging";
 
     bash = getExe pkgs.bash;
-    podman = getExe' pkgs.podman "podman";
     restic = getExe pkgs.restic;
     sqlite3 = getExe' pkgs.sqlite "sqlite3";
+    inherit (self.lib.restic.runners {inherit config pkgs;}) podmanExec systemctl;
 
     stagingDir = name: "${stagingRoot}/${name}";
     dumpFile = name: pg: "${stagingDir name}/${pg.container}-${pg.database}.dump";
@@ -49,10 +53,10 @@
         fi
 
         echo "==> Waiting for ${pg.container}..."
-        until timeout 2 sudo ${podman} exec ${pg.container} pg_isready -U ${pg.user} &>/dev/null; do sleep 1; done
+        until timeout 2 ${podmanExec} ${pg.container} pg_isready -U ${pg.user} &>/dev/null; do sleep 1; done
         echo "==> Restoring ${pg.database}..."
         sudo cat "${dumpFile name pg}" \
-            | sudo ${podman} exec -i ${pg.container} pg_restore -U ${pg.user} -d ${pg.database} --clean --if-exists --single-transaction'')
+            | ${podmanExec} -i ${pg.container} pg_restore -U ${pg.user} -d ${pg.database} --clean --if-exists --single-transaction'')
       job.databases.postgres;
     in
       pkgs.writeShellScriptBin "restic-restore-${name}" ''
@@ -61,7 +65,7 @@
 
         ${optionalString (job.restore.services.stop != []) ''
           echo "==> Stopping services..."
-          sudo systemctl stop ${concatStringsSep " " job.restore.services.stop}
+          ${systemctl} stop ${concatStringsSep " " job.restore.services.stop}
         ''}
 
         ${optionalString (job.restore.hooks.afterStop != "") ''
@@ -85,7 +89,7 @@
           ${job.restore.hooks.afterSync}
         ''}
 
-        ${optionalString (job.restore.services.afterSync != []) "sudo systemctl start ${concatStringsSep " " job.restore.services.afterSync}"}
+        ${optionalString (job.restore.services.afterSync != []) "${systemctl} start ${concatStringsSep " " job.restore.services.afterSync}"}
 
         ${optionalString (job.databases.sqlite != []) sqliteRestoreCmds}
 
@@ -93,7 +97,7 @@
 
         ${optionalString (job.restore.services.afterRestore != []) ''
           echo "==> Starting services..."
-          sudo systemctl start ${concatStringsSep " " job.restore.services.afterRestore}
+          ${systemctl} start ${concatStringsSep " " job.restore.services.afterRestore}
         ''}
 
         ${optionalString (job.restore.hooks.afterRestore != "") ''

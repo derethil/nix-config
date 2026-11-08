@@ -1,44 +1,49 @@
-{self, ...}: {
-  flake.modules.nixos.sabnzbd = {config, ...}: let
-    version = "5.1.3";
+{self, ...}: let
+  version = "5.1.3";
 
-    subdomain = "index.sabnzbd";
-    port = "20090";
-    internalPort = "8080";
+  subdomain = "index.sabnzbd";
+  port = "20090";
+  internalPort = "8080";
 
-    puid = "1000";
-    pgid = "1000";
+  puid = "1000";
+  pgid = "1000";
 
-    inherit (config.virtualisation.quadlet) pods;
-    inherit (self.lib.podman) svc volume;
-  in {
-    imports = [
-      self.modules.nixos.gatus-options
-      self.modules.nixos.ingress
-      self.modules.nixos.quadlet
-      self.modules.nixos.restic
-    ];
+  inherit (self.lib.podman) svc volume;
+in {
+  flake.modules = self.factory.container-app {
+    name = "sabnzbd";
 
-    internal.homelab = {
-      backups.sabnzbd = {
-        files.paths = map volume ["sabnzbd-config"];
+    nixos = {
+      imports = [
+        self.modules.nixos.gatus-options
+        self.modules.nixos.ingress
+        self.modules.nixos.quadlet
+        self.modules.nixos.restic
+      ];
 
-        restore.services = {
-          afterRestore = map svc ["sabnzbd-web"];
-          afterSync = map svc ["sabnzbd-pod"];
-          stop = map svc ["sabnzbd-web" "sabnzbd-pod"];
+      internal.homelab = {
+        backups.sabnzbd = {
+          files.paths = map volume ["sabnzbd-config"];
+
+          restore.services = {
+            afterRestore = map svc ["sabnzbd-web"];
+            afterSync = map svc ["sabnzbd-pod"];
+            stop = map svc ["sabnzbd-web" "sabnzbd-pod"];
+          };
         };
-      };
 
-      gatus.endpoints.sabnzbd = {};
+        gatus.endpoints.sabnzbd = {};
 
-      ingress.sabnzbd = {
-        inherit port subdomain;
-        caddy.forwardAuth.enable = true;
+        ingress.sabnzbd = {
+          inherit port subdomain;
+          caddy.forwardAuth.enable = true;
+        };
       };
     };
 
-    virtualisation.quadlet = {
+    quadlet = {config, ...}: let
+      inherit (config.virtualisation.quadlet) pods;
+    in {
       containers.sabnzbd-web = {
         containerConfig = {
           addCapabilities = [

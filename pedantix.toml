@@ -47,6 +47,11 @@ attrs.blank-lines = 0
 path          = "flake.modules.*.*"
 attrs.flatten = false
 
+# Allows quadlet factory calls to have name at the top
+[[overrides]]
+path        = "flake.modules"
+attrs.first = ["name", "generic", "nixos", "darwin", "homeManager"]
+
 # Define flake-parts module ordering
 [[overrides]]
 path = "flake"

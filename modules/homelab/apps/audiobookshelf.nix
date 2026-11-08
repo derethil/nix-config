@@ -1,55 +1,65 @@
-{self, ...}: {
-  flake.modules.nixos.audiobookshelf = {config, ...}: let
-    version = "2.36.1";
+{self, ...}: let
+  version = "2.36.1";
 
-    subdomain = "audio";
-    port = "20100";
-    internalPort = "80";
+  subdomain = "audio";
+  port = "20100";
+  internalPort = "80";
 
-    inherit (config.virtualisation.quadlet) pods;
-    inherit (self.lib.podman) svc volume;
-  in {
-    imports = [
-      self.modules.nixos.gatus-options
-      self.modules.nixos.ingress
-      self.modules.nixos.quadlet
-      self.modules.nixos.restic
-    ];
+  inherit (self.lib.podman) svc volume;
+in {
+  flake.modules = self.factory.container-app {
+    name = "audiobookshelf";
 
-    internal.homelab = {
-      backups.audiobookshelf = {
-        databases.sqlite = [
-          {
-            name = "audiobookshelf";
-            path = "${volume "audiobookshelf-config"}/absdatabase.sqlite";
-          }
-        ];
+    nixos = {
+      imports = [
+        self.modules.nixos.gatus-options
+        self.modules.nixos.ingress
+        self.modules.nixos.quadlet
+        self.modules.nixos.restic
+      ];
 
-        files = {
-          exclude = map (f: "${volume "audiobookshelf-config"}/${f}") [
-            "absdatabase.sqlite"
-            "absdatabase.sqlite-shm"
-            "absdatabase.sqlite-wal"
+      internal.homelab = {
+        backups.audiobookshelf = {
+          databases.sqlite = [
+            {
+              name = "audiobookshelf";
+              path = "${volume "audiobookshelf-config"}/absdatabase.sqlite";
+            }
           ];
 
-          paths = map volume ["audiobookshelf-config" "audiobookshelf-metadata"];
+          files = {
+            exclude = map (f: "${volume "audiobookshelf-config"}/${f}") [
+              "absdatabase.sqlite"
+              "absdatabase.sqlite-shm"
+              "absdatabase.sqlite-wal"
+            ];
+
+            paths = map volume [
+              "audiobookshelf-audiobooks"
+              "audiobookshelf-config"
+              "audiobookshelf-metadata"
+              "audiobookshelf-podcasts"
+            ];
+          };
+
+          restore.services = {
+            afterRestore = map svc ["audiobookshelf-web"];
+            afterSync = map svc ["audiobookshelf-pod"];
+            stop = map svc ["audiobookshelf-web" "audiobookshelf-pod"];
+          };
         };
 
-        restore.services = {
-          afterRestore = map svc ["audiobookshelf-web"];
-          afterSync = map svc ["audiobookshelf-pod"];
-          stop = map svc ["audiobookshelf-web" "audiobookshelf-pod"];
+        gatus.endpoints.audiobookshelf = {};
+
+        ingress.audiobookshelf = {
+          inherit port subdomain;
         };
-      };
-
-      gatus.endpoints.audiobookshelf = {};
-
-      ingress.audiobookshelf = {
-        inherit port subdomain;
       };
     };
 
-    virtualisation.quadlet = {
+    quadlet = {config, ...}: let
+      inherit (config.virtualisation.quadlet) pods;
+    in {
       containers.audiobookshelf-web = {
         containerConfig = {
           addCapabilities = [

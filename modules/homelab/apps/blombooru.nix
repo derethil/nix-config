@@ -1,78 +1,102 @@
-{self, ...}: {
-  flake.modules.nixos.blombooru = {config, ...}: let
-    version = "1.40.0";
-    postgresVersion = "17-alpine";
-    redisVersion = "7-alpine";
+{
+  self,
+  lib,
+  ...
+}: let
+  inherit (lib) getExe';
 
-    subdomain = "stash";
-    port = "20020";
-    internalPort = "8000";
+  version = "1.40.0";
+  postgresVersion = "17-alpine";
+  redisVersion = "7-alpine";
 
-    inherit (config.virtualisation.quadlet) pods;
-    inherit (self.lib.podman) svc volume;
-  in {
-    imports = [
-      self.modules.nixos.gatus-options
-      self.modules.nixos.ingress
-      self.modules.nixos.quadlet
-      self.modules.nixos.restic
-      self.modules.nixos.secrets
-    ];
+  subdomain = "stash";
+  port = "20020";
+  internalPort = "8000";
 
-    internal.homelab = {
-      backups.blombooru = {
-        databases.postgres = [
-          {
-            container = "blombooru-db";
-            database = "blombooru";
-            user = "blombooru";
-          }
-        ];
+  inherit (self.lib.podman) asUser svc user volume;
+in {
+  flake.modules = self.factory.container-app {
+    name = "blombooru";
 
-        files = {
-          exclude = ["${volume "blombooru-data"}/huggingface"];
-          paths = map volume ["blombooru-data" "blombooru-media"];
-        };
+    nixos = {
+      config,
+      pkgs,
+      ...
+    }: {
+      imports = [
+        self.modules.nixos.gatus-options
+        self.modules.nixos.ingress
+        self.modules.nixos.quadlet
+        self.modules.nixos.restic
+        self.modules.nixos.secrets
+      ];
 
-        restore = {
-          hooks.afterRestore = ''
-            echo "==> Flushing Redis cache..."
-            sudo podman exec blombooru-redis sh -c 'redis-cli -a "$REDIS_PASSWORD" FLUSHALL'
-          '';
+      internal.homelab = {
+        backups.blombooru = {
+          databases.postgres = [
+            {
+              container = "blombooru-db";
+              database = "blombooru";
+              user = "blombooru";
+            }
+          ];
 
-          services = {
-            afterRestore = map svc ["blombooru-redis" "blombooru-web"];
-            afterSync = map svc ["blombooru-pod" "blombooru-db"];
-            stop = map svc ["blombooru-web" "blombooru-redis" "blombooru-db" "blombooru-pod"];
+          files = {
+            exclude = ["${volume "blombooru-data"}/huggingface"];
+            paths = map volume ["blombooru-data" "blombooru-media"];
+          };
+
+          restore = {
+            # REDIS_PASSWORD is expanded by the shell inside the container, which
+            # inherits it from the container's env-file -- not by this script.
+            hooks.afterRestore = ''
+              echo "==> Flushing Redis cache..."
+              ${asUser pkgs "${getExe' pkgs.podman "podman"} exec"} blombooru-redis sh -c 'redis-cli -a "$REDIS_PASSWORD" FLUSHALL'
+            '';
+
+            services = {
+              afterRestore = map svc ["blombooru-redis" "blombooru-web"];
+              afterSync = map svc ["blombooru-pod" "blombooru-db"];
+              stop = map svc ["blombooru-web" "blombooru-redis" "blombooru-db" "blombooru-pod"];
+            };
           };
         };
+
+        gatus.endpoints.blombooru = {};
+
+        ingress.blombooru = {
+          inherit port subdomain;
+        };
       };
 
-      gatus.endpoints.blombooru = {};
+      sops = {
+        secrets = {
+          "serve/blombooru/postgres_password" = {};
+          "serve/blombooru/redis_password" = {};
+        };
 
-      ingress.blombooru = {
-        inherit port subdomain;
+        templates."blombooru-env" = {
+          mode = "0400";
+          content = ''
+            POSTGRES_DB=blombooru
+            POSTGRES_USER=blombooru
+            POSTGRES_PASSWORD=${config.sops.placeholder."serve/blombooru/postgres_password"}
+            REDIS_PASSWORD=${config.sops.placeholder."serve/blombooru/redis_password"}
+          '';
+          owner = user;
+        };
       };
     };
 
-    sops = {
-      secrets = {
-        "serve/blombooru/postgres_password" = {};
-        "serve/blombooru/redis_password" = {};
-      };
+    quadlet = {
+      config,
+      osConfig,
+      ...
+    }: let
+      inherit (config.virtualisation.quadlet) pods;
 
-      templates."blombooru-env" = {
-        mode = "0400";
-        content = ''
-          POSTGRES_DB=blombooru
-          POSTGRES_USER=blombooru
-          POSTGRES_PASSWORD=${config.sops.placeholder."serve/blombooru/postgres_password"}
-          REDIS_PASSWORD=${config.sops.placeholder."serve/blombooru/redis_password"}
-        '';
-      };
-    };
-
-    virtualisation.quadlet = {
+      envFile = osConfig.sops.templates."blombooru-env".path;
+    in {
       containers = {
         blombooru-db = {
           containerConfig = {
@@ -85,7 +109,7 @@
             ];
 
             dropCapabilities = ["ALL"];
-            environmentFiles = [config.sops.templates."blombooru-env".path];
+            environmentFiles = [envFile];
             image = "docker.io/library/postgres:${postgresVersion}";
             noNewPrivileges = true;
             pod = pods.blombooru.ref;
@@ -100,7 +124,7 @@
         blombooru-redis = {
           containerConfig = {
             dropCapabilities = ["ALL"];
-            environmentFiles = [config.sops.templates."blombooru-env".path];
+            environmentFiles = [envFile];
 
             exec = [
               "sh"
@@ -129,7 +153,7 @@
             ];
 
             dropCapabilities = ["ALL"];
-            environmentFiles = [config.sops.templates."blombooru-env".path];
+            environmentFiles = [envFile];
 
             environments = {
               APP_NAME = "Blombooru";

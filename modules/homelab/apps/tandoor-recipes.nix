@@ -1,91 +1,103 @@
-{self, ...}: {
-  flake.modules.nixos.tandoor-recipes = {config, ...}: let
-    version = "2.6.13";
-    postgresVersion = "17-alpine";
+{self, ...}: let
+  version = "2.6.13";
+  postgresVersion = "17-alpine";
 
-    subdomain = "recipes";
-    port = "20010";
-    internalPort = "8080";
-    host = "${subdomain}.${config.internal.homelab.domain}";
+  subdomain = "recipes";
+  port = "20010";
+  internalPort = "8080";
 
-    inherit (config.virtualisation.quadlet) pods;
-    inherit (self.lib.podman) svc volume;
-  in {
-    imports = [
-      self.modules.nixos.gatus-options
-      self.modules.nixos.ingress
-      self.modules.nixos.oidc-options
-      self.modules.nixos.quadlet
-      self.modules.nixos.restic
-      self.modules.nixos.secrets
-    ];
+  inherit (self.lib.podman) svc user volume;
+in {
+  flake.modules = self.factory.container-app {
+    name = "tandoor-recipes";
 
-    internal.homelab = {
-      backups.tandoor = {
-        databases.postgres = [
-          {
-            container = "tandoor-db";
-            database = "djangodb";
-            user = "djangodb";
-          }
-        ];
+    nixos = {config, ...}: {
+      imports = [
+        self.modules.nixos.gatus-options
+        self.modules.nixos.ingress
+        self.modules.nixos.oidc-options
+        self.modules.nixos.quadlet
+        self.modules.nixos.restic
+        self.modules.nixos.secrets
+      ];
 
-        files.paths = map volume ["tandoor-media"];
+      internal.homelab = {
+        backups.tandoor = {
+          databases.postgres = [
+            {
+              container = "tandoor-db";
+              database = "djangodb";
+              user = "djangodb";
+            }
+          ];
 
-        restore.services = {
-          afterRestore = map svc ["tandoor-web"];
-          afterSync = map svc ["tandoor-pod" "tandoor-db"];
-          stop = map svc ["tandoor-web" "tandoor-db" "tandoor-pod"];
+          files.paths = map volume ["tandoor-media"];
+
+          restore.services = {
+            afterRestore = map svc ["tandoor-web"];
+            afterSync = map svc ["tandoor-pod" "tandoor-db"];
+            stop = map svc ["tandoor-web" "tandoor-db" "tandoor-pod"];
+          };
+        };
+
+        gatus.endpoints.tandoor = {};
+
+        ingress.tandoor = {
+          inherit port subdomain;
+
+          # HACK: Tandoor hardcodes its post-logout redirect, but logs out on GET. Hit both on the logout endpoint
+          caddy.extraConfig = ''
+            handle /accounts/logout* {
+              forward_auth 127.0.0.1:${port} {
+                uri /accounts/logout/
+                @done status 2xx 3xx
+                handle_response @done {
+                  redir * ${config.internal.homelab.oidc.endSessionUrl}
+                }
+              }
+            }
+          '';
         };
       };
 
-      gatus.endpoints.tandoor = {};
+      sops = {
+        secrets = {
+          "serve/tandoor/oidc/client_id" = {};
+          "serve/tandoor/oidc/client_secret" = {};
+          "serve/tandoor/postgres_password" = {};
+          "serve/tandoor/secret_key" = {};
+        };
 
-      ingress.tandoor = {
-        inherit port subdomain;
+        templates."tandoor-recipes-env" = {
+          mode = "0400";
+          content = ''
+            POSTGRES_PASSWORD=${config.sops.placeholder."serve/tandoor/postgres_password"}
+            POSTGRES_USER=djangodb
+            POSTGRES_DB=djangodb
 
-        # HACK: Tandoor hardcodes its post-logout redirect, but logs out on GET. Hit both on the logout endpoint
-        caddy.extraConfig = ''
-          handle /accounts/logout* {
-            forward_auth 127.0.0.1:${port} {
-              uri /accounts/logout/
-              @done status 2xx 3xx
-              handle_response @done {
-                redir * ${config.internal.homelab.oidc.endSessionUrl}
-              }
-            }
-          }
-        '';
+            SECRET_KEY=${config.sops.placeholder."serve/tandoor/secret_key"}
+
+            SOCIALACCOUNT_PROVIDERS=${self.lib.oidc.allauthProvider {
+              inherit (config.internal.homelab.oidc) discoveryUrl name providerId;
+              clientId = config.sops.placeholder."serve/tandoor/oidc/client_id";
+              clientSecret = config.sops.placeholder."serve/tandoor/oidc/client_secret";
+            }}
+          '';
+          owner = user;
+        };
       };
     };
 
-    sops = {
-      secrets = {
-        "serve/tandoor/oidc/client_id" = {};
-        "serve/tandoor/oidc/client_secret" = {};
-        "serve/tandoor/postgres_password" = {};
-        "serve/tandoor/secret_key" = {};
-      };
+    quadlet = {
+      config,
+      osConfig,
+      ...
+    }: let
+      inherit (config.virtualisation.quadlet) pods;
 
-      templates."tandoor-recipes-env" = {
-        mode = "0400";
-        content = ''
-          POSTGRES_PASSWORD=${config.sops.placeholder."serve/tandoor/postgres_password"}
-          POSTGRES_USER=djangodb
-          POSTGRES_DB=djangodb
-
-          SECRET_KEY=${config.sops.placeholder."serve/tandoor/secret_key"}
-
-          SOCIALACCOUNT_PROVIDERS=${self.lib.oidc.allauthProvider {
-            inherit (config.internal.homelab.oidc) discoveryUrl name providerId;
-            clientId = config.sops.placeholder."serve/tandoor/oidc/client_id";
-            clientSecret = config.sops.placeholder."serve/tandoor/oidc/client_secret";
-          }}
-        '';
-      };
-    };
-
-    virtualisation.quadlet = {
+      host = "${subdomain}.${osConfig.internal.homelab.domain}";
+      envFile = osConfig.sops.templates."tandoor-recipes-env".path;
+    in {
       containers = {
         tandoor-db = {
           containerConfig = {
@@ -98,7 +110,7 @@
             ];
 
             dropCapabilities = ["ALL"];
-            environmentFiles = [config.sops.templates."tandoor-recipes-env".path];
+            environmentFiles = [envFile];
             image = "docker.io/library/postgres:${postgresVersion}";
             noNewPrivileges = true;
             pod = pods.tandoor.ref;
@@ -119,7 +131,7 @@
             ];
 
             dropCapabilities = ["ALL"];
-            environmentFiles = [config.sops.templates."tandoor-recipes-env".path];
+            environmentFiles = [envFile];
 
             environments = {
               AI_ALLOWED_URLS = "https://openrouter.ai/api/v1";

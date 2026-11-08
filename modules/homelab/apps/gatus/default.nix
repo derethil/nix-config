@@ -1,76 +1,95 @@
-{self, ...}: {
-  flake.modules.nixos.gatus = {config, ...}: let
-    version = "v5.36.0";
-    postgresVersion = "17-alpine";
+{self, ...}: let
+  version = "v5.36.0";
+  postgresVersion = "17-alpine";
 
-    subdomain = "health";
-    port = "20030";
-    internalPort = "8080";
+  subdomain = "health";
+  port = "20030";
+  internalPort = "8080";
 
-    # TODO:
-    # - Configure restic backups to send durations to Gatus along with status and error messages.
-    # - Replace internet endpoint with the proper 'connectivity' that turns off checks when it goes red.
+  # TODO:
+  # - Configure restic backups to send durations to Gatus along with status and error messages.
+  # - Replace internet endpoint with the proper 'connectivity' that turns off checks when it goes red.
 
-    inherit (config.virtualisation.quadlet) pods;
-    inherit (self.lib.podman) svc;
-  in {
-    imports = [
-      self.modules.nixos.gatus-options
-      self.modules.nixos.gatus-config-file
-      self.modules.nixos.gatus-endpoints
-      self.modules.nixos.ingress
-      self.modules.nixos.quadlet
-      self.modules.nixos.restic
-      self.modules.nixos.secrets
-    ];
+  inherit (self.lib.podman) svc user;
+in {
+  flake.modules = self.factory.container-app {
+    name = "gatus";
 
-    internal.homelab = {
-      backups.gatus = {
-        databases.postgres = [
-          {
-            container = "gatus-db";
-            database = "gatus";
-            user = "gatus";
-          }
-        ];
+    nixos = {config, ...}: {
+      imports = [
+        self.modules.nixos.gatus-options
+        self.modules.nixos.gatus-config-file
+        self.modules.nixos.gatus-endpoints
+        self.modules.nixos.ingress
+        self.modules.nixos.quadlet
+        self.modules.nixos.restic
+        self.modules.nixos.secrets
+      ];
 
-        restore.services = {
-          afterRestore = map svc ["gatus-web"];
-          afterSync = map svc ["gatus-pod" "gatus-db"];
-          stop = map svc ["gatus-web" "gatus-db" "gatus-pod"];
+      internal.homelab = {
+        backups.gatus = {
+          databases.postgres = [
+            {
+              container = "gatus-db";
+              database = "gatus";
+              user = "gatus";
+            }
+          ];
+
+          restore.services = {
+            afterRestore = map svc ["gatus-web"];
+            afterSync = map svc ["gatus-pod" "gatus-db"];
+            stop = map svc ["gatus-web" "gatus-db" "gatus-pod"];
+          };
+        };
+
+        gatus = {
+          inherit internalPort;
+          pushUrl = config.internal.homelab.ingress.gatus.url;
+        };
+
+        ingress.gatus = {
+          inherit port subdomain;
         };
       };
 
-      gatus = {
-        inherit internalPort;
-        pushUrl = config.internal.homelab.ingress.gatus.url;
+      sops = {
+        secrets = {
+          "serve/gatus/ntfy_topic".mode = "0444";
+          "serve/gatus/postgres_password" = {};
+          "serve/gatus/token" = {};
+        };
+
+        templates."gatus-env" = {
+          mode = "0400";
+          content = ''
+            POSTGRES_DB=gatus
+            POSTGRES_USER=gatus
+            POSTGRES_PASSWORD=${config.sops.placeholder."serve/gatus/postgres_password"}
+            GATUS_TOKEN=${config.sops.placeholder."serve/gatus/token"}
+            NTFY_TOPIC=${config.sops.placeholder."serve/gatus/ntfy_topic"}
+          '';
+          owner = user;
+        };
       };
 
-      ingress.gatus = {
-        inherit port subdomain;
-      };
+      assertions = [
+        {
+          assertion = config.internal.homelab.gatus.configFile != null;
+          message = "internal.homelab.gatus.configFile must be set to a valid path.";
+        }
+      ];
     };
 
-    sops = {
-      secrets = {
-        "serve/gatus/ntfy_topic".mode = "0444";
-        "serve/gatus/postgres_password" = {};
-        "serve/gatus/token" = {};
-      };
+    quadlet = {
+      config,
+      osConfig,
+      ...
+    }: let
+      inherit (config.virtualisation.quadlet) pods;
 
-      templates."gatus-env" = {
-        mode = "0400";
-        content = ''
-          POSTGRES_DB=gatus
-          POSTGRES_USER=gatus
-          POSTGRES_PASSWORD=${config.sops.placeholder."serve/gatus/postgres_password"}
-          GATUS_TOKEN=${config.sops.placeholder."serve/gatus/token"}
-          NTFY_TOPIC=${config.sops.placeholder."serve/gatus/ntfy_topic"}
-        '';
-      };
-    };
-
-    virtualisation.quadlet = {
+      envFile = osConfig.sops.templates."gatus-env".path;
+    in {
       containers = {
         gatus-db = {
           containerConfig = {
@@ -83,7 +102,7 @@
             ];
 
             dropCapabilities = ["ALL"];
-            environmentFiles = [config.sops.templates."gatus-env".path];
+            environmentFiles = [envFile];
             image = "docker.io/library/postgres:${postgresVersion}";
             noNewPrivileges = true;
             pod = pods.gatus.ref;
@@ -98,14 +117,14 @@
         gatus-web = {
           containerConfig = {
             dropCapabilities = ["ALL"];
-            environmentFiles = [config.sops.templates."gatus-env".path];
+            environmentFiles = [envFile];
             image = "docker.io/twinproduction/gatus:${version}";
             noNewPrivileges = true;
             pod = pods.gatus.ref;
             pull = "newer";
 
             volumes = [
-              "${config.internal.homelab.gatus.configFile}:/config/config.yaml:ro"
+              "${osConfig.internal.homelab.gatus.configFile}:/config/config.yaml:ro"
             ];
           };
 
@@ -130,12 +149,5 @@
 
       volumes.gatus-db = {};
     };
-
-    assertions = [
-      {
-        assertion = config.internal.homelab.gatus.configFile != null;
-        message = "internal.homelab.gatus.configFile must be set to a valid path.";
-      }
-    ];
   };
 }

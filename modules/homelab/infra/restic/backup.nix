@@ -16,8 +16,8 @@
 
     stagingRoot = "/var/lib/restic/staging";
 
-    podman = getExe' pkgs.podman "podman";
     sqlite3 = getExe' pkgs.sqlite "sqlite3";
+    inherit (self.lib.restic.runners {inherit config pkgs;}) podmanExec;
 
     stagingDir = name: "${stagingRoot}/${name}";
     dumpFile = name: pg: "${stagingDir name}/${pg.container}-${pg.database}.dump";
@@ -37,7 +37,7 @@
       concatMapStringsSep "\n"
       (pg: ''
         echo "==> Dumping ${pg.database}..."
-        ${podman} exec ${pg.container} pg_dump -U ${pg.user} -Fc ${pg.database} > ${dumpFile name pg}'')
+        ${podmanExec} ${pg.container} pg_dump -U ${pg.user} -Fc ${pg.database} > ${dumpFile name pg}'')
       job.databases.postgres;
 
     sqliteDumpCommands = name: job:

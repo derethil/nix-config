@@ -1,7 +1,6 @@
 {self, ...}: {
   flake.modules.nixos.hydroxide = {
     config,
-    lib,
     pkgs,
     ...
   }: let
@@ -10,8 +9,6 @@
 
     stateDir = "/var/lib/hydroxide";
     authFile = "${stateDir}/hydroxide/auth.json";
-
-    inherit (lib) toInt;
   in {
     imports = [
       self.modules.nixos.gatus-options
@@ -35,11 +32,6 @@
         url = "tcp://host.containers.internal:${imapPort}";
       };
     };
-
-    networking.firewall.interfaces."podman0".allowedTCPPorts = [
-      (toInt imapPort)
-      (toInt smtpPort)
-    ];
 
     sops.secrets."services/hydroxide/auth_json" = {
       group = "hydroxide";
