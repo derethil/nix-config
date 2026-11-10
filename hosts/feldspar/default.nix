@@ -57,6 +57,7 @@ in {
           self.modules.nixos.displays
           impermanence
           logitech
+          mic-denoise
           networking
           openrgb
           plymouth
@@ -87,6 +88,7 @@ in {
           };
 
           hardware = {
+            micDenoise.inputDevice = "alsa_input.usb-046d_081b_5AAF2850-02.mono-fallback";
             networking.avahi.enable = true;
 
             radeon = {
