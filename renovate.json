@@ -107,14 +107,17 @@
       "dependencyDashboardApproval": true
     },
     {
-      "description": "Automerge versioned Nix package updates",
+      "description": "Regenerate hashes before automerging versioned Nix package updates",
       "matchManagers": [
         "custom.regex"
       ],
       "matchDepTypes": [
         "nix-package"
       ],
-      "automerge": true
+      "automerge": false,
+      "prBodyNotes": [
+        "<!-- nix-source-hash-update -->"
+      ]
     },
     {
       "description": "Parse pgvector PostgreSQL-major image tags",

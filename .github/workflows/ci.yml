@@ -2,12 +2,22 @@ name: CI
 
 on:
   push:
+    branches:
+      - main
   pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - labeled
   workflow_dispatch:
 
 jobs:
   lint:
     name: Lint expressions
+    if: >-
+      !contains(github.event.pull_request.body || '', '<!-- nix-source-hash-update -->') ||
+      (github.event.action == 'labeled' && github.event.label.name == 'hash-updated')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -29,6 +39,9 @@ jobs:
 
   validate:
     name: Check expressions
+    if: >-
+      !contains(github.event.pull_request.body || '', '<!-- nix-source-hash-update -->') ||
+      (github.event.action == 'labeled' && github.event.label.name == 'hash-updated')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7

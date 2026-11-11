@@ -1,6 +1,11 @@
 name: "Build and populate cache"
 on:
   pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - labeled
   push:
     branches:
       - main
@@ -8,6 +13,9 @@ on:
 
 jobs:
   build:
+    if: >-
+      !contains(github.event.pull_request.body || '', '<!-- nix-source-hash-update -->') ||
+      (github.event.action == 'labeled' && github.event.label.name == 'hash-updated')
     runs-on: ${{ contains(matrix.system, 'darwin') && 'macos-latest' || 'ubuntu-latest' }}
     strategy:
       fail-fast: false
@@ -68,7 +76,6 @@ jobs:
       - name: Build ${{ matrix.type }}.${{ matrix.config }}
         run: |
           nix build .#${{ matrix.type }}.${{ matrix.config }}.${{ matrix.attribute }} \
-            ${{ matrix.impure && '--impure' || '' }} \
             --print-build-logs \
             --fallback \
             --system ${{ matrix.system }}
@@ -77,7 +84,10 @@ jobs:
     name: All builds passed
     runs-on: ubuntu-latest
     needs: [build]
-    if: always()
+    if: >-
+      always() &&
+      (!contains(github.event.pull_request.body || '', '<!-- nix-source-hash-update -->') ||
+      (github.event.action == 'labeled' && github.event.label.name == 'hash-updated'))
     steps:
       - name: Check matrix results
         run: |
