@@ -2,6 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended",
+    "helpers:pinGitHubActionDigests",
     ":dependencyDashboard"
   ],
   "gitIgnoredAuthors": [
@@ -139,10 +140,13 @@
       "matchFileNames": [
         "modules/homelab/apps/**"
       ],
+      "matchUpdateTypes": [
+        "major"
+      ],
       "minimumReleaseAge": "7 days"
     },
     {
-      "description": "Automerge homelab container patch and minor updates",
+      "description": "Automerge homelab container digest, patch, and minor updates",
       "matchManagers": [
         "custom.regex"
       ],
@@ -153,26 +157,11 @@
         "modules/homelab/apps/**"
       ],
       "matchUpdateTypes": [
+        "digest",
         "patch",
         "minor"
       ],
       "automerge": true
-    },
-    {
-      "description": "Keep content-changing container digest refreshes manual",
-      "matchManagers": [
-        "custom.regex"
-      ],
-      "matchDatasources": [
-        "docker"
-      ],
-      "matchFileNames": [
-        "modules/homelab/apps/**"
-      ],
-      "matchUpdateTypes": [
-        "digest"
-      ],
-      "automerge": false
     },
     {
       "description": "Hold homelab container major updates in the Dependency Dashboard",
