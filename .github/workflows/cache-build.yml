@@ -43,7 +43,7 @@ jobs:
 
       - name: Free up disk space
         if: ${{ !contains(matrix.system, 'darwin') }}
-        uses: wimpysworld/nothing-but-nix@v10
+        uses: wimpysworld/nothing-but-nix@v12
 
       - name: Set up SSH for nix-secrets repository access
         uses: webfactory/ssh-agent@v0.10.0
