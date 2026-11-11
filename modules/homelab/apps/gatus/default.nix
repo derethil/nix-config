@@ -1,7 +1,7 @@
 {self, ...}: let
   appImage = "docker.io/twinproduction/gatus";
-  appVersion = "v5.36.0";
-  appDigest = "sha256:c5f210d095fa78e6efaa20ffeb14803f2ba4f10615e16a6d12087697149617f0";
+  appVersion = "v5.38.0";
+  appDigest = "sha256:085ed63da963728965d00a3c78aa6167e3bf135218485b893201758e079e8415";
 
   postgresImage = "docker.io/library/postgres";
   postgresVersion = "17-alpine";
