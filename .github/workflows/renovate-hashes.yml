@@ -38,14 +38,14 @@ jobs:
             --silent
 
       - name: Checkout Renovate branch
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref || github.ref_name }}
           token: ${{ secrets.GH_TOKEN_FOR_FLAKE_UPDATE }}
 
       - name: Set up SSH for nix-secrets repository access
-        uses: webfactory/ssh-agent@v0.10.0
+        uses: webfactory/ssh-agent@e83874834305fe9a4a2997156cb26c5de65a8555 # v0.10.0
         with:
           ssh-private-key: ${{ secrets.NIX_SECRETS_SSH_KEY }}
 
@@ -53,7 +53,7 @@ jobs:
         run: git submodule update --init --recursive
 
       - name: Install Nix
-        uses: cachix/install-nix-action@v31
+        uses: cachix/install-nix-action@3dc140bfc76c49fbd4dd958429132e3746bcb086 # v31
         with:
           github_access_token: ${{ github.token }}
 

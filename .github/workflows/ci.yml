@@ -22,10 +22,10 @@ jobs:
       contains(github.event.pull_request.body || '', '<!-- homelab-container-update -->'))
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Install Nix
-        uses: cachix/install-nix-action@v31
+        uses: cachix/install-nix-action@3dc140bfc76c49fbd4dd958429132e3746bcb086 # v31
         with:
           install_url: https://nixos.org/nix/install
           extra_nix_config: |
@@ -52,7 +52,7 @@ jobs:
           contains(github.event.pull_request.body || '', '<!-- homelab-container-update -->')
         run: echo "Container image metadata does not affect flake evaluation"
 
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         if: >-
           github.event.pull_request.user.login != 'renovate[bot]' ||
           !contains(github.event.pull_request.body || '', '<!-- homelab-container-update -->')
@@ -61,7 +61,7 @@ jobs:
         if: >-
           github.event.pull_request.user.login != 'renovate[bot]' ||
           !contains(github.event.pull_request.body || '', '<!-- homelab-container-update -->')
-        uses: webfactory/ssh-agent@v0.10.0
+        uses: webfactory/ssh-agent@e83874834305fe9a4a2997156cb26c5de65a8555 # v0.10.0
         with:
           ssh-private-key: ${{ secrets.NIX_SECRETS_SSH_KEY }}
 
@@ -69,7 +69,7 @@ jobs:
         if: >-
           github.event.pull_request.user.login != 'renovate[bot]' ||
           !contains(github.event.pull_request.body || '', '<!-- homelab-container-update -->')
-        uses: cachix/install-nix-action@v31
+        uses: cachix/install-nix-action@3dc140bfc76c49fbd4dd958429132e3746bcb086 # v31
         with:
           install_url: https://nixos.org/nix/install
           extra_nix_config: |
@@ -87,7 +87,7 @@ jobs:
         if: >-
           github.event.pull_request.user.login != 'renovate[bot]' ||
           !contains(github.event.pull_request.body || '', '<!-- homelab-container-update -->')
-        uses: DeterminateSystems/flake-checker-action@v14
+        uses: DeterminateSystems/flake-checker-action@786422608c7bded2bbc9741ad9f91356842bf520 # v14
         with:
           ignore-missing-flake-lock: false
           fail-mode: true
