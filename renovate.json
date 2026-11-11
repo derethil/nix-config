@@ -42,18 +42,20 @@
     },
     {
       "customType": "regex",
+      "depNameTemplate": "{{{packageName}}} [{{{packageFileDir}}}/{{{packageFile}}}]",
       "description": "Track homelab container image versions",
       "managerFilePatterns": [
         "/^modules\/homelab\/apps\/.*\\.nix$/"
       ],
       "matchStrings": [
-        "[A-Za-z][A-Za-z0-9]*Image\\s*=\\s*\"(?<depName>[^\"]+)\";\\s+[A-Za-z][A-Za-z0-9]*Version\\s*=\\s*\"(?<currentValue>[^\"]+)\";\\s+[A-Za-z][A-Za-z0-9]*Digest\\s*=\\s*\"(?<currentDigest>sha256:[a-f0-9]{64})\";"
+        "[A-Za-z][A-Za-z0-9]*Image\\s*=\\s*\"(?<packageName>[^\"]+)\";\\s+[A-Za-z][A-Za-z0-9]*Version\\s*=\\s*\"(?<currentValue>[^\"]+)\";\\s+[A-Za-z][A-Za-z0-9]*Digest\\s*=\\s*\"(?<currentDigest>sha256:[a-f0-9]{64})\";"
       ],
       "datasourceTemplate": "docker",
       "versioningTemplate": "docker"
     },
     {
       "customType": "regex",
+      "depTypeTemplate": "nix-package",
       "description": "Track versioned Nix package sources",
       "managerFilePatterns": [
         "/\\.nix$/"
@@ -104,6 +106,16 @@
       "dependencyDashboardApproval": true
     },
     {
+      "description": "Automerge versioned Nix package updates",
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchDepTypes": [
+        "nix-package"
+      ],
+      "automerge": true
+    },
+    {
       "description": "Parse pgvector PostgreSQL-major image tags",
       "matchManagers": [
         "custom.regex"
@@ -114,21 +126,23 @@
       "versioning": "regex:^pg(?<major>\\d+)$"
     },
     {
-      "description": "Let homelab container releases age before updating",
+      "description": "Let Docker Hub homelab container releases age before updating",
       "matchManagers": [
         "custom.regex"
       ],
       "matchDatasources": [
         "docker"
       ],
+      "matchPackageNames": [
+        "/^docker\\.io\\//"
+      ],
       "matchFileNames": [
         "modules/homelab/apps/**"
       ],
-      "minimumReleaseAge": "7 days",
-      "minimumReleaseAgeBehaviour": "timestamp-optional"
+      "minimumReleaseAge": "7 days"
     },
     {
-      "description": "Automerge homelab container patch updates",
+      "description": "Automerge homelab container patch and minor updates",
       "matchManagers": [
         "custom.regex"
       ],
@@ -139,7 +153,8 @@
         "modules/homelab/apps/**"
       ],
       "matchUpdateTypes": [
-        "patch"
+        "patch",
+        "minor"
       ],
       "automerge": true
     },
@@ -160,7 +175,7 @@
       "automerge": false
     },
     {
-      "description": "Hold homelab container major and minor updates in the Dependency Dashboard",
+      "description": "Hold homelab container major updates in the Dependency Dashboard",
       "matchManagers": [
         "custom.regex"
       ],
@@ -171,8 +186,7 @@
         "modules/homelab/apps/**"
       ],
       "matchUpdateTypes": [
-        "major",
-        "minor"
+        "major"
       ],
       "dependencyDashboardApproval": true
     },
