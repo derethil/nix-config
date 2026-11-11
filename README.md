@@ -40,6 +40,20 @@ to manage my development/gaming machine, laptop, and a self-hosted server.
   restic backup/restore and caddy modules, Gatus dashboard, and ntfy-backed
   notification system
 
+# Dependency Updates
+
+I use Renovate to keep dependencies current without having to review every
+routine update by hand.
+
+- **Flake inputs**: The lockfile is refreshed once a week in a single PR and
+  merged automatically after all checks pass.
+- **Containers**: Image tags and digests are tracked directly in each app's Nix
+  module. Digest, patch, and minor updates merge automatically, but major
+  updates wait for approval to ensure I can take care of breaking changes.
+- **Nix packages**: Renovate updates the version, and a GitHub Actions workflow
+  regenerates the affected hashes via metadata in the Nix file before the PR is
+  merged.
+
 # Task Runner
 
 Common operations are managed via [`just`](https://github.com/casey/just). Run
