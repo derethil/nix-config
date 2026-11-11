@@ -19,16 +19,19 @@
 
         sources = {
           aarch64-darwin = {
+            # regen-hash-url: packages.aarch64-darwin.iloader.src.url
             hash = "sha256-21iBb4NW+kArzR0/T272t0smYVJF1yvkDEYr+kY4u9w=";
             url = "https://github.com/nab138/iloader/releases/download/v${version}/iloader-darwin-universal.app.tar.gz";
           };
 
           aarch64-linux = {
+            # regen-hash-url: packages.aarch64-linux.iloader.src.url
             hash = "sha256-AaMzw7PMkCwXZ3o4eFLBK61uYAtK0pTZHjRkpN0kobs=";
             url = "https://github.com/nab138/iloader/releases/download/v${version}/iloader-linux-aarch64.AppImage";
           };
 
           x86_64-linux = {
+            # regen-hash-url: packages.x86_64-linux.iloader.src.url
             hash = "sha256-D+N+6fnr42FrunRSFCSNwtP5/+3EqCQXBsyV2WOBNlI=";
             url = "https://github.com/nab138/iloader/releases/download/v${version}/iloader-linux-amd64.AppImage";
           };
@@ -87,6 +90,8 @@
               install -Dm444 ${extracted}/iloader.desktop -t $out/share/applications
               install -Dm444 ${extracted}/iloader.png -t $out/share/pixmaps
             '';
+
+            passthru.src = src;
           }
         else
           pkgs.stdenv.mkDerivation {

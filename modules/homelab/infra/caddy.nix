@@ -36,6 +36,7 @@ in {
       enable = true;
 
       package = pkgs.caddy.withPlugins {
+        # regen-hash: nixosConfigurations.feldspar.config.services.caddy.package.src
         hash = "sha256-bHMI9ueUyZjhSVcn9RzjyeYHtvAFibrrWOOY8xm5Bg4=";
 
         plugins = [

@@ -30,6 +30,7 @@ in
     sourceRoot = ".";
 
     src = fetchurl {
+      # regen-hash-url: packages.aarch64-darwin.stremio.src.url
       hash = "sha256-Xn+BKvSQJFWlx4Cy6gjvA4e9qViJ+x86F3yhK+GiFuY=";
       url = "https://dl.strem.io/stremio-shell-macos/v${release.version}/Stremio_arm64.dmg";
     };

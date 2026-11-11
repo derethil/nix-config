@@ -30,6 +30,7 @@
         sourceRoot = ".";
 
         src = pkgs.fetchurl {
+          # regen-hash-url: packages.aarch64-darwin.mediamate.src.url
           hash = "sha256-Rhq+5HODz/qhSppNXhzO5AnZcwbzAN1NxwXD12got04=";
           url = "https://github.com/Wouter01/MediaMate-Releases/releases/download/v${version}_${build}/MediaMate_v${version}-${build}.zip";
         };

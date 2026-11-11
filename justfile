@@ -13,6 +13,9 @@ mod flake 'just/flake.just'
 # Linting recipes
 mod lint 'just/lint.just'
 
+# Renovate maintenance recipes
+mod renovate 'just/renovate.just'
+
 # Secrets management recipes
 mod secrets 'just/secrets.just'
 
