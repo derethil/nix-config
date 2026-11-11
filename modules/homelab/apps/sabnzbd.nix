@@ -1,5 +1,6 @@
 {self, ...}: let
-  version = "5.1.3";
+  appImage = "lscr.io/linuxserver/sabnzbd";
+  appVersion = "5.1.3";
 
   subdomain = "index.sabnzbd";
   port = "20090";
@@ -61,7 +62,7 @@ in {
             PUID = puid;
           };
 
-          image = "lscr.io/linuxserver/sabnzbd:${version}";
+          image = "${appImage}:${appVersion}";
           noNewPrivileges = true;
           pod = pods.sabnzbd.ref;
           pull = "newer";

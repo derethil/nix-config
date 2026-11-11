@@ -1,5 +1,6 @@
 {self, ...}: let
-  version = "2.36.1";
+  appImage = "ghcr.io/advplyr/audiobookshelf";
+  appVersion = "2.36.1";
 
   subdomain = "audio";
   port = "20100";
@@ -72,7 +73,7 @@ in {
           ];
 
           dropCapabilities = ["ALL"];
-          image = "ghcr.io/advplyr/audiobookshelf:${version}";
+          image = "${appImage}:${appVersion}";
           noNewPrivileges = true;
           pod = pods.audiobookshelf.ref;
           pull = "newer";

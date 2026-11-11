@@ -1,5 +1,7 @@
 {self, ...}: let
-  version = "2.6.13";
+  appImage = "docker.io/vabene1111/recipes";
+  appVersion = "2.6.13";
+  postgresImage = "docker.io/library/postgres";
   postgresVersion = "17-alpine";
 
   subdomain = "recipes";
@@ -111,7 +113,7 @@ in {
 
             dropCapabilities = ["ALL"];
             environmentFiles = [envFile];
-            image = "docker.io/library/postgres:${postgresVersion}";
+            image = "${postgresImage}:${postgresVersion}";
             noNewPrivileges = true;
             pod = pods.tandoor.ref;
             pull = "newer";
@@ -148,7 +150,7 @@ in {
               TANDOOR_PORT = internalPort;
             };
 
-            image = "docker.io/vabene1111/recipes:${version}";
+            image = "${appImage}:${appVersion}";
             noNewPrivileges = true;
             pod = pods.tandoor.ref;
             pull = "newer";

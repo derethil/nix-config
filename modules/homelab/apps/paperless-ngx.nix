@@ -1,6 +1,9 @@
 {self, ...}: let
-  version = "3.0.5";
+  appImage = "ghcr.io/paperless-ngx/paperless-ngx";
+  appVersion = "3.0.5";
+  postgresImage = "docker.io/library/postgres";
   postgresVersion = "17-alpine";
+  valkeyImage = "docker.io/valkey/valkey";
   valkeyVersion = "9-alpine";
 
   subdomain = "documents";
@@ -90,7 +93,7 @@ in {
         paperless-broker = {
           containerConfig = {
             dropCapabilities = ["ALL"];
-            image = "docker.io/valkey/valkey:${valkeyVersion}";
+            image = "${valkeyImage}:${valkeyVersion}";
             noNewPrivileges = true;
             pod = pods.paperless.ref;
             pull = "newer";
@@ -114,7 +117,7 @@ in {
 
             dropCapabilities = ["ALL"];
             environmentFiles = [envFile];
-            image = "docker.io/library/postgres:${postgresVersion}";
+            image = "${postgresImage}:${postgresVersion}";
             noNewPrivileges = true;
             pod = pods.paperless.ref;
             pull = "newer";
@@ -154,7 +157,7 @@ in {
               PAPERLESS_URL = "https://${host}";
             };
 
-            image = "ghcr.io/paperless-ngx/paperless-ngx:${version}";
+            image = "${appImage}:${appVersion}";
             pod = pods.paperless.ref;
             pull = "newer";
 

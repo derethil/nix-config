@@ -1,5 +1,7 @@
 {self, ...}: let
-  version = "latest";
+  appImage = "ghcr.io/seanmorley15/adventurelog";
+  appVersion = "v0.13.1";
+  postgisImage = "docker.io/postgis/postgis";
   postgisVersion = "16-3.5";
 
   subdomain = "travel";
@@ -92,7 +94,7 @@ in {
 
             dropCapabilities = ["ALL"];
             environmentFiles = [envFile];
-            image = "docker.io/postgis/postgis:${postgisVersion}";
+            image = "${postgisImage}:${postgisVersion}";
             noNewPrivileges = true;
             pod = pods.adventurelog.ref;
             pull = "newer";
@@ -129,7 +131,7 @@ in {
               SOCIALACCOUNT_ALLOW_SIGNUP = "True";
             };
 
-            image = "ghcr.io/seanmorley15/adventurelog:${version}";
+            image = "${appImage}:${appVersion}";
             noNewPrivileges = true;
             pod = pods.adventurelog.ref;
             pull = "newer";

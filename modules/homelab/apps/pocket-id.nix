@@ -1,5 +1,7 @@
 {self, ...}: let
-  version = "v2.13.0";
+  appImage = "ghcr.io/pocket-id/pocket-id";
+  appVersion = "v2.13.0";
+  postgresImage = "docker.io/library/postgres";
   postgresVersion = "17-alpine";
 
   subdomain = "auth";
@@ -108,7 +110,7 @@ in {
               POSTGRES_USER = "pocketid";
             };
 
-            image = "docker.io/library/postgres:${postgresVersion}";
+            image = "${postgresImage}:${postgresVersion}";
             noNewPrivileges = true;
             pod = pods.pocket-id.ref;
             pull = "newer";
@@ -131,7 +133,7 @@ in {
               TRUST_PROXY = "127.0.0.1";
             };
 
-            image = "ghcr.io/pocket-id/pocket-id:${version}";
+            image = "${appImage}:${appVersion}";
             noNewPrivileges = true;
             pod = pods.pocket-id.ref;
             pull = "newer";

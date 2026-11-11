@@ -5,8 +5,11 @@
 }: let
   inherit (lib) getExe';
 
-  version = "1.40.0";
+  appImage = "ghcr.io/mrblomblo/blombooru";
+  appVersion = "1.40.0";
+  postgresImage = "docker.io/library/postgres";
   postgresVersion = "17-alpine";
+  redisImage = "docker.io/library/redis";
   redisVersion = "7-alpine";
 
   subdomain = "stash";
@@ -110,7 +113,7 @@ in {
 
             dropCapabilities = ["ALL"];
             environmentFiles = [envFile];
-            image = "docker.io/library/postgres:${postgresVersion}";
+            image = "${postgresImage}:${postgresVersion}";
             noNewPrivileges = true;
             pod = pods.blombooru.ref;
             pull = "newer";
@@ -132,7 +135,7 @@ in {
               ''exec redis-server --save 60 1 --loglevel warning --requirepass "$REDIS_PASSWORD"''
             ];
 
-            image = "docker.io/library/redis:${redisVersion}";
+            image = "${redisImage}:${redisVersion}";
             noNewPrivileges = true;
             pod = pods.blombooru.ref;
             pull = "newer";
@@ -170,7 +173,7 @@ in {
               UVICORN_PORT = internalPort;
             };
 
-            image = "ghcr.io/mrblomblo/blombooru:${version}";
+            image = "${appImage}:${appVersion}";
             noNewPrivileges = true;
             pod = pods.blombooru.ref;
             pull = "newer";
