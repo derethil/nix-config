@@ -8,7 +8,7 @@
   release = {
     datasource = "custom.stremio";
     packageName = "stremio";
-    version = "5.1.22";
+    version = "5.1.26";
     versioning = "semver";
   };
 in
