@@ -1915,11 +1915,11 @@
         "sort-nvim": "sort-nvim"
       },
       "locked": {
-        "lastModified": 1793903531,
-        "narHash": "sha256-+hq8MlsnBjQyfrIunZVqOrMwYSk/u0IVQNMapoSVoPw=",
+        "lastModified": 1794414894,
+        "narHash": "sha256-L0CTM1QSdzmPwSOSukkXmTL1XVN6Zjg+VD5qST5hQo8=",
         "owner": "derethil",
         "repo": "nvim-config",
-        "rev": "3d4db9b71806486a2c79d91dc7d9d9e2fc04f19f",
+        "rev": "abaec21681ea41b4a6be9a64263344da9f91530d",
         "type": "github"
       },
       "original": {
