@@ -14,8 +14,10 @@ on:
 jobs:
   build:
     if: >-
-      !contains(github.event.pull_request.body || '', '<!-- nix-source-hash-update -->') ||
-      (github.event.action == 'labeled' && github.event.label.name == 'hash-updated')
+      (!contains(github.event.pull_request.body || '', '<!-- nix-source-hash-update -->') ||
+      (github.event.action == 'labeled' && github.event.label.name == 'hash-updated')) &&
+      !(github.event.pull_request.user.login == 'renovate[bot]' &&
+      contains(github.event.pull_request.body || '', '<!-- homelab-container-update -->'))
     runs-on: ${{ contains(matrix.system, 'darwin') && 'macos-latest' || 'ubuntu-latest' }}
     strategy:
       fail-fast: false
@@ -90,7 +92,14 @@ jobs:
       (github.event.action == 'labeled' && github.event.label.name == 'hash-updated'))
     steps:
       - name: Check matrix results
+        env:
+          CONTAINER_UPDATE: ${{ github.event.pull_request.user.login == 'renovate[bot]' && contains(github.event.pull_request.body || '', '<!-- homelab-container-update -->') }}
         run: |
+          if [ "${CONTAINER_UPDATE}" = "true" ]; then
+            echo "Container image metadata does not require configuration builds"
+            exit 0
+          fi
+
           if [ "${{ needs.build.result }}" != "success" ]; then
             echo "One or more builds failed"
             exit 1

@@ -73,7 +73,7 @@
     "commitMessagePrefix": "chore: ",
     "commitMessageAction": "update lockfiles",
     "schedule": [
-      "before 6am on Saturday"
+      "before 6am on Friday"
     ]
   },
   "packageRules": [
@@ -128,6 +128,21 @@
         "docker.io/pgvector/pgvector"
       ],
       "versioning": "regex:^pg(?<major>\\d+)$"
+    },
+    {
+      "description": "Identify homelab container image updates",
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchFileNames": [
+        "modules/homelab/apps/**"
+      ],
+      "prBodyNotes": [
+        "<!-- homelab-container-update -->"
+      ]
     },
     {
       "description": "Let Docker Hub homelab container releases age before updating",

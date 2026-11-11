@@ -16,8 +16,10 @@ jobs:
   lint:
     name: Lint expressions
     if: >-
-      !contains(github.event.pull_request.body || '', '<!-- nix-source-hash-update -->') ||
-      (github.event.action == 'labeled' && github.event.label.name == 'hash-updated')
+      (!contains(github.event.pull_request.body || '', '<!-- nix-source-hash-update -->') ||
+      (github.event.action == 'labeled' && github.event.label.name == 'hash-updated')) &&
+      !(github.event.pull_request.user.login == 'renovate[bot]' &&
+      contains(github.event.pull_request.body || '', '<!-- homelab-container-update -->'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -44,14 +46,29 @@ jobs:
       (github.event.action == 'labeled' && github.event.label.name == 'hash-updated')
     runs-on: ubuntu-latest
     steps:
+      - name: Skip flake validation for container metadata
+        if: >-
+          github.event.pull_request.user.login == 'renovate[bot]' &&
+          contains(github.event.pull_request.body || '', '<!-- homelab-container-update -->')
+        run: echo "Container image metadata does not affect flake evaluation"
+
       - uses: actions/checkout@v7
+        if: >-
+          github.event.pull_request.user.login != 'renovate[bot]' ||
+          !contains(github.event.pull_request.body || '', '<!-- homelab-container-update -->')
 
       - name: Set up SSH for nix-secrets repository access
+        if: >-
+          github.event.pull_request.user.login != 'renovate[bot]' ||
+          !contains(github.event.pull_request.body || '', '<!-- homelab-container-update -->')
         uses: webfactory/ssh-agent@v0.10.0
         with:
           ssh-private-key: ${{ secrets.NIX_SECRETS_SSH_KEY }}
 
       - name: Install Nix
+        if: >-
+          github.event.pull_request.user.login != 'renovate[bot]' ||
+          !contains(github.event.pull_request.body || '', '<!-- homelab-container-update -->')
         uses: cachix/install-nix-action@v31
         with:
           install_url: https://nixos.org/nix/install
@@ -61,9 +78,15 @@ jobs:
             experimental-features = nix-command flakes
 
       - name: Validate flake
+        if: >-
+          github.event.pull_request.user.login != 'renovate[bot]' ||
+          !contains(github.event.pull_request.body || '', '<!-- homelab-container-update -->')
         run: nix flake check --all-systems
 
       - name: Check flake health
+        if: >-
+          github.event.pull_request.user.login != 'renovate[bot]' ||
+          !contains(github.event.pull_request.body || '', '<!-- homelab-container-update -->')
         uses: DeterminateSystems/flake-checker-action@v14
         with:
           ignore-missing-flake-lock: false
