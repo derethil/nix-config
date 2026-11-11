@@ -8,7 +8,7 @@
   release = {
     datasource = "custom.stremio";
     packageName = "stremio";
-    version = "5.1.22";
+    version = "5.1.26";
     versioning = "semver";
   };
 in
@@ -31,7 +31,7 @@ in
 
     src = fetchurl {
       # regen-hash-url: packages.aarch64-darwin.stremio.src.url
-      hash = "sha256-Xn+BKvSQJFWlx4Cy6gjvA4e9qViJ+x86F3yhK+GiFuY=";
+      hash = "sha256-+FKG8khW541xYOtJPm6GmUhxl5oQvAKqVUcMiTNG+7Q=";
       url = "https://dl.strem.io/stremio-shell-macos/v${release.version}/Stremio_arm64.dmg";
     };
 
