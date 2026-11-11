@@ -6,8 +6,8 @@
   inherit (lib) getExe';
 
   appImage = "ghcr.io/mrblomblo/blombooru";
-  appVersion = "1.40.0";
-  appDigest = "sha256:179043295207b9ee86c109b706e10027b4c14fbc973059c32ec909ca032f9328";
+  appVersion = "2.0.0";
+  appDigest = "sha256:c2f52e55b289c6b25edc88bf9b4546319d30278bd207220ffa7b0aa4abfcb6fb";
 
   postgresImage = "docker.io/library/postgres";
   postgresVersion = "17-alpine";
