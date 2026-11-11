@@ -1,0 +1,71 @@
+name: Regenerate Renovate hashes
+
+on:
+  push:
+    branches:
+      - "renovate/**"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  regenerate:
+    name: Regenerate Nix source hashes
+    if: github.event_name == 'workflow_dispatch' || !contains(github.event.head_commit.message, 'regenerate Nix source hashes')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout Renovate branch
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+          token: ${{ secrets.GH_TOKEN_FOR_FLAKE_UPDATE }}
+
+      - name: Set up SSH for nix-secrets repository access
+        uses: webfactory/ssh-agent@v0.10.0
+        with:
+          ssh-private-key: ${{ secrets.NIX_SECRETS_SSH_KEY }}
+
+      - name: Initialize submodules
+        run: git submodule update --init --recursive
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ github.token }}
+
+      - name: Regenerate hashes changed by Renovate
+        run: |
+          set -euo pipefail
+          mapfile -t changed < <(
+            git diff --name-only \
+              "origin/${{ github.event.repository.default_branch }}...HEAD" -- '*.nix'
+          )
+
+          if [[ ${#changed[@]} -eq 0 ]]; then
+            echo "Branch touches no Nix files"
+            exit 0
+          fi
+
+          printf 'Scanning %s\n' "${changed[@]}"
+          nix run nixpkgs#just -- renovate regen-nix-hashes "${changed[@]}"
+
+      - name: Push regenerated hashes
+        run: |
+          set -euo pipefail
+
+          if git diff --quiet; then
+            echo "Nix source hashes are already current"
+            exit 0
+          fi
+
+          git --no-pager diff
+          git config user.name "renovate hash regen"
+          git config user.email "renovate-hash-regen@users.noreply.github.com"
+          git commit --all --message "chore(deps): regenerate Nix source hashes"
+          git push origin "HEAD:${{ github.ref_name }}"

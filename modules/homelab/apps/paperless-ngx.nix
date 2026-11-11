@@ -1,7 +1,15 @@
 {self, ...}: let
-  version = "3.0.5";
+  appImage = "ghcr.io/paperless-ngx/paperless-ngx";
+  appVersion = "3.0.5";
+  appDigest = "sha256:65a4cabf0169ea7fbd90ab7bb28ba3f8b5909613635acda1a03ad606f34b456b";
+
+  postgresImage = "docker.io/library/postgres";
   postgresVersion = "17-alpine";
+  postgresDigest = "sha256:e5d2edd28b1f8d40a0a6c0c9cdc545b19b56a0d5d88f94bc11a97d970d4700d0";
+
+  valkeyImage = "docker.io/valkey/valkey";
   valkeyVersion = "9-alpine";
+  valkeyDigest = "sha256:bf09d58e96d6b4524a15396b65b242bbe18beebbcc15a04d8ee75ddac62fae0b";
 
   subdomain = "documents";
   port = "20050";
@@ -90,7 +98,7 @@ in {
         paperless-broker = {
           containerConfig = {
             dropCapabilities = ["ALL"];
-            image = "docker.io/valkey/valkey:${valkeyVersion}";
+            image = "${valkeyImage}:${valkeyVersion}@${valkeyDigest}";
             noNewPrivileges = true;
             pod = pods.paperless.ref;
             pull = "newer";
@@ -114,7 +122,7 @@ in {
 
             dropCapabilities = ["ALL"];
             environmentFiles = [envFile];
-            image = "docker.io/library/postgres:${postgresVersion}";
+            image = "${postgresImage}:${postgresVersion}@${postgresDigest}";
             noNewPrivileges = true;
             pod = pods.paperless.ref;
             pull = "newer";
@@ -154,7 +162,7 @@ in {
               PAPERLESS_URL = "https://${host}";
             };
 
-            image = "ghcr.io/paperless-ngx/paperless-ngx:${version}";
+            image = "${appImage}:${appVersion}@${appDigest}";
             pod = pods.paperless.ref;
             pull = "newer";
 

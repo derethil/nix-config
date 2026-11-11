@@ -5,8 +5,13 @@
 }: let
   inherit (lib) getExe';
 
-  version = "3.0.0";
+  appImage = "ghcr.io/bookorbit/bookorbit";
+  appVersion = "3.0.0";
+  appDigest = "sha256:571ea47b036a8b371db9c54d54a3cea0fb96245f66c09584efac799afd339716";
+
+  postgresImage = "docker.io/pgvector/pgvector";
   postgresVersion = "pg18";
+  postgresDigest = "sha256:c29f30688a9ad961691bdf0ec1650717cc132a5814619d80f80463d6e4c42e47";
 
   subdomain = "books";
   port = "20040";
@@ -105,7 +110,7 @@ in {
 
             dropCapabilities = ["ALL"];
             environmentFiles = [envFile];
-            image = "docker.io/pgvector/pgvector:${postgresVersion}";
+            image = "${postgresImage}:${postgresVersion}@${postgresDigest}";
             noNewPrivileges = true;
             pod = pods.bookorbit.ref;
             pull = "newer";
@@ -140,7 +145,7 @@ in {
               PUID = puid;
             };
 
-            image = "ghcr.io/bookorbit/bookorbit:${version}";
+            image = "${appImage}:${appVersion}@${appDigest}";
             noNewPrivileges = true;
             pod = pods.bookorbit.ref;
             pull = "newer";

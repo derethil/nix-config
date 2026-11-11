@@ -1,0 +1,193 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard"
+  ],
+  "gitIgnoredAuthors": [
+    "renovate-hash-regen@users.noreply.github.com"
+  ],
+  "timezone": "US/Eastern",
+  "schedule": [
+    "before 6am on Saturday"
+  ],
+  "nix": {
+    "enabled": true
+  },
+  "customDatasources": {
+    "stremio": {
+      "defaultRegistryUrlTemplate": "https://formulae.brew.sh/api/cask/stremio.json",
+      "transformTemplates": [
+        "{\"releases\":[{\"version\":version}],\"homepage\":homepage}"
+      ]
+    }
+  },
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Track coordinated Nix release branches in source and generated files",
+      "managerFilePatterns": [
+        "/^modules\/(?:nixpkgs|home-manager|nix-darwin)\\.nix$/",
+        "/^flake\\.nix$/"
+      ],
+      "matchStrings": [
+        "github:(?<repo>NixOS/nixpkgs)/(?<currentValue>(?:nixos|nixpkgs|release)-\\d+\\.\\d+)",
+        "github:(?<repo>nix-community/home-manager)/(?<currentValue>release-\\d+\\.\\d+)",
+        "github:(?<repo>nix-darwin/nix-darwin)/(?<currentValue>nix-darwin-\\d+\\.\\d+)"
+      ],
+      "depNameTemplate": "{{{repo}}}",
+      "packageNameTemplate": "https://github.com/{{{repo}}}",
+      "datasourceTemplate": "git-refs",
+      "versioningTemplate": "regex:^(?<compatibility>nixos|nixpkgs|release|nix-darwin)-(?<major>\\d+)\\.(?<minor>\\d+)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Track homelab container image versions",
+      "managerFilePatterns": [
+        "/^modules\/homelab\/apps\/.*\\.nix$/"
+      ],
+      "matchStrings": [
+        "[A-Za-z][A-Za-z0-9]*Image\\s*=\\s*\"(?<depName>[^\"]+)\";\\s+[A-Za-z][A-Za-z0-9]*Version\\s*=\\s*\"(?<currentValue>[^\"]+)\";\\s+[A-Za-z][A-Za-z0-9]*Digest\\s*=\\s*\"(?<currentDigest>sha256:[a-f0-9]{64})\";"
+      ],
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "description": "Track versioned Nix package sources",
+      "managerFilePatterns": [
+        "/\\.nix$/"
+      ],
+      "matchStrings": [
+        "datasource\\s*=\\s*\"(?<datasource>[^\"]+)\";(?:\\s+extractVersion\\s*=\\s*\"(?<extractVersion>[^\"]+)\";)?\\s+packageName\\s*=\\s*\"(?<packageName>[^\"]+)\";\\s+version\\s*=\\s*\"(?<currentValue>[^\"]+)\";(?:\\s+versioning\\s*=\\s*\"(?<versioning>[^\"]+)\";)?"
+      ]
+    }
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true,
+    "branchTopic": "update-lockfiles",
+    "commitMessagePrefix": "chore: ",
+    "commitMessageAction": "update lockfiles",
+    "schedule": [
+      "before 6am on Saturday"
+    ]
+  },
+  "packageRules": [
+    {
+      "description": "Ignore release-ref updates in the generated flake.nix",
+      "matchManagers": [
+        "nix"
+      ],
+      "matchPackageNames": [
+        "https://github.com/NixOS/nixpkgs"
+      ],
+      "matchUpdateTypes": [
+        "major",
+        "minor",
+        "patch"
+      ],
+      "enabled": false
+    },
+    {
+      "description": "Hold coordinated Nix release updates in the Dependency Dashboard",
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchPackageNames": [
+        "https://github.com/NixOS/nixpkgs",
+        "https://github.com/nix-community/home-manager",
+        "https://github.com/nix-darwin/nix-darwin"
+      ],
+      "groupName": "Nix release branches",
+      "minimumGroupSize": 6,
+      "dependencyDashboardApproval": true
+    },
+    {
+      "description": "Parse pgvector PostgreSQL-major image tags",
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchPackageNames": [
+        "docker.io/pgvector/pgvector"
+      ],
+      "versioning": "regex:^pg(?<major>\\d+)$"
+    },
+    {
+      "description": "Let homelab container releases age before updating",
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchFileNames": [
+        "modules/homelab/apps/**"
+      ],
+      "minimumReleaseAge": "7 days",
+      "minimumReleaseAgeBehaviour": "timestamp-optional"
+    },
+    {
+      "description": "Automerge homelab container patch updates",
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchFileNames": [
+        "modules/homelab/apps/**"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "automerge": true
+    },
+    {
+      "description": "Keep content-changing container digest refreshes manual",
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchFileNames": [
+        "modules/homelab/apps/**"
+      ],
+      "matchUpdateTypes": [
+        "digest"
+      ],
+      "automerge": false
+    },
+    {
+      "description": "Hold homelab container major and minor updates in the Dependency Dashboard",
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchFileNames": [
+        "modules/homelab/apps/**"
+      ],
+      "matchUpdateTypes": [
+        "major",
+        "minor"
+      ],
+      "dependencyDashboardApproval": true
+    },
+    {
+      "description": "Ignore container updates for apps that aren't imported right now",
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchFileNames": [
+        "modules/homelab/apps/adventurelog.nix"
+      ],
+      "enabled": false
+    }
+  ]
+}

@@ -1,6 +1,11 @@
 {self, ...}: let
-  version = "v5.36.0";
+  appImage = "docker.io/twinproduction/gatus";
+  appVersion = "v5.36.0";
+  appDigest = "sha256:c5f210d095fa78e6efaa20ffeb14803f2ba4f10615e16a6d12087697149617f0";
+
+  postgresImage = "docker.io/library/postgres";
   postgresVersion = "17-alpine";
+  postgresDigest = "sha256:e5d2edd28b1f8d40a0a6c0c9cdc545b19b56a0d5d88f94bc11a97d970d4700d0";
 
   subdomain = "health";
   port = "20030";
@@ -103,7 +108,7 @@ in {
 
             dropCapabilities = ["ALL"];
             environmentFiles = [envFile];
-            image = "docker.io/library/postgres:${postgresVersion}";
+            image = "${postgresImage}:${postgresVersion}@${postgresDigest}";
             noNewPrivileges = true;
             pod = pods.gatus.ref;
             pull = "newer";
@@ -118,7 +123,7 @@ in {
           containerConfig = {
             dropCapabilities = ["ALL"];
             environmentFiles = [envFile];
-            image = "docker.io/twinproduction/gatus:${version}";
+            image = "${appImage}:${appVersion}@${appDigest}";
             noNewPrivileges = true;
             pod = pods.gatus.ref;
             pull = "newer";

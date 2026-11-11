@@ -1,4 +1,18 @@
-{self, ...}: {
+{self, ...}: let
+  cloudflarePlugin = {
+    datasource = "github-tags";
+    packageName = "caddy-dns/cloudflare";
+    version = "v0.2.4";
+    versioning = "semver-coerced";
+  };
+
+  jwtPlugin = {
+    datasource = "github-tags";
+    packageName = "ggicci/caddy-jwt";
+    version = "v1.4.0";
+    versioning = "semver-coerced";
+  };
+in {
   flake.modules.nixos.caddy = {
     config,
     pkgs,
@@ -22,11 +36,12 @@
       enable = true;
 
       package = pkgs.caddy.withPlugins {
+        # regen-hash: nixosConfigurations.feldspar.config.services.caddy.package.src
         hash = "sha256-bHMI9ueUyZjhSVcn9RzjyeYHtvAFibrrWOOY8xm5Bg4=";
 
         plugins = [
-          "github.com/caddy-dns/cloudflare@v0.2.4"
-          "github.com/ggicci/caddy-jwt@v1.4.0"
+          "github.com/${cloudflarePlugin.packageName}@${cloudflarePlugin.version}"
+          "github.com/${jwtPlugin.packageName}@${jwtPlugin.version}"
         ];
       };
 

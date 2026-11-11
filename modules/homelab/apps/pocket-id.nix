@@ -1,6 +1,11 @@
 {self, ...}: let
-  version = "v2.13.0";
+  appImage = "ghcr.io/pocket-id/pocket-id";
+  appVersion = "v2.13.0";
+  appDigest = "sha256:c9c1d7b70006968d673a1073df048a3fdec73ccb54e182320b56bb911340f6f1";
+
+  postgresImage = "docker.io/library/postgres";
   postgresVersion = "17-alpine";
+  postgresDigest = "sha256:e5d2edd28b1f8d40a0a6c0c9cdc545b19b56a0d5d88f94bc11a97d970d4700d0";
 
   subdomain = "auth";
   port = "20060";
@@ -108,7 +113,7 @@ in {
               POSTGRES_USER = "pocketid";
             };
 
-            image = "docker.io/library/postgres:${postgresVersion}";
+            image = "${postgresImage}:${postgresVersion}@${postgresDigest}";
             noNewPrivileges = true;
             pod = pods.pocket-id.ref;
             pull = "newer";
@@ -131,7 +136,7 @@ in {
               TRUST_PROXY = "127.0.0.1";
             };
 
-            image = "ghcr.io/pocket-id/pocket-id:${version}";
+            image = "${appImage}:${appVersion}@${appDigest}";
             noNewPrivileges = true;
             pod = pods.pocket-id.ref;
             pull = "newer";
