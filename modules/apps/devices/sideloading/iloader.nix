@@ -11,7 +11,7 @@
           datasource = "github-releases";
           extractVersion = "^v(?<version>.+)$";
           packageName = "nab138/iloader";
-          version = "2.3.1";
+          version = "2.4.1";
           versioning = "semver";
         };
 
