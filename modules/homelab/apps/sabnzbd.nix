@@ -1,6 +1,7 @@
 {self, ...}: let
   appImage = "lscr.io/linuxserver/sabnzbd";
   appVersion = "5.1.3";
+  appDigest = "sha256:693c208f697d0b411410edd92a98b52c8c754c01f5c078a975cbc892044260f5";
 
   subdomain = "index.sabnzbd";
   port = "20090";
@@ -62,7 +63,7 @@ in {
             PUID = puid;
           };
 
-          image = "${appImage}:${appVersion}";
+          image = "${appImage}:${appVersion}@${appDigest}";
           noNewPrivileges = true;
           pod = pods.sabnzbd.ref;
           pull = "newer";

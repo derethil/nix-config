@@ -1,6 +1,7 @@
 {self, ...}: let
   appImage = "lscr.io/linuxserver/prowlarr";
   appVersion = "2.6.5";
+  appDigest = "sha256:b3b00047ed20f6ce2b16780145cb6a0acb51c9e28ea6aa6f5dcd33c7034f1797";
 
   subdomain = "index";
   port = "20070";
@@ -84,7 +85,7 @@ in {
             PUID = puid;
           };
 
-          image = "${appImage}:${appVersion}";
+          image = "${appImage}:${appVersion}@${appDigest}";
           noNewPrivileges = true;
           pod = pods.prowlarr.ref;
           pull = "newer";

@@ -7,10 +7,15 @@
 
   appImage = "ghcr.io/mrblomblo/blombooru";
   appVersion = "1.40.0";
+  appDigest = "sha256:179043295207b9ee86c109b706e10027b4c14fbc973059c32ec909ca032f9328";
+
   postgresImage = "docker.io/library/postgres";
   postgresVersion = "17-alpine";
+  postgresDigest = "sha256:e5d2edd28b1f8d40a0a6c0c9cdc545b19b56a0d5d88f94bc11a97d970d4700d0";
+
   redisImage = "docker.io/library/redis";
   redisVersion = "7-alpine";
+  redisDigest = "sha256:7b1753b4c5ad8458906c272a8132b8c15f5557b000379eb115fb239706a384b7";
 
   subdomain = "stash";
   port = "20020";
@@ -113,7 +118,7 @@ in {
 
             dropCapabilities = ["ALL"];
             environmentFiles = [envFile];
-            image = "${postgresImage}:${postgresVersion}";
+            image = "${postgresImage}:${postgresVersion}@${postgresDigest}";
             noNewPrivileges = true;
             pod = pods.blombooru.ref;
             pull = "newer";
@@ -135,7 +140,7 @@ in {
               ''exec redis-server --save 60 1 --loglevel warning --requirepass "$REDIS_PASSWORD"''
             ];
 
-            image = "${redisImage}:${redisVersion}";
+            image = "${redisImage}:${redisVersion}@${redisDigest}";
             noNewPrivileges = true;
             pod = pods.blombooru.ref;
             pull = "newer";
@@ -173,7 +178,7 @@ in {
               UVICORN_PORT = internalPort;
             };
 
-            image = "${appImage}:${appVersion}";
+            image = "${appImage}:${appVersion}@${appDigest}";
             noNewPrivileges = true;
             pod = pods.blombooru.ref;
             pull = "newer";

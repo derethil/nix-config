@@ -1,8 +1,11 @@
 {self, ...}: let
   appImage = "ghcr.io/seanmorley15/adventurelog";
   appVersion = "v0.13.1";
+  appDigest = "sha256:67ff66e4a2b46b3ca4806a3ecb47cb71c42443ea2d88c18e1ea3dba3ae0d2cf5";
+
   postgisImage = "docker.io/postgis/postgis";
   postgisVersion = "16-3.5";
+  postgisDigest = "sha256:94146ac37bc61e2322f88016056c5920729cb8c64c8542ed590af8fc2abdac07";
 
   subdomain = "travel";
   port = "20080";
@@ -94,7 +97,7 @@ in {
 
             dropCapabilities = ["ALL"];
             environmentFiles = [envFile];
-            image = "${postgisImage}:${postgisVersion}";
+            image = "${postgisImage}:${postgisVersion}@${postgisDigest}";
             noNewPrivileges = true;
             pod = pods.adventurelog.ref;
             pull = "newer";
@@ -131,7 +134,7 @@ in {
               SOCIALACCOUNT_ALLOW_SIGNUP = "True";
             };
 
-            image = "${appImage}:${appVersion}";
+            image = "${appImage}:${appVersion}@${appDigest}";
             noNewPrivileges = true;
             pod = pods.adventurelog.ref;
             pull = "newer";
