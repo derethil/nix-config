@@ -7,7 +7,15 @@
     lib.optionalAttrs (lib.elem system ["aarch64-darwin" "aarch64-linux" "x86_64-linux"]) {
       packages.iloader = let
         pname = "iloader";
-        version = "2.3.1";
+        release = {
+          datasource = "github-releases";
+          extractVersion = "^v(?<version>.+)$";
+          packageName = "nab138/iloader";
+          version = "2.3.1";
+          versioning = "semver";
+        };
+
+        inherit (release) version;
 
         sources = {
           aarch64-darwin = {

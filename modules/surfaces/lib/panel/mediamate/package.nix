@@ -4,8 +4,17 @@
     system,
     ...
   }: let
-    version = "3.8.4";
-    build = "321";
+    release = {
+      datasource = "github-releases";
+      extractVersion = "^v(?<version>.+)$";
+      packageName = "Wouter01/MediaMate-Releases";
+      version = "3.8.4_321";
+      versioning = "regex:^(?<major>[0-9]+)[.](?<minor>[0-9]+)[.](?<patch>[0-9]+)_(?<build>[0-9]+)$";
+    };
+
+    releaseParts = lib.splitString "_" release.version;
+    version = builtins.elemAt releaseParts 0;
+    build = builtins.elemAt releaseParts 1;
   in
     lib.optionalAttrs (lib.elem system lib.platforms.darwin) {
       packages.mediamate = pkgs.stdenvNoCC.mkDerivation {
