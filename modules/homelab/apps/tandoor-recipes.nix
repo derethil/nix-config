@@ -1,7 +1,7 @@
 {self, ...}: let
   appImage = "docker.io/vabene1111/recipes";
-  appVersion = "2.6.13";
-  appDigest = "sha256:f6c58afdea7a721d079ebd6ee5483f2c9da77dd1e709e16d60a82c218e80a451";
+  appVersion = "2.7.2";
+  appDigest = "sha256:1b6d43c3c0f5d2888aa564d9daf29883212b79ad496f59f3c684c099eb1a57b9";
 
   postgresImage = "docker.io/library/postgres";
   postgresVersion = "17-alpine";
@@ -143,11 +143,9 @@ in {
               ALLOWED_HOSTS = "*";
               CSRF_TRUSTED_ORIGINS = "https://${host}";
               DB_ENGINE = "django.db.backends.postgresql";
-              HIDE_LOGIN_FORM = "1";
               POSTGRES_HOST = "localhost";
               POSTGRES_PORT = "5432";
               SECURE_PROXY_SSL_HEADER = "HTTP_X_FORWARDED_PROTO,https";
-              SOCIALACCOUNT_LOGIN_ON_GET = "1";
               SOCIALACCOUNT_ONLY = "1";
               SOCIAL_PROVIDERS = "allauth.socialaccount.providers.openid_connect";
               TANDOOR_PORT = internalPort;
