@@ -124,12 +124,7 @@ in {
 
         settings = {
           alias = aliases;
-
-          core = {
-            editor = "nvim";
-            hooksPath = ".githooks";
-          };
-
+          core.editor = "nvim";
           credential.helper = credentialHelper;
           init.defaultBranch = "main";
           pull.ff = "only";
