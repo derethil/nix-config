@@ -1,7 +1,7 @@
 {self, ...}: let
   appImage = "ghcr.io/paperless-ngx/paperless-ngx";
-  appVersion = "3.0.5";
-  appDigest = "sha256:65a4cabf0169ea7fbd90ab7bb28ba3f8b5909613635acda1a03ad606f34b456b";
+  appVersion = "3.4.2";
+  appDigest = "sha256:d704e84f88300eb6ab001ab15720a2330ff99169cf9f94d6b8fcc44b63a84c84";
 
   postgresImage = "docker.io/library/postgres";
   postgresVersion = "17-alpine";
