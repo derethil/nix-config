@@ -1,7 +1,7 @@
 {self, ...}: let
   appImage = "ghcr.io/pocket-id/pocket-id";
-  appVersion = "v2.13.0";
-  appDigest = "sha256:c9c1d7b70006968d673a1073df048a3fdec73ccb54e182320b56bb911340f6f1";
+  appVersion = "v2.19.2";
+  appDigest = "sha256:3ee23895d6a3adb5dd5de801a4fd31fc31b960e6dfbea9b5200e33cf477695eb";
 
   postgresImage = "docker.io/library/postgres";
   postgresVersion = "17-alpine";
