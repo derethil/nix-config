@@ -138,7 +138,7 @@ in {
           unitConfig = {
             After = map svc ["gatus-db"];
             Description = "Gatus Health Dashboard";
-            Requires = map svc ["gatus-db"];
+            Wants = map svc ["gatus-db"];
           };
         };
       };

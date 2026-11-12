@@ -146,7 +146,7 @@ in {
           unitConfig = {
             After = map svc ["adventurelog-db"];
             Description = "AdventureLog Travel Tracker";
-            Requires = map svc ["adventurelog-db"];
+            Wants = map svc ["adventurelog-db"];
           };
         };
       };

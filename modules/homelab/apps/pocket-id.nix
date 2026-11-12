@@ -148,7 +148,7 @@ in {
           unitConfig = {
             After = map svc ["pocket-id-db"];
             Description = "Pocket ID OIDC Provider";
-            Requires = map svc ["pocket-id-db"];
+            Wants = map svc ["pocket-id-db"];
           };
         };
       };

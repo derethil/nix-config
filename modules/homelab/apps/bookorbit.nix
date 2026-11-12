@@ -165,7 +165,7 @@ in {
           unitConfig = {
             After = map svc ["bookorbit-db"];
             Description = "BookOrbit Library Manager";
-            Requires = map svc ["bookorbit-db"];
+            Wants = map svc ["bookorbit-db"];
           };
         };
       };

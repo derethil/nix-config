@@ -194,7 +194,7 @@ in {
           unitConfig = {
             After = map svc ["blombooru-db" "blombooru-redis"];
             Description = "Blombooru Media Tagging";
-            Requires = map svc ["blombooru-db" "blombooru-redis"];
+            Wants = map svc ["blombooru-db" "blombooru-redis"];
           };
         };
       };

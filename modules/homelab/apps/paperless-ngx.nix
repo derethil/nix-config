@@ -179,7 +179,7 @@ in {
           unitConfig = {
             After = map svc ["paperless-db" "paperless-broker"];
             Description = "Paperless-ngx Document Manager";
-            Requires = map svc ["paperless-db" "paperless-broker"];
+            Wants = map svc ["paperless-db" "paperless-broker"];
           };
         };
       };

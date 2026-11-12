@@ -167,7 +167,7 @@ in {
           unitConfig = {
             After = map svc ["tandoor-db"];
             Description = "Tandoor Recipes Manager";
-            Requires = map svc ["tandoor-db"];
+            Wants = map svc ["tandoor-db"];
           };
         };
       };
