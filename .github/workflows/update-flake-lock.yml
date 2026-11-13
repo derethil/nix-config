@@ -1,0 +1,72 @@
+name: Update Flake Inputs
+on:
+  workflow_dispatch:
+  schedule:
+    # Before 6am US/Eastern on Friday
+    - cron: "0 9 * * fri"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  flake_lock:
+    runs-on: ubuntu-latest
+    outputs:
+      pull-request-number: ${{ steps.update.outputs.pull-request-number }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Set up SSH for nix-secrets repository access
+        uses: webfactory/ssh-agent@e83874834305fe9a4a2997156cb26c5de65a8555 # v0.10.0
+        with:
+          ssh-private-key: ${{ secrets.NIX_SECRETS_SSH_KEY }}
+
+      - name: Install nix
+        uses: cachix/install-nix-action@3dc140bfc76c49fbd4dd958429132e3746bcb086 # v31
+        with:
+          github_access_token: ${{ github.token }}
+
+      - name: Update flake lockfile
+        id: update
+        uses: DeterminateSystems/update-flake-lock@da03c0f078bc4b2c37ee4f7e072d34bf8f188bb3 # v29
+        with:
+          token: ${{ secrets.GH_TOKEN_FOR_FLAKE_UPDATE }}
+          branch: update-flake/${{ github.ref_name }}
+          commit-msg: "build(flake): update lockfile"
+          pr-title: "build(flake): update flake inputs"
+          git-author-name: "renovate[bot]"
+          git-author-email: "29139614+renovate[bot]@users.noreply.github.com"
+          git-committer-name: "renovate[bot]"
+          git-committer-email: "29139614+renovate[bot]@users.noreply.github.com"
+          pr-body: |
+            Automated updates by the [update-flake-lock](https://github.com/DeterminateSystems/update-flake-lock) GitHub Action.
+
+            ```{{ env.GIT_COMMIT_MESSAGE }}```
+          pr-labels: |
+            dependencies
+            automation
+
+      - name: Enable auto-merge
+        if: steps.update.outputs.pull-request-number != ''
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN_FOR_FLAKE_UPDATE }}
+          PR: ${{ steps.update.outputs.pull-request-number }}
+          REPO: ${{ github.repository }}
+        run: gh pr merge "$PR" --repo "$REPO" --auto --squash
+
+      - name: Print summary
+        env:
+          num: ${{ steps.update.outputs.pull-request-number }}
+          url: ${{ steps.update.outputs.pull-request-url }}
+          operation: ${{ steps.update.outputs.pull-request-operation }}
+        run: |
+          echo "Pull request #$num was $operation."
+          echo "$url"
+          (
+            echo "Pull request"
+            echo
+            echo "[#$num]($url) was $operation."
+            echo
+          ) >> $GITHUB_STEP_SUMMARY
