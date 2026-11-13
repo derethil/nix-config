@@ -93,7 +93,18 @@ in {
 
             radeon = {
               mesa = let
-                backport = base: newer: base.overrideAttrs (_: {inherit (newer) src version;});
+                backport = base: newer: let
+                  byName = name: builtins.head (builtins.filter (p: (p.pname or p.name or "") == name) newer.buildInputs);
+                in
+                  base.overrideAttrs (old: {
+                    inherit (newer) src version;
+
+                    buildInputs =
+                      builtins.filter (p: (p.pname or p.name or "") != "wayland-protocols") old.buildInputs
+                      ++ [(byName "wayland-protocols")];
+
+                    mesonFlags = map (pkgs.lib.replaceStrings [",virtio"] [""]) newer.mesonFlags;
+                  });
               in {
                 package = backport pkgs.mesa pkgs.unstable.mesa;
                 package32 = backport pkgs.pkgsi686Linux.mesa pkgs.unstable.pkgsi686Linux.mesa;
