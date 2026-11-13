@@ -67,10 +67,9 @@
     }
   ],
   "lockFileMaintenance": {
-    "enabled": true,
+    "enabled": false,
     "automerge": true,
     "branchTopic": "update-lockfiles",
-    "commitMessagePrefix": "chore: ",
     "commitMessageAction": "update lockfiles",
     "schedule": [
       "before 6am on Friday"
