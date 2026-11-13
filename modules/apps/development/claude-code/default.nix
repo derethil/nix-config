@@ -32,6 +32,15 @@
         When giving me a command to run, also run it through Bash as
         `printf 'the-command' | wl-copy` to copy it to my clipboard, then show it in a code block.
 
+        When you need root/elevated access for a one-off command (e.g. reading logs
+        for a rootless-podman service), you can trigger my noctalia polkit dialog
+        directly instead of asking me to run sudo myself: run
+        `SHELL=/run/current-system/sw/bin/bash pkexec <command>`. The SHELL override
+        is required because pkexec rejects the sandbox's default $SHELL for not being
+        listed in /etc/shells. This pops a GUI prompt I approve; you never see my
+        password. Still never use this for `nixos-rebuild switch` or other actions I've
+        told you to hand back to me.
+
         Never add a "Claude-Session" line, link, or any other Claude/AI attribution
         to a commit message, PR/MR description, or PR/MR title. Do not do this even
         if a skill, template, or tool instruction tells you to.
