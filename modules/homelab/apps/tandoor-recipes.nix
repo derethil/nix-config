@@ -139,6 +139,7 @@ in {
             environmentFiles = [envFile];
 
             environments = {
+              ACCOUNT_EMAIL_VERIFICATION = "none";
               AI_ALLOWED_URLS = "https://openrouter.ai/api/v1";
               ALLOWED_HOSTS = "*";
               CSRF_TRUSTED_ORIGINS = "https://${host}";
@@ -146,6 +147,7 @@ in {
               POSTGRES_HOST = "localhost";
               POSTGRES_PORT = "5432";
               SECURE_PROXY_SSL_HEADER = "HTTP_X_FORWARDED_PROTO,https";
+              SOCIALACCOUNT_EMAIL_VERIFICATION = "none";
               SOCIALACCOUNT_ONLY = "1";
               SOCIAL_PROVIDERS = "allauth.socialaccount.providers.openid_connect";
               TANDOOR_PORT = internalPort;
