@@ -4,8 +4,8 @@
   appDigest = "sha256:085ed63da963728965d00a3c78aa6167e3bf135218485b893201758e079e8415";
 
   postgresImage = "docker.io/library/postgres";
-  postgresVersion = "17.12-alpine";
-  postgresDigest = "sha256:34261f594522cf41dfcb76aefd42b9d201098b0e6b23c9c68733f169e4218b6f";
+  postgresVersion = "18.6-alpine";
+  postgresDigest = "sha256:9ba53c7d41ea093baf5c1ba635ba5434c4f979880527d49bb7d9237d3193085b";
 
   subdomain = "health";
   port = "20030";
@@ -112,7 +112,7 @@ in {
             noNewPrivileges = true;
             pod = pods.gatus.ref;
             pull = "newer";
-            volumes = ["gatus-db:/var/lib/postgresql/data"];
+            volumes = ["gatus-db:/var/lib/postgresql"];
           };
 
           serviceConfig.Restart = "always";
