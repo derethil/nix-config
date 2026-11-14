@@ -4,11 +4,11 @@
   appDigest = "sha256:d704e84f88300eb6ab001ab15720a2330ff99169cf9f94d6b8fcc44b63a84c84";
 
   postgresImage = "docker.io/library/postgres";
-  postgresVersion = "17-alpine";
-  postgresDigest = "sha256:e5d2edd28b1f8d40a0a6c0c9cdc545b19b56a0d5d88f94bc11a97d970d4700d0";
+  postgresVersion = "17.12-alpine";
+  postgresDigest = "sha256:34261f594522cf41dfcb76aefd42b9d201098b0e6b23c9c68733f169e4218b6f";
 
   valkeyImage = "docker.io/valkey/valkey";
-  valkeyVersion = "9-alpine";
+  valkeyVersion = "9.1.3-alpine";
   valkeyDigest = "sha256:bf09d58e96d6b4524a15396b65b242bbe18beebbcc15a04d8ee75ddac62fae0b";
 
   subdomain = "documents";

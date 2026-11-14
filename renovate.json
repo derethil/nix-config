@@ -10,7 +10,7 @@
   ],
   "timezone": "US/Eastern",
   "schedule": [
-    "before 6am on Saturday"
+    "at any time"
   ],
   "nix": {
     "enabled": true
@@ -26,7 +26,7 @@
   "customManagers": [
     {
       "customType": "regex",
-      "description": "Track coordinated Nix release branches in source and generated files",
+      "description": "Detect nixpkgs/home-manager/nix-darwin release-branch refs in flake.nix and the generated per-input files, for the coordinated group below",
       "managerFilePatterns": [
         "/^modules\/(?:nixpkgs|home-manager|nix-darwin)\\.nix$/",
         "/^flake\\.nix$/"
@@ -44,7 +44,7 @@
     {
       "customType": "regex",
       "depNameTemplate": "{{{packageName}}} [{{{packageFileDir}}}/{{{packageFile}}}]",
-      "description": "Track homelab container image versions",
+      "description": "Detect <X>Image/<X>Version/<X>Digest triples in modules/homelab/apps/**, shared by every container pin (postgres, pgvector, redis, valkey, app images, ...)",
       "managerFilePatterns": [
         "/^modules\/homelab\/apps\/.*\\.nix$/"
       ],
@@ -57,7 +57,7 @@
     {
       "customType": "regex",
       "depTypeTemplate": "nix-package",
-      "description": "Track versioned Nix package sources",
+      "description": "Detect datasource/packageName/version triples used to pin arbitrary Nix package sources (requires hash regen on update, see packageRule below)",
       "managerFilePatterns": [
         "/\\.nix$/"
       ],
@@ -77,7 +77,7 @@
   },
   "packageRules": [
     {
-      "description": "Ignore release-ref updates in the generated flake.nix",
+      "description": "Disable the built-in nix manager for the nixpkgs input since release-branch tracking happens via the custom regex manager below instead",
       "matchManagers": [
         "nix"
       ],
@@ -92,7 +92,7 @@
       "enabled": false
     },
     {
-      "description": "Hold coordinated Nix release updates in the Dependency Dashboard",
+      "description": "Bump nixpkgs/home-manager/nix-darwin release branches together",
       "matchManagers": [
         "custom.regex"
       ],
@@ -103,10 +103,13 @@
       ],
       "groupName": "Nix release branches",
       "minimumGroupSize": 6,
-      "dependencyDashboardApproval": true
+      "dependencyDashboardApproval": true,
+      "schedule": [
+        "before 6am on Saturday"
+      ]
     },
     {
-      "description": "Regenerate hashes before automerging versioned Nix package updates",
+      "description": "Batch versioned Nix package source bumps weekly and don't merge until the renovate-hashes CI workflow pushes regenerated hashes",
       "matchManagers": [
         "custom.regex"
       ],
@@ -116,20 +119,23 @@
       "automerge": false,
       "prBodyNotes": [
         "<!-- nix-source-hash-update -->"
+      ],
+      "schedule": [
+        "before 6am on Saturday"
       ]
     },
     {
-      "description": "Parse pgvector PostgreSQL-major image tags",
+      "description": "Parse pgvector tags as <pgvector version>-pg<postgres major> so pgvector releases (e.g. 0.8.7->0.8.8) register as patch/minor, while a Postgres major change (pg17->pg18) still registers as major",
       "matchManagers": [
         "custom.regex"
       ],
       "matchPackageNames": [
         "docker.io/pgvector/pgvector"
       ],
-      "versioning": "regex:^pg(?<major>\\d+)$"
+      "versioning": "regex:^\\d+\\.(?<minor>\\d+)\\.(?<patch>\\d+)-pg(?<major>\\d+)$"
     },
     {
-      "description": "Identify homelab container image updates",
+      "description": "Tag homelab container PRs with a marker so the CI workflow can skip flake validation for pure image-metadata changes",
       "matchManagers": [
         "custom.regex"
       ],
@@ -144,7 +150,7 @@
       ]
     },
     {
-      "description": "Let Docker Hub homelab container releases age before updating",
+      "description": "Give docker.io (not ghcr.io/lscr.io as they don't provide release timestamps) homelab major bumps a 7-day cooldown",
       "matchManagers": [
         "custom.regex"
       ],
@@ -163,7 +169,7 @@
       "minimumReleaseAge": "7 days"
     },
     {
-      "description": "Automerge homelab container digest, patch, and minor updates",
+      "description": "Automerge homelab container patch/minor bumps",
       "matchManagers": [
         "custom.regex"
       ],
@@ -174,14 +180,13 @@
         "modules/homelab/apps/**"
       ],
       "matchUpdateTypes": [
-        "digest",
         "patch",
         "minor"
       ],
       "automerge": true
     },
     {
-      "description": "Hold homelab container major updates in the Dependency Dashboard",
+      "description": "Require explicit Dependency Dashboard approval for container major bumps",
       "matchManagers": [
         "custom.regex"
       ],
@@ -197,7 +202,7 @@
       "dependencyDashboardApproval": true
     },
     {
-      "description": "Ignore container updates for apps that aren't imported right now",
+      "description": "Skip container updates for apps that aren't deployed",
       "matchManagers": [
         "custom.regex"
       ],

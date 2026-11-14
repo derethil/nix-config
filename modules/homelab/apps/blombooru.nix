@@ -10,11 +10,11 @@
   appDigest = "sha256:c2f52e55b289c6b25edc88bf9b4546319d30278bd207220ffa7b0aa4abfcb6fb";
 
   postgresImage = "docker.io/library/postgres";
-  postgresVersion = "17-alpine";
-  postgresDigest = "sha256:e5d2edd28b1f8d40a0a6c0c9cdc545b19b56a0d5d88f94bc11a97d970d4700d0";
+  postgresVersion = "17.12-alpine";
+  postgresDigest = "sha256:34261f594522cf41dfcb76aefd42b9d201098b0e6b23c9c68733f169e4218b6f";
 
   redisImage = "docker.io/library/redis";
-  redisVersion = "7-alpine";
+  redisVersion = "7.4.12-alpine";
   redisDigest = "sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe";
 
   subdomain = "stash";

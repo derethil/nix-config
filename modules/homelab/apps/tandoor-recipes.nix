@@ -4,8 +4,8 @@
   appDigest = "sha256:1b6d43c3c0f5d2888aa564d9daf29883212b79ad496f59f3c684c099eb1a57b9";
 
   postgresImage = "docker.io/library/postgres";
-  postgresVersion = "17-alpine";
-  postgresDigest = "sha256:e5d2edd28b1f8d40a0a6c0c9cdc545b19b56a0d5d88f94bc11a97d970d4700d0";
+  postgresVersion = "17.12-alpine";
+  postgresDigest = "sha256:34261f594522cf41dfcb76aefd42b9d201098b0e6b23c9c68733f169e4218b6f";
 
   subdomain = "recipes";
   port = "20010";
