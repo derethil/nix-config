@@ -4,8 +4,8 @@
   appDigest = "sha256:085ed63da963728965d00a3c78aa6167e3bf135218485b893201758e079e8415";
 
   postgresImage = "docker.io/library/postgres";
-  postgresVersion = "18.6-alpine";
-  postgresDigest = "sha256:9ba53c7d41ea093baf5c1ba635ba5434c4f979880527d49bb7d9237d3193085b";
+  postgresVersion = "18.7-alpine";
+  postgresDigest = "sha256:75dcac3dfb1cd01ca3536910bbc84128759362f8b118bf8c55b38a94f68f3b73";
 
   subdomain = "health";
   port = "20030";
