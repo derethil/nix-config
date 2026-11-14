@@ -10,8 +10,8 @@
   appDigest = "sha256:c2f52e55b289c6b25edc88bf9b4546319d30278bd207220ffa7b0aa4abfcb6fb";
 
   postgresImage = "docker.io/library/postgres";
-  postgresVersion = "17-alpine";
-  postgresDigest = "sha256:e5d2edd28b1f8d40a0a6c0c9cdc545b19b56a0d5d88f94bc11a97d970d4700d0";
+  postgresVersion = "18-alpine";
+  postgresDigest = "sha256:9ba53c7d41ea093baf5c1ba635ba5434c4f979880527d49bb7d9237d3193085b";
 
   redisImage = "docker.io/library/redis";
   redisVersion = "7-alpine";
