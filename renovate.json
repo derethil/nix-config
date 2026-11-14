@@ -10,7 +10,7 @@
   ],
   "timezone": "US/Eastern",
   "schedule": [
-    "before 6am on Saturday"
+    "at any time"
   ],
   "nix": {
     "enabled": true
@@ -103,7 +103,10 @@
       ],
       "groupName": "Nix release branches",
       "minimumGroupSize": 6,
-      "dependencyDashboardApproval": true
+      "dependencyDashboardApproval": true,
+      "schedule": [
+        "before 6am on Saturday"
+      ]
     },
     {
       "description": "Regenerate hashes before automerging versioned Nix package updates",
@@ -116,17 +119,20 @@
       "automerge": false,
       "prBodyNotes": [
         "<!-- nix-source-hash-update -->"
+      ],
+      "schedule": [
+        "before 6am on Saturday"
       ]
     },
     {
-      "description": "Parse pgvector PostgreSQL-major image tags",
+      "description": "Parse pgvector version + PostgreSQL-major image tags",
       "matchManagers": [
         "custom.regex"
       ],
       "matchPackageNames": [
         "docker.io/pgvector/pgvector"
       ],
-      "versioning": "regex:^pg(?<major>\\d+)$"
+      "versioning": "regex:^\\d+\\.(?<minor>\\d+)\\.(?<patch>\\d+)-pg(?<major>\\d+)$"
     },
     {
       "description": "Identify homelab container image updates",
@@ -163,7 +169,7 @@
       "minimumReleaseAge": "7 days"
     },
     {
-      "description": "Automerge homelab container digest, patch, and minor updates",
+      "description": "Automerge homelab container patch and minor updates",
       "matchManagers": [
         "custom.regex"
       ],
@@ -174,7 +180,6 @@
         "modules/homelab/apps/**"
       ],
       "matchUpdateTypes": [
-        "digest",
         "patch",
         "minor"
       ],

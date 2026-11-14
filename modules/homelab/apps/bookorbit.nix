@@ -10,8 +10,8 @@
   appDigest = "sha256:d318f7732f6f6330312e2c5f854f7899f858b54cc4b18a13cde1f43b5bea0515";
 
   postgresImage = "docker.io/pgvector/pgvector";
-  postgresVersion = "pg18";
-  postgresDigest = "sha256:c29f30688a9ad961691bdf0ec1650717cc132a5814619d80f80463d6e4c42e47";
+  postgresVersion = "0.8.7-pg18";
+  postgresDigest = "sha256:38681dc6eaf55308e2a4c6de392d131652dcfac70e1263e35cd9b5ea3fe39782";
 
   subdomain = "books";
   port = "20040";
