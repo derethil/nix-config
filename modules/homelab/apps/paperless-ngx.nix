@@ -5,7 +5,7 @@
 
   postgresImage = "docker.io/library/postgres";
   postgresVersion = "17.12-alpine";
-  postgresDigest = "sha256:34261f594522cf41dfcb76aefd42b9d201098b0e6b23c9c68733f169e4218b6f";
+  postgresDigest = "sha256:a77aa70e641402a21411b92b721c58d10f23b50ae5fdd2333efd22d166e1e5f7";
 
   valkeyImage = "docker.io/valkey/valkey";
   valkeyVersion = "9.1.3-alpine";
