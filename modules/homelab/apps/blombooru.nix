@@ -14,8 +14,8 @@
   postgresDigest = "sha256:34261f594522cf41dfcb76aefd42b9d201098b0e6b23c9c68733f169e4218b6f";
 
   redisImage = "docker.io/library/redis";
-  redisVersion = "7.4.12-alpine";
-  redisDigest = "sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe";
+  redisVersion = "8.10.2-alpine";
+  redisDigest = "sha256:9f8d2d789b9a1d1e3f283f979aa9cbf393373806472e1ccd460e2f9c869b833b";
 
   subdomain = "stash";
   port = "20020";
