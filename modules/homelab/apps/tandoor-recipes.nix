@@ -1,7 +1,7 @@
 {self, ...}: let
   appImage = "docker.io/vabene1111/recipes";
-  appVersion = "2.7.2";
-  appDigest = "sha256:1b6d43c3c0f5d2888aa564d9daf29883212b79ad496f59f3c684c099eb1a57b9";
+  appVersion = "2.7.3";
+  appDigest = "sha256:73bb55c3096b9badd901717e298e025015ae3a264fecfb21a2a9fff72109f4f6";
 
   postgresImage = "docker.io/library/postgres";
   postgresVersion = "17.12-alpine";
