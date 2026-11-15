@@ -184,6 +184,9 @@
         "minor",
         "digest"
       ],
+      "schedule": [
+        "before 6am on Monday"
+      ],
       "automerge": true
     },
     {
