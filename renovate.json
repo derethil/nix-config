@@ -169,7 +169,7 @@
       "minimumReleaseAge": "7 days"
     },
     {
-      "description": "Automerge homelab container patch/minor bumps",
+      "description": "Automerge homelab container patch/minor/digest bumps",
       "matchManagers": [
         "custom.regex"
       ],
@@ -181,7 +181,8 @@
       ],
       "matchUpdateTypes": [
         "patch",
-        "minor"
+        "minor",
+        "digest"
       ],
       "automerge": true
     },
