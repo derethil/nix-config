@@ -10,8 +10,8 @@
   appDigest = "sha256:c2f52e55b289c6b25edc88bf9b4546319d30278bd207220ffa7b0aa4abfcb6fb";
 
   postgresImage = "docker.io/library/postgres";
-  postgresVersion = "17.12-alpine";
-  postgresDigest = "sha256:a77aa70e641402a21411b92b721c58d10f23b50ae5fdd2333efd22d166e1e5f7";
+  postgresVersion = "18.7-alpine";
+  postgresDigest = "sha256:b6972e1115a4ff8eba5d7f7d19184926d1e16d7d1136ae1e1a7ebf286da0f015";
 
   redisImage = "docker.io/library/redis";
   redisVersion = "8.10.3-alpine";
@@ -122,7 +122,7 @@ in {
             noNewPrivileges = true;
             pod = pods.blombooru.ref;
             pull = "newer";
-            volumes = ["blombooru-db:/var/lib/postgresql/data"];
+            volumes = ["blombooru-db:/var/lib/postgresql"];
           };
 
           serviceConfig.Restart = "always";
