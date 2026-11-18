@@ -4,8 +4,8 @@
   appDigest = "sha256:d704e84f88300eb6ab001ab15720a2330ff99169cf9f94d6b8fcc44b63a84c84";
 
   postgresImage = "docker.io/library/postgres";
-  postgresVersion = "17.12-alpine";
-  postgresDigest = "sha256:a77aa70e641402a21411b92b721c58d10f23b50ae5fdd2333efd22d166e1e5f7";
+  postgresVersion = "18.7-alpine";
+  postgresDigest = "sha256:b6972e1115a4ff8eba5d7f7d19184926d1e16d7d1136ae1e1a7ebf286da0f015";
 
   valkeyImage = "docker.io/valkey/valkey";
   valkeyVersion = "9.1.3-alpine";
@@ -126,7 +126,7 @@ in {
             noNewPrivileges = true;
             pod = pods.paperless.ref;
             pull = "newer";
-            volumes = ["paperless-db:/var/lib/postgresql/data"];
+            volumes = ["paperless-db:/var/lib/postgresql"];
           };
 
           serviceConfig.Restart = "always";
