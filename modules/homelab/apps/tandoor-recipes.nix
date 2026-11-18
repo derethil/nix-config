@@ -4,8 +4,8 @@
   appDigest = "sha256:73bb55c3096b9badd901717e298e025015ae3a264fecfb21a2a9fff72109f4f6";
 
   postgresImage = "docker.io/library/postgres";
-  postgresVersion = "17.12-alpine";
-  postgresDigest = "sha256:a77aa70e641402a21411b92b721c58d10f23b50ae5fdd2333efd22d166e1e5f7";
+  postgresVersion = "18.7-alpine";
+  postgresDigest = "sha256:b6972e1115a4ff8eba5d7f7d19184926d1e16d7d1136ae1e1a7ebf286da0f015";
 
   subdomain = "recipes";
   port = "20010";
@@ -120,7 +120,7 @@ in {
             noNewPrivileges = true;
             pod = pods.tandoor.ref;
             pull = "newer";
-            volumes = ["tandoor-db:/var/lib/postgresql/data"];
+            volumes = ["tandoor-db:/var/lib/postgresql"];
           };
 
           serviceConfig.Restart = "always";
