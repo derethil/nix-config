@@ -1,7 +1,7 @@
 {self, ...}: let
   appImage = "lscr.io/linuxserver/prowlarr";
-  appVersion = "2.7.0";
-  appDigest = "sha256:6660787a99b2e58203539583663c973b48979fc00ff2cb78dc0ea17429e1f6ef";
+  appVersion = "3.0.2";
+  appDigest = "sha256:45117ba8439e2337a92ffe38a451a4dafc0be771754d05d88cdf102419d09646";
 
   subdomain = "index";
   port = "20070";
