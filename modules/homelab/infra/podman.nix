@@ -73,6 +73,7 @@ in {
         runuser = getExe' pkgs.util-linux "runuser";
       in "/run/wrappers/bin/sudo ${runuser} -u ${user} -- ${env} -C / HOME=${home} XDG_RUNTIME_DIR=/run/user/${toString uid} ${command}";
 
+      socket = "/run/user/${toString uid}/podman/podman.sock";
       svc = container: "${container}.service";
       volume = name: "${storageRoot}/volumes/${name}/_data";
     };

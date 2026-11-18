@@ -77,6 +77,13 @@
         to the NixOS MCP that allows you to easily pull exact documentation for any package or
         package option in Nixpkgs, Home Manager, and Home Manager, among other things.
 
+        ## Homelab
+
+        Homelab container logs are available through the dozzle MCP. Prefer it for
+        anything log-shaped, since it returns structured level-parsed entries and
+        searches server-side. search_container_logs only looks at the last 5 minutes
+        by default, so pass since_minutes or an explicit start for anything older.
+
         ## Response Formatting
 
         When you list your sources after using online search, you must output the
@@ -86,8 +93,8 @@
         When giving me a command to run, always run it through Bash as
         `printf 'the-command' | wl-copy` to copy it to my clipboard, then show it in a code block.
 
-        When you need root/elevated access for a one-off command (e.g. reading logs
-        for a rootless-podman service), you can trigger my noctalia polkit dialog
+        When you need root/elevated access for a one-off command (e.g. inspecting
+        root-owned files), you can trigger my noctalia polkit dialog
         directly instead of asking me to run sudo myself: run
         `SHELL=/run/current-system/sw/bin/bash pkexec <command>`. The SHELL override
         is required because pkexec rejects the sandbox's default $SHELL for not being

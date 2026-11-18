@@ -157,6 +157,9 @@ in {
           # foundation
           foundation
 
+          # homelab
+          dozzle-mcp
+
           # services
           remote-pull
 
@@ -175,6 +178,8 @@ in {
             coolantSensor = "/sys/class/hwmon/hwmon6/temp2_input";
             pciDevice = "0000:03:00.0";
           };
+
+          homelab.domain = "lumelle.me";
 
           services.remote-pull.targets = [
             {

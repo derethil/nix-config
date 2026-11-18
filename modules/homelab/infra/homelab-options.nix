@@ -1,7 +1,7 @@
 {lib, ...}: let
   inherit (lib) mkOption types;
 in {
-  flake.modules.nixos.homelab-options = {
+  flake.modules.generic.homelab-options = {
     key = "homelab-options";
 
     options.internal.homelab = {

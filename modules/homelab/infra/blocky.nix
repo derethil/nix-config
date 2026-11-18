@@ -13,7 +13,7 @@
 
     imports = [
       self.modules.nixos.gatus-options
-      self.modules.nixos.homelab-options
+      self.modules.generic.homelab-options
     ];
 
     config = {

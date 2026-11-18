@@ -9,7 +9,7 @@ in {
     inherit (config.internal.homelab) domain;
   in {
     key = "ingress-options";
-    imports = [self.modules.nixos.homelab-options];
+    imports = [self.modules.generic.homelab-options];
 
     options.internal.homelab = {
       authMiddleware = mkOption {

@@ -43,6 +43,9 @@ in {
           foundation
           user-derethil
 
+          # homelab
+          homelab-options
+
           # surfaces
           hammerspoon
           paneru
@@ -64,6 +67,8 @@ in {
             {app = "${pkgs.prismlauncher}/Applications/PrismLauncher.app";}
             {app = "/Applications/Steam.app";}
           ];
+
+          homelab.domain = "lumelle.me";
         };
 
         networking.hostName = "gabbro";
@@ -88,6 +93,9 @@ in {
           # foundation
           foundation
 
+          # homelab
+          dozzle-mcp
+
           # surfaces
           alacritty
           paneru
@@ -97,6 +105,7 @@ in {
 
         internal = {
           inherit displays flakeRoot;
+          homelab.domain = "lumelle.me";
         };
       };
     };

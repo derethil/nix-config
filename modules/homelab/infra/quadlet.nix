@@ -8,6 +8,16 @@
   inherit (self.lib.podman) user;
 
   localtime = ["/etc/localtime:/etc/localtime:ro"];
+
+  containers = timeZone:
+    mkOption {
+      type = types.attrsOf (types.submodule {
+        config.containerConfig = {
+          environments.TZ = timeZone;
+          volumes = localtime;
+        };
+      });
+    };
 in {
   flake-file.inputs.quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
 
@@ -21,14 +31,7 @@ in {
         self.modules.nixos.time
       ];
 
-      options.virtualisation.quadlet.containers = mkOption {
-        type = types.attrsOf (types.submodule {
-          config.containerConfig = {
-            environments.TZ = config.time.timeZone;
-            volumes = localtime;
-          };
-        });
-      };
+      options.virtualisation.quadlet.containers = containers config.time.timeZone;
 
       config = {
         home-manager.users.${user} = {
@@ -42,15 +45,7 @@ in {
 
     homeManager.quadlet = {osConfig, ...}: {
       imports = [inputs.quadlet-nix.homeManagerModules.quadlet];
-
-      options.virtualisation.quadlet.containers = mkOption {
-        type = types.attrsOf (types.submodule {
-          config.containerConfig = {
-            environments.TZ = osConfig.time.timeZone;
-            volumes = localtime;
-          };
-        });
-      };
+      options.virtualisation.quadlet.containers = containers osConfig.time.timeZone;
     };
   };
 }
