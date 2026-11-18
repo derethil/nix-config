@@ -4,8 +4,8 @@
   appDigest = "sha256:189e03bb73bb86d7108fe81cbe2237c408cff2176b14cd7a39cc12a2ee8b2762";
 
   postgresImage = "docker.io/library/postgres";
-  postgresVersion = "17.12-alpine";
-  postgresDigest = "sha256:a77aa70e641402a21411b92b721c58d10f23b50ae5fdd2333efd22d166e1e5f7";
+  postgresVersion = "18.7-alpine";
+  postgresDigest = "sha256:b6972e1115a4ff8eba5d7f7d19184926d1e16d7d1136ae1e1a7ebf286da0f015";
 
   subdomain = "auth";
   port = "20060";
@@ -117,7 +117,7 @@ in {
             noNewPrivileges = true;
             pod = pods.pocket-id.ref;
             pull = "newer";
-            volumes = ["pocket-id-db:/var/lib/postgresql/data"];
+            volumes = ["pocket-id-db:/var/lib/postgresql"];
           };
 
           serviceConfig.Restart = "always";
