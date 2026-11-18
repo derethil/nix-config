@@ -73,7 +73,7 @@ jobs:
           fi
 
           printf 'Scanning %s\n' "${changed[@]}"
-          nix run nixpkgs#just -- renovate regen-nix-hashes "${changed[@]}"
+          nix run nixpkgs#just -- repo renovate regen-nix-hashes "${changed[@]}"
 
       - name: Push regenerated hashes as a fixup
         env:

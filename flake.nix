@@ -1,5 +1,5 @@
 # DO-NOT-EDIT. This file was auto-generated using github:denful/flake-file.
-# Use `just flake write` to regenerate it.
+# Use `just repo flake write` to regenerate it.
 {
   description = "Personal NixOS, Nix Darwin, and Home Manager configurations";
 

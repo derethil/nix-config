@@ -1,12 +1,13 @@
-set working-directory := ".."
+set working-directory := "../.."
 
 [private]
 default:
-    @just --list flake
+    @just --list repo flake
 
 # Diff the last two system generations
 diff:
     #!/usr/bin/env bash
+    set -euo pipefail
     profiles=($(ls -dv /nix/var/nix/profiles/system-*-link | tail -2))
     dix "${profiles[0]}" "${profiles[1]}"
 
@@ -16,11 +17,11 @@ check:
 
 # Format with alejandra
 format:
-    nix formatter run $(fd .nix)
+    nix formatter run $(fd -e nix)
 
 # Prefetch a file and print its sha256 hash
 get-hash url:
-    nix store prefetch-file --hash-type sha256 {{ url }} 2>&1 | grep -oP "(?<=hash ')[^']+" | tr -d '[:space:]'
+    nix store prefetch-file --hash-type sha256 "{{ url }}" 2>&1 | grep -oP "(?<=hash ')[^']+" | tr -d '[:space:]'
 
 # Regenerate flake.nix and flake.lock from the current inputs
 write:

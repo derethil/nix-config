@@ -1,26 +1,8 @@
-# ─── HELPER RECIPES ──────────────────────────────────────────────────────────
+set working-directory := ".."
 
 [private]
-print color text:
-    @echo -e "{{ color }}{{ text }}{{ NORMAL }}"
-
-[private]
-submodule-update:
-    git submodule update --init --remote secrets
-
-[arg("hostname", help="nixosConfigurations/darwinConfigurations name")]
-[arg("path", help="path to evaluate (e.g. config.internal.primaryUser)")]
-[arg("darwin", long="darwin", value="true", help="treat the hostname as a darwinConfigurations output instead of nixosConfigurations")]
-[arg("apply", long="apply", help="nix function to post-process the evaluated value (e.g. builtins.attrNames)")]
-[private]
-eval hostname path darwin="false" apply="x: x":
-    #!/usr/bin/env bash
-    set -euo pipefail
-    if [ "{{ darwin }}" = "true" ]; then
-        nix eval --json ".#darwinConfigurations.{{ hostname }}.{{ path }}" --apply '{{ apply }}' | jq -r '. // empty'
-    else
-        nix eval --json ".#nixosConfigurations.{{ hostname }}.{{ path }}" --apply '{{ apply }}' | jq -r '. // empty'
-    fi
+default:
+    @just --list provision
 
 [private]
 wait-for-host hostname ip:
@@ -73,7 +55,7 @@ install hostname ip target_user="root" build_on="local":
     if ! (command -v ssh-to-age &>/dev/null && command -v nixos-anywhere &>/dev/null); then
         just print "{{ YELLOW }}" "==> Required tools missing. Re-running inside a nix shell..."
         exec nix shell nixpkgs#ssh-to-age nixpkgs#nixos-anywhere nixpkgs#sops nixpkgs#age \
-            --command bash -c 'just install "$1" "$2" "$3" "$4"' -- "{{ hostname }}" "{{ ip }}" "{{ target_user }}" "{{ build_on }}"
+            --command bash -c 'just provision install "$1" "$2" "$3" "$4"' -- "{{ hostname }}" "{{ ip }}" "{{ target_user }}" "{{ build_on }}"
         exit 0
     fi
 
@@ -83,7 +65,7 @@ install hostname ip target_user="root" build_on="local":
     trap 'rm -rf "$tmp"' EXIT
 
     just submodule-update
-    git add ./hosts
+    git add "hosts/{{ hostname }}"
 
     # ─── LUKS ENCRYPTION ─────────────────────────────────────────────────────
 
@@ -111,7 +93,7 @@ install hostname ip target_user="root" build_on="local":
     echo "    age key: $age_key"
 
     just print "{{ GREEN }}" "==> Registering {{ hostname }} as a sops recipient..."
-    just secrets _write-sops-key {{ hostname }} "$age_key"
+    just provision _write-sops-key {{ hostname }} "$age_key"
     just secrets rekey
     just secrets update -p
 
@@ -177,10 +159,52 @@ install hostname ip target_user="root" build_on="local":
 [arg("hostname", help="NixOS configuration name (must match a flake output)")]
 [arg("target_user", long="target-user", short="u", help="SSH user on the installer ISO (default: root)")]
 bootstrap hostname ip target_user="root" build_on="local":
-    just install {{ hostname }} {{ ip }} {{ target_user }} {{ build_on }}
-    just wait-for-host {{ hostname }} {{ ip }}
+    just provision install {{ hostname }} {{ ip }} {{ target_user }} {{ build_on }}
+    just provision wait-for-host {{ hostname }} {{ ip }}
 
-    just secrets provision-identity $(just eval {{ hostname }} config.internal.primaryUser) {{ ip }}
+    just provision provision-identity $(just eval {{ hostname }} config.internal.primaryUser) {{ ip }}
 
-    just sync {{ hostname }} {{ ip }}
-    just switch {{ hostname }} {{ ip }}
+    just provision sync {{ hostname }} {{ ip }}
+    just provision switch {{ hostname }} {{ ip }}
+
+# Register an already-running host by fetching its existing SSH key
+[arg("ip", pattern="^([0-9]{1,3}[.]){3}[0-9]{1,3}$", help="IP address of the running host")]
+[arg("hostname", help="NixOS configuration name (must match a flake output)")]
+add-host hostname ip:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    age_key=$(ssh root@{{ ip }} "cat /etc/ssh/ssh_host_ed25519_key.pub" | nix run nixpkgs#ssh-to-age)
+    just provision _write-sops-key {{ hostname }} "$age_key"
+    just secrets rekey
+    just secrets update
+
+# Copy personal age identity onto a machine so home-manager can decrypt secrets
+[arg("ip", pattern="^([0-9]{1,3}[.]){3}[0-9]{1,3}$", help="IP address of the target machine")]
+[arg("user", help="SSH user on the target machine")]
+provision-identity user ip:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    key="${SOPS_AGE_KEY_FILE:-$HOME/.config/sops/age/keys.txt}"
+
+    if [[ ! -f "$key" ]]; then
+        just print "{{ RED }}" "==> Error: No personal age key found at $key" >&2
+        exit 1
+    fi
+
+    ctl=$(mktemp -u)
+    trap 'ssh -o ControlPath="$ctl" -O exit {{ user }}@{{ ip }} 2>/dev/null || true' EXIT
+    opts=(-o ControlMaster=auto -o ControlPath="$ctl" -o ControlPersist=60 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null)
+
+    just print "{{ GREEN }}" "==> Provisioning age identity to {{ user }}@{{ ip }}..."
+    ssh "${opts[@]}" {{ user }}@{{ ip }} 'install -d -m 700 "$HOME/.config/sops" "$HOME/.config/sops/age"'
+    scp "${opts[@]}" "$key" {{ user }}@{{ ip }}:.config/sops/age/keys.txt
+    ssh "${opts[@]}" {{ user }}@{{ ip }} 'chmod 600 "$HOME/.config/sops/age/keys.txt"'
+    just print "{{ GREEN }}" "==> Successfully provisioned age identity."
+
+# internal: print the age key to add, wait for manual edit
+[private]
+_write-sops-key hostname age_key:
+    @just print "{{ YELLOW }}" "Add under 'keys:' in .sops.yaml:"
+    @echo "  - &{{ hostname }} {{ age_key }}"
+    @just print "{{ YELLOW }}" "And '*{{ hostname }}' to the relevant key_groups."
+    @read -p "$(printf '\033[1;32mPress enter once .sops.yaml is updated...\033[0m')" _

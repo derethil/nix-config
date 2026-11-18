@@ -22,6 +22,6 @@ When asked to bring current UI changes into Nix:
 3. Regenerate `settings.nix` from that merged data, excluding `plugins` and `plugin_settings`.
 4. Move `plugins` and `plugin_settings` into `plugins.nix`. Retain Nix dependencies there as well.
 5. Prefer bare Nix attribute names. Quote only keys invalid in Nix syntax, such as IDs containing `@` or `/`.
-6. Run `just flake format` afterwards. Do not activate the configuration or restart Noctalia unless the user asks.
+6. Run `just repo flake format` afterwards. Do not activate the configuration or restart Noctalia unless the user asks.
 
 Plugin source code and updates are managed by Noctalia; Nix declaratively controls which plugins are enabled and their settings.

@@ -1,6 +1,6 @@
 # Display Renovate maintenance recipes
 default:
-    @just --list renovate
+    @just --list repo renovate
 
 # Regenerate source hashes after Renovate updates package versions
 [no-cd, positional-arguments]
@@ -13,7 +13,8 @@ regen-nix-hashes *files:
     files=("$@")
 
     if [[ ${#files[@]} -eq 0 ]]; then
-      mapfile -t files < <(git ls-files '*.nix')
+      repo_root="$(git rev-parse --show-toplevel)"
+      mapfile -t files < <(git -C "$repo_root" ls-files '*.nix' | sed "s|^|$repo_root/|")
     fi
 
     backup_copy=""

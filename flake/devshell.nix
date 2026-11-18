@@ -45,13 +45,9 @@
     };
 
     pre-commit = {
-      # `just lint check` and the installed hook already cover this; running every
-      # hook again in the sandbox on each `nix flake check` only costs time.
       check.enable = false;
 
       settings = {
-        # Rust reimplementation of pre-commit; ~10x faster to install and run,
-        # and what devenv defaults to.
         package = pkgs.prek;
 
         hooks = {

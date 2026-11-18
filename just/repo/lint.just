@@ -1,8 +1,8 @@
-set working-directory := ".."
+set working-directory := "../.."
 
 [private]
 default:
-    @just --list lint
+    @just --list repo lint
 
 # Run all linters and format checks
 check:

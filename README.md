@@ -86,5 +86,5 @@ project with:
 3. **Bootstrap**: Run the following:
 
 ```bash
-just bootstrap <hostname> <target-ip>
+just provision bootstrap <hostname> <target-ip>
 ```

@@ -1,4 +1,4 @@
-set working-directory := ".."
+set working-directory := "../.."
 
 env_file := "/run/secrets/rendered/restic-env"
 repo_file := "/run/secrets/services/restic/repository"
@@ -6,11 +6,11 @@ pass_file := "/run/secrets/services/restic/repository_password"
 services := `systemctl list-unit-files 'restic-backups-*.service' --no-legend 2>/dev/null | awk '{print $1}' | sed 's/^restic-backups-//; s/\.service$//' | sort | xargs`
 
 [private]
-_load_env := "set -a; source <(sudo cat " + env_file + "); set +a; export RESTIC_REPOSITORY=$(sudo cat " + repo_file + "); export RESTIC_PASSWORD=$(sudo cat " + pass_file + "); export RESTIC_CACHE_DIR=$HOME/.cache/restic"
+_load_env := "env_content=$(sudo cat " + env_file + "); set -a; eval \"$env_content\"; set +a; RESTIC_REPOSITORY=$(sudo cat " + repo_file + "); export RESTIC_REPOSITORY; RESTIC_PASSWORD=$(sudo cat " + pass_file + "); export RESTIC_PASSWORD; export RESTIC_CACHE_DIR=$HOME/.cache/restic"
 
 [private]
 default:
-    @just --list backups
+    @just --list ops backups
 
 # List all snapshots in the repository
 [arg("tag", help="Only show snapshots with this tag (e.g. paperless)")]
@@ -73,6 +73,9 @@ _check-service service:
 restore service="all" snapshot="latest": (_check-service service)
     #!/usr/bin/env bash
     set -euo pipefail
+    just print "{{ RED }}" "This will overwrite {{ service }}'s live data from snapshot {{ snapshot }}. Continue? [y/N]"
+    read -r confirm
+    [[ "$confirm" =~ ^[Yy]$ ]] || { just print "{{ YELLOW }}" "Cancelled."; exit 1; }
     if [ "{{ service }}" = "all" ]; then
         for svc in {{ services }}; do
             restic-restore-$svc "{{ snapshot }}"

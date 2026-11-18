@@ -15,10 +15,11 @@ cleanup-privacy service="all":
     #!/usr/bin/env bash
     set -euo pipefail
 
-    if [[ "{{ service }}" == "all" ]]; then
+    service="{{ service }}"
+    if [[ "$service" == "all" ]]; then
         where=""
     else
-        where="WHERE service = '{{ service }}'"
+        where="WHERE service = '${service//\'/\'\'}'"
     fi
 
     stale_desc=()
@@ -71,8 +72,15 @@ cleanup-privacy service="all":
     for svc in "${services_to_reset[@]}"; do
         stale_count=0
         for s in "${stale_services[@]}"; do [[ "$s" == "$svc" ]] && stale_count=$((stale_count + 1)); done
-        user_total=$(sqlite3 "$HOME/Library/Application Support/com.apple.TCC/TCC.db" "SELECT COUNT(*) FROM access WHERE service='$svc';" 2>/dev/null || echo 0)
-        system_total=$(sudo sqlite3 "/Library/Application Support/com.apple.TCC/TCC.db" "SELECT COUNT(*) FROM access WHERE service='$svc';" 2>/dev/null || echo 0)
+        escaped_svc="${svc//\'/\'\'}"
+        user_total=$(sqlite3 "$HOME/Library/Application Support/com.apple.TCC/TCC.db" "SELECT COUNT(*) FROM access WHERE service='$escaped_svc';" 2>&1) || {
+            just print "{{ RED }}" "==> Failed to query user TCC.db for $svc: $user_total"
+            exit 1
+        }
+        system_total=$(sudo sqlite3 "/Library/Application Support/com.apple.TCC/TCC.db" "SELECT COUNT(*) FROM access WHERE service='$escaped_svc';" 2>&1) || {
+            just print "{{ RED }}" "==> Failed to query system TCC.db for $svc: $system_total"
+            exit 1
+        }
         other=$((user_total + system_total - stale_count))
         printf '    %-35s %d dead / %d other\n' "$svc" "$stale_count" "$other"
     done
