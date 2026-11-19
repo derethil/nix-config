@@ -4,7 +4,7 @@
   inputs,
   ...
 }: let
-  inherit (lib) mkOption types;
+  inherit (lib) mkOption recursiveUpdate types;
   inherit (self.lib.podman) user;
 
   localtime = ["/etc/localtime:/etc/localtime:ro"];
@@ -21,31 +21,58 @@
 in {
   flake-file.inputs.quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
 
-  flake.modules = {
-    nixos.quadlet = {config, ...}: {
-      key = "quadlet";
+  flake = {
+    modules = {
+      nixos.quadlet = {config, ...}: {
+        key = "quadlet";
 
-      imports = [
-        inputs.quadlet-nix.nixosModules.quadlet
-        self.modules.nixos.podman
-        self.modules.nixos.time
-      ];
+        imports = [
+          inputs.quadlet-nix.nixosModules.quadlet
+          self.modules.nixos.podman
+          self.modules.nixos.time
+        ];
 
-      options.virtualisation.quadlet.containers = containers config.time.timeZone;
+        options.virtualisation.quadlet.containers = containers config.time.timeZone;
 
-      config = {
-        home-manager.users.${user} = {
-          imports = [self.modules.homeManager.quadlet];
-          home.stateVersion = "25.05";
+        config = {
+          home-manager.users.${user} = {
+            imports = [self.modules.homeManager.quadlet];
+            home.stateVersion = "25.05";
+          };
+
+          virtualisation.quadlet.enable = true;
         };
+      };
 
-        virtualisation.quadlet.enable = true;
+      homeManager.quadlet = {osConfig, ...}: {
+        imports = [inputs.quadlet-nix.homeManagerModules.quadlet];
+        options.virtualisation.quadlet.containers = containers osConfig.time.timeZone;
       };
     };
 
-    homeManager.quadlet = {osConfig, ...}: {
-      imports = [inputs.quadlet-nix.homeManagerModules.quadlet];
-      options.virtualisation.quadlet.containers = containers osConfig.time.timeZone;
-    };
+    lib.quadlet.mkQuadletPostgresPod = config: podName: options: let
+      inherit (config.virtualisation.quadlet) pods;
+    in
+      recursiveUpdate {
+        containerConfig = {
+          addCapabilities = [
+            "CHOWN"
+            "DAC_READ_SEARCH"
+            "FOWNER"
+            "SETGID"
+            "SETUID"
+          ];
+
+          dropCapabilities = ["ALL"];
+          noNewPrivileges = true;
+          pod = pods.${podName}.ref;
+          pull = "newer";
+          volumes = ["${podName}-db:/var/lib/postgresql"];
+        };
+
+        serviceConfig.Restart = "always";
+        unitConfig.Description = "${podName} postgreSQL database";
+      }
+      options;
   };
 }

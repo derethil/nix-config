@@ -85,27 +85,12 @@ in {
       envFile = osConfig.sops.templates."adventurelog-env".path;
     in {
       containers = {
-        adventurelog-db = {
+        adventurelog-db = self.lib.quadlet.mkQuadletPostgresPod config "adventurelog" {
           containerConfig = {
-            addCapabilities = [
-              "CHOWN"
-              "DAC_READ_SEARCH"
-              "FOWNER"
-              "SETGID"
-              "SETUID"
-            ];
-
-            dropCapabilities = ["ALL"];
             environmentFiles = [envFile];
             image = "${postgisImage}:${postgisVersion}@${postgisDigest}";
-            noNewPrivileges = true;
-            pod = pods.adventurelog.ref;
-            pull = "newer";
             volumes = ["adventurelog-db:/var/lib/postgresql/data"];
           };
-
-          serviceConfig.Restart = "always";
-          unitConfig.Description = "AdventureLog PostgreSQL/PostGIS Database";
         };
 
         adventurelog-web = {

@@ -96,27 +96,11 @@ in {
       envFile = osConfig.sops.templates."gatus-env".path;
     in {
       containers = {
-        gatus-db = {
+        gatus-db = self.lib.quadlet.mkQuadletPostgresPod config "gatus" {
           containerConfig = {
-            addCapabilities = [
-              "CHOWN"
-              "DAC_READ_SEARCH"
-              "FOWNER"
-              "SETGID"
-              "SETUID"
-            ];
-
-            dropCapabilities = ["ALL"];
             environmentFiles = [envFile];
             image = "${postgresImage}:${postgresVersion}@${postgresDigest}";
-            noNewPrivileges = true;
-            pod = pods.gatus.ref;
-            pull = "newer";
-            volumes = ["gatus-db:/var/lib/postgresql"];
           };
-
-          serviceConfig.Restart = "always";
-          unitConfig.Description = "Gatus PostgreSQL Database";
         };
 
         gatus-web = {

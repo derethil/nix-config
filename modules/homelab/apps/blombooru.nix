@@ -106,27 +106,11 @@ in {
       envFile = osConfig.sops.templates."blombooru-env".path;
     in {
       containers = {
-        blombooru-db = {
+        blombooru-db = self.lib.quadlet.mkQuadletPostgresPod config "blombooru" {
           containerConfig = {
-            addCapabilities = [
-              "CHOWN"
-              "DAC_READ_SEARCH"
-              "FOWNER"
-              "SETGID"
-              "SETUID"
-            ];
-
-            dropCapabilities = ["ALL"];
             environmentFiles = [envFile];
             image = "${postgresImage}:${postgresVersion}@${postgresDigest}";
-            noNewPrivileges = true;
-            pod = pods.blombooru.ref;
-            pull = "newer";
-            volumes = ["blombooru-db:/var/lib/postgresql"];
           };
-
-          serviceConfig.Restart = "always";
-          unitConfig.Description = "Blombooru PostgreSQL Database";
         };
 
         blombooru-redis = {

@@ -98,27 +98,11 @@ in {
       chown = getExe' pkgs.coreutils "chown";
     in {
       containers = {
-        bookorbit-db = {
+        bookorbit-db = self.lib.quadlet.mkQuadletPostgresPod config "bookorbit" {
           containerConfig = {
-            addCapabilities = [
-              "CHOWN"
-              "DAC_READ_SEARCH"
-              "FOWNER"
-              "SETGID"
-              "SETUID"
-            ];
-
-            dropCapabilities = ["ALL"];
             environmentFiles = [envFile];
             image = "${postgresImage}:${postgresVersion}@${postgresDigest}";
-            noNewPrivileges = true;
-            pod = pods.bookorbit.ref;
-            pull = "newer";
-            volumes = ["bookorbit-db:/var/lib/postgresql"];
           };
-
-          serviceConfig.Restart = "always";
-          unitConfig.Description = "BookOrbit PostgreSQL Database";
         };
 
         bookorbit-web = {

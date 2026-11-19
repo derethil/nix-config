@@ -104,27 +104,11 @@ in {
       envFile = osConfig.sops.templates."tandoor-recipes-env".path;
     in {
       containers = {
-        tandoor-db = {
+        tandoor-db = self.lib.quadlet.mkQuadletPostgresPod config "tandoor" {
           containerConfig = {
-            addCapabilities = [
-              "CHOWN"
-              "DAC_READ_SEARCH"
-              "FOWNER"
-              "SETGID"
-              "SETUID"
-            ];
-
-            dropCapabilities = ["ALL"];
             environmentFiles = [envFile];
             image = "${postgresImage}:${postgresVersion}@${postgresDigest}";
-            noNewPrivileges = true;
-            pod = pods.tandoor.ref;
-            pull = "newer";
-            volumes = ["tandoor-db:/var/lib/postgresql"];
           };
-
-          serviceConfig.Restart = "always";
-          unitConfig.Description = "Tandoor Recipes PostgreSQL Database";
         };
 
         tandoor-web = {

@@ -95,17 +95,8 @@ in {
       envFile = osConfig.sops.templates."pocket-id-env".path;
     in {
       containers = {
-        pocket-id-db = {
+        pocket-id-db = self.lib.quadlet.mkQuadletPostgresPod config "pocket-id" {
           containerConfig = {
-            addCapabilities = [
-              "CHOWN"
-              "DAC_READ_SEARCH"
-              "FOWNER"
-              "SETGID"
-              "SETUID"
-            ];
-
-            dropCapabilities = ["ALL"];
             environmentFiles = [envFile];
 
             environments = {
@@ -114,14 +105,7 @@ in {
             };
 
             image = "${postgresImage}:${postgresVersion}@${postgresDigest}";
-            noNewPrivileges = true;
-            pod = pods.pocket-id.ref;
-            pull = "newer";
-            volumes = ["pocket-id-db:/var/lib/postgresql"];
           };
-
-          serviceConfig.Restart = "always";
-          unitConfig.Description = "Pocket ID PostgreSQL Database";
         };
 
         pocket-id-web = {

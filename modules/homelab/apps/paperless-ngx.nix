@@ -110,27 +110,11 @@ in {
           unitConfig.Description = "Paperless-ngx Valkey Broker";
         };
 
-        paperless-db = {
+        paperless-db = self.lib.quadlet.mkQuadletPostgresPod config "paperless" {
           containerConfig = {
-            addCapabilities = [
-              "CHOWN"
-              "DAC_READ_SEARCH"
-              "FOWNER"
-              "SETGID"
-              "SETUID"
-            ];
-
-            dropCapabilities = ["ALL"];
             environmentFiles = [envFile];
             image = "${postgresImage}:${postgresVersion}@${postgresDigest}";
-            noNewPrivileges = true;
-            pod = pods.paperless.ref;
-            pull = "newer";
-            volumes = ["paperless-db:/var/lib/postgresql"];
           };
-
-          serviceConfig.Restart = "always";
-          unitConfig.Description = "Paperless-ngx PostgreSQL Database";
         };
 
         paperless-web = {
