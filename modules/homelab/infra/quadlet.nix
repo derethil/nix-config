@@ -50,29 +50,40 @@ in {
       };
     };
 
-    lib.quadlet.mkQuadletPostgresPod = config: podName: options: let
-      inherit (config.virtualisation.quadlet) pods;
-    in
-      recursiveUpdate {
-        containerConfig = {
-          addCapabilities = [
-            "CHOWN"
-            "DAC_READ_SEARCH"
-            "FOWNER"
-            "SETGID"
-            "SETUID"
-          ];
+    lib.quadlet = {
+      mkQuadletPod = port: internalPort: {
+        autoStart = true;
 
-          dropCapabilities = ["ALL"];
-          noNewPrivileges = true;
-          pod = pods.${podName}.ref;
-          pull = "newer";
-          volumes = ["${podName}-db:/var/lib/postgresql"];
+        podConfig = {
+          exitPolicy = "continue";
+          publishPorts = ["127.0.0.1:${port}:${internalPort}"];
         };
+      };
 
-        serviceConfig.Restart = "always";
-        unitConfig.Description = "${podName} postgreSQL database";
-      }
-      options;
+      mkQuadletPostgresPod = config: podName: options: let
+        inherit (config.virtualisation.quadlet) pods;
+      in
+        recursiveUpdate {
+          containerConfig = {
+            addCapabilities = [
+              "CHOWN"
+              "DAC_READ_SEARCH"
+              "FOWNER"
+              "SETGID"
+              "SETUID"
+            ];
+
+            dropCapabilities = ["ALL"];
+            noNewPrivileges = true;
+            pod = pods.${podName}.ref;
+            pull = "newer";
+            volumes = ["${podName}-db:/var/lib/postgresql"];
+          };
+
+          serviceConfig.Restart = "always";
+          unitConfig.Description = "${podName} postgreSQL database";
+        }
+        options;
+    };
   };
 }

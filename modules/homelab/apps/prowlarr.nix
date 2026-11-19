@@ -96,15 +96,7 @@ in {
         unitConfig.Description = "Prowlarr Indexer Manager";
       };
 
-      pods.prowlarr = {
-        autoStart = true;
-
-        podConfig = {
-          exitPolicy = "continue";
-          publishPorts = ["127.0.0.1:${port}:${internalPort}"];
-        };
-      };
-
+      pods.prowlarr = self.lib.quadlet.mkQuadletPod port internalPort;
       volumes.prowlarr-config = {};
     };
   };

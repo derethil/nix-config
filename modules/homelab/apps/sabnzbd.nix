@@ -79,14 +79,7 @@ in {
         unitConfig.Description = "SABnzbd Usenet Downloader";
       };
 
-      pods.sabnzbd = {
-        autoStart = true;
-
-        podConfig = {
-          exitPolicy = "continue";
-          publishPorts = ["127.0.0.1:${port}:${internalPort}"];
-        };
-      };
+      pods.sabnzbd = self.lib.quadlet.mkQuadletPod port internalPort;
 
       volumes = {
         sabnzbd-config = {};

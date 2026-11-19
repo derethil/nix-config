@@ -137,14 +137,7 @@ in {
         };
       };
 
-      pods.pocket-id = {
-        autoStart = true;
-
-        podConfig = {
-          exitPolicy = "continue";
-          publishPorts = ["127.0.0.1:${port}:${internalPort}"];
-        };
-      };
+      pods.pocket-id = self.lib.quadlet.mkQuadletPod port internalPort;
 
       volumes = {
         pocket-id-data = {};

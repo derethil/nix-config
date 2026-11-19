@@ -168,14 +168,7 @@ in {
         };
       };
 
-      pods.paperless = {
-        autoStart = true;
-
-        podConfig = {
-          exitPolicy = "continue";
-          publishPorts = ["127.0.0.1:${port}:${internalPort}"];
-        };
-      };
+      pods.paperless = self.lib.quadlet.mkQuadletPod port internalPort;
 
       volumes = {
         paperless-broker = {};

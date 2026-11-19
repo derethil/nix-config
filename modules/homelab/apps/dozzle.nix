@@ -115,15 +115,7 @@ in {
           };
         };
 
-        pods.dozzle = {
-          autoStart = true;
-
-          podConfig = {
-            exitPolicy = "continue";
-            publishPorts = ["127.0.0.1:${port}:${internalPort}"];
-          };
-        };
-
+        pods.dozzle = self.lib.quadlet.mkQuadletPod port internalPort;
         volumes.dozzle-data = {};
       };
     })

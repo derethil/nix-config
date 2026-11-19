@@ -91,14 +91,7 @@ in {
         unitConfig.Description = "Audiobookshelf Audiobook & Podcast Server";
       };
 
-      pods.audiobookshelf = {
-        autoStart = true;
-
-        podConfig = {
-          exitPolicy = "continue";
-          publishPorts = ["127.0.0.1:${port}:${internalPort}"];
-        };
-      };
+      pods.audiobookshelf = self.lib.quadlet.mkQuadletPod port internalPort;
 
       volumes = {
         audiobookshelf-audiobooks = {};
