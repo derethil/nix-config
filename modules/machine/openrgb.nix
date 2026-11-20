@@ -48,8 +48,20 @@
           wantedBy = ["hibernate.target" "hybrid-sleep.target" "suspend.target"];
         };
 
+        openrgb-shutdown-prep = {
+          before = ["systemd-poweroff.service" "systemd-reboot.service" "systemd-halt.service"];
+          description = "Turn off OpenRGB devices before shutdown";
+
+          serviceConfig = {
+            ExecStart = "${getExe pkg} --color 000000";
+            Type = "oneshot";
+          };
+
+          wantedBy = ["shutdown.target"];
+        };
+
         openrgb-suspend-prep = {
-          before = ["systemd-hibernate.service" "systemd-suspend.service"];
+          before = ["systemd-hibernate.service" "systemd-hybrid-sleep.service" "systemd-suspend.service"];
           description = "Turn off OpenRGB devices before sleep";
 
           serviceConfig = {
@@ -57,7 +69,7 @@
             Type = "oneshot";
           };
 
-          wantedBy = ["hibernate.target" "suspend.target"];
+          wantedBy = ["hibernate.target" "hybrid-sleep.target" "suspend.target"];
         };
       };
     };
