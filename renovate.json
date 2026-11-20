@@ -116,6 +116,7 @@
       "matchDepTypes": [
         "nix-package"
       ],
+      "groupName": "Nix package source bumps",
       "automerge": false,
       "prBodyNotes": [
         "<!-- nix-source-hash-update -->"
@@ -184,6 +185,7 @@
         "minor",
         "digest"
       ],
+      "groupName": "Homelab container updates",
       "schedule": [
         "before 6am on Monday"
       ],
