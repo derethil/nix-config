@@ -11,7 +11,7 @@
           datasource = "github-releases";
           extractVersion = "^v(?<version>.+)$";
           packageName = "nab138/iloader";
-          version = "2.4.1";
+          version = "2.4.2";
           versioning = "semver";
         };
 
@@ -20,19 +20,19 @@
         sources = {
           aarch64-darwin = {
             # regen-hash-url: packages.aarch64-darwin.iloader.src.url
-            hash = "sha256-z0vdJp+RrpFlHNILEBxiFwUr7dOuBurXLvBNYRr8+ls=";
+            hash = "sha256-g19tZygcKx13S3SclrnJ5nprRbmWPCmc2HpPuwjfnfY=";
             url = "https://github.com/nab138/iloader/releases/download/v${version}/iloader-darwin-universal.app.tar.gz";
           };
 
           aarch64-linux = {
             # regen-hash-url: packages.aarch64-linux.iloader.src.url
-            hash = "sha256-3DAnGGw9qBGqH0IfSVSLPesm1PyVCQX4s6rh/IwF+P0=";
+            hash = "sha256-+Ti9H6UpJiLU0umkF9zU7Z7WRAq/ktAEY5O/1CfR6hM=";
             url = "https://github.com/nab138/iloader/releases/download/v${version}/iloader-linux-aarch64.AppImage";
           };
 
           x86_64-linux = {
             # regen-hash-url: packages.x86_64-linux.iloader.src.url
-            hash = "sha256-3vp25Pw+fPouYIiCiOFNB25qmcxQs42i2GVigXvNRmM=";
+            hash = "sha256-sez7w7JhapKlcNqJAkkftylyM7xizUMCAK/JZwu22RQ=";
             url = "https://github.com/nab138/iloader/releases/download/v${version}/iloader-linux-amd64.AppImage";
           };
         };
