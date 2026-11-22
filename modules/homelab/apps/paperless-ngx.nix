@@ -1,15 +1,15 @@
 {self, ...}: let
   appImage = "ghcr.io/paperless-ngx/paperless-ngx";
-  appVersion = "3.4.2";
-  appDigest = "sha256:d704e84f88300eb6ab001ab15720a2330ff99169cf9f94d6b8fcc44b63a84c84";
+  appVersion = "3.5.1";
+  appDigest = "sha256:8508853b8a0f8394074260957d0be186c8c64f346973b24a7583de4580f306b9";
 
   postgresImage = "docker.io/library/postgres";
   postgresVersion = "18.7-alpine";
-  postgresDigest = "sha256:b6972e1115a4ff8eba5d7f7d19184926d1e16d7d1136ae1e1a7ebf286da0f015";
+  postgresDigest = "sha256:0115267ab5a509022df9319c77be365cef335adb71556c75f60f5360ee247e71";
 
   valkeyImage = "docker.io/valkey/valkey";
-  valkeyVersion = "9.1.3-alpine";
-  valkeyDigest = "sha256:bf09d58e96d6b4524a15396b65b242bbe18beebbcc15a04d8ee75ddac62fae0b";
+  valkeyVersion = "9.2.0-alpine";
+  valkeyDigest = "sha256:c8e2d17498838af5d91e12eb7c11220b3434a7b7131a333e3af52ad5e0b80882";
 
   subdomain = "documents";
   port = "20050";

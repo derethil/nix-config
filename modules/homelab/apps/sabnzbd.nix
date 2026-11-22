@@ -1,7 +1,7 @@
 {self, ...}: let
   appImage = "lscr.io/linuxserver/sabnzbd";
   appVersion = "5.1.3";
-  appDigest = "sha256:b356d0a9b22db584e9005364ec4e752dfc081ce501b7145e9a5c0bb38e4d1ba4";
+  appDigest = "sha256:d225bbab93f54784c115a3b1d89711e469b1969c9f32aa6ebb11fb03b5804431";
 
   subdomain = "index.sabnzbd";
   port = "20090";

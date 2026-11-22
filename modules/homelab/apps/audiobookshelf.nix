@@ -1,7 +1,7 @@
 {self, ...}: let
   appImage = "ghcr.io/advplyr/audiobookshelf";
-  appVersion = "2.37.2";
-  appDigest = "sha256:b897c33f05972fb1bf484f7487bc878fa91ec8691335c1db6e2929c3a7658efa";
+  appVersion = "2.38.0";
+  appDigest = "sha256:60064c23f32fd9099fd39e82c5132c51701d1221135bbca04cd099b589e1edc3";
 
   subdomain = "audio";
   port = "20100";

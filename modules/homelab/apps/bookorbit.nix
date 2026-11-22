@@ -6,8 +6,8 @@
   inherit (lib) getExe';
 
   appImage = "ghcr.io/bookorbit/bookorbit";
-  appVersion = "3.8.0";
-  appDigest = "sha256:d318f7732f6f6330312e2c5f854f7899f858b54cc4b18a13cde1f43b5bea0515";
+  appVersion = "3.9.0";
+  appDigest = "sha256:79cd9c66c990a82944514e3e82d5be5987f21eda96cb37a378ed1484043716fc";
 
   postgresImage = "docker.io/pgvector/pgvector";
   postgresVersion = "0.8.7-pg18";
