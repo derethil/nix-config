@@ -131,12 +131,7 @@
     };
 
     nvim-config.url = "github:derethil/nvim-config";
-
-    paneru = {
-      inputs.nixpkgs.follows = "nixpkgs";
-      url = "github:karinushka/paneru";
-    };
-
+    paneru.url = "github:karinushka/paneru";
     pedantix.url = "github:Swarsel/pedantix";
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
 
