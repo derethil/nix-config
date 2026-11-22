@@ -7,8 +7,8 @@
   inherit (self.lib.podman) socket svc user volume;
 
   appImage = "ghcr.io/amir20/dozzle";
-  appVersion = "v11.4.3";
-  appDigest = "sha256:244f218c876d6ed766277e71a537f34bfb2c01829e1927737e3673a8327deeb8";
+  appVersion = "v11.5.0";
+  appDigest = "sha256:74600d62dd73a72a5d36fbd0c98af649203df921d74310b7ed383ef63392358e";
 
   subdomain = "logs";
   port = "20110";

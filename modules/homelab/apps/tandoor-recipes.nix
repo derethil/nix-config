@@ -1,11 +1,11 @@
 {self, ...}: let
   appImage = "docker.io/vabene1111/recipes";
-  appVersion = "2.7.3";
-  appDigest = "sha256:73bb55c3096b9badd901717e298e025015ae3a264fecfb21a2a9fff72109f4f6";
+  appVersion = "2.7.6";
+  appDigest = "sha256:6c467bf484044a0305ff39bed5badb48b58bb963d4276fc248e101921151895b";
 
   postgresImage = "docker.io/library/postgres";
   postgresVersion = "18.7-alpine";
-  postgresDigest = "sha256:b6972e1115a4ff8eba5d7f7d19184926d1e16d7d1136ae1e1a7ebf286da0f015";
+  postgresDigest = "sha256:0115267ab5a509022df9319c77be365cef335adb71556c75f60f5360ee247e71";
 
   subdomain = "recipes";
   port = "20010";
