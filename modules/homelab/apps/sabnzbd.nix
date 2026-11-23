@@ -17,6 +17,7 @@ in {
 
     nixos = {
       imports = [
+        self.modules.nixos.arr-network
         self.modules.nixos.gatus-options
         self.modules.nixos.ingress
         self.modules.nixos.quadlet
@@ -44,7 +45,7 @@ in {
     };
 
     quadlet = {config, ...}: let
-      inherit (config.virtualisation.quadlet) pods;
+      inherit (config.virtualisation.quadlet) networks pods;
     in {
       containers.sabnzbd-web = {
         containerConfig = {
@@ -79,7 +80,9 @@ in {
         unitConfig.Description = "SABnzbd Usenet Downloader";
       };
 
-      pods.sabnzbd = self.lib.quadlet.mkQuadletPod port internalPort;
+      pods.sabnzbd = self.lib.quadlet.mkQuadletPod' port internalPort {
+        podConfig.networks = [networks.arr.ref];
+      };
 
       volumes = {
         sabnzbd-config = {};

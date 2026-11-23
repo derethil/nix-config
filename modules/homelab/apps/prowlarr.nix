@@ -17,6 +17,7 @@ in {
 
     nixos = {
       imports = [
+        self.modules.nixos.arr-network
         self.modules.nixos.gatus-options
         self.modules.nixos.ingress
         self.modules.nixos.quadlet
@@ -66,7 +67,7 @@ in {
     };
 
     quadlet = {config, ...}: let
-      inherit (config.virtualisation.quadlet) pods;
+      inherit (config.virtualisation.quadlet) networks pods;
     in {
       containers.prowlarr-web = {
         containerConfig = {
@@ -96,7 +97,10 @@ in {
         unitConfig.Description = "Prowlarr Indexer Manager";
       };
 
-      pods.prowlarr = self.lib.quadlet.mkQuadletPod port internalPort;
+      pods.prowlarr = self.lib.quadlet.mkQuadletPod' port internalPort {
+        podConfig.networks = [networks.arr.ref];
+      };
+
       volumes.prowlarr-config = {};
     };
   };

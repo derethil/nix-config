@@ -27,6 +27,7 @@ in {
 
     nixos = {config, ...}: {
       imports = [
+        self.modules.nixos.arr-network
         self.modules.nixos.gatus-options
         self.modules.nixos.ingress
         self.modules.nixos.quadlet
@@ -89,7 +90,7 @@ in {
       osConfig,
       ...
     }: let
-      inherit (config.virtualisation.quadlet) pods;
+      inherit (config.virtualisation.quadlet) networks pods;
 
       url = "https://${subdomain}.${osConfig.internal.homelab.domain}";
       envFile = osConfig.sops.templates."bookorbit-env".path;
@@ -154,7 +155,9 @@ in {
         };
       };
 
-      pods.bookorbit = self.lib.quadlet.mkQuadletPod port internalPort;
+      pods.bookorbit = self.lib.quadlet.mkQuadletPod' port internalPort {
+        podConfig.networks = [networks.arr.ref];
+      };
 
       volumes = {
         bookorbit-books = {};

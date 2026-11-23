@@ -50,15 +50,19 @@ in {
       };
     };
 
-    lib.quadlet = {
-      mkQuadletPod = port: internalPort: {
-        autoStart = true;
+    lib.quadlet = rec {
+      mkQuadletPod = port: internalPort: mkQuadletPod' port internalPort {};
 
-        podConfig = {
-          exitPolicy = "continue";
-          publishPorts = ["127.0.0.1:${port}:${internalPort}"];
-        };
-      };
+      mkQuadletPod' = port: internalPort: options:
+        recursiveUpdate {
+          autoStart = true;
+
+          podConfig = {
+            exitPolicy = "continue";
+            publishPorts = ["127.0.0.1:${port}:${internalPort}"];
+          };
+        }
+        options;
 
       mkQuadletPostgresPod = config: podName: options: let
         inherit (config.virtualisation.quadlet) pods;
