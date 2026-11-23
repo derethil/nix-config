@@ -185,7 +185,7 @@
         "minor",
         "digest"
       ],
-      "groupName": "Homelab container updates",
+      "groupName": "Homelab containers",
       "schedule": [
         "before 6am on Monday"
       ],

@@ -4,8 +4,8 @@
     pkgs,
     ...
   }: let
-    imapPort = "1143";
-    smtpPort = "1025";
+    imapPort = "11143";
+    smtpPort = "11025";
 
     stateDir = "/var/lib/hydroxide";
     authFile = "${stateDir}/hydroxide/auth.json";
