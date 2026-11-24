@@ -12,6 +12,13 @@
     tmux-pkg = pkgs.callPackage ./_scripts/tmux-wrapper.nix {inherit lib refresh-env;};
     continuum-status = pkgs.callPackage ./_scripts/continuum-status.nix {inherit lib;};
 
+    remoteHosts = lib.attrNames (lib.filterAttrs (_: type: type == "directory") (builtins.readDir "${self}/hosts"));
+    ssh-launch = getExe (pkgs.callPackage ./_scripts/ssh-launch.nix {inherit lib;});
+    ssh-select = getExe (pkgs.callPackage ./_scripts/ssh-select.nix {
+      inherit lib ssh-launch;
+      hosts = remoteHosts;
+    });
+
     themesDir = ./_themes;
     themeModulesDir = ./_modules;
   in {
@@ -68,24 +75,21 @@
         bind -T prefix_w d kill-pane
         bind -T prefix_w m resize-pane -Z
 
-        # Moving/Swapping Between Windows
-        ${lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
-          # User0/User1 are custom sequences sent by Alacritty for cmd+shift+h/l
-          # see modules/surfaces/lib/terminal/alacritty.nix keyboard.bindings
-          set -s user-keys[0] "\e[300~"
-          set -s user-keys[1] "\e[301~"
-          bind -n 'User0' previous-window
-          bind -n 'User1' next-window
-          bind H swap-window -t -1\; select-window -t -1
-          bind L swap-window -t +1\; select-window -t +1
-        ''}
 
-        ${lib.optionalString (!pkgs.stdenv.hostPlatform.isDarwin) ''
-          bind -n M-H previous-window
-          bind -n M-L next-window
-          bind -n C-M-H swap-window -t -1\; select-window -t -1
-          bind -n C-M-L swap-window -t +1\; select-window -t +1
-        ''}
+        # Enable both sets of keybinds so a Mac on a Linux-based session can still use Mac keybinds
+        # User0/User1 are custom sequences sent by Alacritty for cmd+shift+h/l
+        # see modules/surfaces/lib/terminal/alacritty.nix keyboard.bindings
+        set -s user-keys[0] "\e[300~"
+        set -s user-keys[1] "\e[301~"
+        bind -n 'User0' previous-window
+        bind -n 'User1' next-window
+        bind H swap-window -t -1\; select-window -t -1
+        bind L swap-window -t +1\; select-window -t +1
+
+        bind -n M-H previous-window
+        bind -n M-L next-window
+        bind -n C-M-H swap-window -t -1\; select-window -t -1
+        bind -n C-M-L swap-window -t +1\; select-window -t +1
 
         # Fix Borders for Two Panes
         set -g pane-border-style bg=black,fg=blue
@@ -93,6 +97,8 @@
 
         # Cycling Layouts
         bind l next-layout
+
+        bind e run-shell "echo '#{session_id}' > \''${XDG_RUNTIME_DIR:-/tmp}/tmux-ssh-session" \; display-popup -E -w 40% -h 20% -T "Remote Session" "${ssh-select}"
 
         # Open in Current Directory
         bind - split-window -v -c "#{pane_current_path}"
@@ -186,7 +192,7 @@
             set -g @theme_window_current_color "#{thm_bg_bright}"
             set -g @theme_window_current_background "#{thm_bg}"
 
-            set -g @theme_status_modules_right "directory continuum session"
+            set -g @theme_status_modules_right "directory continuum session host"
             set -g @theme_directory_text "#( echo #{pane_current_path} | sed 's|$HOME|~|' | rev | cut -d'/' -f-3 | rev )"
           '';
 

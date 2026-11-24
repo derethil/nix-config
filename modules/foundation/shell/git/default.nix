@@ -22,6 +22,7 @@
     cp = "cherry-pick";
     cv = "commit --verbose";
     d = "diff -M";
+    ds = "diff --shortstat";
     f = "fetch";
     l = "log --pretty=format:'%Cgreen%h%Creset - %Cblue%an%Creset @ %ar : %s%C(yellow)%d%Creset'";
     l2 = "log --pretty='format:%Cgreen%h%Creset %an - %s%C(yellow)%d%Creset' --graph";
