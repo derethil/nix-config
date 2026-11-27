@@ -67,15 +67,19 @@
     }
   ],
   "lockFileMaintenance": {
-    "enabled": false,
-    "automerge": true,
-    "branchTopic": "update-lockfiles",
-    "commitMessageAction": "update lockfiles",
-    "schedule": [
-      "before 6am on Friday"
-    ]
+    "enabled": false
   },
   "packageRules": [
+    {
+      "description": "Automerge GitHub Action digest updates",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchUpdateTypes": [
+        "digest"
+      ],
+      "automerge": true
+    },
     {
       "description": "Disable the built-in nix manager for the nixpkgs input since release-branch tracking happens via the custom regex manager below instead",
       "matchManagers": [

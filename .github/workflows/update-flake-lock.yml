@@ -2,8 +2,8 @@ name: Update Flake Inputs
 on:
   workflow_dispatch:
   schedule:
-    # Before 6am US/Eastern on Friday
-    - cron: "0 9 * * fri"
+    - cron: "23 5 * * fri"
+      timezone: "America/New_York"
 
 permissions:
   contents: write
