@@ -40,6 +40,7 @@ in {
           devices
           gaming
           productivity
+          qbittorrent
           sunshine
 
           # foundation
