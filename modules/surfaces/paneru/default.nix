@@ -3,7 +3,10 @@
   inputs,
   ...
 }: {
-  flake-file.inputs.paneru.url = "github:karinushka/paneru";
+  flake-file.inputs.paneru = {
+    inputs.nixpkgs.follows = "nixpkgs-unstable";
+    url = "github:karinushka/paneru";
+  };
 
   flake.modules = {
     darwin = {
