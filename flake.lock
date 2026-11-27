@@ -1755,22 +1755,6 @@
     },
     "nixpkgs_15": {
       "locked": {
-        "lastModified": 1785483748,
-        "narHash": "sha256-M4HXpLsR7iFTNQfD/q+zK8/QeRYztYVDVIdIgCVGGZ0=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "59ea0b1c043c463e39fcb3cfb9a5c8bcf0777c72",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_16": {
-      "locked": {
         "lastModified": 1784007870,
         "narHash": "sha256-djcLt/JJphyNt4eDY9XTly+/WbCK5lqWq9lSgCmJkkQ=",
         "owner": "NixOS",
@@ -1785,7 +1769,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_17": {
+    "nixpkgs_16": {
       "locked": {
         "lastModified": 1787900134,
         "narHash": "sha256-VYXO0XZlgj06dxJZRhrD3WoSsvq/c7+/Akyoa22pefw=",
@@ -2031,11 +2015,11 @@
         "sort-nvim": "sort-nvim"
       },
       "locked": {
-        "lastModified": 1794414894,
-        "narHash": "sha256-L0CTM1QSdzmPwSOSukkXmTL1XVN6Zjg+VD5qST5hQo8=",
+        "lastModified": 1795806759,
+        "narHash": "sha256-5nz3cfOoa1UlQUrtxmRpkQAmgiUGaZiBeuHW5C3Ct8w=",
         "owner": "derethil",
         "repo": "nvim-config",
-        "rev": "abaec21681ea41b4a6be9a64263344da9f91530d",
+        "rev": "23d64b018aa56400ffb8e7d41e390f9269e7fdd3",
         "type": "github"
       },
       "original": {
@@ -2083,7 +2067,9 @@
         "flake-parts": "flake-parts_11",
         "import-tree": "import-tree_3",
         "nix-darwin": "nix-darwin_2",
-        "nixpkgs": "nixpkgs_15"
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
       },
       "locked": {
         "lastModified": 1795294459,
@@ -2124,7 +2110,7 @@
       "inputs": {
         "flake-parts": "flake-parts_12",
         "git-hooks-nix": "git-hooks-nix_2",
-        "nixpkgs": "nixpkgs_16",
+        "nixpkgs": "nixpkgs_15",
         "treefmt-nix": "treefmt-nix_6"
       },
       "locked": {
@@ -2383,7 +2369,7 @@
     },
     "tether": {
       "inputs": {
-        "nixpkgs": "nixpkgs_17"
+        "nixpkgs": "nixpkgs_16"
       },
       "locked": {
         "lastModified": 1795754468,
