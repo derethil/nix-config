@@ -2,6 +2,7 @@
   flake.modules.homeManager.noctalia-panel = {
     programs.noctalia.settings = {
       accessibility = {
+        font_scale = 1.0;
         high_contrast = false;
         ui_scale = 1.0;
       };
@@ -16,7 +17,7 @@
         enable_volume_sounds = true;
         sound_theme = "freedesktop";
         sound_volume = 0.5;
-        spectrum_frame_rate = 60;
+        spectrum_frame_rate = 144;
       };
 
       backdrop = {
@@ -198,7 +199,11 @@
       };
 
       battery = {
-        device."/org/freedesktop/UPower/devices/battery_hidpp_battery_0".warning_threshold = 5;
+        device = {
+          "/org/freedesktop/UPower/devices/battery_hidpp_battery_0".warning_threshold = 5;
+          "/org/freedesktop/UPower/devices/mouse_hidpp_battery_0".warning_threshold = 5;
+        };
+
         warning_threshold = 10;
       };
 
@@ -209,8 +214,11 @@
 
       brightness = {
         enable_ddcutil = false;
+        enable_scheduled_brightness = false;
         ignore_mmids = [];
         minimum_brightness = 0.0;
+        scheduled_day_brightness = 1.0;
+        scheduled_night_brightness = 0.5;
         sync_all_monitors = true;
       };
 
@@ -256,9 +264,9 @@
 
         reminders = {
           all_day_digest_time = "09:00";
-          default_lead_minutes = 0;
+          default_lead_minutes = 5;
           enabled = true;
-          use_event_reminders = true;
+          use_event_reminders = false;
         };
       };
 
@@ -271,7 +279,6 @@
           show_week_numbers = false;
         };
 
-        circular_avatar = true;
         hidden_tabs = [];
         media.show_visualizer = true;
 
@@ -470,6 +477,14 @@
           "Escape"
         ];
 
+        category_next = [
+          "Ctrl+Tab"
+        ];
+
+        category_previous = [
+          "Ctrl+Shift+ISO_Left_Tab"
+        ];
+
         copy = [
           "Ctrl+c"
         ];
@@ -493,6 +508,10 @@
 
         save = [
           "Ctrl+s"
+        ];
+
+        select_all = [
+          "Ctrl+a"
         ];
 
         tab_next = [
@@ -696,6 +715,7 @@
         scale = 1.0;
         show_actions = true;
         show_app_name = true;
+        show_progress_bar = true;
         width = 360;
       };
 
@@ -746,6 +766,7 @@
         avatar_path = "";
         button_borders = true;
         card_borders = true;
+        circular_avatar = true;
         clipboard_auto_paste = "auto";
         clipboard_confirm_clear_history = true;
         clipboard_enabled = true;
@@ -755,7 +776,7 @@
         corner_radius_scale = 1.0;
         date_format = "%A, %x";
         disable_mipmaps = false;
-        external_ip_enabled = false;
+        external_ip_enabled = true;
         font_family = "Inter Medium";
         greeter_sync.auto_sync = true;
         input_borders = true;
@@ -769,7 +790,7 @@
           categories = true;
           category_icons_only = false;
           colorize_icons = false;
-          compact = false;
+          compact = true;
           default_view = "recent";
           dmenu = {};
           fetch_exchange_rates = true;
@@ -875,7 +896,7 @@
           region_dim_opacity = 0.6499999761581421;
           region_modifier = "none";
           remember_last_region = false;
-          save_to_file = true;
+          save_to_file = false;
           show_cursor = true;
           show_region_dimensions = true;
           show_region_hint = true;
