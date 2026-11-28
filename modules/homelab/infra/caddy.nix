@@ -37,7 +37,7 @@ in {
 
       package = pkgs.caddy.withPlugins {
         # regen-hash: nixosConfigurations.feldspar.config.services.caddy.package.src
-        hash = "sha256-bHMI9ueUyZjhSVcn9RzjyeYHtvAFibrrWOOY8xm5Bg4=";
+        hash = "sha256-CL7CyuD2DNVGIUNYDBMsiifS/h5PP6LAF7Lrjh2EUg4=";
 
         plugins = [
           "github.com/${cloudflarePlugin.packageName}@${cloudflarePlugin.version}"
