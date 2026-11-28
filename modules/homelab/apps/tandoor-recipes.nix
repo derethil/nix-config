@@ -1,11 +1,17 @@
-{self, ...}: let
+{
+  self,
+  lib,
+  ...
+}: let
+  inherit (lib) mkMerge;
+
   appImage = "docker.io/vabene1111/recipes";
   appVersion = "2.7.6";
   appDigest = "sha256:6c467bf484044a0305ff39bed5badb48b58bb963d4276fc248e101921151895b";
 
   postgresImage = "docker.io/library/postgres";
-  postgresVersion = "18.7-alpine";
-  postgresDigest = "sha256:0115267ab5a509022df9319c77be365cef335adb71556c75f60f5360ee247e71";
+  postgresVersion = "19.0-alpine";
+  postgresDigest = "sha256:cac45fb483caee3668946088a1c0532db89d5285c28dbfeac889b4068296e06f";
 
   subdomain = "recipes";
   port = "20010";
@@ -112,41 +118,45 @@ in {
         };
 
         tandoor-web = {
-          containerConfig = {
-            addCapabilities = [
-              "CHOWN"
-              "SETGID"
-              "SETUID"
-            ];
+          containerConfig = mkMerge [
+            (self.lib.quadlet.mkHealthCheck "wget --spider -q http://localhost:${internalPort}/" {})
 
-            dropCapabilities = ["ALL"];
-            environmentFiles = [envFile];
+            {
+              addCapabilities = [
+                "CHOWN"
+                "SETGID"
+                "SETUID"
+              ];
 
-            environments = {
-              ACCOUNT_EMAIL_VERIFICATION = "none";
-              AI_ALLOWED_URLS = "https://openrouter.ai/api/v1";
-              ALLOWED_HOSTS = "*";
-              CSRF_TRUSTED_ORIGINS = "https://${host}";
-              DB_ENGINE = "django.db.backends.postgresql";
-              POSTGRES_HOST = "localhost";
-              POSTGRES_PORT = "5432";
-              SECURE_PROXY_SSL_HEADER = "HTTP_X_FORWARDED_PROTO,https";
-              SOCIALACCOUNT_EMAIL_VERIFICATION = "none";
-              SOCIALACCOUNT_ONLY = "1";
-              SOCIAL_PROVIDERS = "allauth.socialaccount.providers.openid_connect";
-              TANDOOR_PORT = internalPort;
-            };
+              dropCapabilities = ["ALL"];
+              environmentFiles = [envFile];
 
-            image = "${appImage}:${appVersion}@${appDigest}";
-            noNewPrivileges = true;
-            pod = pods.tandoor.ref;
-            pull = "newer";
+              environments = {
+                ACCOUNT_EMAIL_VERIFICATION = "none";
+                AI_ALLOWED_URLS = "https://openrouter.ai/api/v1";
+                ALLOWED_HOSTS = "*";
+                CSRF_TRUSTED_ORIGINS = "https://${host}";
+                DB_ENGINE = "django.db.backends.postgresql";
+                POSTGRES_HOST = "localhost";
+                POSTGRES_PORT = "5432";
+                SECURE_PROXY_SSL_HEADER = "HTTP_X_FORWARDED_PROTO,https";
+                SOCIALACCOUNT_EMAIL_VERIFICATION = "none";
+                SOCIALACCOUNT_ONLY = "1";
+                SOCIAL_PROVIDERS = "allauth.socialaccount.providers.openid_connect";
+                TANDOOR_PORT = internalPort;
+              };
 
-            volumes = [
-              "tandoor-media:/opt/recipes/mediafiles"
-              "tandoor-static:/opt/recipes/staticfiles"
-            ];
-          };
+              image = "${appImage}:${appVersion}@${appDigest}";
+              noNewPrivileges = true;
+              pod = pods.tandoor.ref;
+              pull = "newer";
+
+              volumes = [
+                "tandoor-media:/opt/recipes/mediafiles"
+                "tandoor-static:/opt/recipes/staticfiles"
+              ];
+            }
+          ];
 
           serviceConfig.Restart = "always";
 

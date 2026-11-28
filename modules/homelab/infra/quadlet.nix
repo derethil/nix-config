@@ -4,7 +4,7 @@
   inputs,
   ...
 }: let
-  inherit (lib) mkOption recursiveUpdate types;
+  inherit (lib) mkMerge mkOption recursiveUpdate types;
   inherit (self.lib.podman) user;
 
   localtime = ["/etc/localtime:/etc/localtime:ro"];
@@ -51,6 +51,18 @@ in {
     };
 
     lib.quadlet = rec {
+      mkHealthCheck = cmd: overrides:
+        mkMerge [
+          {
+            healthCmd = cmd;
+            healthInterval = "10s";
+            healthRetries = 3;
+            healthTimeout = "5s";
+            notify = "healthy";
+          }
+          overrides
+        ];
+
       mkQuadletPod = port: internalPort: mkQuadletPod' port internalPort {};
 
       mkQuadletPod' = port: internalPort: options:
@@ -67,27 +79,39 @@ in {
       mkQuadletPostgresPod = config: podName: options: let
         inherit (config.virtualisation.quadlet) pods;
       in
-        recursiveUpdate {
-          containerConfig = {
-            addCapabilities = [
-              "CHOWN"
-              "DAC_READ_SEARCH"
-              "FOWNER"
-              "SETGID"
-              "SETUID"
-            ];
+        recursiveUpdate
+        {
+          containerConfig = mkMerge [
+            (mkHealthCheck ''pg_isready -U "$POSTGRES_USER"'' {
+              healthStartupCmd = ''pg_isready -U "$POSTGRES_USER"'';
+              healthStartupInterval = "5s";
+              healthStartupRetries = 60;
+            })
 
-            dropCapabilities = ["ALL"];
-            noNewPrivileges = true;
-            pod = pods.${podName}.ref;
-            pull = "newer";
-            volumes = ["${podName}-db:/var/lib/postgresql"];
-          };
+            {
+              addCapabilities = [
+                "CHOWN"
+                "DAC_OVERRIDE"
+                "DAC_READ_SEARCH"
+                "FOWNER"
+                "SETGID"
+                "SETUID"
+              ];
+
+              dropCapabilities = ["ALL"];
+              noNewPrivileges = true;
+              pod = pods.${podName}.ref;
+              pull = "newer";
+              volumes = ["${podName}-db:/var/lib/postgresql"];
+            }
+
+            (options.containerConfig or {})
+          ];
 
           serviceConfig.Restart = "always";
           unitConfig.Description = "${podName} postgreSQL database";
         }
-        options;
+        (removeAttrs options ["containerConfig"]);
     };
   };
 }

@@ -3,15 +3,15 @@
   lib,
   ...
 }: let
-  inherit (lib) getExe';
+  inherit (lib) getExe' mkMerge;
 
   appImage = "ghcr.io/mrblomblo/blombooru";
   appVersion = "2.0.0";
   appDigest = "sha256:c2f52e55b289c6b25edc88bf9b4546319d30278bd207220ffa7b0aa4abfcb6fb";
 
   postgresImage = "docker.io/library/postgres";
-  postgresVersion = "18.7-alpine";
-  postgresDigest = "sha256:0115267ab5a509022df9319c77be365cef335adb71556c75f60f5360ee247e71";
+  postgresVersion = "19.0-alpine";
+  postgresDigest = "sha256:cac45fb483caee3668946088a1c0532db89d5285c28dbfeac889b4068296e06f";
 
   redisImage = "docker.io/library/redis";
   redisVersion = "8.10.3-alpine";
@@ -114,23 +114,21 @@ in {
         };
 
         blombooru-redis = {
-          containerConfig = {
-            dropCapabilities = ["ALL"];
-            environmentFiles = [envFile];
+          containerConfig = mkMerge [
+            (self.lib.quadlet.mkHealthCheck ''redis-cli -a "$REDIS_PASSWORD" ping | grep -q PONG'' {})
 
-            exec = [
-              "sh"
-              "-c"
-              ''exec redis-server --save 60 1 --loglevel warning --requirepass "$REDIS_PASSWORD"''
-            ];
-
-            image = "${redisImage}:${redisVersion}@${redisDigest}";
-            noNewPrivileges = true;
-            pod = pods.blombooru.ref;
-            pull = "newer";
-            user = "redis";
-            volumes = ["blombooru-redis:/data"];
-          };
+            {
+              dropCapabilities = ["ALL"];
+              environmentFiles = [envFile];
+              exec = ["sh" "-c" ''exec redis-server --save 60 1 --loglevel warning --requirepass "$REDIS_PASSWORD"''];
+              image = "${redisImage}:${redisVersion}@${redisDigest}";
+              noNewPrivileges = true;
+              pod = pods.blombooru.ref;
+              pull = "newer";
+              user = "redis";
+              volumes = ["blombooru-redis:/data"];
+            }
+          ];
 
           serviceConfig.Restart = "always";
           unitConfig.Description = "Blombooru Redis Cache";

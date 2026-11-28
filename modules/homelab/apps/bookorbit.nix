@@ -3,15 +3,15 @@
   lib,
   ...
 }: let
-  inherit (lib) getExe';
+  inherit (lib) getExe' mkMerge;
 
   appImage = "ghcr.io/bookorbit/bookorbit";
   appVersion = "3.9.0";
   appDigest = "sha256:79cd9c66c990a82944514e3e82d5be5987f21eda96cb37a378ed1484043716fc";
 
   postgresImage = "docker.io/pgvector/pgvector";
-  postgresVersion = "0.8.7-pg18";
-  postgresDigest = "sha256:38681dc6eaf55308e2a4c6de392d131652dcfac70e1263e35cd9b5ea3fe39782";
+  postgresVersion = "0.8.7-pg19";
+  postgresDigest = "sha256:89879f41d564f67b0c1462a491d16fcbc6de39ac10db17e7a4bba2138a5e0ba5";
 
   subdomain = "books";
   port = "20040";
@@ -107,40 +107,44 @@ in {
         };
 
         bookorbit-web = {
-          containerConfig = {
-            addCapabilities = [
-              "CHOWN"
-              "DAC_OVERRIDE"
-              "FOWNER"
-              "SETGID"
-              "SETUID"
-            ];
+          containerConfig = mkMerge [
+            (self.lib.quadlet.mkHealthCheck "wget --spider -q http://127.0.0.1:${internalPort}/" {})
 
-            dropCapabilities = ["ALL"];
-            environmentFiles = [envFile];
+            {
+              addCapabilities = [
+                "CHOWN"
+                "DAC_OVERRIDE"
+                "FOWNER"
+                "SETGID"
+                "SETUID"
+              ];
 
-            environments = {
-              APP_URL = url;
-              BOOK_DOCK_PATH = "/data/downloads/book-dock";
-              OIDC_ALLOW_LOCAL_ISSUERS = "true";
-              PGID = pgid;
-              PORT = internalPort;
-              POSTGRES_HOST = "localhost";
-              POSTGRES_PORT = "5432";
-              PUID = puid;
-            };
+              dropCapabilities = ["ALL"];
+              environmentFiles = [envFile];
 
-            image = "${appImage}:${appVersion}@${appDigest}";
-            noNewPrivileges = true;
-            pod = pods.bookorbit.ref;
-            pull = "newer";
+              environments = {
+                APP_URL = url;
+                BOOK_DOCK_PATH = "/data/downloads/book-dock";
+                OIDC_ALLOW_LOCAL_ISSUERS = "true";
+                PGID = pgid;
+                PORT = internalPort;
+                POSTGRES_HOST = "localhost";
+                POSTGRES_PORT = "5432";
+                PUID = puid;
+              };
 
-            volumes = [
-              "bookorbit-books:/books"
-              "bookorbit-data:/data"
-              "sabnzbd-downloads:/data/downloads"
-            ];
-          };
+              image = "${appImage}:${appVersion}@${appDigest}";
+              noNewPrivileges = true;
+              pod = pods.bookorbit.ref;
+              pull = "newer";
+
+              volumes = [
+                "bookorbit-books:/books"
+                "bookorbit-data:/data"
+                "sabnzbd-downloads:/data/downloads"
+              ];
+            }
+          ];
 
           serviceConfig = {
             ExecStartPre = "${podman} unshare ${chown} ${puid}:${pgid} ${volume "bookorbit-books"} ${volume "bookorbit-data"}";

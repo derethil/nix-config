@@ -1,11 +1,17 @@
-{self, ...}: let
+{
+  self,
+  lib,
+  ...
+}: let
+  inherit (lib) mkMerge;
+
   appImage = "ghcr.io/paperless-ngx/paperless-ngx";
   appVersion = "3.5.1";
   appDigest = "sha256:8508853b8a0f8394074260957d0be186c8c64f346973b24a7583de4580f306b9";
 
   postgresImage = "docker.io/library/postgres";
-  postgresVersion = "18.7-alpine";
-  postgresDigest = "sha256:0115267ab5a509022df9319c77be365cef335adb71556c75f60f5360ee247e71";
+  postgresVersion = "19.0-alpine";
+  postgresDigest = "sha256:cac45fb483caee3668946088a1c0532db89d5285c28dbfeac889b4068296e06f";
 
   valkeyImage = "docker.io/valkey/valkey";
   valkeyVersion = "9.2.0-alpine";
@@ -96,15 +102,18 @@ in {
     in {
       containers = {
         paperless-broker = {
-          containerConfig = {
-            dropCapabilities = ["ALL"];
-            image = "${valkeyImage}:${valkeyVersion}@${valkeyDigest}";
-            noNewPrivileges = true;
-            pod = pods.paperless.ref;
-            pull = "newer";
-            user = "valkey";
-            volumes = ["paperless-broker:/data"];
-          };
+          containerConfig = mkMerge [
+            (self.lib.quadlet.mkHealthCheck "valkey-cli ping" {})
+            {
+              dropCapabilities = ["ALL"];
+              image = "${valkeyImage}:${valkeyVersion}@${valkeyDigest}";
+              noNewPrivileges = true;
+              pod = pods.paperless.ref;
+              pull = "newer";
+              user = "valkey";
+              volumes = ["paperless-broker:/data"];
+            }
+          ];
 
           serviceConfig.Restart = "always";
           unitConfig.Description = "Paperless-ngx Valkey Broker";
@@ -118,45 +127,49 @@ in {
         };
 
         paperless-web = {
-          containerConfig = {
-            addCapabilities = [
-              "CHOWN"
-              "DAC_OVERRIDE"
-              "FOWNER"
-              "SETGID"
-              "SETUID"
-            ];
+          containerConfig = mkMerge [
+            (self.lib.quadlet.mkHealthCheck "curl -f -s -o /dev/null http://localhost:${internalPort}/" {})
 
-            dropCapabilities = ["ALL"];
-            environmentFiles = [envFile];
+            {
+              addCapabilities = [
+                "CHOWN"
+                "DAC_OVERRIDE"
+                "FOWNER"
+                "SETGID"
+                "SETUID"
+              ];
 
-            environments = {
-              PAPERLESS_ACCOUNT_ALLOW_SIGNUPS = "false";
-              PAPERLESS_APPS = "allauth.socialaccount.providers.openid_connect";
-              PAPERLESS_DBENGINE = "postgresql";
-              PAPERLESS_DBHOST = "localhost";
-              PAPERLESS_DBNAME = "paperless";
-              PAPERLESS_DBPORT = "5432";
-              PAPERLESS_DBUSER = "paperless";
-              PAPERLESS_DISABLE_REGULAR_LOGIN = "1";
-              PAPERLESS_LOGOUT_REDIRECT_URL = osConfig.internal.homelab.oidc.endSessionUrl;
-              PAPERLESS_REDIRECT_LOGIN_TO_SSO = "1";
-              PAPERLESS_REDIS = "redis://localhost:6379";
-              PAPERLESS_SOCIAL_AUTO_SIGNUP = "1";
-              PAPERLESS_URL = "https://${host}";
-            };
+              dropCapabilities = ["ALL"];
+              environmentFiles = [envFile];
 
-            image = "${appImage}:${appVersion}@${appDigest}";
-            pod = pods.paperless.ref;
-            pull = "newer";
+              environments = {
+                PAPERLESS_ACCOUNT_ALLOW_SIGNUPS = "false";
+                PAPERLESS_APPS = "allauth.socialaccount.providers.openid_connect";
+                PAPERLESS_DBENGINE = "postgresql";
+                PAPERLESS_DBHOST = "localhost";
+                PAPERLESS_DBNAME = "paperless";
+                PAPERLESS_DBPORT = "5432";
+                PAPERLESS_DBUSER = "paperless";
+                PAPERLESS_DISABLE_REGULAR_LOGIN = "1";
+                PAPERLESS_LOGOUT_REDIRECT_URL = osConfig.internal.homelab.oidc.endSessionUrl;
+                PAPERLESS_REDIRECT_LOGIN_TO_SSO = "1";
+                PAPERLESS_REDIS = "redis://localhost:6379";
+                PAPERLESS_SOCIAL_AUTO_SIGNUP = "1";
+                PAPERLESS_URL = "https://${host}";
+              };
 
-            volumes = [
-              "paperless-data:/usr/src/paperless/data"
-              "paperless-media:/usr/src/paperless/media"
-              "paperless-consume:/usr/src/paperless/consume"
-              "paperless-export:/usr/src/paperless/export"
-            ];
-          };
+              image = "${appImage}:${appVersion}@${appDigest}";
+              pod = pods.paperless.ref;
+              pull = "newer";
+
+              volumes = [
+                "paperless-data:/usr/src/paperless/data"
+                "paperless-media:/usr/src/paperless/media"
+                "paperless-consume:/usr/src/paperless/consume"
+                "paperless-export:/usr/src/paperless/export"
+              ];
+            }
+          ];
 
           serviceConfig.Restart = "always";
 
