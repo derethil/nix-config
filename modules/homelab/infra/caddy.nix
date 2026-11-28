@@ -9,7 +9,7 @@
   jwtPlugin = {
     datasource = "github-tags";
     packageName = "ggicci/caddy-jwt";
-    version = "v1.4.0";
+    version = "v1.5.0";
     versioning = "semver-coerced";
   };
 in {
